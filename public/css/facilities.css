@@ -1,0 +1,465 @@
+/* Keep all layout changes within the facilities page. */
+body.facilities-page {
+  --facilities-green: #173f35;
+  --facilities-muted: #5c6c61;
+  --facilities-border: #dce2d5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: none;
+  padding: 0;
+  background: #f7f8f2;
+  line-height: 1.6;
+}
+
+.facilities-page *,
+.facilities-page *::before,
+.facilities-page *::after {
+  box-sizing: border-box;
+}
+
+.facilities-page a {
+  text-decoration: none;
+}
+
+.facilities-page a:focus-visible {
+  outline: 3px solid #748c38;
+  outline-offset: 5px;
+}
+
+.facilities-shell {
+  width: min(100% - 96px, 1180px);
+  margin-inline: auto;
+}
+
+.facilities-skip-link {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 10px 16px;
+  border-radius: 6px;
+  background: white;
+  transform: translateY(-180%);
+}
+
+.facilities-skip-link:focus {
+  transform: translateY(0);
+}
+
+.facilities-header {
+  border-bottom: 1px solid var(--facilities-border);
+}
+
+.facilities-header-inner,
+.facilities-brand,
+.facilities-nav,
+.facilities-back-link,
+.facilities-intro-content,
+.facilities-count,
+.facilities-card-heading,
+.facilities-home-button,
+.facilities-footer-inner {
+  display: flex;
+  align-items: center;
+}
+
+.facilities-header-inner {
+  min-height: 96px;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.facilities-brand {
+  gap: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+}
+
+.facilities-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: var(--facilities-green);
+}
+
+.facilities-brand-mark svg {
+  width: 30px;
+  stroke: #e8edcf;
+  stroke-width: 1.5;
+}
+
+.facilities-nav {
+  gap: 12px;
+}
+
+.facilities-nav a {
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.facilities-nav a[aria-current="page"] {
+  background: #e8eddf;
+}
+
+.facilities-nav a:hover,
+.facilities-back-link:hover {
+  color: #436a36;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.facilities-main {
+  flex: 1;
+  width: 100%;
+}
+
+.facilities-intro {
+  padding-block: 36px 34px;
+  border-bottom: 1px solid var(--facilities-border);
+}
+
+.facilities-back-link {
+  width: fit-content;
+  gap: 9px;
+  margin-bottom: 40px;
+  font-size: 13px;
+}
+
+.facilities-back-link svg {
+  width: 17px;
+  height: 17px;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.facilities-intro-content {
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+}
+
+.facilities-intro-content > div {
+  min-width: 0;
+}
+
+.facilities-eyebrow {
+  margin: 0 0 12px;
+  color: #597047;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+}
+
+.facilities-intro h1 {
+  margin: 0;
+  font-size: clamp(34px, 4vw, 50px);
+  line-height: 1.2;
+  letter-spacing: -1.6px;
+  overflow-wrap: anywhere;
+}
+
+.facilities-description {
+  max-width: 580px;
+  margin: 18px 0 0;
+  color: var(--facilities-muted);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.facilities-count {
+  flex-shrink: 0;
+  gap: 9px;
+  margin: 0 0 4px;
+  padding: 9px 14px;
+  border: 1px solid var(--facilities-border);
+  border-radius: 8px;
+  background: #eaf0e1;
+  color: #4b6347;
+  font-size: 12px;
+}
+
+.facilities-count span {
+  color: var(--facilities-green);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.facilities-list {
+  padding-block: 34px 64px;
+}
+
+.facilities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.facilities-page .facility-card {
+  min-width: 0;
+  margin: 0;
+  padding: 26px;
+  border: 1px solid var(--facilities-border);
+  border-radius: 14px;
+  background: #fff;
+  overflow-wrap: anywhere;
+}
+
+.facilities-card-heading {
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.facilities-card-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid #dce5d0;
+  border-radius: 12px;
+  background: #eef3e6;
+}
+
+.facilities-card-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--facilities-green);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.facilities-card-label {
+  color: var(--facilities-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.facilities-page .facility-card h2 {
+  margin: 0 0 22px;
+  color: var(--facilities-green);
+  font-size: 22px;
+  line-height: 1.4;
+  letter-spacing: -0.4px;
+}
+
+.facilities-details {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding-top: 20px;
+  border-top: 1px solid #e7ebe2;
+}
+
+.facilities-detail dt {
+  margin-bottom: 5px;
+  color: #5c6c61;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.facilities-detail dd {
+  margin: 0;
+  color: #354c40;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.facilities-empty {
+  padding: 54px 24px 58px;
+  border: 1px dashed #c6d1bc;
+  border-radius: 16px;
+  background: #eef1e7;
+  text-align: center;
+}
+
+.facilities-empty-icon {
+  display: grid;
+  place-items: center;
+  width: 86px;
+  height: 86px;
+  margin: 0 auto 26px;
+  border: 1px solid #dce5d0;
+  border-radius: 24px;
+  background: #f7f8f2;
+}
+
+.facilities-empty-icon svg {
+  width: 48px;
+  height: 48px;
+  stroke: #4c6b45;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.facilities-empty h2 {
+  margin: 0;
+  color: var(--facilities-green);
+  font-size: 28px;
+  line-height: 1.35;
+  letter-spacing: -0.7px;
+}
+
+.facilities-empty-description {
+  max-width: 470px;
+  margin: 16px auto 24px;
+  color: var(--facilities-muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.facilities-page .facilities-home-button {
+  justify-content: center;
+  gap: 20px;
+  width: fit-content;
+  min-height: 48px;
+  margin-inline: auto;
+  padding: 12px 20px;
+  border: 1px solid var(--facilities-green);
+  border-radius: 8px;
+  background: var(--facilities-green);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.facilities-home-button:hover {
+  background: #285b48;
+}
+
+.facilities-footer {
+  border-top: 1px solid var(--facilities-border);
+}
+
+.facilities-footer-inner {
+  justify-content: space-between;
+  gap: 24px;
+  padding-block: 28px;
+}
+
+.facilities-footer p {
+  margin: 0;
+  color: var(--facilities-muted);
+  font-size: 12px;
+}
+
+.facilities-footer .facilities-footer-name {
+  color: var(--facilities-green);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.facilities-footer-name span {
+  display: block;
+  margin-top: 3px;
+  color: var(--facilities-muted);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+@media (max-width: 1000px) {
+  .facilities-shell {
+    width: calc(100% - 64px);
+  }
+
+  .facilities-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .facilities-intro-content {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 700px) {
+  .facilities-shell {
+    width: calc(100% - 40px);
+  }
+
+  .facilities-header-inner {
+    min-height: 0;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding-block: 20px 16px;
+  }
+
+  .facilities-brand {
+    font-size: 19px;
+  }
+
+  .facilities-nav {
+    width: 100%;
+    gap: 6px;
+  }
+
+  .facilities-nav a {
+    padding: 9px 15px;
+    font-size: 13px;
+  }
+
+  .facilities-intro {
+    padding-block: 24px 26px;
+  }
+
+  .facilities-back-link {
+    margin-bottom: 30px;
+  }
+
+  .facilities-intro h1 {
+    font-size: 34px;
+    letter-spacing: -1px;
+  }
+
+  .facilities-description {
+    margin-top: 14px;
+    font-size: 15px;
+  }
+
+  .facilities-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .facilities-list {
+    padding-block: 26px 40px;
+  }
+
+  .facilities-page .facility-card {
+    padding: 24px;
+  }
+
+  .facilities-empty {
+    padding: 38px 22px;
+  }
+
+  .facilities-empty h2 {
+    font-size: 25px;
+  }
+
+  .facilities-empty .facilities-eyebrow {
+    font-size: 10px;
+    letter-spacing: 1.1px;
+  }
+
+  .facilities-footer-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+    padding-block: 26px;
+  }
+}
