@@ -416,7 +416,7 @@ body.home-page {
     gap: 10px 20px;
   }
 
-  .home-button {
+  .home-page .home-button {
     gap: 28px;
     padding-inline: 20px;
   }
@@ -462,7 +462,7 @@ body.home-page {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home-button {
+  .home-page .home-button {
     transition: none;
   }
 }
