@@ -5,21 +5,101 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Danh sách cơ sở</title>
   <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/facilities.css">
 </head>
-<body>
-  <h1>Danh sách cơ sở</h1>
+<body class="facilities-page">
+  <a class="facilities-skip-link" href="#noi-dung">Đến nội dung chính</a>
 
-  <a href="/">Về trang chủ</a>
+  <header class="facilities-header">
+    <div class="facilities-shell facilities-header-inner">
+      <a class="facilities-brand" href="/" aria-label="Sân Thể Thao — Trang chủ">
+        <span class="facilities-brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <rect x="5" y="7" width="22" height="18" rx="2" />
+            <path d="M16 7v18M5 12h5v8H5m22-8h-5v8h5" />
+            <circle cx="16" cy="16" r="4" />
+          </svg>
+        </span>
+        <span>Sân Thể Thao</span>
+      </a>
+      <nav class="facilities-nav" aria-label="Điều hướng chính">
+        <a href="/">Trang chủ</a>
+        <a href="/facilities" aria-current="page">Cơ sở</a>
+      </nav>
+    </div>
+  </header>
 
-  <% if (facilities.length === 0) { %>
-    <p>Chưa có cơ sở nào.</p>
-  <% } %>
+  <main id="noi-dung" class="facilities-main">
+    <div class="facilities-shell">
+      <section class="facilities-intro" aria-labelledby="facilities-title">
+        <a class="facilities-back-link" href="/">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6" /></svg>
+          Về trang chủ
+        </a>
+        <div class="facilities-intro-content">
+          <div>
+            <p class="facilities-eyebrow">Cùng nhau ra sân</p>
+            <h1 id="facilities-title">Danh sách cơ sở</h1>
+            <p class="facilities-description">Khám phá các cơ sở thể thao và tìm địa điểm phù hợp cho buổi vận động tiếp theo của bạn.</p>
+          </div>
+          <p class="facilities-count"><span><%= facilities.length %></span> cơ sở trong hệ thống</p>
+        </div>
+      </section>
 
-  <% for (const facility of facilities) { %>
-    <article class="facility-card">
-      <h2><%= facility.name %></h2>
-      <p><%= facility.address %></p>
-    </article>
-  <% } %>
+      <section class="facilities-list" aria-label="Các cơ sở thể thao">
+        <% if (facilities.length === 0) { %>
+          <div class="facilities-empty">
+            <span class="facilities-empty-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64" fill="none">
+                <path d="M32 55s17-14 17-30a17 17 0 1 0-34 0c0 16 17 30 17 30Z" />
+                <circle cx="32" cy="25" r="6" />
+                <path d="M12 51c-4 1-6 3-6 5 0 4 12 6 26 6s26-2 26-6c0-2-2-4-6-5" />
+              </svg>
+            </span>
+            <p class="facilities-eyebrow">Hẹn bạn ở buổi chơi tiếp theo</p>
+            <h2>Chưa có cơ sở nào.</h2>
+            <p class="facilities-empty-description">Thông tin cơ sở sẽ xuất hiện tại đây khi được cập nhật vào hệ thống. Bạn có thể ghé lại sau để khám phá các địa điểm thể thao.</p>
+            <a class="facilities-home-button" href="/">Trở về trang chủ <span aria-hidden="true">↗</span></a>
+          </div>
+        <% } else { %>
+          <div class="facilities-grid">
+            <% for (const facility of facilities) { %>
+              <article class="facility-card">
+                <div class="facilities-card-heading">
+                  <span class="facilities-card-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M12 21s7-6 7-13A7 7 0 0 0 5 8c0 7 7 13 7 13Z" />
+                      <circle cx="12" cy="8" r="2.5" />
+                    </svg>
+                  </span>
+                  <span class="facilities-card-label">Cơ sở thể thao</span>
+                </div>
+                <h2><%= facility.name %></h2>
+                <dl class="facilities-details">
+                  <div class="facilities-detail">
+                    <dt>Địa chỉ</dt>
+                    <dd><%= facility.address %></dd>
+                  </div>
+                  <% if (facility.phone) { %>
+                    <div class="facilities-detail">
+                      <dt>Số điện thoại</dt>
+                      <dd><%= facility.phone %></dd>
+                    </div>
+                  <% } %>
+                </dl>
+              </article>
+            <% } %>
+          </div>
+        <% } %>
+      </section>
+    </div>
+  </main>
+
+  <footer class="facilities-footer">
+    <div class="facilities-shell facilities-footer-inner">
+      <p class="facilities-footer-name">Sân Thể Thao<span>Hệ thống quản lý đặt sân thể thao</span></p>
+      <p>Kết nối đam mê. Cùng nhau vận động.</p>
+    </div>
+  </footer>
 </body>
 </html>
