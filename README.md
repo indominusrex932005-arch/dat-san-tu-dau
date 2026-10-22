@@ -14,5 +14,8 @@
 ## Dữ liệu mẫu
 Chạy node scripts/tao-co-so-mau.js nếu cần tạo cơ sở mẫu.
 
+## Hướng dẫn làm việc nhóm
+Xem hướng dẫn chi tiết về cách thiết lập môi trường, chạy dự án và quy trình Git tại [docs/HUONG_DAN_LAM_VIEC_NHOM.md](docs/HUONG_DAN_LAM_VIEC_NHOM.md).
+
 ## Trạng thái
 Dự án đang xây dựng phần khung MVC và chức năng cơ sở.
