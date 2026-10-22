@@ -1,0 +1,3068 @@
+[
+  {
+    "id": "them-desktop-1366",
+    "title": "Thêm cơ sở · 1366px",
+    "width": 1366,
+    "height": 1089,
+    "description": "Mẫu thiết kế tĩnh, chưa phải chức năng đang chạy. Ba trường: name, address bắt buộc; phone không bắt buộc.",
+    "nodes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "w": 1366,
+        "h": 1089,
+        "fill": "#f7f8f2",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 96,
+        "w": 1366,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 93,
+        "y": 27,
+        "w": 42,
+        "h": 42,
+        "fill": "#173f35",
+        "radius": 12,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "icon",
+        "x": 99,
+        "y": 33,
+        "size": 30,
+        "kind": "court",
+        "color": "#e8edcf"
+      },
+      {
+        "type": "text",
+        "x": 147,
+        "y": 38,
+        "text": "Sân Thể Thao",
+        "size": 20,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -0.5
+      },
+      {
+        "type": "text",
+        "x": 1075,
+        "y": 39,
+        "text": "Trang chủ",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 1171,
+        "y": 26,
+        "w": 76,
+        "h": 40,
+        "fill": "#e8eddf",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 1188,
+        "y": 39,
+        "text": "Cơ sở",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "icon",
+        "x": 93,
+        "y": 132,
+        "size": 18,
+        "kind": "back",
+        "color": "#173f35"
+      },
+      {
+        "type": "text",
+        "x": 119,
+        "y": 134,
+        "text": "Danh sách cơ sở",
+        "size": 13,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 93,
+        "y": 194,
+        "text": "THÔNG TIN ĐỊA ĐIỂM",
+        "size": 11,
+        "fill": "#597047",
+        "weight": 700,
+        "spacing": 1.4
+      },
+      {
+        "type": "text",
+        "x": 93,
+        "y": 222,
+        "text": "Thêm cơ sở",
+        "size": 50,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -1
+      },
+      {
+        "type": "text",
+        "x": 93,
+        "y": 288,
+        "text": "Bổ sung thông tin địa điểm kinh doanh.",
+        "size": 16,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 93,
+        "y": 358,
+        "w": 712,
+        "h": 571,
+        "fill": "#ffffff",
+        "radius": 14,
+        "stroke": "#dce2d5",
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 390,
+        "text": "*",
+        "size": 13,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 137,
+        "y": 390,
+        "text": "Trường bắt buộc",
+        "size": 13,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 430,
+        "text": "Tên cơ sở",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 207,
+        "y": 430,
+        "text": "*",
+        "size": 14,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 457,
+        "w": 648,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "name"
+      },
+      {
+        "type": "text",
+        "x": 139,
+        "y": 474,
+        "text": "Nhập tên cơ sở",
+        "size": 16,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 533,
+        "text": "Địa chỉ",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 174,
+        "y": 533,
+        "text": "*",
+        "size": 14,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 560,
+        "w": 648,
+        "h": 104,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "address"
+      },
+      {
+        "type": "text",
+        "x": 139,
+        "y": 577,
+        "text": "Nhập địa chỉ cơ sở",
+        "size": 16,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 760,
+        "y": 654,
+        "w": 5,
+        "h": 1,
+        "fill": "#5c6c61",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 688,
+        "text": "Số điện thoại",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 225,
+        "y": 689,
+        "text": "(không bắt buộc)",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 715,
+        "w": 648,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "phone"
+      },
+      {
+        "type": "text",
+        "x": 139,
+        "y": 732,
+        "text": "Nhập số điện thoại",
+        "size": 16,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 777,
+        "text": "Có thể để trống.",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 821,
+        "w": 648,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 845,
+        "w": 116,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 153,
+        "y": 862,
+        "text": "Quay lại",
+        "size": 15,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 597,
+        "y": 845,
+        "w": 176,
+        "h": 52,
+        "fill": "#173f35",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 648.5,
+        "y": 862,
+        "text": "Lưu cơ sở",
+        "size": 15,
+        "fill": "#ffffff",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 845,
+        "y": 358,
+        "w": 300,
+        "h": 258,
+        "fill": "#eef1e7",
+        "radius": 14,
+        "stroke": "#dce2d5",
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 869,
+        "y": 382,
+        "w": 44,
+        "h": 44,
+        "fill": "#f7f8f2",
+        "radius": 12,
+        "stroke": "#dce2d5",
+        "field": null
+      },
+      {
+        "type": "icon",
+        "x": 879,
+        "y": 390,
+        "size": 24,
+        "kind": "pin",
+        "color": "#173f35"
+      },
+      {
+        "type": "text",
+        "x": 869,
+        "y": 452,
+        "text": "Thông tin rõ ràng,",
+        "size": 22,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -0.4
+      },
+      {
+        "type": "text",
+        "x": 869,
+        "y": 481,
+        "text": "dễ tìm địa điểm.",
+        "size": 22,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -0.4
+      },
+      {
+        "type": "text",
+        "x": 869,
+        "y": 527,
+        "text": "Mỗi cơ sở là một địa điểm kinh doanh.",
+        "size": 13,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 869,
+        "y": 552,
+        "text": "Tên và địa chỉ giúp mọi người",
+        "size": 13,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 869,
+        "y": 573,
+        "text": "nhận biết đúng cơ sở.",
+        "size": 13,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 977,
+        "w": 1366,
+        "h": 112,
+        "fill": "#f7f8f2",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 977,
+        "w": 1366,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 93,
+        "y": 1001,
+        "text": "Sân Thể Thao",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 93,
+        "y": 1027,
+        "text": "Hệ thống quản lý đặt sân thể thao",
+        "size": 11,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 976,
+        "y": 1015,
+        "text": "Kết nối đam mê. Cùng nhau vận động.",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      }
+    ]
+  },
+  {
+    "id": "them-mobile-390",
+    "title": "Thêm cơ sở · 390px",
+    "width": 390,
+    "height": 1188,
+    "description": "Mẫu thiết kế tĩnh, chưa phải chức năng đang chạy. Ba trường: name, address bắt buộc; phone không bắt buộc.",
+    "nodes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 1188,
+        "fill": "#f7f8f2",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 132,
+        "w": 390,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 20,
+        "y": 22,
+        "w": 42,
+        "h": 42,
+        "fill": "#173f35",
+        "radius": 12,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "icon",
+        "x": 26,
+        "y": 28,
+        "size": 30,
+        "kind": "court",
+        "color": "#e8edcf"
+      },
+      {
+        "type": "text",
+        "x": 74,
+        "y": 32,
+        "text": "Sân Thể Thao",
+        "size": 19,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -0.5
+      },
+      {
+        "type": "text",
+        "x": 35,
+        "y": 94,
+        "text": "Trang chủ",
+        "size": 13,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 131,
+        "y": 81,
+        "w": 76,
+        "h": 40,
+        "fill": "#e8eddf",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 148,
+        "y": 94,
+        "text": "Cơ sở",
+        "size": 13,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "icon",
+        "x": 20,
+        "y": 156,
+        "size": 18,
+        "kind": "back",
+        "color": "#173f35"
+      },
+      {
+        "type": "text",
+        "x": 46,
+        "y": 158,
+        "text": "Danh sách cơ sở",
+        "size": 13,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 204,
+        "text": "THÔNG TIN ĐỊA ĐIỂM",
+        "size": 11,
+        "fill": "#597047",
+        "weight": 700,
+        "spacing": 1.4
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 232,
+        "text": "Thêm cơ sở",
+        "size": 34,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -1
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 288,
+        "text": "Bổ sung thông tin địa điểm kinh doanh.",
+        "size": 14,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 311,
+        "text": "Cùng nhau xây dựng những điểm hẹn thể thao.",
+        "size": 14,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 20,
+        "y": 364,
+        "w": 350,
+        "h": 611,
+        "fill": "#ffffff",
+        "radius": 14,
+        "stroke": "#dce2d5",
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 384,
+        "text": "*",
+        "size": 13,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 52,
+        "y": 384,
+        "text": "Trường bắt buộc",
+        "size": 13,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 424,
+        "text": "Tên cơ sở",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 122,
+        "y": 424,
+        "text": "*",
+        "size": 14,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 451,
+        "w": 310,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "name"
+      },
+      {
+        "type": "text",
+        "x": 54,
+        "y": 468,
+        "text": "Nhập tên cơ sở",
+        "size": 16,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 527,
+        "text": "Địa chỉ",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 89,
+        "y": 527,
+        "text": "*",
+        "size": 14,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 554,
+        "w": 310,
+        "h": 104,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "address"
+      },
+      {
+        "type": "text",
+        "x": 54,
+        "y": 571,
+        "text": "Nhập địa chỉ cơ sở",
+        "size": 16,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 337,
+        "y": 648,
+        "w": 5,
+        "h": 1,
+        "fill": "#5c6c61",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 682,
+        "text": "Số điện thoại",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 140,
+        "y": 683,
+        "text": "(không bắt buộc)",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 709,
+        "w": 310,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "phone"
+      },
+      {
+        "type": "text",
+        "x": 54,
+        "y": 726,
+        "text": "Nhập số điện thoại",
+        "size": 16,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 771,
+        "text": "Có thể để trống.",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 815,
+        "w": 310,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 839,
+        "w": 310,
+        "h": 52,
+        "fill": "#173f35",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 158.5,
+        "y": 856,
+        "text": "Lưu cơ sở",
+        "size": 15,
+        "fill": "#ffffff",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 903,
+        "w": 310,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 165.0,
+        "y": 920,
+        "text": "Quay lại",
+        "size": 15,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1076,
+        "w": 390,
+        "h": 112,
+        "fill": "#f7f8f2",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1076,
+        "w": 390,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 1100,
+        "text": "Sân Thể Thao",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 1126,
+        "text": "Hệ thống quản lý đặt sân thể thao",
+        "size": 11,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 1151,
+        "text": "Kết nối đam mê. Cùng nhau vận động.",
+        "size": 11,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      }
+    ]
+  },
+  {
+    "id": "sua-desktop-1366",
+    "title": "Sửa cơ sở · 1366px",
+    "width": 1366,
+    "height": 1157,
+    "description": "Mẫu thiết kế tĩnh, chưa phải chức năng đang chạy. Dữ liệu trong form sửa chỉ là ví dụ.",
+    "nodes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "w": 1366,
+        "h": 1157,
+        "fill": "#f7f8f2",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 96,
+        "w": 1366,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 93,
+        "y": 27,
+        "w": 42,
+        "h": 42,
+        "fill": "#173f35",
+        "radius": 12,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "icon",
+        "x": 99,
+        "y": 33,
+        "size": 30,
+        "kind": "court",
+        "color": "#e8edcf"
+      },
+      {
+        "type": "text",
+        "x": 147,
+        "y": 38,
+        "text": "Sân Thể Thao",
+        "size": 20,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -0.5
+      },
+      {
+        "type": "text",
+        "x": 1075,
+        "y": 39,
+        "text": "Trang chủ",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 1171,
+        "y": 26,
+        "w": 76,
+        "h": 40,
+        "fill": "#e8eddf",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 1188,
+        "y": 39,
+        "text": "Cơ sở",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "icon",
+        "x": 93,
+        "y": 132,
+        "size": 18,
+        "kind": "back",
+        "color": "#173f35"
+      },
+      {
+        "type": "text",
+        "x": 119,
+        "y": 134,
+        "text": "Danh sách cơ sở",
+        "size": 13,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 93,
+        "y": 194,
+        "text": "THÔNG TIN ĐỊA ĐIỂM",
+        "size": 11,
+        "fill": "#597047",
+        "weight": 700,
+        "spacing": 1.4
+      },
+      {
+        "type": "text",
+        "x": 93,
+        "y": 222,
+        "text": "Sửa cơ sở",
+        "size": 50,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -1
+      },
+      {
+        "type": "text",
+        "x": 93,
+        "y": 288,
+        "text": "Cập nhật thông tin địa điểm kinh doanh.",
+        "size": 16,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 93,
+        "y": 358,
+        "w": 712,
+        "h": 639,
+        "fill": "#ffffff",
+        "radius": 14,
+        "stroke": "#dce2d5",
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 390,
+        "w": 648,
+        "h": 48,
+        "fill": "#eef1e7",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 137,
+        "y": 398,
+        "text": "Dữ liệu minh họa",
+        "size": 12,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 137,
+        "y": 417,
+        "text": "Không phải thông tin cơ sở thật.",
+        "size": 11,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 458,
+        "text": "*",
+        "size": 13,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 137,
+        "y": 458,
+        "text": "Trường bắt buộc",
+        "size": 13,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 498,
+        "text": "Tên cơ sở",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 207,
+        "y": 498,
+        "text": "*",
+        "size": 14,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 525,
+        "w": 648,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "name"
+      },
+      {
+        "type": "text",
+        "x": 139,
+        "y": 542,
+        "text": "Cơ sở thể thao Minh Hòa",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 601,
+        "text": "Địa chỉ",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 174,
+        "y": 601,
+        "text": "*",
+        "size": 14,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 628,
+        "w": 648,
+        "h": 104,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "address"
+      },
+      {
+        "type": "text",
+        "x": 139,
+        "y": 645,
+        "text": "Số 18 Đường Nội Bộ, Phường Mẫu",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 760,
+        "y": 722,
+        "w": 5,
+        "h": 1,
+        "fill": "#5c6c61",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 756,
+        "text": "Số điện thoại",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 225,
+        "y": 757,
+        "text": "(không bắt buộc)",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 783,
+        "w": 648,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "phone"
+      },
+      {
+        "type": "text",
+        "x": 139,
+        "y": 800,
+        "text": "0123 456 789",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 845,
+        "text": "Có thể để trống.",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 889,
+        "w": 648,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 913,
+        "w": 116,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 153,
+        "y": 930,
+        "text": "Quay lại",
+        "size": 15,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 597,
+        "y": 913,
+        "w": 176,
+        "h": 52,
+        "fill": "#173f35",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 636.0,
+        "y": 930,
+        "text": "Lưu thay đổi",
+        "size": 15,
+        "fill": "#ffffff",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 845,
+        "y": 358,
+        "w": 300,
+        "h": 258,
+        "fill": "#eef1e7",
+        "radius": 14,
+        "stroke": "#dce2d5",
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 869,
+        "y": 382,
+        "w": 44,
+        "h": 44,
+        "fill": "#f7f8f2",
+        "radius": 12,
+        "stroke": "#dce2d5",
+        "field": null
+      },
+      {
+        "type": "icon",
+        "x": 879,
+        "y": 390,
+        "size": 24,
+        "kind": "pin",
+        "color": "#173f35"
+      },
+      {
+        "type": "text",
+        "x": 869,
+        "y": 452,
+        "text": "Thông tin rõ ràng,",
+        "size": 22,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -0.4
+      },
+      {
+        "type": "text",
+        "x": 869,
+        "y": 481,
+        "text": "dễ tìm địa điểm.",
+        "size": 22,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -0.4
+      },
+      {
+        "type": "text",
+        "x": 869,
+        "y": 527,
+        "text": "Mỗi cơ sở là một địa điểm kinh doanh.",
+        "size": 13,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 869,
+        "y": 552,
+        "text": "Tên và địa chỉ giúp mọi người",
+        "size": 13,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 869,
+        "y": 573,
+        "text": "nhận biết đúng cơ sở.",
+        "size": 13,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1045,
+        "w": 1366,
+        "h": 112,
+        "fill": "#f7f8f2",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1045,
+        "w": 1366,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 93,
+        "y": 1069,
+        "text": "Sân Thể Thao",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 93,
+        "y": 1095,
+        "text": "Hệ thống quản lý đặt sân thể thao",
+        "size": 11,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 976,
+        "y": 1083,
+        "text": "Kết nối đam mê. Cùng nhau vận động.",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      }
+    ]
+  },
+  {
+    "id": "sua-mobile-390",
+    "title": "Sửa cơ sở · 390px",
+    "width": 390,
+    "height": 1252,
+    "description": "Mẫu thiết kế tĩnh, chưa phải chức năng đang chạy. Dữ liệu trong form sửa chỉ là ví dụ.",
+    "nodes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 1252,
+        "fill": "#f7f8f2",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 132,
+        "w": 390,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 20,
+        "y": 22,
+        "w": 42,
+        "h": 42,
+        "fill": "#173f35",
+        "radius": 12,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "icon",
+        "x": 26,
+        "y": 28,
+        "size": 30,
+        "kind": "court",
+        "color": "#e8edcf"
+      },
+      {
+        "type": "text",
+        "x": 74,
+        "y": 32,
+        "text": "Sân Thể Thao",
+        "size": 19,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -0.5
+      },
+      {
+        "type": "text",
+        "x": 35,
+        "y": 94,
+        "text": "Trang chủ",
+        "size": 13,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 131,
+        "y": 81,
+        "w": 76,
+        "h": 40,
+        "fill": "#e8eddf",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 148,
+        "y": 94,
+        "text": "Cơ sở",
+        "size": 13,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "icon",
+        "x": 20,
+        "y": 156,
+        "size": 18,
+        "kind": "back",
+        "color": "#173f35"
+      },
+      {
+        "type": "text",
+        "x": 46,
+        "y": 158,
+        "text": "Danh sách cơ sở",
+        "size": 13,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 204,
+        "text": "THÔNG TIN ĐỊA ĐIỂM",
+        "size": 11,
+        "fill": "#597047",
+        "weight": 700,
+        "spacing": 1.4
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 232,
+        "text": "Sửa cơ sở",
+        "size": 34,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -1
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 288,
+        "text": "Cập nhật thông tin địa điểm kinh doanh.",
+        "size": 14,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 311,
+        "text": "Cùng nhau xây dựng những điểm hẹn thể thao.",
+        "size": 14,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 20,
+        "y": 364,
+        "w": 350,
+        "h": 679,
+        "fill": "#ffffff",
+        "radius": 14,
+        "stroke": "#dce2d5",
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 384,
+        "w": 310,
+        "h": 48,
+        "fill": "#eef1e7",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 52,
+        "y": 392,
+        "text": "Dữ liệu minh họa",
+        "size": 12,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 52,
+        "y": 411,
+        "text": "Không phải thông tin cơ sở thật.",
+        "size": 11,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 452,
+        "text": "*",
+        "size": 13,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 52,
+        "y": 452,
+        "text": "Trường bắt buộc",
+        "size": 13,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 492,
+        "text": "Tên cơ sở",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 122,
+        "y": 492,
+        "text": "*",
+        "size": 14,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 519,
+        "w": 310,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "name"
+      },
+      {
+        "type": "text",
+        "x": 54,
+        "y": 536,
+        "text": "Cơ sở thể thao Minh Hòa",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 595,
+        "text": "Địa chỉ",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 89,
+        "y": 595,
+        "text": "*",
+        "size": 14,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 622,
+        "w": 310,
+        "h": 104,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "address"
+      },
+      {
+        "type": "text",
+        "x": 54,
+        "y": 638,
+        "text": "Số 18 Đường Nội Bộ,",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 54,
+        "y": 664,
+        "text": "Phường Mẫu",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 337,
+        "y": 716,
+        "w": 5,
+        "h": 1,
+        "fill": "#5c6c61",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 750,
+        "text": "Số điện thoại",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 140,
+        "y": 751,
+        "text": "(không bắt buộc)",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 777,
+        "w": 310,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "phone"
+      },
+      {
+        "type": "text",
+        "x": 54,
+        "y": 794,
+        "text": "0123 456 789",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 839,
+        "text": "Có thể để trống.",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 883,
+        "w": 310,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 907,
+        "w": 310,
+        "h": 52,
+        "fill": "#173f35",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 146.0,
+        "y": 924,
+        "text": "Lưu thay đổi",
+        "size": 15,
+        "fill": "#ffffff",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 971,
+        "w": 310,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 165.0,
+        "y": 988,
+        "text": "Quay lại",
+        "size": 15,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1140,
+        "w": 390,
+        "h": 112,
+        "fill": "#f7f8f2",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1140,
+        "w": 390,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 1164,
+        "text": "Sân Thể Thao",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 1190,
+        "text": "Hệ thống quản lý đặt sân thể thao",
+        "size": 11,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 1215,
+        "text": "Kết nối đam mê. Cùng nhau vận động.",
+        "size": 11,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      }
+    ]
+  },
+  {
+    "id": "loi-desktop-1366",
+    "title": "Sửa cơ sở — lỗi minh họa · 1366px",
+    "width": 1366,
+    "height": 1331,
+    "description": "Mẫu thiết kế tĩnh, chưa phải chức năng đang chạy. Dữ liệu minh họa; tên để trống, địa chỉ và điện thoại được giữ lại.",
+    "nodes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "w": 1366,
+        "h": 1331,
+        "fill": "#f7f8f2",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 96,
+        "w": 1366,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 93,
+        "y": 27,
+        "w": 42,
+        "h": 42,
+        "fill": "#173f35",
+        "radius": 12,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "icon",
+        "x": 99,
+        "y": 33,
+        "size": 30,
+        "kind": "court",
+        "color": "#e8edcf"
+      },
+      {
+        "type": "text",
+        "x": 147,
+        "y": 38,
+        "text": "Sân Thể Thao",
+        "size": 20,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -0.5
+      },
+      {
+        "type": "text",
+        "x": 1075,
+        "y": 39,
+        "text": "Trang chủ",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 1171,
+        "y": 26,
+        "w": 76,
+        "h": 40,
+        "fill": "#e8eddf",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 1188,
+        "y": 39,
+        "text": "Cơ sở",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "icon",
+        "x": 93,
+        "y": 132,
+        "size": 18,
+        "kind": "back",
+        "color": "#173f35"
+      },
+      {
+        "type": "text",
+        "x": 119,
+        "y": 134,
+        "text": "Danh sách cơ sở",
+        "size": 13,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 93,
+        "y": 194,
+        "text": "THÔNG TIN ĐỊA ĐIỂM",
+        "size": 11,
+        "fill": "#597047",
+        "weight": 700,
+        "spacing": 1.4
+      },
+      {
+        "type": "text",
+        "x": 93,
+        "y": 222,
+        "text": "Sửa cơ sở",
+        "size": 50,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -1
+      },
+      {
+        "type": "text",
+        "x": 93,
+        "y": 288,
+        "text": "Cập nhật thông tin địa điểm kinh doanh.",
+        "size": 16,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 93,
+        "y": 358,
+        "w": 712,
+        "h": 813,
+        "fill": "#ffffff",
+        "radius": 14,
+        "stroke": "#dce2d5",
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 390,
+        "w": 648,
+        "h": 48,
+        "fill": "#eef1e7",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 137,
+        "y": 398,
+        "text": "Dữ liệu minh họa",
+        "size": 12,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 137,
+        "y": 417,
+        "text": "Không phải thông tin cơ sở thật.",
+        "size": 11,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 458,
+        "w": 648,
+        "h": 80,
+        "fill": "#fff5f3",
+        "radius": 8,
+        "stroke": "#dcaca5",
+        "field": null
+      },
+      {
+        "type": "icon",
+        "x": 139,
+        "y": 473,
+        "size": 20,
+        "kind": "error",
+        "color": "#a52f2f"
+      },
+      {
+        "type": "text",
+        "x": 169,
+        "y": 474,
+        "text": "Chưa thể lưu cơ sở",
+        "size": 15,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 139,
+        "y": 504,
+        "text": "Kiểm tra trường được đánh dấu bên dưới.",
+        "size": 13,
+        "fill": "#a52f2f",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 562,
+        "text": "*",
+        "size": 13,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 137,
+        "y": 562,
+        "text": "Trường bắt buộc",
+        "size": 13,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 602,
+        "text": "Tên cơ sở",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 207,
+        "y": 602,
+        "text": "*",
+        "size": 14,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 629,
+        "w": 648,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#a52f2f",
+        "field": "name"
+      },
+      {
+        "type": "text",
+        "x": 139,
+        "y": 646,
+        "text": "Nhập tên cơ sở",
+        "size": 16,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 691,
+        "text": "Vui lòng nhập tên cơ sở.",
+        "size": 12,
+        "fill": "#a52f2f",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 735,
+        "text": "Địa chỉ",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 174,
+        "y": 735,
+        "text": "*",
+        "size": 14,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 762,
+        "w": 648,
+        "h": 104,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "address"
+      },
+      {
+        "type": "text",
+        "x": 139,
+        "y": 779,
+        "text": "Số 18 Đường Nội Bộ, Phường Mẫu",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 760,
+        "y": 856,
+        "w": 5,
+        "h": 1,
+        "fill": "#5c6c61",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 890,
+        "text": "Số điện thoại",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 225,
+        "y": 891,
+        "text": "(không bắt buộc)",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 917,
+        "w": 648,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "phone"
+      },
+      {
+        "type": "text",
+        "x": 139,
+        "y": 934,
+        "text": "0123 456 789",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 979,
+        "text": "Có thể để trống.",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 125,
+        "y": 1023,
+        "text": "Thông tin bạn đã nhập vẫn được giữ lại.",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 1063,
+        "w": 648,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 125,
+        "y": 1087,
+        "w": 116,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 153,
+        "y": 1104,
+        "text": "Quay lại",
+        "size": 15,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 597,
+        "y": 1087,
+        "w": 176,
+        "h": 52,
+        "fill": "#173f35",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 636.0,
+        "y": 1104,
+        "text": "Lưu thay đổi",
+        "size": 15,
+        "fill": "#ffffff",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 845,
+        "y": 358,
+        "w": 300,
+        "h": 258,
+        "fill": "#eef1e7",
+        "radius": 14,
+        "stroke": "#dce2d5",
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 869,
+        "y": 382,
+        "w": 44,
+        "h": 44,
+        "fill": "#f7f8f2",
+        "radius": 12,
+        "stroke": "#dce2d5",
+        "field": null
+      },
+      {
+        "type": "icon",
+        "x": 879,
+        "y": 390,
+        "size": 24,
+        "kind": "pin",
+        "color": "#173f35"
+      },
+      {
+        "type": "text",
+        "x": 869,
+        "y": 452,
+        "text": "Thông tin rõ ràng,",
+        "size": 22,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -0.4
+      },
+      {
+        "type": "text",
+        "x": 869,
+        "y": 481,
+        "text": "dễ tìm địa điểm.",
+        "size": 22,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -0.4
+      },
+      {
+        "type": "text",
+        "x": 869,
+        "y": 527,
+        "text": "Mỗi cơ sở là một địa điểm kinh doanh.",
+        "size": 13,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 869,
+        "y": 552,
+        "text": "Tên và địa chỉ giúp mọi người",
+        "size": 13,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 869,
+        "y": 573,
+        "text": "nhận biết đúng cơ sở.",
+        "size": 13,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1219,
+        "w": 1366,
+        "h": 112,
+        "fill": "#f7f8f2",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1219,
+        "w": 1366,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 93,
+        "y": 1243,
+        "text": "Sân Thể Thao",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 93,
+        "y": 1269,
+        "text": "Hệ thống quản lý đặt sân thể thao",
+        "size": 11,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 976,
+        "y": 1257,
+        "text": "Kết nối đam mê. Cùng nhau vận động.",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      }
+    ]
+  },
+  {
+    "id": "loi-mobile-390",
+    "title": "Sửa cơ sở — lỗi minh họa · 390px",
+    "width": 390,
+    "height": 1421,
+    "description": "Mẫu thiết kế tĩnh, chưa phải chức năng đang chạy. Dữ liệu minh họa; tên để trống, địa chỉ và điện thoại được giữ lại.",
+    "nodes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 1421,
+        "fill": "#f7f8f2",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 132,
+        "w": 390,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 20,
+        "y": 22,
+        "w": 42,
+        "h": 42,
+        "fill": "#173f35",
+        "radius": 12,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "icon",
+        "x": 26,
+        "y": 28,
+        "size": 30,
+        "kind": "court",
+        "color": "#e8edcf"
+      },
+      {
+        "type": "text",
+        "x": 74,
+        "y": 32,
+        "text": "Sân Thể Thao",
+        "size": 19,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -0.5
+      },
+      {
+        "type": "text",
+        "x": 35,
+        "y": 94,
+        "text": "Trang chủ",
+        "size": 13,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 131,
+        "y": 81,
+        "w": 76,
+        "h": 40,
+        "fill": "#e8eddf",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 148,
+        "y": 94,
+        "text": "Cơ sở",
+        "size": 13,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "icon",
+        "x": 20,
+        "y": 156,
+        "size": 18,
+        "kind": "back",
+        "color": "#173f35"
+      },
+      {
+        "type": "text",
+        "x": 46,
+        "y": 158,
+        "text": "Danh sách cơ sở",
+        "size": 13,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 204,
+        "text": "THÔNG TIN ĐỊA ĐIỂM",
+        "size": 11,
+        "fill": "#597047",
+        "weight": 700,
+        "spacing": 1.4
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 232,
+        "text": "Sửa cơ sở",
+        "size": 34,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": -1
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 288,
+        "text": "Cập nhật thông tin địa điểm kinh doanh.",
+        "size": 14,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 311,
+        "text": "Cùng nhau xây dựng những điểm hẹn thể thao.",
+        "size": 14,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 20,
+        "y": 364,
+        "w": 350,
+        "h": 897,
+        "fill": "#ffffff",
+        "radius": 14,
+        "stroke": "#dce2d5",
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 384,
+        "w": 310,
+        "h": 48,
+        "fill": "#eef1e7",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 52,
+        "y": 392,
+        "text": "Dữ liệu minh họa",
+        "size": 12,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 52,
+        "y": 411,
+        "text": "Không phải thông tin cơ sở thật.",
+        "size": 11,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 452,
+        "w": 310,
+        "h": 104,
+        "fill": "#fff5f3",
+        "radius": 8,
+        "stroke": "#dcaca5",
+        "field": null
+      },
+      {
+        "type": "icon",
+        "x": 54,
+        "y": 467,
+        "size": 20,
+        "kind": "error",
+        "color": "#a52f2f"
+      },
+      {
+        "type": "text",
+        "x": 84,
+        "y": 468,
+        "text": "Chưa thể lưu cơ sở",
+        "size": 15,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 54,
+        "y": 498,
+        "text": "Kiểm tra trường được đánh dấu",
+        "size": 13,
+        "fill": "#a52f2f",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 54,
+        "y": 519,
+        "text": "bên dưới.",
+        "size": 13,
+        "fill": "#a52f2f",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 580,
+        "text": "*",
+        "size": 13,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 52,
+        "y": 580,
+        "text": "Trường bắt buộc",
+        "size": 13,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 620,
+        "text": "Tên cơ sở",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 122,
+        "y": 620,
+        "text": "*",
+        "size": 14,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 647,
+        "w": 310,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#a52f2f",
+        "field": "name"
+      },
+      {
+        "type": "text",
+        "x": 54,
+        "y": 664,
+        "text": "Nhập tên cơ sở",
+        "size": 16,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 709,
+        "text": "Vui lòng nhập tên cơ sở.",
+        "size": 12,
+        "fill": "#a52f2f",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 753,
+        "text": "Địa chỉ",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 89,
+        "y": 753,
+        "text": "*",
+        "size": 14,
+        "fill": "#a52f2f",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 780,
+        "w": 310,
+        "h": 104,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "address"
+      },
+      {
+        "type": "text",
+        "x": 54,
+        "y": 796,
+        "text": "Số 18 Đường Nội Bộ,",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 54,
+        "y": 822,
+        "text": "Phường Mẫu",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 337,
+        "y": 874,
+        "w": 5,
+        "h": 1,
+        "fill": "#5c6c61",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 908,
+        "text": "Số điện thoại",
+        "size": 14,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 140,
+        "y": 909,
+        "text": "(không bắt buộc)",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 935,
+        "w": 310,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": "phone"
+      },
+      {
+        "type": "text",
+        "x": 54,
+        "y": 952,
+        "text": "0123 456 789",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 997,
+        "text": "Có thể để trống.",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 1041,
+        "text": "Thông tin bạn đã nhập",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 40,
+        "y": 1060,
+        "text": "vẫn được giữ lại.",
+        "size": 12,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 1101,
+        "w": 310,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 1125,
+        "w": 310,
+        "h": 52,
+        "fill": "#173f35",
+        "radius": 8,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 146.0,
+        "y": 1142,
+        "text": "Lưu thay đổi",
+        "size": 15,
+        "fill": "#ffffff",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 1189,
+        "w": 310,
+        "h": 52,
+        "fill": "#ffffff",
+        "radius": 8,
+        "stroke": "#7b887b",
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 165.0,
+        "y": 1206,
+        "text": "Quay lại",
+        "size": 15,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1309,
+        "w": 390,
+        "h": 112,
+        "fill": "#f7f8f2",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1309,
+        "w": 390,
+        "h": 1,
+        "fill": "#dce2d5",
+        "radius": 0,
+        "stroke": null,
+        "field": null
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 1333,
+        "text": "Sân Thể Thao",
+        "size": 16,
+        "fill": "#173f35",
+        "weight": 700,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 1359,
+        "text": "Hệ thống quản lý đặt sân thể thao",
+        "size": 11,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      },
+      {
+        "type": "text",
+        "x": 20,
+        "y": 1384,
+        "text": "Kết nối đam mê. Cùng nhau vận động.",
+        "size": 11,
+        "fill": "#5c6c61",
+        "weight": 400,
+        "spacing": 0
+      }
+    ]
+  }
+]
