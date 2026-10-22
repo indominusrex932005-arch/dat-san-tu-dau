@@ -1,13 +1,96 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <link rel="stylesheet" href="/assets/css/app.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Khám phá các cơ sở thể thao và tìm địa điểm phù hợp cho buổi chơi tiếp theo của bạn.">
   <title><%= title %></title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/home.css">
 </head>
-<body>
-  <h1><%= title %></h1>
-  <p>Chào mừng bạn đến với website đặt sân.</p>
+<body class="home-page">
+  <a class="home-skip-link" href="#noi-dung">Đến nội dung chính</a>
+
+  <header class="home-header home-shell">
+    <a class="home-brand" href="/" aria-label="Sân Thể Thao - Trang chủ">
+      <span class="home-brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none">
+          <rect x="7" y="5" width="18" height="22" rx="1" />
+          <path d="M7 16h18M16 5v22M7 10h18M7 22h18" />
+        </svg>
+      </span>
+      <span>Sân Thể Thao<span class="home-brand-dot">.</span></span>
+    </a>
+
+    <nav class="home-nav" aria-label="Điều hướng chính">
+      <a class="home-nav-link" href="/" aria-current="page">Trang chủ</a>
+      <a class="home-nav-link" href="/facilities">Cơ sở <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main id="noi-dung" class="home-shell" tabindex="-1">
+    <section class="home-hero" aria-labelledby="home-title">
+      <div class="home-hero-content">
+        <p class="home-eyebrow"><span class="home-status-dot" aria-hidden="true"></span> Cùng nhau ra sân</p>
+        <h1 id="home-title"><%= title %></h1>
+        <p class="home-hero-description">Khám phá các cơ sở thể thao, tìm địa điểm phù hợp và lên kế hoạch cho buổi chơi tiếp theo của bạn.</p>
+
+        <div class="home-actions">
+          <a class="home-button" href="/facilities">Xem cơ sở <span aria-hidden="true">↗</span></a>
+          <a class="home-text-link" href="#gioi-thieu">Tìm hiểu thêm <span aria-hidden="true">↓</span></a>
+        </div>
+
+        <p class="home-hero-note"><span aria-hidden="true">✳</span> Thêm vận động. Thêm kết nối.</p>
+      </div>
+
+      <figure class="home-visual" aria-label="Minh họa sân thể thao và vợt">
+        <div class="home-visual-label"><span aria-hidden="true">✦</span> Một khoảng sân, nhiều niềm vui</div>
+        <svg class="home-court-art" viewBox="0 0 480 440" fill="none" aria-hidden="true" focusable="false">
+          <defs>
+            <pattern id="home-racket-strings" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(15)">
+              <path d="M0 0h9v9" stroke="#d6dfca" stroke-width="1.2" />
+            </pattern>
+          </defs>
+          <circle cx="388" cy="73" r="40" fill="#ead684" />
+          <path d="M42 115h26m-13-13v26M413 210h18m-9-9v18" stroke="#98ad8d" stroke-width="2" stroke-linecap="round" />
+          <g transform="rotate(-16 231 226)">
+            <rect x="94" y="55" width="267" height="358" rx="9" fill="#173f35" fill-opacity=".12" />
+            <rect x="82" y="40" width="267" height="358" rx="9" fill="#326b50" />
+            <rect x="100" y="58" width="231" height="322" stroke="#e9efdf" stroke-width="2" />
+            <path d="M116 58v322M315 58v322M100 80h231M100 358h231M100 160h231M100 278h231M215.5 58v102M215.5 278v102" stroke="#e9efdf" stroke-width="1.5" />
+            <path d="M88 219h255" stroke="#143e31" stroke-width="10" stroke-linecap="round" />
+            <path d="M88 215h255" stroke="#f2df99" stroke-width="3" stroke-linecap="round" />
+            <path d="M88 210v20M343 210v20" stroke="#f2df99" stroke-width="4" stroke-linecap="round" />
+          </g>
+          <g transform="rotate(30 383 322)">
+            <path d="M383 348v67" stroke="#173f35" stroke-width="10" stroke-linecap="round" />
+            <path d="M383 392v25" stroke="#ead684" stroke-width="12" stroke-linecap="round" />
+            <ellipse cx="383" cy="303" rx="35" ry="48" fill="#f7f8f2" />
+            <ellipse cx="383" cy="303" rx="35" ry="48" fill="url(#home-racket-strings)" stroke="#173f35" stroke-width="5" />
+          </g>
+          <circle cx="75" cy="330" r="13" fill="#f7f8f2" />
+          <path d="M65 324c7 0 13 6 14 17" stroke="#a9ba97" stroke-width="1.5" />
+          <path d="M52 354c-5 12-2 22 9 29" stroke="#98ad8d" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 7" />
+        </svg>
+        <figcaption class="home-visual-caption"><span class="home-caption-line" aria-hidden="true"></span> Hẹn nhau ở sân, vui hơn mỗi ngày.</figcaption>
+      </figure>
+    </section>
+
+    <section id="gioi-thieu" class="home-intro" aria-labelledby="home-intro-title">
+      <div class="home-intro-heading">
+        <p class="home-eyebrow">Bắt đầu từ đây</p>
+        <h2 id="home-intro-title">Một nơi để tìm sân.<br>Một lý do để ra ngoài.</h2>
+      </div>
+      <div class="home-intro-content">
+        <p>Chúng tôi xây dựng hệ thống quản lý đặt sân thể thao để việc kết nối với các cơ sở trở nên thuận tiện hơn. Hãy bắt đầu bằng cách khám phá thông tin địa điểm trên hệ thống.</p>
+        <a class="home-text-link" href="/facilities">Khám phá danh sách cơ sở <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="home-footer home-shell">
+    <p><%= title %></p>
+    <p>Cho những buổi chơi trọn niềm vui<span class="home-brand-dot" aria-hidden="true">.</span></p>
+  </footer>
 </body>
 </html>
