@@ -8,7 +8,10 @@ const app = express();
 app.set('view engine', 'ejs'); 
 app.set('views', './views');
 
-app.use('/',homeRoutes)
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use('/', homeRoutes);
 app.use('/facilities', facilityRoutes);
 app.use('/assets', express.static('public'));
 

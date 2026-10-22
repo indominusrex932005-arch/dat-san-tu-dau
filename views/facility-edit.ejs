@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/facility-edit.css">
+</head>
+<body class="facility-edit-page">
+  <header class="facility-edit-header">
+    <h1><%= title %></h1>
+    <nav>
+      <a href="/facilities">Quay lại danh sách cơ sở</a>
+    </nav>
+  </header>
+
+  <main class="facility-edit-main">
+    <% if (errorMessage) { %>
+      <div class="facility-edit-error" role="alert">
+        <p><%= errorMessage %></p>
+      </div>
+    <% } %>
+
+    <form action="/facilities/<%= facility._id %>/edit" method="POST" class="facility-edit-form">
+      <div class="facility-edit-group">
+        <label for="name">Tên cơ sở (*):</label>
+        <input 
+          type="text" 
+          id="name" 
+          name="name" 
+          value="<%= facility.name || '' %>" 
+          required
+        >
+      </div>
+
+      <div class="facility-edit-group">
+        <label for="address">Địa chỉ (*):</label>
+        <input 
+          type="text" 
+          id="address" 
+          name="address" 
+          value="<%= facility.address || '' %>" 
+          required
+        >
+      </div>
+
+      <div class="facility-edit-group">
+        <label for="phone">Số điện thoại:</label>
+        <input 
+          type="tel" 
+          id="phone" 
+          name="phone" 
+          value="<%= facility.phone || '' %>"
+        >
+      </div>
+
+      <div class="facility-edit-actions">
+        <button type="submit" class="facility-edit-btn-submit">Cập nhật cơ sở</button>
+        <a href="/facilities" class="facility-edit-btn-cancel">Hủy</a>
+      </div>
+    </form>
+  </main>
+</body>
+</html>
