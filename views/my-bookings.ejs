@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Sân Thể Thao</title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/demo.css">
+</head>
+<body class="demo-page">
+  <div class="demo-shell">
+    <%- include('partials/navigation') %>
+    <main>
+      <h1><%= title %></h1>
+      <p class="demo-muted">Các lượt đặt dưới đây đã được lưu cho tài khoản của bạn.</p>
+      <% if (bookings.length === 0) { %>
+        <div class="demo-card">
+          <p>Bạn chưa có lượt đặt sân nào.</p>
+          <a class="demo-button" href="/courts">Chọn sân để đặt</a>
+        </div>
+      <% } else { %>
+        <div class="demo-grid">
+          <% for (const booking of bookings) { %>
+            <article class="demo-card">
+              <h2><%= booking.court?.name || 'Sân không còn trong hệ thống' %></h2>
+              <p><strong>Cơ sở:</strong> <%= booking.court?.facility?.name || 'Chưa có thông tin cơ sở' %></p>
+              <p><strong>Ngày:</strong> <%= formatDate(booking.date) %></p>
+              <p><strong>Giờ:</strong> <%= String(booking.startHour).padStart(2, '0') %>:00–<%= String(booking.startHour + 1).padStart(2, '0') %>:00</p>
+              <p class="demo-price"><%= formatMoney(booking.totalPrice) %></p>
+              <p class="demo-status">Đã đặt</p>
+            </article>
+          <% } %>
+        </div>
+      <% } %>
+    </main>
+  </div>
+</body>
+</html>

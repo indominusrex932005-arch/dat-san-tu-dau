@@ -1,0 +1,19 @@
+<header class="demo-nav">
+  <a class="demo-brand" href="/">Sân Thể Thao</a>
+  <nav class="demo-nav-links" aria-label="Điều hướng chính">
+    <a href="/">Trang chủ</a>
+    <a href="/facilities">Cơ sở</a>
+    <a href="/courts">Đặt sân</a>
+    <% if (currentUser) { %>
+      <a href="/my-bookings">Lịch sử đặt</a>
+      <span class="demo-user"><%= currentUser.fullName %></span>
+      <form action="/logout" method="POST" class="demo-inline-form">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button type="submit" class="demo-button demo-button-secondary">Đăng xuất</button>
+      </form>
+    <% } else { %>
+      <a href="/login">Đăng nhập</a>
+      <a href="/register">Đăng ký</a>
+    <% } %>
+  </nav>
+</header>

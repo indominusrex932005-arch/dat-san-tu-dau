@@ -1,0 +1,23 @@
+flowchart TD
+    H["ĐÃ CÓ · Trang chủ /"] --> F["ĐÃ CÓ · Danh sách cơ sở /facilities"]
+    F --> C["ĐỀ XUẤT · Xem các sân"]
+    C --> S["ĐỀ XUẤT · Chọn sân, ngày, giờ"]
+    S --> G{"CHỜ CHỐT Q01<br/>Xác thực tại bước nào?"}
+    G -->|"Cần xác thực theo chính sách được duyệt"| A["ĐỀ XUẤT · Nhánh đăng nhập<br/>Xem mục 4"]
+    A -->|"Thành công; điểm quay lại chờ Q07"| S
+    G -->|"Đủ điều kiện theo chính sách được duyệt"| P["ĐỀ XUẤT · Gửi yêu cầu đặt"]
+    P --> B["ĐỀ XUẤT · Backend kiểm tra và xử lý<br/>Quyền, giờ, giá, trạng thái chờ Q03–Q06"]
+    B --> R{"ĐỀ XUẤT · Kết quả backend?"}
+    R -->|"Lưu được"| K["ĐỀ XUẤT · Xem kết quả theo backend<br/>CHỜ CHỐT Q06/Q07"]
+    K --> L["ĐỀ XUẤT · Xem lịch sử đặt<br/>Dữ liệu theo quyền; xem mục 4"]
+    R -->|"Backend xác nhận không lưu"| E["ĐỀ XUẤT · Nhánh lỗi<br/>Xem mục 5"]
+    R -->|"Chưa xác định đã lưu chưa"| U["CHỜ CHỐT Q07/Q08<br/>Xác minh kết quả trước khi thử lại"]
+    E -->|"Sửa hoặc chọn lại nếu backend cho phép"| S
+    classDef existing fill:#173f35,color:#ffffff,stroke:#173f35
+    classDef proposed fill:#edf4ff,color:#172033,stroke:#64748b
+    classDef pending fill:#fff4cc,color:#4b3500,stroke:#a66b00
+    classDef error fill:#fff0f0,color:#641d1d,stroke:#b45a5a
+    class H,F existing
+    class C,S,A,P,B,K,L proposed
+    class G,R,U pending
+    class E error

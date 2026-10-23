@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Sân Thể Thao</title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/demo.css">
+</head>
+<body class="demo-page">
+  <div class="demo-shell">
+    <%- include('partials/navigation') %>
+    <main class="demo-card demo-narrow">
+      <h1><%= title %></h1>
+      <p class="demo-error" role="alert"><%= message %></p>
+      <a class="demo-button" href="<%= backUrl %>">Quay lại</a>
+    </main>
+  </div>
+</body>
+</html>
