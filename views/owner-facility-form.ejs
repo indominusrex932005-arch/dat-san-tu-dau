@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Sân Thể Thao</title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/demo.css">
+  <link rel="stylesheet" href="/assets/css/owner.css">
+</head>
+<body class="demo-page">
+  <div class="demo-shell">
+    <%- include('partials/navigation') %>
+    <main aria-labelledby="facility-form-title">
+      <a class="owner-back" href="/owner">← Quản lý cơ sở</a>
+      <div class="owner-heading">
+        <div>
+          <span class="owner-kicker">THÔNG TIN CƠ SỞ ĐƯỢC CẤP</span>
+          <h1 id="facility-form-title"><%= title %></h1>
+          <p>Cập nhật tên, địa chỉ và số điện thoại liên hệ của cơ sở bạn đang quản lý.</p>
+        </div>
+      </div>
+      <% if (errorMessage) { %>
+        <p id="facility-form-error" class="demo-error" role="alert"><%= errorMessage %></p>
+      <% } %>
+      <div class="owner-form-layout">
+        <section class="demo-card" aria-label="Thông tin cơ sở">
+          <form class="demo-form owner-form owner-facility-form" action="/owner/facilities/<%= facility._id %>" method="POST" <% if (errorMessage) { %>aria-describedby="facility-form-error"<% } %>>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <label for="name">Tên cơ sở (bắt buộc)</label>
+            <input id="name" name="name" type="text" value="<%= facility.name || '' %>" maxlength="150" autocomplete="organization" required>
+            <label for="address">Địa chỉ (bắt buộc)</label>
+            <textarea id="address" name="address" rows="3" maxlength="500" autocomplete="street-address" required><%= facility.address || '' %></textarea>
+            <label for="phone">Số điện thoại liên hệ (bắt buộc)</label>
+            <input id="phone" name="phone" type="tel" value="<%= facility.phone || '' %>" maxlength="30" autocomplete="tel" aria-describedby="facility-phone-help" required>
+            <p id="facility-phone-help" class="owner-field-help">Nhập số Việt Nam 10 chữ số, bắt đầu bằng 0 hoặc +84. Có thể dùng khoảng trắng, dấu chấm hoặc dấu gạch ngang để phân cách.</p>
+            <div class="demo-actions">
+              <button class="demo-button" type="submit">Lưu thay đổi</button>
+              <a class="demo-button demo-button-secondary" href="/owner">Quay lại quản lý</a>
+            </div>
+          </form>
+        </section>
+        <aside class="demo-card owner-info-card">
+          <h2>Số liên hệ của cơ sở</h2>
+          <p>Khách vãng lai dùng số này để liên hệ chủ sân khi cần hủy đơn.</p>
+          <p class="owner-note">Cần giữ số điện thoại hợp lệ để cơ sở tiếp tục nhận đơn mới. Để trống hoặc nhập sai sẽ báo lỗi khi lưu.</p>
+          <p class="owner-field-help">Việc cấp cơ sở và thay đổi chủ quản lý do quản trị viên xử lý.</p>
+        </aside>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
