@@ -1,0 +1,53 @@
+%% Hiện trạng main 7d612bc, ngày 23/10/2026; không mô tả PR chưa merge.
+%% Nguồn: auth/admin/owner controllers và routes, auth.middleware, booking.service.
+flowchart TD
+    subgraph registration["1. Đăng ký và cấp quyền — đang có"]
+        register["GET /register/owner<br/>POST hồ sơ chủ sân + CSRF"]
+        pending["Tạo OWNER, ownerStatus=PENDING<br/>303 đến /login"]
+        login["GET /login → POST /login<br/>Đăng nhập đúng → 303 /owner"]
+        ownerStatus{"GET /owner<br/>OWNER đã APPROVED?"}
+        waiting["PENDING: chờ duyệt<br/>REJECTED: liên hệ nhóm trưởng<br/>Chưa được quản lý sân"]
+        admin["ADMIN đã được cấp quyền<br/>Đăng nhập → GET /admin"]
+        adminChoice{"Duyệt hồ sơ PENDING?"}
+        rejectOwner["POST /admin/owners/:id/reject<br/>REJECTED → 303 /admin"]
+        assign["POST /admin/owners/:id/approve<br/>Cấp cơ sở chưa có chủ hoặc tạo từ hồ sơ<br/>Transaction: APPROVED + Facility.owner"]
+    end
+
+    subgraph management["2. Quản lý đúng cơ sở — đang có"]
+        dashboard["GET /owner — OWNER APPROVED<br/>Sân, đơn, yêu cầu thuộc cơ sở được cấp"]
+        courtForm["Thêm/sửa sân trong /owner/courts<br/>Giờ, giá thường/cao điểm mỗi ô 30 phút<br/>POST hợp lệ → 303 /owner"]
+        requests["CUSTOMER gửi CANCEL/CHANGE của đơn mình<br/>PENDING; đơn hợp lệ, chưa bắt đầu"]
+        review{"OWNER xét yêu cầu<br/>trong đúng cơ sở"}
+        rejectRequest["POST /owner/requests/:id/reject<br/>REJECTED, giữ lịch → 303 /owner"]
+        approveType{"POST /owner/requests/:id/approve<br/>Loại CANCEL hay CHANGE?"}
+        cancelled["CANCEL: đơn CANCELLED, giải phóng ô<br/>Yêu cầu APPROVED → 303 /owner<br/>Không có khoản hoàn thì kết thúc"]
+        changed["CHANGE: đổi toàn đơn, cùng cơ sở<br/>Kiểm tra ô/giá, chênh lệch; giữ lịch cũ nếu lỗi<br/>APPROVED → 303 /owner; không hoàn thì kết thúc"]
+        callCancel["Khách vãng lai gọi cơ sở; OWNER xác minh<br/>POST /owner/bookings/:id/cancel<br/>OWNER_CALL; đơn hợp lệ, chưa bắt đầu"]
+    end
+
+    subgraph refund["3. Hoàn thủ công — đang có, không tự chuyển tiền"]
+        refundDue["Khoản hoàn hợp lệ > 0: PENDING<br/>UNPAID chỉ cho khoản hoàn bằng 0"]
+        record["Chủ sân hoàn bên ngoài rồi POST /owner/requests/:id/refund<br/>Ghi TRANSFERRED → 303 /owner<br/>DEMO_PAID vẫn chỉ là mô phỏng"]
+    end
+
+    register -->|"Hồ sơ hợp lệ"| pending
+    pending --> login
+    login --> ownerStatus
+    ownerStatus -->|"Chưa"| waiting
+    ownerStatus -->|"Rồi, cơ sở đã được cấp"| dashboard
+    admin --> adminChoice
+    adminChoice -->|"Từ chối"| rejectOwner
+    adminChoice -->|"Chấp thuận"| assign
+    assign -->|"OWNER tải lại /owner"| dashboard
+
+    dashboard --> courtForm
+    dashboard --> review
+    requests --> review
+    review -->|"Từ chối"| rejectRequest
+    review -->|"Chấp thuận"| approveType
+    approveType -->|"CANCEL hợp lệ"| cancelled
+    approveType -->|"CHANGE hợp lệ"| changed
+    callCancel -->|"Hủy hợp lệ"| cancelled
+    cancelled -->|"Có khoản hoàn > 0"| refundDue
+    changed -->|"Có khoản hoàn > 0"| refundDue
+    refundDue --> record
