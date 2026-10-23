@@ -13,8 +13,8 @@ Ngày đối chiếu: **23/10/2026**. Phạm vi: **bốn trang công khai** `/`,
 | Mã  | Điều kiện cần có | Tình trạng đối chiếu | Nguồn |
 | --- | --- | --- | --- |
 | G01 | Bản `main` đã merge PR #26, #27, #28; ghi SHA đối chiếu. | SHA đối chiếu: `7d612bc00ba0fbda8efab3ba0c02ddf0ab73ee69` — **ĐÃ CÓ** trên `origin/main`. | `git log --oneline` |
-| G02 | Ứng dụng khởi động được (`npm start` hoặc `node app.js`), kết nối Atlas thành công, không crash khi truy cập bốn trang. | **CHỜ** — chưa chạy phiên kiểm thử. | Nhóm trưởng xác nhận môi trường. |
-| G03 | Có dữ liệu thử: ≥ 1 cơ sở và ≥ 1 sân có `isActive: true`; ≥ 1 tài khoản khách và ≥ 1 chủ sân `APPROVED` để kiểm tra đăng nhập. | **CHỜ** — chưa được bàn giao. | Nhóm trưởng cung cấp/xác nhận; không xóa dữ liệu Atlas chung để tạo màn rỗng. |
+| G02 | Ứng dụng khởi động được (`npm start` hoặc `node server.js`), kết nối Atlas thành công, không crash khi truy cập bốn trang. | **CHỜ** — chưa chạy phiên kiểm thử. | Nhóm trưởng xác nhận môi trường. |
+| G03 | Có dữ liệu thử: ≥ 1 cơ sở và ≥ 1 sân có `active: true`; ≥ 1 tài khoản khách và ≥ 1 chủ sân `APPROVED` để kiểm tra đăng nhập. | **CHỜ** — chưa được bàn giao. | Nhóm trưởng cung cấp/xác nhận; không xóa dữ liệu Atlas chung để tạo màn rỗng. |
 | G04 | Môi trường test riêng biệt hoặc được phép dùng Atlas phát triển; `.env` không commit vào Git. | **CHỜ** — chưa xác nhận. | Nhóm trưởng. |
 
 **Dừng trước khi chạy nếu còn thiếu G01–G04.** Việc render EJS qua fixture hoặc lint đạt không thay cho ca end-to-end với DB thật.
@@ -49,7 +49,7 @@ Quy ước: **CHỜ** = thiếu điều kiện/chưa chạy; **ĐẠT** = đã c
 | USER-OWNER | Tài khoản chủ sân `ownerStatus: APPROVED` để kiểm tra đăng nhập và điều hướng. |
 | FACILITY-A | Cơ sở có đầy đủ thông tin (tên, địa chỉ, số điện thoại, chủ sân APPROVED). |
 | FACILITY-EMPTY | Màn danh sách cơ sở rỗng – hoặc thực hiện riêng trên môi trường không có dữ liệu; không xóa dữ liệu chung. |
-| COURT-A | Sân `isActive: true`, có `basePriceVND`, `peakPriceVND`, `openTime`, `closeTime`. |
+| COURT-A | Sân `active: true`, có `basePriceVND`, `peakPriceVND`, `openTime`, `closeTime`. |
 | COURT-EMPTY | Màn danh sách sân rỗng – hoặc môi trường không có sân active. |
 | LONG-NAME | Tên cơ sở/sân dài để kiểm tra bố cục; nhóm trưởng xác nhận giới hạn ký tự tối đa. |
 | BAD-CRED | Email/mật khẩu sai để kiểm tra thông báo lỗi đăng nhập. |
@@ -132,7 +132,7 @@ Các ký hiệu trên là **chỉ chờ bàn giao, không phải bản ghi đã 
 
 | Bước | Mong đợi | Thực tế | Trạng thái |
 | --- | --- | --- | --- |
-| 1. Nhập đúng `USER-GUEST`, submit. | Chuyển hướng về trang phù hợp (ví dụ `/courts` hoặc `/`), session được tạo. | CHƯA CHẠY | CHỜ |
+| 1. Nhập đúng `USER-GUEST`, submit. | Chuyển hướng về `/courts`, session được tạo. | CHƯA CHẠY | CHỜ |
 | 2. Nav trang đích hiển thị "Đơn của tôi". | Không còn liên kết "Đăng nhập" trên nav. | CHƯA CHẠY | CHỜ |
 
 Ảnh: CHƯA CÓ.
@@ -141,7 +141,7 @@ Các ký hiệu trên là **chỉ chờ bàn giao, không phải bản ghi đã 
 
 | Bước | Mong đợi | Thực tế | Trạng thái |
 | --- | --- | --- | --- |
-| 1. Nhập đúng `USER-OWNER`, submit. | Chuyển hướng đúng; nav có "Quản lý sân". | CHƯA CHẠY | CHỜ |
+| 1. Nhập đúng `USER-OWNER`, submit. | Chuyển hướng về `/owner`; nav có "Quản lý sân". | CHƯA CHẠY | CHỜ |
 
 Ảnh: CHƯA CÓ.
 
@@ -183,7 +183,7 @@ Các ký hiệu trên là **chỉ chờ bàn giao, không phải bản ghi đã 
 
 | Bước | Mong đợi | Thực tế | Trạng thái |
 | --- | --- | --- | --- |
-| 1. Mở `/courts` khi không có sân `isActive: true` (dùng `COURT-EMPTY` hoặc môi trường riêng). | Hiển thị trạng thái rỗng "Chưa có sân đang hoạt động." và nút "Xem cơ sở →". | CHƯA CHẠY | CHỜ (cần môi trường/dữ liệu phù hợp) |
+| 1. Mở `/courts` khi không có sân `active: true` (dùng `COURT-EMPTY` hoặc môi trường riêng). | Hiển thị trạng thái rỗng "Chưa có sân đang hoạt động." và nút "Xem cơ sở →". | CHƯA CHẠY | CHỜ (cần môi trường/dữ liệu phù hợp) |
 
 Ảnh: CHƯA CÓ. Nếu không có môi trường rỗng, ghi **CHƯA KIỂM TRA** và lý do.
 
