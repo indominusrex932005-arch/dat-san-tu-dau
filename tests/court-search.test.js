@@ -57,4 +57,23 @@ test('searchCourts validate query đầu vào', async (t) => {
       (err) => err instanceof RuleError && err.message.includes('quá khứ')
     );
   });
+
+  await t.test('Từ chối khi tham số tìm kiếm bị lặp lại', async () => {
+    await assert.rejects(
+      () => searchCourts({ date: ['', '2026-10-27'] }),
+      (err) => err instanceof RuleError && err.message.includes('lặp lại')
+    );
+    await assert.rejects(
+      () => searchCourts({ facilityId: ['id1', 'id2'] }),
+      (err) => err instanceof RuleError && err.message.includes('lặp lại')
+    );
+    await assert.rejects(
+      () => searchCourts({ date: '2026-12-01', startTime: ['08:00', '09:00'], endTime: '10:00' }),
+      (err) => err instanceof RuleError && err.message.includes('lặp lại')
+    );
+    await assert.rejects(
+      () => searchCourts({ date: '2026-12-01', startTime: '08:00', endTime: ['10:00', '11:00'] }),
+      (err) => err instanceof RuleError && err.message.includes('lặp lại')
+    );
+  });
 });

@@ -2,22 +2,9 @@ import Facility from '../models/Facility.js';
 import { searchCourts } from '../services/court-search.service.js';
 import { getAvailability } from '../services/booking.service.js';
 
-/** Lấy giá trị string đầu tiên từ req.query (tránh array khi key lặp). */
-function qs(raw) {
-  if (Array.isArray(raw)) return typeof raw[0] === 'string' ? raw[0].trim() : '';
-  return typeof raw === 'string' ? raw.trim() : '';
-}
-
 export async function showCourts(req, res, next) {
-  const query = {
-    facilityId: qs(req.query?.facilityId),
-    date:       qs(req.query?.date),
-    startTime:  qs(req.query?.startTime),
-    endTime:    qs(req.query?.endTime)
-  };
-
   try {
-    const result = await searchCourts(query);
+    const result = await searchCourts(req.query);
     res.render('courts', {
       title: 'Danh sách sân',
       ...result
@@ -25,11 +12,17 @@ export async function showCourts(req, res, next) {
   } catch (error) {
     if (error.name === 'RuleError') {
       const facilities = await Facility.find().sort({ name: 1 }).lean().catch(() => []);
+      const filters = {
+        facilityId: typeof req.query?.facilityId === 'string' ? req.query.facilityId.trim() : '',
+        date: typeof req.query?.date === 'string' ? req.query.date.trim() : '',
+        startTime: typeof req.query?.startTime === 'string' ? req.query.startTime.trim() : '',
+        endTime: typeof req.query?.endTime === 'string' ? req.query.endTime.trim() : ''
+      };
       return res.status(400).render('courts', {
         title: 'Danh sách sân',
         courts: [],
         facilities,
-        filters: query,
+        filters,
         filterError: error.message
       });
     }

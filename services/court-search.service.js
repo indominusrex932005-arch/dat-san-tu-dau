@@ -21,6 +21,14 @@ function isFacilityReady(facility) {
 }
 
 export async function searchCourts(query = {}, now = new Date()) {
+  if (!query || typeof query !== 'object') query = {};
+
+  for (const key of ['facilityId', 'date', 'startTime', 'endTime']) {
+    if (Array.isArray(query[key])) {
+      throw new RuleError('Tham số tìm kiếm không được lặp lại.');
+    }
+  }
+
   const rawFacilityId = typeof query.facilityId === 'string' ? query.facilityId.trim() : '';
   const rawDate = typeof query.date === 'string' ? query.date.trim() : '';
   const rawStartTime = typeof query.startTime === 'string' ? query.startTime.trim() : '';
