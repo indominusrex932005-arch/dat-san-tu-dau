@@ -1,0 +1,304 @@
+/* CSS riêng cho form thêm và sửa sân của chủ sân */
+
+.owner-court-form-page {
+  background-color: #f7f8f2;
+  color: #173f35;
+  font-family: inherit;
+}
+
+.owner-court-form-shell {
+  width: min(1184px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 0 0 60px 0;
+}
+
+.owner-court-form-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #53685d;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 20px 0 16px 0;
+  transition: color 0.15s ease;
+}
+
+.owner-court-form-back:hover {
+  color: #173f35;
+  text-decoration: underline;
+}
+
+.owner-court-form-back:focus-visible {
+  outline: 2px solid #173f35;
+  outline-offset: 3px;
+}
+
+.owner-court-form-heading {
+  margin-bottom: 24px;
+}
+
+.owner-court-form-kicker {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #53685d;
+  margin-bottom: 4px;
+}
+
+.owner-court-form-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #173f35;
+}
+
+.owner-court-form-error {
+  background-color: #fde8e8;
+  border: 1px solid #f8b4b4;
+  border-left: 4px solid #c81e1e;
+  color: #9b1c1c;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 14.5px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+/* Bố cục chia 2 cột trên desktop */
+.owner-court-form-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.owner-court-form-card {
+  background: #ffffff;
+  border: 1px solid #dce2d5;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 2px 8px rgba(23, 63, 53, 0.04);
+}
+
+.owner-court-form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.owner-court-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.owner-court-form-label {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #173f35;
+}
+
+.owner-court-form-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 14px;
+  font-size: 15px;
+  color: #173f35;
+  background: #ffffff;
+  border: 1px solid #cbd5c8;
+  border-radius: 8px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.owner-court-form-input:focus {
+  outline: none;
+  border-color: #173f35;
+  box-shadow: 0 0 0 3px rgba(23, 63, 53, 0.15);
+}
+
+/* Fieldset gom nhóm các khoảng giờ và mức giá */
+.owner-court-form-fieldset {
+  border: 1px solid #dce2d5;
+  border-radius: 12px;
+  padding: 18px 20px 20px 20px;
+  margin: 0;
+  background-color: #fcfdfa;
+}
+
+.owner-court-form-legend {
+  font-size: 14px;
+  font-weight: 700;
+  color: #173f35;
+  padding: 0 8px;
+  letter-spacing: 0.01em;
+}
+
+.owner-court-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.owner-court-form-help {
+  margin: 10px 0 0 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #53685d;
+}
+
+/* Checkbox trạng thái nhận đặt sân */
+.owner-court-form-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: #173f35;
+  user-select: none;
+}
+
+.owner-court-form-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #173f35;
+  cursor: pointer;
+}
+
+/* Nút bấm Lưu / Hủy */
+.owner-court-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+  padding-top: 18px;
+  border-top: 1px solid #edf0ea;
+}
+
+.owner-court-form-btn-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #173f35;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.owner-court-form-btn-submit:hover {
+  background-color: #123028;
+}
+
+.owner-court-form-btn-submit:focus-visible {
+  outline: 2px solid #173f35;
+  outline-offset: 3px;
+}
+
+.owner-court-form-btn-cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eef2e6;
+  color: #173f35;
+  border: 1px solid #c9d4bf;
+  border-radius: 999px;
+  padding: 11px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.owner-court-form-btn-cancel:hover {
+  background-color: #e2e8d7;
+  text-decoration: none;
+}
+
+.owner-court-form-btn-cancel:focus-visible {
+  outline: 2px solid #173f35;
+  outline-offset: 3px;
+}
+
+/* Thẻ thông tin hướng dẫn bên phải (aside) */
+.owner-court-form-aside {
+  background: #ffffff;
+  border: 1px solid #dce2d5;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(23, 63, 53, 0.04);
+}
+
+.owner-court-form-aside-title {
+  margin: 0 0 14px 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: #173f35;
+}
+
+.owner-court-form-aside p {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #53685d;
+}
+
+.owner-court-form-aside p strong {
+  color: #173f35;
+}
+
+.owner-court-form-note {
+  margin-top: 16px;
+  padding: 10px 14px;
+  background: #f7f8f2;
+  border-left: 3px solid #173f35;
+  border-radius: 4px;
+  font-size: 13px !important;
+  color: #173f35 !important;
+  line-height: 1.45;
+}
+
+/* Responsive Mobile (390px) */
+@media (max-width: 768px) {
+  .owner-court-form-shell {
+    width: calc(100% - 24px);
+    padding-bottom: 40px;
+  }
+
+  .owner-court-form-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .owner-court-form-card {
+    padding: 20px 16px;
+  }
+
+  .owner-court-form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .owner-court-form-title {
+    font-size: 22px;
+  }
+
+  .owner-court-form-actions {
+    flex-direction: column;
+  }
+
+  .owner-court-form-btn-submit,
+  .owner-court-form-btn-cancel {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
