@@ -1,5 +1,7 @@
 /* Booking, customer forms and printable receipt. */
 .booking-eyebrow { margin: 10px 0 6px; color: #526b57; font-size: 12px; font-weight: 700; letter-spacing: .12em; }
+.booking-facility-meta,
+main > h1 { overflow-wrap: anywhere; word-break: break-word; }
 .booking-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0; }
 .booking-tabs a { padding: 9px 14px; border: 1px solid #ced9cd; border-radius: 8px; text-decoration: none; }
 .booking-tabs a[aria-current="page"] { color: #fff; background: #173f35; border-color: #173f35; }
