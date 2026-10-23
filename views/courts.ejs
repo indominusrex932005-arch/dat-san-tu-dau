@@ -31,15 +31,107 @@
         </div>
         <p class="courts-count"><strong><%= courts.length %></strong> sân trong danh sách</p>
       </section>
+
+      <% 
+        const currentFilters = typeof filters === 'object' && filters !== null ? filters : {};
+        const hasFilters = Boolean(currentFilters.facilityId || currentFilters.date || currentFilters.startTime || currentFilters.endTime);
+        const facilityList = Array.isArray(facilities) ? facilities : [];
+      %>
+
+      <!-- Khối bộ lọc tìm kiếm -->
+      <section class="courts-filter-section" aria-labelledby="courts-filter-heading">
+        <h2 id="courts-filter-heading" class="courts-filter-heading">Tìm sân phù hợp</h2>
+
+        <% if (typeof filterError === 'string' && filterError) { %>
+          <div class="courts-filter-error" role="alert">
+            <p><%= filterError %></p>
+          </div>
+        <% } %>
+
+        <form action="/courts" method="GET" class="courts-filter-form">
+          <div class="courts-filter-row">
+            <div class="courts-filter-field courts-filter-facility">
+              <label for="filter-facility" class="courts-filter-label">Cơ sở</label>
+              <select id="filter-facility" name="facilityId" class="courts-filter-select">
+                <option value="">-- Tất cả cơ sở --</option>
+                <% for (const f of facilityList) { %>
+                  <option value="<%= f._id %>" <%= String(currentFilters.facilityId) === String(f._id) ? 'selected' : '' %>>
+                    <%= f.name %>
+                  </option>
+                <% } %>
+              </select>
+            </div>
+
+            <div class="courts-filter-field courts-filter-date">
+              <label for="filter-date" class="courts-filter-label">Ngày</label>
+              <input 
+                id="filter-date" 
+                name="date" 
+                type="date" 
+                class="courts-filter-input" 
+                value="<%= currentFilters.date || '' %>"
+              >
+            </div>
+
+            <div class="courts-filter-field courts-filter-time">
+              <label for="filter-startTime" class="courts-filter-label">Từ giờ</label>
+              <input 
+                id="filter-startTime" 
+                name="startTime" 
+                type="time" 
+                step="1800" 
+                class="courts-filter-input" 
+                value="<%= currentFilters.startTime || '' %>"
+              >
+            </div>
+
+            <div class="courts-filter-field courts-filter-time">
+              <label for="filter-endTime" class="courts-filter-label">Đến giờ</label>
+              <input 
+                id="filter-endTime" 
+                name="endTime" 
+                type="time" 
+                step="1800" 
+                class="courts-filter-input" 
+                value="<%= currentFilters.endTime || '' %>"
+              >
+            </div>
+          </div>
+
+          <div class="courts-filter-footer">
+            <p class="courts-filter-help">
+              Chọn ngày và cả hai mốc giờ (bước 30 phút) nếu muốn tìm sân còn trống liên tục trong khoảng giờ đó.
+            </p>
+            <div class="courts-filter-buttons">
+              <button type="submit" class="courts-filter-submit">Tìm sân</button>
+              <% if (hasFilters) { %>
+                <a href="/courts" class="courts-filter-reset">Xóa bộ lọc</a>
+              <% } %>
+            </div>
+          </div>
+        </form>
+      </section>
+
       <% if (courts.length === 0) { %>
-        <section class="courts-empty" aria-labelledby="courts-empty-title">
-          <span class="courts-symbol" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none"><rect x="7" y="10" width="34" height="28" rx="2"/><path d="M24 10v28M7 24h34"/><circle cx="24" cy="24" r="7"/></svg>
-          </span>
-          <h2 id="courts-empty-title">Chưa có sân đang hoạt động.</h2>
-          <p>Bạn có thể xem các cơ sở hoặc quay lại danh sách sân sau.</p>
-          <a class="courts-button courts-button-outline" href="/facilities">Xem cơ sở <span aria-hidden="true">→</span></a>
-        </section>
+        <% if (hasFilters) { %>
+          <section class="courts-empty" aria-labelledby="courts-empty-title">
+            <span class="courts-symbol" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none"><rect x="7" y="10" width="34" height="28" rx="2"/><path d="M24 10v28M7 24h34"/><circle cx="24" cy="24" r="7"/></svg>
+            </span>
+            <h2 id="courts-empty-title">Không tìm được sân phù hợp bộ lọc.</h2>
+            <p>Không có sân nào thỏa mãn tất cả tiêu chí bạn đã chọn. Bạn hãy thử chọn cơ sở khác, đổi ngày hoặc nới rộng khoảng giờ tìm kiếm.</p>
+            <a class="courts-button courts-button-outline" href="/courts">Xóa bộ lọc về danh sách sân <span aria-hidden="true">→</span></a>
+          </section>
+        <% } else { %>
+          <section class="courts-empty" aria-labelledby="courts-empty-title">
+            <span class="courts-symbol" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none"><rect x="7" y="10" width="34" height="28" rx="2"/><path d="M24 10v28M7 24h34"/><circle cx="24" cy="24" r="7"/></svg>
+            </span>
+            <h2 id="courts-empty-title">Chưa có sân đang hoạt động.</h2>
+            <p>Bạn có thể xem các cơ sở hoặc quay lại danh sách sân sau.</p>
+            <a class="courts-button courts-button-outline" href="/facilities">Xem cơ sở <span aria-hidden="true">→</span></a>
+          </section>
+        <% } %>
       <% } else { %>
         <div class="courts-grid">
           <% for (const court of courts) { %>
@@ -67,7 +159,7 @@
                 <% if (!court.facility?.owner || court.facility.owner.ownerStatus !== 'APPROVED' || !court.facility.phone) { %>
                   <p class="courts-notice">Đang chờ cấp chủ sân hoặc số liên hệ.</p>
                 <% } %>
-                <a class="courts-button" href="/courts/<%= court._id %>" aria-label="Xem giờ và đặt sân: <%= court.name %>">Xem giờ và đặt sân <span aria-hidden="true">→</span></a>
+                <a class="courts-button" href="/courts/<%= court._id %><%= currentFilters.date ? '?date=' + encodeURIComponent(currentFilters.date) : '' %>" aria-label="Xem giờ và đặt sân: <%= court.name %>">Xem giờ và đặt sân <span aria-hidden="true">→</span></a>
               </div>
             </article>
           <% } %>
