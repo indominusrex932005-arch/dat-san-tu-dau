@@ -8,8 +8,8 @@
   <%- include('partials/navigation') %>
   <% const receivingBookings = typeof facilityReady !== 'boolean' || facilityReady; %>
   <main>
-    <a href="/courts">← Danh sách sân</a><p class="booking-eyebrow">CHỌN NGÀY VÀ GIỜ</p><h1><%= court.name %></h1>
-    <p><strong><%= court.facility?.name || 'Cơ sở thể thao' %></strong> · <%= court.facility?.address || 'Địa chỉ đang cập nhật' %></p>
+    <a href="/courts">← Danh sách sân</a><p class="booking-eyebrow">CHỌN NGÀY VÀ GIỜ</p><h1 class="booking-court-title"><%= court.name %></h1>
+    <p class="booking-court-location"><strong><%= court.facility?.name || 'Cơ sở thể thao' %></strong> · <%= court.facility?.address || 'Địa chỉ đang cập nhật' %></p>
     <ol class="booking-steps" aria-label="Tiến trình đặt sân"><li aria-current="step">1. Chọn ô</li><li>2. Giữ chỗ / thanh toán</li><li>3. Lưu phiếu</li></ol>
     <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
     <% if (!receivingBookings) { %><p class="booking-notice">Cơ sở đang chờ cấp chủ sân hoặc cập nhật số điện thoại, nên chưa nhận đơn mới.</p><% } %>
