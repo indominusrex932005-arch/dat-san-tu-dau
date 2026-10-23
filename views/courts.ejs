@@ -17,7 +17,7 @@
         <div>
           <p class="courts-eyebrow">Sân Thể Thao / Đặt sân</p>
           <h1 id="courts-title"><%= title %></h1>
-          <p class="courts-description">Mỗi lượt đặt kéo dài một giờ. Chọn sân để xem ngày và giờ còn trống.</p>
+          <p class="courts-description">Chọn nhiều ô 30 phút, kể cả các ô không liền nhau. Đăng nhập hoặc đặt vãng lai đều được.</p>
         </div>
         <p class="courts-count"><strong><%= courts.length %></strong> sân trong danh sách</p>
       </section>
@@ -48,7 +48,15 @@
                 <% } %>
               </div>
               <div class="courts-card-bottom">
-                <p class="courts-price"><strong><%= formatMoney(court.pricePerHour) %></strong><span>/ giờ</span></p>
+                <p class="courts-hours">Mở cửa <strong><%= court.openTime || '06:00' %>–<%= court.closeTime || '22:00' %></strong></p>
+                <dl class="courts-prices">
+                  <div><dt>Giá thường / 30 phút</dt><dd><%= formatMoney(court.basePriceVND ?? (court.pricePerHour || 0) / 2) %></dd></div>
+                  <div><dt>Cao điểm / 30 phút</dt><dd><%= formatMoney(court.peakPriceVND ?? (court.pricePerHour || 0) / 2) %></dd></div>
+                </dl>
+                <p class="courts-peak-hours">Cao điểm <%= court.peakStartTime || '17:00' %>–<%= court.peakEndTime || '22:00' %></p>
+                <% if (!court.facility?.owner || court.facility.owner.ownerStatus !== 'APPROVED' || !court.facility.phone) { %>
+                  <p class="courts-notice">Đang chờ cấp chủ sân hoặc số liên hệ.</p>
+                <% } %>
                 <a class="courts-button" href="/courts/<%= court._id %>" aria-label="Xem giờ và đặt sân: <%= court.name %>">Xem giờ và đặt sân <span aria-hidden="true">→</span></a>
               </div>
             </article>

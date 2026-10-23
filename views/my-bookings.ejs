@@ -1,38 +1,38 @@
 <!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="vi"><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %> | Sân Thể Thao</title>
-  <link rel="stylesheet" href="/assets/css/app.css">
-  <link rel="stylesheet" href="/assets/css/demo.css">
-</head>
-<body class="demo-page">
-  <div class="demo-shell">
-    <%- include('partials/navigation') %>
-    <main>
-      <h1><%= title %></h1>
-      <p class="demo-muted">Các lượt đặt dưới đây đã được lưu cho tài khoản của bạn.</p>
-      <% if (bookings.length === 0) { %>
-        <div class="demo-card">
-          <p>Bạn chưa có lượt đặt sân nào.</p>
-          <a class="demo-button" href="/courts">Chọn sân để đặt</a>
-        </div>
-      <% } else { %>
-        <div class="demo-grid">
-          <% for (const booking of bookings) { %>
-            <article class="demo-card">
-              <h2><%= booking.court?.name || 'Sân không còn trong hệ thống' %></h2>
-              <p><strong>Cơ sở:</strong> <%= booking.court?.facility?.name || 'Chưa có thông tin cơ sở' %></p>
-              <p><strong>Ngày:</strong> <%= formatDate(booking.date) %></p>
-              <p><strong>Giờ:</strong> <%= String(booking.startHour).padStart(2, '0') %>:00–<%= String(booking.startHour + 1).padStart(2, '0') %>:00</p>
-              <p class="demo-price"><%= formatMoney(booking.totalPrice) %></p>
-              <p class="demo-status">Đã đặt</p>
-            </article>
+  <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/booking.css">
+</head><body class="demo-page"><div class="demo-shell">
+  <%- include('partials/navigation') %>
+  <main>
+    <p class="booking-eyebrow">TÀI KHOẢN CỦA BẠN</p><h1><%= title %></h1>
+    <p class="demo-muted">Xem phiếu và theo dõi yêu cầu hủy/đổi của các đơn thuộc tài khoản này.</p>
+    <% if (!bookings.length) { %><section class="demo-card"><p>Bạn chưa có lượt đặt sân nào.</p><a class="demo-button" href="/courts">Chọn sân để đặt</a></section>
+    <% } else { %><div class="demo-grid">
+      <% for (const booking of bookings) { const facility = booking.facility || booking.court?.facility; const pending = (booking.requests || []).some(request => request.status === 'PENDING'); %>
+        <article class="demo-card booking-order-card">
+          <p class="booking-code"><%= booking.publicCode || booking._id %></p><h2><%= booking.court?.name || 'Sân đang cập nhật' %></h2>
+          <p><%= facility?.name || 'Cơ sở đang cập nhật' %> · <%= formatDate(booking.date) %></p>
+          <ul class="booking-time-list"><% for (const slot of booking.slots || []) { %><li><span><%= formatTime(slot.startAt) %>–<%= formatTime(slot.endAt) %></span><strong><%= formatMoney(slot.priceVND) %></strong></li><% } %></ul>
+          <p class="demo-price"><%= formatMoney(booking.totalPrice) %></p>
+          <p><span class="booking-badge"><%= statusLabel(booking.status) %></span></p><p class="demo-muted"><%= paymentLabel(booking.paymentStatus) %></p>
+          <% if (booking.paymentStatus === 'DEMO_PAID') { %><p class="booking-notice">Thanh toán mô phỏng, chưa xác minh tiền ngân hàng.</p><% } %>
+          <div class="demo-actions">
+            <a class="demo-button" href="/bookings/<%= booking._id %>/<%= booking.status === 'HOLD' ? 'checkout' : 'receipt' %>"><%= booking.status === 'HOLD' ? 'Xem giữ chỗ' : 'Xem / lưu phiếu' %></a>
+            <% if (!pending && ['CONFIRMED', 'LEGACY_RESERVED'].includes(booking.status) && (booking.slots || []).every(slot => new Date(slot.startAt).getTime() > Date.now())) { %><a href="/bookings/<%= booking._id %>/request">Yêu cầu hủy / đổi</a><% } %>
+          </div>
+          <% for (const request of booking.requests || []) { %>
+            <section class="booking-request-status">
+              <h3>Yêu cầu <%= request.type === 'CHANGE' ? 'đổi lịch / sân' : 'hủy đơn' %></h3>
+              <p><%= ({PENDING:'Chờ chủ sân xử lý',APPROVED:'Chủ sân đã đồng ý',REJECTED:'Chủ sân đã từ chối'})[request.status] || request.status %></p>
+              <% if (request.ownerNote) { %><p><%= request.ownerNote %></p><% } %>
+              <% if (request.refundAmount > 0) { %><p>Hoàn tiền: <strong><%= formatMoney(request.refundAmount) %></strong> · <%= request.refundStatus === 'TRANSFERRED' ? 'Chủ sân đã ghi nhận chuyển hoàn thủ công' : 'Chờ chủ sân chuyển hoàn thủ công' %></p><% } %>
+              <% if (request.extraAmount > 0) { %><p>Chênh lệch thêm: <%= formatMoney(request.extraAmount) %>.</p><% } %>
+            </section>
           <% } %>
-        </div>
+        </article>
       <% } %>
-    </main>
-  </div>
-</body>
-</html>
+    </div><% } %>
+  </main>
+</div></body></html>

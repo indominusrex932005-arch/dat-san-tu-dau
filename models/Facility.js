@@ -13,6 +13,12 @@ const facilitySchema = new mongoose.Schema({
     trim: true
   },
 
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null
+  },
+
   phone: {
     type: String,
     trim: true
@@ -20,6 +26,8 @@ const facilitySchema = new mongoose.Schema({
 }, {
   timestamps: true
 });
+
+facilitySchema.index({ owner: 1 }, { unique: true, partialFilterExpression: { owner: { $type: 'objectId' } } });
 
 const Facility = mongoose.model('Facility', facilitySchema);
 

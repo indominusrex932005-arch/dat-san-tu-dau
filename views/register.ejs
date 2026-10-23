@@ -1,36 +1,45 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %> | Sân Thể Thao</title>
-  <link rel="stylesheet" href="/assets/css/app.css">
-  <link rel="stylesheet" href="/assets/css/demo.css">
+  <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/booking.css">
 </head>
-<body class="demo-page">
-  <div class="demo-shell">
-    <%- include('partials/navigation') %>
-    <main class="demo-card demo-narrow">
-      <h1><%= title %></h1>
-      <p class="demo-muted">Tạo tài khoản của bạn. Đăng ký thành công sẽ chuyển đến trang đăng nhập.</p>
-      <% if (errorMessage) { %>
-        <p class="demo-error" role="alert"><%= errorMessage %></p>
+<body class="demo-page"><div class="demo-shell">
+  <%- include('partials/navigation') %>
+  <% const isOwner = typeof accountType !== 'undefined' && accountType === 'OWNER'; %>
+  <main class="demo-card demo-narrow">
+    <p class="booking-eyebrow">TẠO TÀI KHOẢN</p>
+    <h1><%= isOwner ? 'Đăng ký chủ sân' : 'Đăng ký khách đặt sân' %></h1>
+    <nav class="booking-tabs" aria-label="Loại tài khoản">
+      <a href="/register" <%- !isOwner ? 'aria-current="page"' : '' %>>Khách đặt sân</a>
+      <a href="/register/owner" <%- isOwner ? 'aria-current="page"' : '' %>>Chủ sân</a>
+    </nav>
+    <% if (isOwner) { %><p class="booking-notice">Tài khoản cần được quản trị viên duyệt và cấp cơ sở. Bạn chỉ quản lý sân sau khi được duyệt.</p>
+    <% } else { %><p class="demo-muted">Xem lịch sử, lưu phiếu và gửi yêu cầu hủy/đổi cho chủ sân từ tài khoản của bạn.</p><% } %>
+    <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
+    <form action="<%= isOwner ? '/register/owner' : '/register' %>" method="POST" class="demo-form">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <label for="fullName">Họ tên</label>
+      <input id="fullName" name="fullName" value="<%= typeof fullName === 'string' ? fullName : '' %>" autocomplete="name" maxlength="100" required>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" value="<%= email %>" autocomplete="username" maxlength="254" required>
+      <label for="phone">Số điện thoại<%= isOwner ? '' : ' (không bắt buộc)' %></label>
+      <input type="tel" id="phone" name="phone" value="<%= typeof phone === 'string' ? phone : '' %>" autocomplete="tel" maxlength="24" <%- isOwner ? 'required' : '' %>>
+      <% if (isOwner) { %>
+        <label for="requestedFacilityName">Tên cơ sở muốn quản lý</label>
+        <input id="requestedFacilityName" name="requestedFacilityName" value="<%= typeof requestedFacilityName === 'string' ? requestedFacilityName : '' %>" minlength="2" maxlength="150" required>
+        <label for="requestedFacilityAddress">Địa chỉ cơ sở</label>
+        <input id="requestedFacilityAddress" name="requestedFacilityAddress" value="<%= typeof requestedFacilityAddress === 'string' ? requestedFacilityAddress : '' %>" minlength="3" maxlength="500" required>
       <% } %>
-      <form action="/register" method="POST" class="demo-form">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <label for="fullName">Họ tên</label>
-        <input type="text" id="fullName" name="fullName" value="<%= fullName %>" autocomplete="name" maxlength="100" required>
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" value="<%= email %>" autocomplete="username" maxlength="254" required>
-        <label for="password">Mật khẩu</label>
-        <input type="password" id="password" name="password" autocomplete="new-password" minlength="8" aria-describedby="passwordHelp" required>
-        <p id="passwordHelp" class="demo-muted">Ít nhất 8 ký tự, không quá 72 byte.</p>
-        <label for="confirmPassword">Nhập lại mật khẩu</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" minlength="8" required>
-        <button type="submit" class="demo-button">Đăng ký</button>
-      </form>
-      <p>Đã có tài khoản? <a href="/login">Đăng nhập</a></p>
-    </main>
-  </div>
-</body>
-</html>
+      <label for="password">Mật khẩu</label>
+      <input type="password" id="password" name="password" autocomplete="new-password" minlength="8" aria-describedby="passwordHelp" required>
+      <p id="passwordHelp" class="demo-muted">Ít nhất 8 ký tự, không quá 72 byte.</p>
+      <label for="confirmPassword">Nhập lại mật khẩu</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" minlength="8" required>
+      <button type="submit" class="demo-button"><%= isOwner ? 'Gửi đăng ký chủ sân' : 'Tạo tài khoản khách' %></button>
+    </form>
+    <p>Đã có tài khoản? <a href="/login">Đăng nhập</a>.</p>
+    <p class="demo-muted">Bạn cũng có thể <a href="/courts">đặt sân không cần tài khoản</a>. Khi cần hủy/đổi, khách vãng lai liên hệ chủ sân.</p>
+  </main>
+</div></body></html>

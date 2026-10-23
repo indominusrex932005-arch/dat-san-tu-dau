@@ -180,24 +180,40 @@ body.courts-page {
   border-top: 1px solid #e6eadd;
 }
 
-.courts-price {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 0 0 20px;
+.courts-hours,
+.courts-peak-hours {
+  margin: 0 0 14px;
+  color: #53685d;
+  font-size: 13px;
 }
 
-.courts-price strong {
-  min-width: 0;
-  font-size: 24px;
+.courts-prices {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 14px;
+}
+
+.courts-prices dt {
+  color: #53685d;
+  font-size: 12px;
+}
+
+.courts-prices dd {
+  margin: 3px 0 0;
+  font-size: 23px;
+  font-weight: 700;
   line-height: 1.35;
   letter-spacing: -0.6px;
 }
 
-.courts-price > span {
-  color: #53685d;
-  font-size: 13px;
+.courts-notice {
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  border: 1px solid #dec68a;
+  border-radius: 7px;
+  background: #fff8e7;
+  color: #705514;
+  font-size: 12px;
 }
 
 .courts-button {

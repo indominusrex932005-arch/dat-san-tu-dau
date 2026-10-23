@@ -1,54 +1,65 @@
-import mongoose from 'mongoose';
 import Court from '../models/Court.js';
 import Booking from '../models/Booking.js';
-import { validBookingDate, slotIsFuture } from '../utils/booking-time.js';
+import BookingRequest from '../models/BookingRequest.js';
+import { createHold, getBookingForViewer, simulatePayment, createChangeRequest, expireHolds } from '../services/booking.service.js';
+
+function tokenFrom(req) {
+  const token = req.body?.token ?? req.query.token;
+  return typeof token === 'string' ? token : '';
+}
+function tokenQuery(token) { return token ? '?token=' + encodeURIComponent(token) : ''; }
 
 export async function createBooking(req, res) {
-  const { courtId, date, startHour } = req.body ?? {};
-  if (typeof courtId !== 'string' || !mongoose.isObjectIdOrHexString(courtId)
-      || !validBookingDate(date)
-      || typeof startHour !== 'string' || !/^\d{1,2}$/.test(startHour)) {
-    return res.status(400).render('error', {
-      title: 'Dữ liệu không hợp lệ', message: 'Kiểm tra lại sân, ngày và giờ đặt.', backUrl: '/courts'
-    });
-  }
+  const body = req.body ?? {};
+  const { booking, token } = await createHold({
+    courtId: body.courtId, date: body.date, times: body.times ?? body['times[]'],
+    guestName: body.guestName, guestPhone: body.guestPhone, user: req.currentUser
+  });
+  res.redirect(303, `/bookings/${booking._id}/checkout${tokenQuery(token)}`);
+}
 
-  const hour = Number(startHour);
-  const court = await Court.findOne({ _id: courtId, active: true });
-  if (!court) {
-    return res.status(404).render('error', {
-      title: 'Không tìm thấy sân', message: 'Sân không tồn tại hoặc đã ngừng nhận đặt.', backUrl: '/courts'
-    });
-  }
-  if (!slotIsFuture(date, hour)) {
-    return res.status(400).render('error', {
-      title: 'Giờ không hợp lệ', message: 'Chọn một khung giờ còn ở tương lai, từ 06:00 đến 22:00.',
-      backUrl: `/courts/${courtId}?date=${date}`
-    });
-  }
+export async function showCheckout(req, res) {
+  const token = tokenFrom(req);
+  const booking = await getBookingForViewer(req.params.id, { user: req.currentUser, token });
+  if (booking.status === 'CONFIRMED') return res.redirect(303, `/bookings/${booking._id}/receipt${tokenQuery(token)}`);
+  res.status(booking.status === 'EXPIRED' ? 410 : 200).render('booking-checkout', {
+    title: 'Kiểm tra và thanh toán', booking, token, errorMessage: null
+  });
+}
 
-  try {
-    await Booking.create({
-      user: req.currentUser._id, court: court._id, date, startHour: hour,
-      totalPrice: court.pricePerHour
-    });
-  } catch (error) {
-    if (error.code === 11000) {
-      return res.status(409).render('error', {
-        title: 'Khung giờ đã được đặt',
-        message: 'Đã có người đặt sân trong khung giờ này. Vui lòng chọn giờ khác.',
-        backUrl: `/courts/${courtId}?date=${date}`
-      });
-    }
-    throw error;
-  }
+export async function payDemo(req, res) {
+  const token = tokenFrom(req);
+  const booking = await simulatePayment(req.params.id, { user: req.currentUser, token });
+  res.redirect(303, `/bookings/${booking._id}/receipt${tokenQuery(token)}`);
+}
 
-  res.redirect(303, '/my-bookings');
+export async function showReceipt(req, res) {
+  const token = tokenFrom(req);
+  const booking = await getBookingForViewer(req.params.id, { user: req.currentUser, token });
+  if (booking.status === 'HOLD') return res.redirect(303, `/bookings/${booking._id}/checkout${tokenQuery(token)}`);
+  res.render('booking-receipt', { title: 'Phiếu đặt sân', booking, token, errorMessage: null });
 }
 
 export async function showMyBookings(req, res) {
+  await expireHolds();
   const bookings = await Booking.find({ user: req.currentUser._id })
-    .populate({ path: 'court', populate: { path: 'facility', select: 'name address' } })
-    .sort({ date: -1, startHour: -1 }).lean();
+    .populate({ path: 'court', populate: { path: 'facility' } }).populate('facility')
+    .sort({ createdAt: -1 }).lean();
+  const requests = await BookingRequest.find({ booking: { $in: bookings.map(booking => booking._id) } }).sort({ createdAt: -1 }).lean();
+  for (const booking of bookings) booking.requests = requests.filter(request => String(request.booking) === String(booking._id));
   res.render('my-bookings', { title: 'Lịch sử đặt sân', bookings });
+}
+
+export async function showRequestForm(req, res) {
+  const booking = await getBookingForViewer(req.params.id, { user: req.currentUser });
+  if (!booking.user || String(booking.user) !== String(req.currentUser._id)) {
+    throw Object.assign(new Error('Bạn chỉ được gửi yêu cầu cho đơn của mình.'), { status: 403 });
+  }
+  const courts = await Court.find({ facility: booking.facility?._id, active: true }).sort({ name: 1 }).lean();
+  res.render('booking-request', { title: 'Yêu cầu hủy hoặc đổi sân', booking, courts, token: '', errorMessage: null });
+}
+
+export async function sendRequest(req, res) {
+  await createChangeRequest(req.params.id, req.currentUser, req.body ?? {});
+  res.redirect(303, '/my-bookings');
 }
