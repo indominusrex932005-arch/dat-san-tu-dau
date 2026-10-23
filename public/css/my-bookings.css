@@ -1,0 +1,445 @@
+/* Style riêng cho trang Lịch sử đặt sân */
+
+.my-bookings-page {
+  background-color: #f7f8f2;
+  color: #173f35;
+  font-family: inherit;
+}
+
+.my-bookings-shell {
+  width: min(1184px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 0 0 60px 0;
+}
+
+.my-bookings-header {
+  margin-bottom: 28px;
+}
+
+.my-bookings-eyebrow {
+  margin: 0 0 6px 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #53685d;
+}
+
+.my-bookings-title {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #173f35;
+}
+
+.my-bookings-desc {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #53685d;
+}
+
+/* Khối khi chưa có đơn nào */
+.my-bookings-empty-card {
+  background: #ffffff;
+  border: 1px solid #dce2d5;
+  border-radius: 16px;
+  padding: 48px 24px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(23, 63, 53, 0.04);
+}
+
+.my-bookings-empty-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #eef2e6;
+  color: #173f35;
+  margin-bottom: 16px;
+  font-size: 24px;
+}
+
+.my-bookings-empty-text {
+  margin: 0 0 20px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #53685d;
+}
+
+.my-bookings-btn-primary {
+  display: inline-block;
+  background-color: #173f35;
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.my-bookings-btn-primary:hover {
+  background-color: #123028;
+  text-decoration: none;
+}
+
+.my-bookings-btn-primary:focus-visible {
+  outline: 2px solid #173f35;
+  outline-offset: 3px;
+}
+
+/* Danh sách lưới các đơn */
+.my-bookings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 20px;
+}
+
+.my-bookings-card {
+  background: #ffffff;
+  border: 1px solid #dce2d5;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(23, 63, 53, 0.04);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  word-break: break-word;
+}
+
+.my-bookings-card:hover {
+  border-color: #b8c5ad;
+  box-shadow: 0 4px 14px rgba(23, 63, 53, 0.08);
+}
+
+/* Phần trên của thẻ: mã đơn & trạng thái */
+.my-bookings-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.my-bookings-code-wrap {
+  min-width: 0;
+}
+
+.my-bookings-code-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #7b8e83;
+  margin-bottom: 2px;
+}
+
+.my-bookings-code {
+  margin: 0;
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: #173f35;
+  word-break: break-all;
+}
+
+/* Huy hiệu trạng thái đặt sân */
+.my-bookings-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.my-bookings-status-confirmed {
+  background-color: #e8f5e9;
+  color: #1b5e20;
+  border: 1px solid #c8e6c9;
+}
+
+.my-bookings-status-hold {
+  background-color: #fff8e1;
+  color: #b78103;
+  border: 1px solid #ffe082;
+}
+
+.my-bookings-status-cancelled {
+  background-color: #fbe9e7;
+  color: #c62828;
+  border: 1px solid #ffccbc;
+}
+
+.my-bookings-status-expired {
+  background-color: #f5f5f5;
+  color: #616161;
+  border: 1px solid #e0e0e0;
+}
+
+.my-bookings-status-legacy {
+  background-color: #ede7f6;
+  color: #4a148c;
+  border: 1px solid #d1c4e9;
+}
+
+/* Tên sân và cơ sở */
+.my-bookings-court-name {
+  margin: 0 0 6px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #173f35;
+  line-height: 1.3;
+}
+
+.my-bookings-meta {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  color: #53685d;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.my-bookings-meta-dot {
+  color: #b8c5ad;
+}
+
+/* Danh sách các ô giờ đặt */
+.my-bookings-slots-wrap {
+  background: #f7f8f2;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+
+.my-bookings-slots-title {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #53685d;
+  letter-spacing: 0.04em;
+}
+
+.my-bookings-slots-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.my-bookings-slot-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13.5px;
+  color: #173f35;
+}
+
+.my-bookings-slot-time {
+  font-weight: 600;
+}
+
+.my-bookings-slot-price {
+  color: #53685d;
+  font-size: 13px;
+}
+
+/* Tổng tiền và thanh toán */
+.my-bookings-payment-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 12px;
+  border-top: 1px dashed #dce2d5;
+  margin-bottom: 12px;
+}
+
+.my-bookings-total-label {
+  font-size: 13px;
+  color: #53685d;
+  font-weight: 500;
+}
+
+.my-bookings-total-price {
+  font-size: 19px;
+  font-weight: 800;
+  color: #173f35;
+}
+
+.my-bookings-payment-status {
+  margin: 0 0 12px 0;
+  font-size: 13px;
+  color: #53685d;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.my-bookings-notice {
+  background-color: #fef9e7;
+  border-left: 3px solid #f1c40f;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12.5px;
+  color: #7d6608;
+  margin: 0 0 16px 0;
+  line-height: 1.4;
+}
+
+/* Các nút hành động */
+.my-bookings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 14px;
+  border-top: 1px solid #edf0ea;
+}
+
+.my-bookings-btn-receipt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #173f35;
+  color: #ffffff !important;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.my-bookings-btn-receipt:hover {
+  background-color: #123028;
+  text-decoration: none;
+}
+
+.my-bookings-btn-receipt:focus-visible {
+  outline: 2px solid #173f35;
+  outline-offset: 2px;
+}
+
+.my-bookings-btn-request {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eef2e6;
+  color: #173f35 !important;
+  border: 1px solid #c9d4bf;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.my-bookings-btn-request:hover {
+  background-color: #e2e8d7;
+  border-color: #b1c1a3;
+  text-decoration: none;
+}
+
+.my-bookings-btn-request:focus-visible {
+  outline: 2px solid #173f35;
+  outline-offset: 2px;
+}
+
+/* Khối trạng thái yêu cầu hủy/đổi lịch */
+.my-bookings-request-box {
+  margin-top: 14px;
+  background: #fdfefc;
+  border: 1px solid #dce2d5;
+  border-left: 4px solid #173f35;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.my-bookings-request-title {
+  margin: 0 0 6px 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #173f35;
+}
+
+.my-bookings-request-status-text {
+  margin: 0 0 6px 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.my-bookings-request-status-pending {
+  color: #b78103;
+}
+
+.my-bookings-request-status-approved {
+  color: #1b5e20;
+}
+
+.my-bookings-request-status-rejected {
+  color: #c62828;
+}
+
+.my-bookings-request-note {
+  margin: 4px 0;
+  font-size: 12.5px;
+  color: #53685d;
+  background: #f4f6f0;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.my-bookings-request-money {
+  margin: 6px 0 0 0;
+  font-size: 12.5px;
+  color: #173f35;
+}
+
+/* Tối ưu hóa trên điện thoại (Mobile <= 520px hoặc 390px) */
+@media (max-width: 520px) {
+  .my-bookings-shell {
+    width: calc(100% - 24px);
+    padding-bottom: 40px;
+  }
+
+  .my-bookings-title {
+    font-size: 22px;
+  }
+
+  .my-bookings-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .my-bookings-card {
+    padding: 18px 16px;
+  }
+
+  .my-bookings-court-name {
+    font-size: 18px;
+  }
+
+  .my-bookings-actions {
+    flex-direction: column;
+  }
+
+  .my-bookings-btn-receipt,
+  .my-bookings-btn-request {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

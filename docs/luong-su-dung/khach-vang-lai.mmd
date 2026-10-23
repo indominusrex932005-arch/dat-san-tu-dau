@@ -1,0 +1,45 @@
+flowchart TD
+    browse["Khách chưa đăng nhập<br/>Xem trang chủ, cơ sở và GET /courts"]
+    calendar["GET /courts/:id?date=…<br/>Chọn một sân / một ngày, giờ Việt Nam"]
+    ready{"Cơ sở đủ điều kiện nhận đơn<br/>và còn ô trống?"}
+    guest["Chọn nhiều ô 30 phút, có thể rời nhau<br/>Nhập họ tên và SĐT Việt Nam hợp lệ"]
+    post["POST /bookings + CSRF<br/>Server tính lại giá và kiểm tra các ô"]
+    error["Trang lỗi thực tế<br/>400 dữ liệu; 403 CSRF/quyền; 404 không có<br/>409 tranh chấp/trạng thái; 503 thiếu replica set"]
+    hold["Transaction: HOLD + toàn bộ SlotLock, giữ 10 phút<br/>Snapshot giá từng ô; DB chỉ lưu hash token khách"]
+    access{"Link riêng / token khách hợp lệ<br/>cho đúng đơn?"}
+    blocked["400 ID sai / 404 không có đơn / 403 thiếu hoặc sai token<br/>Mã đơn và SĐT không cấp quyền xem"]
+    checkout["303 → GET /bookings/:id/checkout<br/>Giữ link riêng; QR chỉ minh họa, chưa nhận tiền"]
+    mode{"DEMO_MODE=true<br/>và không phải production?"}
+    demo["POST /bookings/:id/demo-payment<br/>Token + CSRF; server kiểm tra hạn và đủ lock"]
+    expired["EXPIRED — các ô được giải phóng<br/>Checkout hết hạn: 410; demo quá hạn: 410"]
+    confirmed["CONFIRMED / DEMO_PAID<br/>Chỉ mô phỏng, không xác minh tiền ngân hàng"]
+    receipt["303 → GET /bookings/:id/receipt<br/>Vẫn cần link riêng / token khách"]
+    print["In / Lưu PDF bằng hộp thoại trình duyệt<br/>Phiếu giữ nhãn thanh toán mô phỏng"]
+    contact["Muốn hủy: gọi số cơ sở trên phiếu<br/>Không có lịch sử hay quyền tự gửi yêu cầu hủy/đổi"]
+    owner["OWNER đúng cơ sở tiếp nhận cuộc gọi<br/>POST /owner/bookings/:id/cancel trước ô đầu tiên<br/>Hủy đơn hợp lệ; xử lý / ghi nhận hoàn thủ công"]
+
+    browse --> calendar --> ready
+    ready -->|"Chưa sẵn sàng / hết ô: chọn lại"| calendar
+    ready -->|"Có"| guest --> post
+    post -->|"Không hợp lệ / không giữ đủ ô"| error
+    error -->|"Quay về danh sách, chọn lại"| calendar
+    post -->|"Giữ tất cả ô hoặc không ô nào"| hold --> access
+    access -->|"Không"| blocked
+    access -->|"Có"| checkout
+    checkout -->|"Còn HOLD và còn hạn"| mode
+    checkout -->|"Đã CONFIRMED: 303 sang phiếu"| receipt
+    checkout -->|"Đã hết hạn"| expired
+    mode -->|"Có: mở nút mô phỏng"| demo
+    mode -->|"Không: không có nút, chờ hết hạn giữ"| expired
+    demo -->|"Còn hạn và đủ lock"| confirmed --> receipt --> print
+    demo -->|"Quá hạn"| expired
+    demo -->|"403 demo tắt / CSRF / quyền; 409 thiếu lock / trạng thái"| error
+    expired -->|"Chọn các ô hiện còn trống"| calendar
+    receipt -->|"Mở lại vẫn kiểm tra token"| access
+    receipt --> contact --> owner
+    classDef current fill:#eaf4ee,stroke:#173f35,color:#173f35
+    classDef warning fill:#fff3d8,stroke:#946200,color:#533800
+    classDef failure fill:#fff0ed,stroke:#ab3e2a,color:#732718
+    class browse,calendar,ready,guest,post,hold,access,checkout,mode,demo,receipt,print,contact,owner current
+    class confirmed warning
+    class error,blocked,expired failure
