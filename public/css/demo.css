@@ -1,0 +1,38 @@
+body.demo-page {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  background: #f7f8f2;
+  color: #173f35;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+.demo-page *, .demo-page *::before, .demo-page *::after { box-sizing: border-box; }
+.demo-shell { width: min(1100px, calc(100% - 40px)); margin: 0 auto; padding: 28px 0 48px; }
+.demo-nav { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-bottom: 22px; border-bottom: 1px solid #dce2d5; margin-bottom: 30px; }
+.demo-brand { font-size: 22px; font-weight: 700; text-decoration: none; }
+.demo-nav-links { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 20px; }
+.demo-nav a { overflow-wrap: anywhere; }
+.demo-user { font-size: 14px; color: #53685d; overflow-wrap: anywhere; }
+.demo-inline-form { display: inline; margin: 0; }
+.demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 20px; }
+.demo-card { min-width: 0; background: white; border: 1px solid #dce2d5; border-radius: 14px; padding: 24px; margin-bottom: 20px; overflow-wrap: anywhere; }
+.demo-card h2 { margin-top: 0; }
+.demo-narrow { max-width: 520px; margin: 0 auto; }
+.demo-form { display: grid; gap: 12px; }
+.demo-form label { font-weight: 700; }
+.demo-form input, .demo-form select { display: block; width: 100%; min-width: 0; padding: 12px; border: 1px solid #7b887b; border-radius: 7px; font: inherit; background: white; color: #173f35; }
+.demo-button { display: inline-block; padding: 12px 18px; border: 1px solid #173f35; border-radius: 7px; background: #173f35; color: white; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; text-align: center; }
+.demo-button-secondary { background: white; color: #173f35; }
+.demo-price { font-size: 22px; font-weight: 700; }
+.demo-error { padding: 16px; margin: 16px 0; border: 1px solid #b44d4d; border-radius: 8px; color: #812424; background: #fff2f0; overflow-wrap: anywhere; }
+.demo-muted { color: #53685d; }
+.demo-status { font-weight: 700; color: #24593b; }
+.demo-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.demo-page a:focus-visible, .demo-page button:focus-visible, .demo-page input:focus-visible, .demo-page select:focus-visible { outline: 3px solid #8b9d4b; outline-offset: 3px; }
+@media (max-width: 600px) {
+  .demo-card { padding: 18px; }
+  .demo-nav { align-items: flex-start; }
+  .demo-nav-links { width: 100%; gap: 12px; }
+  .demo-inline-form .demo-button { padding: 8px 12px; }
+}

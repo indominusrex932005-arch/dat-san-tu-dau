@@ -1,21 +1,19 @@
-# Quản lý đặt sân thể thao
+# Đặt sân MVC: đăng ký, đăng nhập và đặt sân
 
-## Yêu cầu
-- Node.js 24.
-- MongoDB Atlas và quyền kết nối database phát triển.
+Node.js 24; Express 5, EJS, Mongoose, MongoDB.
 
-## Cách chạy
-1. Chạy npm ci để cài thư viện.
-2. Sao chép .env.example thành .env.
-3. Điền MONGODB_URI và cho phép IP máy mình trên Atlas.
-4. Chạy npm run dev.
-5. Mở http://localhost:3000.
+1. Chạy `npm ci`, tạo `.env` riêng từ `.env.example` nếu chưa có.
+2. Điền `MONGODB_URI`; tạo `SESSION_SECRET` ngẫu nhiên ít nhất 32 ký tự.
+3. Chạy `node scripts/tao-du-lieu-demo.js` để tạo cơ sở và hai sân mẫu.
+4. Chạy `npm start`; mở http://localhost:3000/register để tự đăng ký.
+5. Đăng nhập tại `/login`, chọn sân ở `/courts`, chọn ngày/giờ, đặt và xem `/my-bookings`.
 
-## Dữ liệu mẫu
-Chạy node scripts/tao-co-so-mau.js nếu cần tạo cơ sở mẫu.
+Script mẫu chỉ tạo cơ sở và sân khi chưa có; không tạo hoặc đổi mật khẩu tài khoản.
+Không cần DEMO_EMAIL/DEMO_PASSWORD. Người dùng nhập email và mật khẩu của mình trên form đăng ký.
+Mật khẩu được băm bằng bcrypt trước khi lưu vào MongoDB. Session lưu trong MongoDB;
+trình duyệt giữ cookie định danh phiên có chữ ký bằng SESSION_SECRET của server.
 
-## Hướng dẫn làm việc nhóm
-Xem hướng dẫn chi tiết về cách thiết lập môi trường, chạy dự án và quy trình Git tại [docs/HUONG_DAN_LAM_VIEC_NHOM.md](docs/HUONG_DAN_LAM_VIEC_NHOM.md).
+Mỗi lượt 1 giờ, từ 06:00 đến 22:00 theo giờ Việt Nam. Giá lấy từ database;
+unique index chặn hai lượt trùng sân/ngày/giờ. Chưa có thanh toán hay hủy đơn.
 
-## Trạng thái
-Dự án đang xây dựng phần khung MVC và chức năng cơ sở.
+Code và giải thích từng file nằm trong HUONG_DAN_COPY_CODE.md. Không commit .env hoặc node_modules.
