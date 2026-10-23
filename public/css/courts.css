@@ -432,12 +432,16 @@ body.courts-page {
   display: grid;
   grid-template-columns: 2fr 1.5fr 1fr 1fr;
   gap: 14px;
+  /* Cho phép tất cả cột co lại khi nội dung dài hơn phần mềm grid */
+  min-width: 0;
 }
 
 .courts-filter-field {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  /* Ngăn ô grid bị đẩy rộng bởi nội dung con dài */
+  min-width: 0;
 }
 
 .courts-filter-label {
@@ -452,6 +456,9 @@ body.courts-page {
 .courts-filter-input {
   height: 42px;
   box-sizing: border-box;
+  /* Ngăn select/input tràn ra ngoài ô grid */
+  max-width: 100%;
+  min-width: 0;
   padding: 0 12px;
   border: 1px solid #cbd5c8;
   border-radius: 8px;
