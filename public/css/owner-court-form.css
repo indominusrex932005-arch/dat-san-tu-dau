@@ -36,6 +36,7 @@
 
 .owner-court-form-heading {
   margin-bottom: 24px;
+  min-width: 0; /* Cho phép flex/grid con co lại khi nội dung dài */
 }
 
 .owner-court-form-kicker {
@@ -46,6 +47,11 @@
   text-transform: uppercase;
   color: #53685d;
   margin-bottom: 4px;
+  /* Ngăn tên cơ sở dài tràn ngang */
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .owner-court-form-title {
