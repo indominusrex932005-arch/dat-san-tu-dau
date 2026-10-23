@@ -11,7 +11,8 @@ permissions:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - name: Lay code
         uses: actions/checkout@v5
@@ -25,5 +26,32 @@ jobs:
       - name: Cai thu vien
         run: npm ci
 
-      - name: Kiem tra JavaScript
-        run: npm run lint
+      - name: Kiem tra JavaScript va EJS
+        run: npm run check
+
+      - name: Khoi dong MongoDB replica set cho kiem thu
+        run: |
+          docker run -d --name mongo-test -p 127.0.0.1:27029:27029 mongo:8.0 mongod --replSet rs0 --bind_ip_all --port 27029 --wiredTigerCacheSizeGB 0.25
+          for attempt in $(seq 1 30); do
+            if docker exec mongo-test mongosh --quiet --port 27029 --eval 'db.adminCommand({ping:1}).ok' >/dev/null 2>&1; then break; fi
+            sleep 1
+          done
+          docker exec mongo-test mongosh --quiet --port 27029 --eval 'rs.initiate({_id:"rs0",members:[{_id:0,host:"127.0.0.1:27029"}]})'
+          for attempt in $(seq 1 30); do
+            if docker exec mongo-test mongosh --quiet --port 27029 --eval 'if(!db.hello().isWritablePrimary) quit(1)' >/dev/null 2>&1; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+
+      - name: Kiem thu luong va tranh chap dat san
+        env:
+          TEST_MONGODB_URI: mongodb://127.0.0.1:27029/?replicaSet=rs0
+        run: npm test
+
+      - name: Nhat ky MongoDB neu kiem thu loi
+        if: failure()
+        run: docker logs --tail 100 mongo-test || true
+
+      - name: Don database kiem thu
+        if: always()
+        run: docker rm -f mongo-test || true

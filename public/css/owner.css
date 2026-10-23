@@ -1,0 +1,83 @@
+.owner-heading, .owner-card-heading, .owner-section-heading, .owner-booking-footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.owner-heading { margin: 24px 0; }
+.owner-heading > div { flex: 1 1 260px; min-width: 0; overflow-wrap: anywhere; }
+.owner-heading h1 { margin: 4px 0 8px; line-height: 1.25; }
+.owner-heading p { margin: 0; color: #53685d; }
+.owner-kicker { color: #4e6b46; font-size: 12px; font-weight: 700; letter-spacing: .1em; }
+.owner-back { display: inline-block; margin: 0 0 8px; }
+.owner-note { padding: 14px 16px; border-left: 4px solid #72964e; background: #edf3e7; border-radius: 0 8px 8px 0; overflow-wrap: anywhere; }
+.owner-stat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 24px 0 12px; }
+.owner-stat { display: flex; flex-direction: column; gap: 8px; margin: 0 0 16px; }
+.owner-stat span { color: #53685d; }
+.owner-stat strong { font-size: 34px; line-height: 1.2; }
+.owner-section-heading { align-items: center; margin: 14px 0; }
+.owner-section-heading h2 { margin: 0; }
+.owner-card-heading h3 { margin: 0; font-size: 19px; }
+.owner-badge { display: inline-block; max-width: 100%; padding: 4px 10px; border-radius: 99px; background: #edf0e9; color: #435547; font-size: 12px; font-weight: 700; overflow-wrap: anywhere; }
+.owner-badge-success { background: #e6f1df; color: #265525; }
+.owner-badge-waiting { background: #fff0cd; color: #78540a; }
+.owner-detail-list { margin: 18px 0; }
+.owner-detail-list > div { display: grid; grid-template-columns: minmax(110px, .7fr) minmax(0, 1fr); gap: 12px; padding: 10px 0; border-bottom: 1px solid #edf0e9; }
+.owner-detail-list dt { color: #53685d; }
+.owner-detail-list dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+.owner-empty { color: #53685d; }
+.owner-form-layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+.owner-field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.owner-field-grid > div { min-width: 0; }
+.owner-field-grid label { display: block; margin-bottom: 6px; }
+.owner-form fieldset { min-width: 0; border: 1px solid #dce2d5; border-radius: 9px; padding: 16px; margin: 0; }
+.owner-form legend { font-weight: 700; padding: 0 6px; }
+.owner-field-help { font-size: 13px; color: #53685d; margin: 0; overflow-wrap: anywhere; }
+.owner-field-grid + .owner-field-help { margin-top: 12px; }
+.owner-checkbox { display: flex; align-items: flex-start; gap: 10px; }
+.owner-checkbox input[type="checkbox"] { flex: 0 0 auto; width: 18px; height: 18px; margin: 4px 0 0; padding: 0; accent-color: #173f35; }
+.owner-checkbox span { min-width: 0; }
+.owner-info-card h2 { margin-top: 0; }
+.owner-application-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.owner-application { min-width: 0; }
+.owner-review-form { border: 1px solid #dce2d5; border-radius: 9px; padding: 16px; margin: 12px 0 0; align-content: start; }
+.owner-review-form textarea { display: block; width: 100%; min-width: 0; max-width: 100%; padding: 12px; border: 1px solid #7b887b; border-radius: 7px; font: inherit; background: white; color: #173f35; resize: vertical; }
+.owner-secondary-action { margin-top: 16px; }
+.owner-button-danger { background: white; color: #8b3030; border-color: #a85555; }
+.owner-button-danger:hover { background: #fff2f0; }
+.owner-owner-list { list-style: none; margin: 0; padding: 0; }
+.owner-owner-list li { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 14px 0; border-bottom: 1px solid #edf0e9; }
+.owner-owner-list li:last-child { border-bottom: 0; }
+.owner-owner-list li > div { min-width: 0; }
+.owner-owner-list li strong, .owner-owner-list li > div span { display: block; overflow-wrap: anywhere; }
+.owner-owner-list li > div span { color: #53685d; font-size: 14px; }
+.owner-review-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
+.owner-request-list, .owner-booking-list { display: grid; gap: 0; }
+.owner-request-card p, .owner-booking-card p { overflow-wrap: anywhere; }
+.owner-refund-summary { margin-top: 20px; padding-top: 12px; border-top: 1px solid #dce2d5; }
+.owner-slot-chips { display: flex; gap: 8px; flex-wrap: wrap; padding: 0; list-style: none; }
+.owner-slot-chips li { max-width: 100%; padding: 6px 10px; border: 1px solid #dce2d5; border-radius: 7px; background: #f7f8f2; font-size: 14px; }
+.owner-booking-footer { align-items: center; margin: 16px 0 10px; }
+.owner-booking-footer > strong { font-size: 22px; }
+.owner-demo-payment { color: #78540a; font-size: 14px; background: #fff7e2; border-radius: 6px; padding: 6px 10px; }
+.owner-receipt-link { display: inline-block; padding: 5px 0; }
+.owner-call-cancel { margin-top: 18px; padding-top: 16px; border-top: 1px solid #dce2d5; }
+.owner-call-cancel summary { cursor: pointer; color: #8b3030; font-weight: 700; }
+.owner-pending { margin-top: 36px; }
+.demo-page textarea:focus-visible, .demo-page summary:focus-visible { outline: 3px solid #8b9d4b; outline-offset: 3px; }
+@media (max-width: 760px) {
+  .owner-form-layout, .owner-application-grid, .owner-review-grid { grid-template-columns: minmax(0, 1fr); }
+  .owner-stat-grid { gap: 10px; }
+  .owner-stat { padding: 14px; }
+  .owner-stat span { font-size: 13px; }
+  .owner-stat strong { font-size: 28px; }
+}
+@media (max-width: 480px) {
+  .owner-stat-grid, .owner-field-grid { grid-template-columns: minmax(0, 1fr); }
+  .owner-stat { flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 0; }
+  .owner-stat-grid { margin-bottom: 24px; }
+  .owner-detail-list > div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .owner-card-heading { gap: 10px; }
+  .owner-review-form { padding: 12px; }
+}
