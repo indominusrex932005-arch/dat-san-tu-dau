@@ -1,0 +1,858 @@
+{
+  "browser": "ChatGPT in-app browser (IAB); build not exposed by tooling",
+  "testedSHA": "30ee256133ac87417481ccf52407281af9e385e7",
+  "executedAtUTC": "2026-10-23T17:54:11.121Z",
+  "captures": [
+    {
+      "alert": null,
+      "cards": [
+        {
+          "clientWidth": 377,
+          "htmlElementsInTitle": 0,
+          "name": "QA B01 — Trống 09–18",
+          "scrollWidth": 377,
+          "titleClientWidth": 321,
+          "titleScrollWidth": 321
+        },
+        {
+          "clientWidth": 377,
+          "htmlElementsInTitle": 0,
+          "name": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_",
+          "scrollWidth": 377,
+          "titleClientWidth": 321,
+          "titleScrollWidth": 321
+        }
+      ],
+      "clientWidth": 1351,
+      "controls": [
+        {
+          "clientWidth": 396,
+          "id": "filter-facility",
+          "left": 108,
+          "right": 505.3333435058594,
+          "scrollWidth": 396,
+          "tag": "SELECT",
+          "width": 397.3333435058594
+        },
+        {
+          "clientWidth": 297,
+          "id": "filter-date",
+          "left": 519.3333740234375,
+          "right": 817.3333740234375,
+          "scrollWidth": 297,
+          "tag": "INPUT",
+          "width": 298
+        },
+        {
+          "clientWidth": 197,
+          "id": "filter-startTime",
+          "left": 831.3333740234375,
+          "right": 1030.0000457763672,
+          "scrollWidth": 197,
+          "tag": "INPUT",
+          "width": 198.6666717529297
+        },
+        {
+          "clientWidth": 197,
+          "id": "filter-endTime",
+          "left": 1044,
+          "right": 1242.6666717529297,
+          "scrollWidth": 197,
+          "tag": "INPUT",
+          "width": 198.6666717529297
+        },
+        {
+          "clientWidth": 101,
+          "id": "",
+          "left": 1026.166748046875,
+          "right": 1127.072998046875,
+          "scrollWidth": 101,
+          "tag": "BUTTON",
+          "text": "Tìm sân",
+          "width": 100.90625
+        },
+        {
+          "clientWidth": 104,
+          "id": "",
+          "left": 1137.072998046875,
+          "right": 1242.666748046875,
+          "scrollWidth": 104,
+          "tag": "A",
+          "text": "Xóa bộ lọc",
+          "width": 105.59375
+        }
+      ],
+      "count": "2 sân trong danh sách",
+      "documentWidth": 1351,
+      "empty": null,
+      "filters": [
+        {
+          "id": "filter-facility",
+          "value": "6adb9d4d2e58e202c0c6661c"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "14:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "15:00"
+        }
+      ],
+      "links": [
+        "/courts/6adb9d4d2e58e202c0c66628?date=2026-10-27",
+        "/courts/6adb9d4d2e58e202c0c66629?date=2026-10-27"
+      ],
+      "url": "/courts?facilityId=6adb9d4d2e58e202c0c6661c&date=2026-10-27&startTime=14%3A00&endTime=15%3A00",
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      },
+      "name": "thuong-desktop-1366"
+    },
+    {
+      "alert": null,
+      "cards": [
+        {
+          "clientWidth": 333,
+          "htmlElementsInTitle": 0,
+          "name": "QA B01 — Trống 09–18",
+          "scrollWidth": 333,
+          "titleClientWidth": 285,
+          "titleScrollWidth": 285
+        },
+        {
+          "clientWidth": 333,
+          "htmlElementsInTitle": 0,
+          "name": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_",
+          "scrollWidth": 333,
+          "titleClientWidth": 285,
+          "titleScrollWidth": 285
+        }
+      ],
+      "clientWidth": 375,
+      "controls": [
+        {
+          "clientWidth": 284,
+          "id": "filter-facility",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 284,
+          "tag": "SELECT",
+          "width": 285.3333435058594
+        },
+        {
+          "clientWidth": 284,
+          "id": "filter-date",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 284,
+          "tag": "INPUT",
+          "width": 285.3333435058594
+        },
+        {
+          "clientWidth": 284,
+          "id": "filter-startTime",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 284,
+          "tag": "INPUT",
+          "width": 285.3333435058594
+        },
+        {
+          "clientWidth": 284,
+          "id": "filter-endTime",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 284,
+          "tag": "INPUT",
+          "width": 285.3333435058594
+        },
+        {
+          "clientWidth": 285,
+          "id": "",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 285,
+          "tag": "BUTTON",
+          "text": "Tìm sân",
+          "width": 285.3333435058594
+        },
+        {
+          "clientWidth": 284,
+          "id": "",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 284,
+          "tag": "A",
+          "text": "Xóa bộ lọc",
+          "width": 285.3333435058594
+        }
+      ],
+      "count": "2 sân trong danh sách",
+      "documentWidth": 375,
+      "empty": null,
+      "filters": [
+        {
+          "id": "filter-facility",
+          "value": "6adb9d4d2e58e202c0c6661c"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "14:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "15:00"
+        }
+      ],
+      "links": [
+        "/courts/6adb9d4d2e58e202c0c66628?date=2026-10-27",
+        "/courts/6adb9d4d2e58e202c0c66629?date=2026-10-27"
+      ],
+      "url": "/courts?facilityId=6adb9d4d2e58e202c0c6661c&date=2026-10-27&startTime=14%3A00&endTime=15%3A00",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "name": "thuong-mobile-390"
+    },
+    {
+      "alert": null,
+      "cards": [],
+      "clientWidth": 375,
+      "controls": [
+        {
+          "clientWidth": 284,
+          "id": "filter-facility",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 284,
+          "tag": "SELECT",
+          "width": 285.3333435058594
+        },
+        {
+          "clientWidth": 284,
+          "id": "filter-date",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 284,
+          "tag": "INPUT",
+          "width": 285.3333435058594
+        },
+        {
+          "clientWidth": 284,
+          "id": "filter-startTime",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 284,
+          "tag": "INPUT",
+          "width": 285.3333435058594
+        },
+        {
+          "clientWidth": 284,
+          "id": "filter-endTime",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 284,
+          "tag": "INPUT",
+          "width": 285.3333435058594
+        },
+        {
+          "clientWidth": 285,
+          "id": "",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 285,
+          "tag": "BUTTON",
+          "text": "Tìm sân",
+          "width": 285.3333435058594
+        },
+        {
+          "clientWidth": 284,
+          "id": "",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 284,
+          "tag": "A",
+          "text": "Xóa bộ lọc",
+          "width": 285.3333435058594
+        }
+      ],
+      "count": "0 sân trong danh sách",
+      "documentWidth": 375,
+      "empty": "Không tìm được sân phù hợp bộ lọc.",
+      "filters": [
+        {
+          "id": "filter-facility",
+          "value": "6adb9d4d2e58e202c0c6661c"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "19:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "20:00"
+        }
+      ],
+      "links": [],
+      "url": "/courts?facilityId=6adb9d4d2e58e202c0c6661c&date=2026-10-27&startTime=19%3A00&endTime=20%3A00",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "name": "rong-mobile-390"
+    },
+    {
+      "alert": null,
+      "cards": [],
+      "clientWidth": 1351,
+      "controls": [
+        {
+          "clientWidth": 396,
+          "id": "filter-facility",
+          "left": 108,
+          "right": 505.3333435058594,
+          "scrollWidth": 396,
+          "tag": "SELECT",
+          "width": 397.3333435058594
+        },
+        {
+          "clientWidth": 297,
+          "id": "filter-date",
+          "left": 519.3333740234375,
+          "right": 817.3333740234375,
+          "scrollWidth": 297,
+          "tag": "INPUT",
+          "width": 298
+        },
+        {
+          "clientWidth": 197,
+          "id": "filter-startTime",
+          "left": 831.3333740234375,
+          "right": 1030.0000457763672,
+          "scrollWidth": 197,
+          "tag": "INPUT",
+          "width": 198.6666717529297
+        },
+        {
+          "clientWidth": 197,
+          "id": "filter-endTime",
+          "left": 1044,
+          "right": 1242.6666717529297,
+          "scrollWidth": 197,
+          "tag": "INPUT",
+          "width": 198.6666717529297
+        },
+        {
+          "clientWidth": 101,
+          "id": "",
+          "left": 1026.166748046875,
+          "right": 1127.072998046875,
+          "scrollWidth": 101,
+          "tag": "BUTTON",
+          "text": "Tìm sân",
+          "width": 100.90625
+        },
+        {
+          "clientWidth": 104,
+          "id": "",
+          "left": 1137.072998046875,
+          "right": 1242.666748046875,
+          "scrollWidth": 104,
+          "tag": "A",
+          "text": "Xóa bộ lọc",
+          "width": 105.59375
+        }
+      ],
+      "count": "0 sân trong danh sách",
+      "documentWidth": 1351,
+      "empty": "Không tìm được sân phù hợp bộ lọc.",
+      "filters": [
+        {
+          "id": "filter-facility",
+          "value": "6adb9d4d2e58e202c0c6661c"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "19:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "20:00"
+        }
+      ],
+      "links": [],
+      "url": "/courts?facilityId=6adb9d4d2e58e202c0c6661c&date=2026-10-27&startTime=19%3A00&endTime=20%3A00",
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      },
+      "name": "rong-desktop-1366"
+    },
+    {
+      "alert": "Giờ kết thúc phải sau giờ bắt đầu.",
+      "cards": [],
+      "clientWidth": 1351,
+      "controls": [
+        {
+          "clientWidth": 396,
+          "id": "filter-facility",
+          "left": 108,
+          "right": 505.3333435058594,
+          "scrollWidth": 396,
+          "tag": "SELECT",
+          "width": 397.3333435058594
+        },
+        {
+          "clientWidth": 297,
+          "id": "filter-date",
+          "left": 519.3333740234375,
+          "right": 817.3333740234375,
+          "scrollWidth": 297,
+          "tag": "INPUT",
+          "width": 298
+        },
+        {
+          "clientWidth": 197,
+          "id": "filter-startTime",
+          "left": 831.3333740234375,
+          "right": 1030.0000457763672,
+          "scrollWidth": 197,
+          "tag": "INPUT",
+          "width": 198.6666717529297
+        },
+        {
+          "clientWidth": 197,
+          "id": "filter-endTime",
+          "left": 1044,
+          "right": 1242.6666717529297,
+          "scrollWidth": 197,
+          "tag": "INPUT",
+          "width": 198.6666717529297
+        },
+        {
+          "clientWidth": 101,
+          "id": "",
+          "left": 1026.166748046875,
+          "right": 1127.072998046875,
+          "scrollWidth": 101,
+          "tag": "BUTTON",
+          "text": "Tìm sân",
+          "width": 100.90625
+        },
+        {
+          "clientWidth": 104,
+          "id": "",
+          "left": 1137.072998046875,
+          "right": 1242.666748046875,
+          "scrollWidth": 104,
+          "tag": "A",
+          "text": "Xóa bộ lọc",
+          "width": 105.59375
+        }
+      ],
+      "count": "0 sân trong danh sách",
+      "documentWidth": 1351,
+      "empty": "Không tìm được sân phù hợp bộ lọc.",
+      "filters": [
+        {
+          "id": "filter-facility",
+          "value": "6adb9d4d2e58e202c0c6661c"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "14:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "13:00"
+        }
+      ],
+      "links": [],
+      "url": "/courts?facilityId=6adb9d4d2e58e202c0c6661c&date=2026-10-27&startTime=14%3A00&endTime=13%3A00",
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      },
+      "name": "loi-desktop-1366"
+    },
+    {
+      "alert": "Giờ kết thúc phải sau giờ bắt đầu.",
+      "cards": [],
+      "clientWidth": 375,
+      "controls": [
+        {
+          "clientWidth": 284,
+          "id": "filter-facility",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 284,
+          "tag": "SELECT",
+          "width": 285.3333435058594
+        },
+        {
+          "clientWidth": 284,
+          "id": "filter-date",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 284,
+          "tag": "INPUT",
+          "width": 285.3333435058594
+        },
+        {
+          "clientWidth": 284,
+          "id": "filter-startTime",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 284,
+          "tag": "INPUT",
+          "width": 285.3333435058594
+        },
+        {
+          "clientWidth": 284,
+          "id": "filter-endTime",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 284,
+          "tag": "INPUT",
+          "width": 285.3333435058594
+        },
+        {
+          "clientWidth": 285,
+          "id": "",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 285,
+          "tag": "BUTTON",
+          "text": "Tìm sân",
+          "width": 285.3333435058594
+        },
+        {
+          "clientWidth": 284,
+          "id": "",
+          "left": 44.66666793823242,
+          "right": 330.0000114440918,
+          "scrollWidth": 284,
+          "tag": "A",
+          "text": "Xóa bộ lọc",
+          "width": 285.3333435058594
+        }
+      ],
+      "count": "0 sân trong danh sách",
+      "documentWidth": 375,
+      "empty": "Không tìm được sân phù hợp bộ lọc.",
+      "filters": [
+        {
+          "id": "filter-facility",
+          "value": "6adb9d4d2e58e202c0c6661c"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "14:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "13:00"
+        }
+      ],
+      "links": [],
+      "url": "/courts?facilityId=6adb9d4d2e58e202c0c6661c&date=2026-10-27&startTime=14%3A00&endTime=13%3A00",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "name": "loi-mobile-390"
+    }
+  ],
+  "keyboard": {
+    "mobile": [
+      {
+        "id": "filter-date",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.01) 0px 0px 0px 0.223253px",
+        "tag": "INPUT",
+        "text": null,
+        "type": "date"
+      },
+      {
+        "id": "filter-date",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.13) 0px 0px 0px 2.61281px",
+        "tag": "INPUT",
+        "text": null,
+        "type": "date"
+      },
+      {
+        "id": "filter-date",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.15) 0px 0px 0px 3px",
+        "tag": "INPUT",
+        "text": null,
+        "type": "date"
+      },
+      {
+        "id": "filter-date",
+        "outline": "rgb(23, 63, 53) none 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.137) 0px 0px 0px 2.77948px",
+        "tag": "INPUT",
+        "text": null,
+        "type": "date"
+      },
+      {
+        "id": "filter-startTime",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.01) 0px 0px 0px 0.22052px",
+        "tag": "INPUT",
+        "text": null,
+        "type": "time"
+      },
+      {
+        "id": "filter-startTime",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.15) 0px 0px 0px 3px",
+        "tag": "INPUT",
+        "text": null,
+        "type": "time"
+      },
+      {
+        "id": "filter-startTime",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.15) 0px 0px 0px 3px",
+        "tag": "INPUT",
+        "text": null,
+        "type": "time"
+      },
+      {
+        "id": "filter-startTime",
+        "outline": "rgb(23, 63, 53) none 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.114) 0px 0px 0px 2.30746px",
+        "tag": "INPUT",
+        "text": null,
+        "type": "time"
+      },
+      {
+        "id": "filter-endTime",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.01) 0px 0px 0px 0.223253px",
+        "tag": "INPUT",
+        "text": null,
+        "type": "time"
+      },
+      {
+        "id": "filter-endTime",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.13) 0px 0px 0px 2.60897px",
+        "tag": "INPUT",
+        "text": null,
+        "type": "time"
+      },
+      {
+        "id": "filter-endTime",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.15) 0px 0px 0px 3px",
+        "tag": "INPUT",
+        "text": null,
+        "type": "time"
+      },
+      {
+        "id": "filter-endTime",
+        "outline": "rgb(23, 63, 53) none 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.137) 0px 0px 0px 2.7822px",
+        "tag": "INPUT",
+        "text": null,
+        "type": "time"
+      },
+      {
+        "id": "",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "none",
+        "tag": "BUTTON",
+        "text": "Tìm sân",
+        "type": "submit"
+      }
+    ],
+    "desktop": [
+      {
+        "id": "filter-date",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.043) 0px 0px 0px 0.875058px",
+        "tag": "INPUT",
+        "text": null
+      },
+      {
+        "id": "filter-date",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.106) 0px 0px 0px 2.16934px",
+        "tag": "INPUT",
+        "text": null
+      },
+      {
+        "id": "filter-date",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.15) 0px 0px 0px 3px",
+        "tag": "INPUT",
+        "text": null
+      },
+      {
+        "id": "filter-date",
+        "outline": "rgb(23, 63, 53) none 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.137) 0px 0px 0px 2.774px",
+        "tag": "INPUT",
+        "text": null
+      },
+      {
+        "id": "filter-startTime",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.01) 0px 0px 0px 0.226003px",
+        "tag": "INPUT",
+        "text": null
+      },
+      {
+        "id": "filter-startTime",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.08) 0px 0px 0px 1.60257px",
+        "tag": "INPUT",
+        "text": null
+      },
+      {
+        "id": "filter-startTime",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.145) 0px 0px 0px 2.95297px",
+        "tag": "INPUT",
+        "text": null
+      },
+      {
+        "id": "filter-startTime",
+        "outline": "rgb(23, 63, 53) none 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.137) 0px 0px 0px 2.77675px",
+        "tag": "INPUT",
+        "text": null
+      },
+      {
+        "id": "filter-endTime",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "tag": "INPUT",
+        "text": null
+      },
+      {
+        "id": "filter-endTime",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.08) 0px 0px 0px 1.60103px",
+        "tag": "INPUT",
+        "text": null
+      },
+      {
+        "id": "filter-endTime",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.145) 0px 0px 0px 2.9492px",
+        "tag": "INPUT",
+        "text": null
+      },
+      {
+        "id": "filter-endTime",
+        "outline": "rgb(23, 63, 53) none 2.66667px",
+        "shadow": "rgba(23, 63, 53, 0.137) 0px 0px 0px 2.774px",
+        "tag": "INPUT",
+        "text": null
+      },
+      {
+        "id": "",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "shadow": "none",
+        "tag": "BUTTON",
+        "text": "Tìm sân"
+      }
+    ]
+  },
+  "interactions": {
+    "mobile": {
+      "submitEnterCount": 2,
+      "resetUrl": "/courts",
+      "resetCount": 14,
+      "resetFields": [
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    "desktop": {
+      "submitEnterCount": 2,
+      "resetUrl": "/courts",
+      "resetCount": 14,
+      "resetFields": [
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+  },
+  "detail": {
+    "mobile": {
+      "checkedSlots": 0,
+      "clientWidth": 375,
+      "documentWidth": 1241,
+      "heading": "QA B01 — Trống 09–18",
+      "height": 844,
+      "url": "/courts/6adb9d4d2e58e202c0c66628?date=2026-10-27",
+      "width": 390,
+      "date": "2026-10-27"
+    },
+    "desktop": {
+      "checkedSlots": 0,
+      "clientWidth": 1351,
+      "date": "2026-10-27",
+      "documentWidth": 1351,
+      "heading": "QA B01 — Trống 09–18",
+      "height": 900,
+      "url": "/courts/6adb9d4d2e58e202c0c66628?date=2026-10-27",
+      "width": 1366
+    },
+    "overflow": {
+      "clientWidth": 375,
+      "date": "2026-10-27",
+      "documentWidth": 1241,
+      "paragraphs": [
+        {
+          "clientWidth": 335,
+          "overflowWrap": "normal",
+          "scrollWidth": 1221,
+          "text": "Cơ sở B kiểm thử tên dài — Khu thể thao luyện tập và thi đấu Khu thể t",
+          "wordBreak": "normal"
+        }
+      ],
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  }
+}
