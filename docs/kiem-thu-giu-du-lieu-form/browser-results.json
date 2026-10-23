@@ -1,0 +1,140 @@
+{
+  "date": "24/10/2026",
+  "branch": "fix/booking-form-recovery",
+  "baseSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+  "browser": "ChatGPT in-app browser (IAB)",
+  "clock": "real server/browser clock; no time simulation",
+  "dataSource": "synthetic local MongoDB replica set qaForm38; real app/controller/service/EJS/CSS/JS",
+  "instrumentationNote": "Browser DOM tooling redacts tel input values. Retained invalid phone was verified visually in both saved screenshots and by the real HTTP integration test; boolean DOM equality was not used for that field.",
+  "checks": [
+    {
+      "case": "normal",
+      "viewport": 390,
+      "buttonDisabled": true,
+      "clientWidth": 375,
+      "documentWidth": 375,
+      "selected": 0,
+      "pass": true
+    },
+    {
+      "case": "invalid-phone",
+      "viewport": 390,
+      "clientWidth": 375,
+      "date": "2026-10-27",
+      "documentWidth": 375,
+      "error": "Chưa giữ được sân. Nhập họ tên và số điện thoại Việt Nam gồm 10 số. Lịch và giá bên dưới đã được cập nhật. Kiểm tra lại các ô còn chọn và thông tin liên hệ trước khi gửi lại.",
+      "focusError": true,
+      "nameMatches": true,
+      "path": "/courts/6adbe49bc637cd35bfdc38ac",
+      "recovered": "true",
+      "search": "?date=2026-10-27",
+      "selected": [
+        "14:00",
+        "14:30"
+      ],
+      "summary": "2 ô · 60 phút",
+      "total": "100.000 ₫",
+      "pass": true,
+      "phoneRetention": "Verified visually in saved screenshot and by HTTP integration tests; tel input DOM value is redacted by browser tooling"
+    },
+    {
+      "case": "normal",
+      "viewport": 1366,
+      "buttonDisabled": true,
+      "clientWidth": 1351,
+      "documentWidth": 1351,
+      "selected": 0,
+      "pass": true
+    },
+    {
+      "case": "invalid-phone",
+      "viewport": 1366,
+      "clientWidth": 1351,
+      "date": "2026-10-27",
+      "documentWidth": 1351,
+      "error": "Chưa giữ được sân. Nhập họ tên và số điện thoại Việt Nam gồm 10 số. Lịch và giá bên dưới đã được cập nhật. Kiểm tra lại các ô còn chọn và thông tin liên hệ trước khi gửi lại.",
+      "focusError": true,
+      "nameMatches": true,
+      "path": "/courts/6adbe49bc637cd35bfdc38ac",
+      "recovered": "true",
+      "search": "?date=2026-10-27",
+      "selected": [
+        "14:00",
+        "14:30"
+      ],
+      "summary": "2 ô · 60 phút",
+      "total": "100.000 ₫",
+      "pass": true,
+      "phoneRetention": "Verified visually in saved screenshot and by HTTP integration tests; tel input DOM value is redacted by browser tooling"
+    },
+    {
+      "case": "reload-after-error",
+      "viewport": 1366,
+      "beforeBookingPosts": 2,
+      "afterBookingPosts": 2,
+      "additionalGetRequests": 5,
+      "clientWidth": 1351,
+      "documentWidth": 1351,
+      "hasForm": true,
+      "isRecovery": "false",
+      "path": "/courts/6adbe49bc637cd35bfdc38ac",
+      "pass": true
+    },
+    {
+      "case": "partial-conflict",
+      "viewport": 390,
+      "availablePrice": 70000,
+      "clientWidth": 375,
+      "date": "2026-10-28",
+      "documentWidth": 375,
+      "error": "Chưa giữ được sân. Ô 14:30 đã được giữ hoặc đặt. Hãy chọn ô khác. Lịch và giá bên dưới đã được cập nhật. Kiểm tra lại các ô còn chọn và thông tin liên hệ trước khi gửi lại. Các ô sau đã được bỏ khỏi lựa chọn: 14:30–15:00: đang được người khác giữ chỗ.",
+      "focusError": true,
+      "nameMatches": true,
+      "occupiedChecked": false,
+      "occupiedDisabled": true,
+      "selected": [
+        "14:00"
+      ],
+      "summary": "1 ô · 30 phút",
+      "total": "70.000 ₫",
+      "pass": true
+    },
+    {
+      "case": "explicit-corrected-retry",
+      "viewport": 390,
+      "clientWidth": 375,
+      "documentWidth": 375,
+      "hasCheckout": true,
+      "path": "/bookings/6adbe584c637cd35bfdc38b1/checkout",
+      "pass": true
+    },
+    {
+      "case": "partial-conflict",
+      "viewport": 1366,
+      "availablePrice": 100000,
+      "clientWidth": 1351,
+      "date": "2026-10-29",
+      "documentWidth": 1351,
+      "error": "Chưa giữ được sân. Ô 14:30 đã được giữ hoặc đặt. Hãy chọn ô khác. Lịch và giá bên dưới đã được cập nhật. Kiểm tra lại các ô còn chọn và thông tin liên hệ trước khi gửi lại. Các ô sau đã được bỏ khỏi lựa chọn: 14:30–15:00: đang được người khác giữ chỗ.",
+      "focusError": true,
+      "nameMatches": true,
+      "occupiedChecked": false,
+      "occupiedDisabled": true,
+      "selected": [
+        "14:00"
+      ],
+      "summary": "1 ô · 30 phút",
+      "total": "100.000 ₫",
+      "pass": true
+    },
+    {
+      "case": "explicit-corrected-retry",
+      "viewport": 1366,
+      "clientWidth": 1351,
+      "documentWidth": 1351,
+      "hasCheckout": true,
+      "path": "/bookings/6adbe5a2c637cd35bfdc38b8/checkout",
+      "pass": true
+    }
+  ]
+}
