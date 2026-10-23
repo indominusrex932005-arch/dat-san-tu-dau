@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - name: Lay code
@@ -31,7 +31,7 @@ jobs:
 
       - name: Khoi dong MongoDB replica set cho kiem thu
         run: |
-          docker run --rm -d --name mongo-test -p 127.0.0.1:27029:27029 mongo:8 mongod --replSet rs0 --bind_ip_all --port 27029
+          docker run -d --name mongo-test -p 127.0.0.1:27029:27029 mongo:8.0 mongod --replSet rs0 --bind_ip_all --port 27029 --wiredTigerCacheSizeGB 0.25
           for attempt in $(seq 1 30); do
             if docker exec mongo-test mongosh --quiet --port 27029 --eval 'db.adminCommand({ping:1}).ok' >/dev/null 2>&1; then break; fi
             sleep 1
@@ -47,3 +47,11 @@ jobs:
         env:
           TEST_MONGODB_URI: mongodb://127.0.0.1:27029/?replicaSet=rs0
         run: npm test
+
+      - name: Nhat ky MongoDB neu kiem thu loi
+        if: failure()
+        run: docker logs --tail 100 mongo-test || true
+
+      - name: Don database kiem thu
+        if: always()
+        run: docker rm -f mongo-test || true
