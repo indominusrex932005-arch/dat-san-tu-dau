@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Sân Thể Thao</title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/demo.css">
+  <link rel="stylesheet" href="/assets/css/owner.css">
+</head>
+<body class="demo-page">
+  <div class="demo-shell">
+    <%- include('partials/navigation') %>
+    <% const courtData = court || {}; const editingCourt = Boolean(courtData._id); %>
+    <main aria-labelledby="court-form-title">
+      <a class="owner-back" href="/owner">← Quản lý cơ sở</a>
+      <div class="owner-heading">
+        <div><span class="owner-kicker"><%= facility?.name || 'CƠ SỞ CỦA BẠN' %></span><h1 id="court-form-title"><%= title %></h1></div>
+      </div>
+      <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
+      <div class="owner-form-layout">
+        <section class="demo-card">
+          <form class="demo-form owner-form" action="<%= editingCourt ? '/owner/courts/' + courtData._id : '/owner/courts' %>" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <label for="name">Tên sân</label>
+            <input id="name" name="name" type="text" value="<%= courtData.name || '' %>" maxlength="150" required>
+            <fieldset>
+              <legend>Giờ phục vụ</legend>
+              <div class="owner-field-grid">
+                <div><label for="openTime">Mở cửa</label><input id="openTime" name="openTime" type="time" step="1800" value="<%= courtData.openTime || '06:00' %>" required></div>
+                <div><label for="closeTime">Đóng cửa</label><input id="closeTime" name="closeTime" type="time" step="1800" value="<%= courtData.closeTime || '22:00' %>" required></div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Khoảng giờ cao điểm</legend>
+              <div class="owner-field-grid">
+                <div><label for="peakStartTime">Bắt đầu</label><input id="peakStartTime" name="peakStartTime" type="time" step="1800" value="<%= courtData.peakStartTime || '17:00' %>" required></div>
+                <div><label for="peakEndTime">Kết thúc</label><input id="peakEndTime" name="peakEndTime" type="time" step="1800" value="<%= courtData.peakEndTime || '22:00' %>" required></div>
+              </div>
+              <p class="owner-field-help">Chọn mốc giờ nguyên hoặc 30 phút. Giờ cao điểm nằm trong giờ phục vụ, không qua đêm.</p>
+            </fieldset>
+            <fieldset>
+              <legend>Giá cho từng ô 30 phút</legend>
+              <div class="owner-field-grid">
+                <div><label for="basePriceVND">Giá thường (đồng / ô)</label><input id="basePriceVND" name="basePriceVND" type="number" min="0" step="1" value="<%= courtData.basePriceVND ?? (courtData.pricePerHour === undefined ? 50000 : courtData.pricePerHour / 2) %>" required></div>
+                <div><label for="peakPriceVND">Giá cao điểm (đồng / ô)</label><input id="peakPriceVND" name="peakPriceVND" type="number" min="0" step="1" value="<%= courtData.peakPriceVND ?? courtData.basePriceVND ?? (courtData.pricePerHour === undefined ? 75000 : courtData.pricePerHour / 2) %>" required></div>
+              </div>
+            </fieldset>
+            <label class="owner-checkbox" for="active"><input id="active" name="active" type="checkbox" value="on" <%= courtData.active !== false ? 'checked' : '' %>><span>Đang nhận đặt sân</span></label>
+            <div class="demo-actions"><button class="demo-button" type="submit"><%= editingCourt ? 'Lưu thay đổi' : 'Tạo sân' %></button><a class="demo-button demo-button-secondary" href="/owner">Hủy</a></div>
+          </form>
+        </section>
+        <aside class="demo-card owner-info-card">
+          <h2>Cách tính giá</h2>
+          <p>Mỗi ô dài <strong>30 phút</strong>. Chọn hai ô tương đương một giờ; các ô có thể rời nhau.</p>
+          <p>Ô bắt đầu trong khoảng cao điểm dùng giá cao điểm. Những ô còn lại dùng giá thường.</p>
+          <p class="owner-note">Giá mới áp dụng cho lượt đặt mới. Giá đã lưu trong đơn cũ được giữ nguyên.</p>
+        </aside>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

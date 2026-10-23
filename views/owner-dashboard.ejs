@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Sân Thể Thao</title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/demo.css">
+  <link rel="stylesheet" href="/assets/css/owner.css">
+</head>
+<body class="demo-page">
+  <div class="demo-shell">
+    <%- include('partials/navigation') %>
+    <%
+      const ownerCourts = Array.isArray(courts) ? courts : [];
+      const ownerBookings = Array.isArray(bookings) ? bookings : [];
+      const ownerRequests = Array.isArray(requests) ? requests : [];
+      const pendingRequests = ownerRequests.filter(item => item.status === 'PENDING');
+      const pendingRefunds = ownerRequests.filter(item => item.refundStatus === 'PENDING');
+      const bookingLabels = { HOLD: 'Giữ chỗ / chờ thanh toán', CONFIRMED: 'Đã xác nhận', EXPIRED: 'Hết hạn', CANCELLED: 'Đã hủy', LEGACY_RESERVED: 'Đơn cũ — chưa ghi nhận tiền' };
+      const paymentLabels = { UNPAID: 'Chưa ghi nhận thanh toán', DEMO_PAID: 'Thanh toán mô phỏng — chưa xác minh ngân hàng', PAID: 'Đã ghi nhận thanh toán' };
+      const requestLabels = { PENDING: 'Chờ xử lý', APPROVED: 'Đã chấp thuận', REJECTED: 'Đã từ chối' };
+      const showTime = value => { const parsed = new Date(value); return Number.isNaN(parsed.getTime()) ? 'Chưa có giờ' : new Intl.DateTimeFormat('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(parsed); };
+    %>
+    <main aria-labelledby="owner-title">
+      <div class="owner-heading">
+        <div><span class="owner-kicker">QUẢN LÝ CƠ SỞ</span><h1 id="owner-title"><%= facility?.name || 'Cơ sở của bạn' %></h1><p><%= facility?.address || 'Tài khoản chưa được cấp cơ sở quản lý.' %></p></div>
+        <% if (facility) { %><a href="/owner/courts/new" class="demo-button">+ Thêm sân</a><% } %>
+      </div>
+      <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
+      <% if (!facility) { %><p class="demo-card owner-empty">Bạn cần được quản trị viên cấp cơ sở trước khi quản lý sân và đơn đặt.</p><% } else { %>
+        <p class="owner-note">Điện thoại cơ sở: <strong><%= facility.phone || 'Chưa có thông tin' %></strong>. Khách vãng lai dùng số này để liên hệ hủy đơn.</p>
+        <section class="owner-stat-grid" aria-label="Tổng quan cơ sở">
+          <div class="demo-card owner-stat"><span>Sân đang quản lý</span><strong><%= ownerCourts.length %></strong></div>
+          <div class="demo-card owner-stat"><span>Yêu cầu chờ xử lý</span><strong><%= pendingRequests.length %></strong></div>
+          <div class="demo-card owner-stat"><span>Khoản hoàn chờ ghi nhận</span><strong><%= pendingRefunds.length %></strong></div>
+        </section>
+
+        <section id="courts" aria-labelledby="owner-courts-title">
+          <div class="owner-section-heading"><h2 id="owner-courts-title">Sân và bảng giá</h2><a href="/courts">Xem trang đặt sân →</a></div>
+          <% if (!ownerCourts.length) { %><p class="demo-card owner-empty">Cơ sở chưa có sân. Bấm “Thêm sân” để cấu hình giờ mở cửa và giá.</p><% } %>
+          <div class="demo-grid">
+            <% for (const item of ownerCourts) { %>
+              <article class="demo-card owner-court-card">
+                <div class="owner-card-heading"><h3><%= item.name %></h3><span class="owner-badge <%= item.active ? 'owner-badge-success' : '' %>"><%= item.active ? 'Đang nhận đặt' : 'Tạm ngừng' %></span></div>
+                <dl class="owner-detail-list">
+                  <div><dt>Giờ phục vụ</dt><dd><%= item.openTime || '06:00' %>–<%= item.closeTime || '22:00' %></dd></div>
+                  <div><dt>Giá thường / 30 phút</dt><dd><%= formatMoney(item.basePriceVND ?? item.pricePerHour / 2) %></dd></div>
+                  <div><dt>Giá cao điểm / 30 phút</dt><dd><%= formatMoney(item.peakPriceVND ?? item.basePriceVND ?? item.pricePerHour / 2) %></dd></div>
+                  <div><dt>Khoảng cao điểm</dt><dd><%= item.peakStartTime || '17:00' %>–<%= item.peakEndTime || '22:00' %></dd></div>
+                </dl>
+                <a class="demo-button demo-button-secondary" href="/owner/courts/<%= item._id %>/edit">Sửa sân và giá</a>
+              </article>
+            <% } %>
+          </div>
+        </section>
+
+        <section id="requests" aria-labelledby="owner-requests-title">
+          <h2 id="owner-requests-title">Yêu cầu hủy / đổi và khoản hoàn</h2>
+          <p class="demo-muted">Khách gửi yêu cầu; bạn xét lịch và thỏa thuận khoản hoàn/chênh lệch. Ghi nhận tại đây không tự chuyển tiền ngân hàng.</p>
+          <% if (!ownerRequests.length) { %><p class="demo-card owner-empty">Chưa có yêu cầu hủy hoặc đổi sân.</p><% } %>
+          <div class="owner-request-list">
+            <% for (const item of ownerRequests) { %>
+              <% const requestBooking = item.booking && typeof item.booking === 'object' ? item.booking : null; %>
+              <article class="demo-card owner-request-card">
+                <div class="owner-card-heading"><h3><%= item.type === 'CHANGE' ? 'Đổi sân / giờ' : 'Hủy đơn' %> · <%= requestBooking?.publicCode || 'Đơn đặt sân' %></h3><span class="owner-badge <%= item.status === 'PENDING' ? 'owner-badge-waiting' : item.status === 'APPROVED' ? 'owner-badge-success' : '' %>"><%= requestLabels[item.status] || item.status %></span></div>
+                <p><strong>Khách:</strong> <%= requestBooking?.guestName || requestBooking?.user?.fullName || 'Chưa có tên' %> · <%= requestBooking?.guestPhone || 'Chưa có điện thoại' %></p>
+                <p><strong>Lý do:</strong> <%= item.reason || 'Không có ghi chú' %></p>
+                <% if (item.type === 'CHANGE') { %>
+                  <p><strong>Đề nghị chuyển tới:</strong> <%= item.requestedCourt?.name || 'Sân trong cơ sở' %> · <%= item.requestedDate ? formatDate(item.requestedDate) : 'Chưa có ngày' %></p>
+                  <p><strong>Các ô bắt đầu:</strong> <%= Array.isArray(item.requestedTimes) ? item.requestedTimes.join(', ') : '' %></p>
+                  <p class="owner-note">Lịch cũ được giữ đến khi đổi thành công. Backend sẽ kiểm tra lại lịch và giá mới khi bạn duyệt.</p>
+                <% } %>
+                <% if (item.status === 'PENDING') { %>
+                  <div class="owner-review-grid">
+                    <form action="/owner/requests/<%= item._id %>/approve" method="POST" class="demo-form owner-review-form">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                      <label for="refund-<%= item._id %>">Khoản hoàn đã thống nhất (đồng)</label>
+                      <input id="refund-<%= item._id %>" name="refundAmount" type="number" min="0" max="<%= requestBooking?.paymentStatus === 'UNPAID' ? 0 : requestBooking?.totalPrice ?? 0 %>" step="1" value="0" required>
+                      <p class="owner-field-help"><%= requestBooking?.paymentStatus === 'UNPAID' ? 'Đơn chưa ghi nhận thanh toán, khoản hoàn phải là 0.' : 'Nhập 0 nếu không hoàn. Backend kiểm tra mức hoàn theo đơn và giá lịch mới; khoản hợp lệ lớn hơn 0 được lưu là chờ hoàn thủ công.' %></p>
+                      <% if (item.type === 'CHANGE') { %><label class="owner-checkbox" for="extra-<%= item._id %>"><input id="extra-<%= item._id %>" name="extraPaymentConfirmed" type="checkbox" value="yes"><span>Đã thống nhất và xử lý khoản chênh lệch với khách, nếu có</span></label><% } %>
+                      <label for="approve-note-<%= item._id %>">Ghi chú xử lý</label>
+                      <textarea id="approve-note-<%= item._id %>" name="ownerNote" rows="2" maxlength="1000" placeholder="Ghi thỏa thuận với khách"></textarea>
+                      <button class="demo-button" type="submit">Chấp thuận <%= item.type === 'CHANGE' ? 'đổi sân / giờ' : 'hủy đơn' %></button>
+                    </form>
+                    <form action="/owner/requests/<%= item._id %>/reject" method="POST" class="demo-form owner-review-form">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                      <label for="reject-note-<%= item._id %>">Lý do từ chối</label>
+                      <textarea id="reject-note-<%= item._id %>" name="ownerNote" rows="3" maxlength="1000" required></textarea>
+                      <button class="demo-button owner-button-danger" type="submit">Từ chối yêu cầu</button>
+                    </form>
+                  </div>
+                <% } else { %>
+                  <p><strong>Ghi chú chủ sân:</strong> <%= item.ownerNote || 'Không có ghi chú' %></p>
+                  <% if (item.extraAmount > 0) { %><p><strong>Chênh lệch đã ghi nhận:</strong> <%= formatMoney(item.extraAmount) %></p><% } %>
+                <% } %>
+                <% if (item.refundAmount > 0) { %>
+                  <div class="owner-refund-summary">
+                    <p><strong>Khoản hoàn:</strong> <%= formatMoney(item.refundAmount) %> · <%= item.refundStatus === 'TRANSFERRED' ? 'Đã ghi nhận hoàn thủ công' : 'Chờ hoàn thủ công' %></p>
+                    <% if (item.refundStatus === 'PENDING' && item.status === 'APPROVED') { %>
+                      <form action="/owner/requests/<%= item._id %>/refund" method="POST" class="demo-form owner-review-form">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <label for="refund-note-<%= item._id %>">Ghi chú xác nhận đã xử lý khoản hoàn</label>
+                        <textarea id="refund-note-<%= item._id %>" name="ownerNote" rows="2" maxlength="1000" required></textarea>
+                        <p class="owner-field-help">Chỉ ghi nhận sau khi bạn đã xử lý khoản hoàn với khách. Đây không phải lệnh chuyển tiền; giao dịch demo vẫn chỉ là mô phỏng.</p>
+                        <button class="demo-button demo-button-secondary" type="submit">Ghi nhận đã xử lý khoản hoàn</button>
+                      </form>
+                    <% } %>
+                  </div>
+                <% } %>
+              </article>
+            <% } %>
+          </div>
+        </section>
+
+        <section id="bookings" aria-labelledby="owner-bookings-title">
+          <h2 id="owner-bookings-title">Đơn đặt tại cơ sở</h2>
+          <% if (!ownerBookings.length) { %><p class="demo-card owner-empty">Chưa có đơn đặt sân tại cơ sở này.</p><% } %>
+          <div class="owner-booking-list">
+            <% for (const item of ownerBookings) { %>
+              <article class="demo-card owner-booking-card">
+                <div class="owner-card-heading"><h3><%= item.publicCode || 'Đơn cũ' %> · <%= item.court?.name || 'Sân đã thay đổi' %></h3><span class="owner-badge <%= item.status === 'HOLD' ? 'owner-badge-waiting' : item.status === 'CONFIRMED' ? 'owner-badge-success' : '' %>"><%= bookingLabels[item.status] || item.status || 'Đơn cũ' %></span></div>
+                <p><strong><%= item.guestName || item.user?.fullName || 'Khách đặt sân' %></strong> · <%= item.guestPhone || 'Chưa có điện thoại' %> · <%= item.user ? 'Có tài khoản' : 'Khách vãng lai' %></p>
+                <p><strong>Ngày chơi:</strong> <%= item.date ? formatDate(item.date) : 'Chưa có ngày' %></p>
+                <ul class="owner-slot-chips" aria-label="Các ô giờ đã chọn">
+                  <% for (const slot of item.slots || []) { %><li><%= showTime(slot.startAt) %>–<%= showTime(slot.endAt) %> · <%= formatMoney(slot.priceVND) %></li><% } %>
+                </ul>
+                <div class="owner-booking-footer"><strong><%= formatMoney(item.totalPrice || 0) %></strong><span class="<%= item.paymentStatus === 'DEMO_PAID' ? 'owner-demo-payment' : 'demo-muted' %>"><%= paymentLabels[item.paymentStatus] || 'Chưa ghi nhận thanh toán' %></span></div>
+                <a href="/bookings/<%= item._id %>/<%= item.status === 'HOLD' ? 'checkout' : 'receipt' %>" class="owner-receipt-link"><%= item.status === 'CONFIRMED' ? 'Xem phiếu đặt sân' : 'Xem thông tin đơn' %> →</a>
+                <% if (!item.user && ['CONFIRMED', 'LEGACY_RESERVED'].includes(item.status)) { %>
+                  <details class="owner-call-cancel">
+                    <summary>Xử lý hủy khi khách gọi điện</summary>
+                    <p>Đối chiếu mã đơn, tên và số điện thoại với khách trước khi hủy.</p>
+                    <form action="/owner/bookings/<%= item._id %>/cancel" method="POST" class="demo-form owner-review-form">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                      <label for="call-refund-<%= item._id %>">Khoản hoàn đã thống nhất (đồng)</label>
+                      <input id="call-refund-<%= item._id %>" name="refundAmount" type="number" min="0" max="<%= item.paymentStatus === 'UNPAID' ? 0 : item.totalPrice || 0 %>" step="1" value="0" required>
+                      <label for="call-note-<%= item._id %>">Nội dung đã xác minh / thỏa thuận</label>
+                      <textarea id="call-note-<%= item._id %>" name="ownerNote" rows="2" maxlength="1000" required></textarea>
+                      <button class="demo-button owner-button-danger" type="submit">Hủy đơn theo liên hệ của khách</button>
+                    </form>
+                  </details>
+                <% } %>
+              </article>
+            <% } %>
+          </div>
+        </section>
+      <% } %>
+    </main>
+  </div>
+</body>
+</html>

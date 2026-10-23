@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi"><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Sân Thể Thao</title>
+  <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/booking.css">
+  <script src="/assets/js/booking.js" defer></script>
+</head><body class="demo-page"><div class="demo-shell">
+  <%- include('partials/navigation') %>
+  <% const facility = booking.facility || booking.court?.facility; const accessToken = typeof token === 'string' ? token : ''; const query = accessToken ? '?token=' + encodeURIComponent(accessToken) : ''; %>
+  <main>
+    <p class="booking-eyebrow">GIỮ CHỖ / THANH TOÁN</p><h1>Kiểm tra đơn <%= booking.publicCode || booking._id %></h1>
+    <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
+    <div class="booking-layout">
+      <section class="demo-card">
+        <h2><%= booking.court?.name || 'Sân đang cập nhật' %></h2>
+        <p><strong><%= facility?.name || 'Cơ sở thể thao' %></strong><br><%= facility?.address || 'Địa chỉ đang cập nhật' %></p>
+        <dl class="booking-details">
+          <div><dt>Người chơi</dt><dd><%= booking.guestName %></dd></div>
+          <div><dt>Số điện thoại</dt><dd><%= booking.guestPhone %></dd></div>
+          <div><dt>Ngày chơi</dt><dd><%= formatDate(booking.date) %></dd></div>
+          <div><dt>Trạng thái</dt><dd><%= statusLabel(booking.status) %></dd></div>
+        </dl>
+        <ul class="booking-time-list">
+          <% for (const slot of booking.slots || []) { %><li><span><%= formatTime(slot.startAt) %>–<%= formatTime(slot.endAt) %></span><strong><%= formatMoney(slot.priceVND) %></strong></li><% } %>
+        </ul>
+        <p class="booking-total"><span>Tổng số tiền (100%)</span><strong><%= formatMoney(booking.totalPrice) %></strong></p>
+        <p class="demo-muted">Giá từng ô đã được lưu vào đơn. Không có bước đặt cọc.</p>
+      </section>
+      <aside class="demo-card booking-summary">
+        <% if (booking.status === 'HOLD') { %>
+          <h2>Chỗ đang được giữ</h2>
+          <p class="booking-countdown" role="timer" data-hold-until="<%= booking.holdExpiresAt ? new Date(booking.holdExpiresAt).toISOString() : '' %>" aria-live="off">Đang tính thời gian còn lại…</p>
+          <% if (booking.holdExpiresAt) { %><p class="demo-muted">Hạn giữ: <%= formatTime(booking.holdExpiresAt) %> (giờ Việt Nam). Thời hạn được máy chủ kiểm tra.</p><% } %>
+          <img src="/assets/images/qr-minh-hoa.svg" class="booking-qr" width="240" height="270" alt="Hình minh họa vị trí mã QR; chưa thể dùng để thanh toán">
+          <p class="booking-notice">QR minh họa — chưa thể thanh toán. Chưa kết nối ngân hàng và chưa xác minh tiền thật.</p>
+          <% if (demoMode) { %>
+            <form action="/bookings/<%= booking._id %>/demo-payment" method="POST" class="demo-form" id="demo-payment-form">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="token" value="<%= accessToken %>">
+              <button class="demo-button" type="submit" data-demo-payment>Mô phỏng thanh toán toàn bộ</button>
+            </form>
+            <p class="demo-muted">Chỉ dùng để trình bày. Phiếu sau bước này được ghi rõ là thanh toán mô phỏng.</p>
+          <% } else { %><p class="demo-muted">Thanh toán trực tuyến chưa được mở. Vui lòng liên hệ cơ sở; các ô sẽ được giải phóng khi hết hạn giữ.</p><% } %>
+        <% } else { %>
+          <h2><%= statusLabel(booking.status) %></h2><p><%= paymentLabel(booking.paymentStatus) %></p>
+          <a class="demo-button" href="/bookings/<%= booking._id %>/receipt<%= query %>">Xem thông tin / phiếu</a>
+        <% } %>
+        <hr>
+        <p>Liên hệ cơ sở: <% if (facility?.phone) { %><a href="tel:<%= facility.phone %>"><%= facility.phone %></a><% } else { %>Chưa có số liên hệ.<% } %></p>
+        <% if (!booking.user) { %><p class="demo-muted">Khách vãng lai liên hệ chủ sân khi cần hủy/đổi. Hãy lưu phiếu và đường dẫn đơn của bạn.</p><% } %>
+      </aside>
+    </div>
+    <a href="/courts/<%= booking.court?._id || '' %>?date=<%= booking.date %>">← Xem lại lịch sân</a>
+  </main>
+</div></body></html>

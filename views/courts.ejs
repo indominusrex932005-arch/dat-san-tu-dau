@@ -1,36 +1,27 @@
 <!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="vi"><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %> | Sân Thể Thao</title>
-  <link rel="stylesheet" href="/assets/css/app.css">
-  <link rel="stylesheet" href="/assets/css/demo.css">
-</head>
-<body class="demo-page">
-  <div class="demo-shell">
-    <%- include('partials/navigation') %>
-    <main>
-      <h1><%= title %></h1>
-      <p class="demo-muted">Mỗi lượt đặt kéo dài một giờ. Chọn sân để xem ngày và giờ còn trống.</p>
-      <% if (courts.length === 0) { %>
-        <div class="demo-card"><p>Chưa có sân đang hoạt động.</p></div>
-      <% } else { %>
-        <div class="demo-grid">
-          <% for (const court of courts) { %>
-            <article class="demo-card">
-              <h2><%= court.name %></h2>
-              <p><strong>Cơ sở:</strong> <%= court.facility?.name || 'Chưa có thông tin cơ sở' %></p>
-              <% if (court.facility?.address) { %>
-                <p class="demo-muted"><%= court.facility.address %></p>
-              <% } %>
-              <p class="demo-price"><%= formatMoney(court.pricePerHour) %> / giờ</p>
-              <a class="demo-button" href="/courts/<%= court._id %>">Xem giờ và đặt sân</a>
-            </article>
-          <% } %>
-        </div>
-      <% } %>
-    </main>
-  </div>
-</body>
-</html>
+  <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/booking.css">
+</head><body class="demo-page"><div class="demo-shell">
+  <%- include('partials/navigation') %>
+  <main>
+    <p class="booking-eyebrow">CHỌN BUỔI CHƠI CỦA BẠN</p><h1><%= title %></h1>
+    <p class="demo-muted">Chọn nhiều ô 30 phút, kể cả các ô không liền nhau. Đăng nhập hoặc đặt vãng lai đều được.</p>
+    <% if (!courts.length) { %><section class="demo-card"><p>Chưa có sân đang nhận đặt.</p><a href="/facilities">Xem các cơ sở</a></section>
+    <% } else { %><div class="demo-grid">
+      <% for (const court of courts) { %><article class="demo-card booking-court-card">
+        <p class="booking-eyebrow"><%= court.facility?.name || 'Cơ sở thể thao' %></p><h2><%= court.name %></h2>
+        <p class="demo-muted"><%= court.facility?.address || 'Địa chỉ đang cập nhật' %></p>
+        <p>Mở cửa <strong><%= court.openTime || '06:00' %>–<%= court.closeTime || '22:00' %></strong></p>
+        <dl class="booking-prices">
+          <div><dt>Giá thường / 30 phút</dt><dd><%= formatMoney(court.basePriceVND ?? (court.pricePerHour || 0) / 2) %></dd></div>
+          <div><dt>Cao điểm / 30 phút</dt><dd><%= formatMoney(court.peakPriceVND ?? (court.pricePerHour || 0) / 2) %></dd></div>
+        </dl>
+        <p class="demo-muted">Cao điểm <%= court.peakStartTime || '17:00' %>–<%= court.peakEndTime || '22:00' %></p>
+        <% if (!court.facility?.owner || court.facility.owner.ownerStatus !== 'APPROVED' || !court.facility.phone) { %><p class="booking-notice">Đang chờ cấp chủ sân hoặc số liên hệ.</p><% } %>
+        <a class="demo-button" href="/courts/<%= court._id %>">Xem lịch và chọn giờ</a>
+      </article><% } %>
+    </div><% } %>
+  </main>
+</div></body></html>

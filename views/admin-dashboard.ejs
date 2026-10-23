@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Sân Thể Thao</title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/demo.css">
+  <link rel="stylesheet" href="/assets/css/owner.css">
+</head>
+<body class="demo-page">
+  <div class="demo-shell">
+    <%- include('partials/navigation') %>
+    <% const pendingApplications = Array.isArray(applications) ? applications : []; %>
+    <% const availableFacilities = Array.isArray(facilities) ? facilities.filter(item => !item.owner) : []; %>
+    <% const approvedOwners = Array.isArray(owners) ? owners : []; %>
+    <main aria-labelledby="admin-title">
+      <div class="owner-heading"><div><span class="owner-kicker">QUẢN TRỊ NHÓM</span><h1 id="admin-title"><%= title %></h1><p>Duyệt tài khoản chủ sân và cấp cơ sở quản lý.</p></div></div>
+      <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
+      <section class="owner-stat-grid" aria-label="Tổng quan tài khoản">
+        <div class="demo-card owner-stat"><span>Đang chờ duyệt</span><strong><%= pendingApplications.length %></strong></div>
+        <div class="demo-card owner-stat"><span>Chủ sân đã duyệt</span><strong><%= approvedOwners.length %></strong></div>
+        <div class="demo-card owner-stat"><span>Cơ sở chưa cấp chủ sân</span><strong><%= availableFacilities.length %></strong></div>
+      </section>
+      <section aria-labelledby="applications-title">
+        <h2 id="applications-title">Đăng ký chủ sân</h2>
+        <% if (!pendingApplications.length) { %><p class="demo-card owner-empty">Chưa có đăng ký đang chờ duyệt.</p><% } %>
+        <div class="owner-application-grid">
+          <% for (const item of pendingApplications) { %>
+            <article class="demo-card owner-application">
+              <div class="owner-card-heading"><h3><%= item.fullName %></h3><span class="owner-badge owner-badge-waiting">Chờ duyệt</span></div>
+              <dl class="owner-detail-list">
+                <div><dt>Email</dt><dd><%= item.email %></dd></div>
+                <div><dt>Điện thoại</dt><dd><%= item.phone || 'Chưa có thông tin' %></dd></div>
+                <div><dt>Cơ sở đề nghị</dt><dd><%= item.requestedFacilityName || 'Chưa có thông tin' %></dd></div>
+                <div><dt>Địa chỉ đề nghị</dt><dd><%= item.requestedFacilityAddress || 'Chưa có thông tin' %></dd></div>
+              </dl>
+              <form action="/admin/owners/<%= item._id %>/approve" method="POST" class="demo-form owner-review-form">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <label for="facility-<%= item._id %>">Cơ sở sẽ cấp quyền quản lý</label>
+                <select id="facility-<%= item._id %>" name="facilityId">
+                  <option value="">Tạo cơ sở mới theo thông tin đề nghị</option>
+                  <% for (const available of availableFacilities) { %><option value="<%= available._id %>"><%= available.name %> — <%= available.address %></option><% } %>
+                </select>
+                <p class="owner-field-help">Chỉ cấp một cơ sở chưa có chủ sân hoặc tạo cơ sở mới. Người đăng ký không tự nhận quyền cơ sở.</p>
+                <button class="demo-button" type="submit">Duyệt và cấp cơ sở</button>
+              </form>
+              <form action="/admin/owners/<%= item._id %>/reject" method="POST" class="owner-secondary-action">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button class="demo-button owner-button-danger" type="submit">Từ chối đăng ký</button>
+              </form>
+            </article>
+          <% } %>
+        </div>
+      </section>
+      <section class="demo-card" aria-labelledby="approved-title">
+        <h2 id="approved-title">Chủ sân đã được cấp quyền</h2>
+        <% if (!approvedOwners.length) { %><p class="demo-muted">Chưa có chủ sân được duyệt.</p><% } %>
+        <ul class="owner-owner-list">
+          <% for (const item of approvedOwners) { %>
+            <% const assigned = facilities.find(entry => entry.owner && String(entry.owner._id || entry.owner) === String(item._id)); %>
+            <li><div><strong><%= item.fullName %></strong><span><%= item.email %></span></div><span><%= assigned?.name || 'Chưa có cơ sở được cấp' %></span></li>
+          <% } %>
+        </ul>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
