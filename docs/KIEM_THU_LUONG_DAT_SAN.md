@@ -29,10 +29,11 @@ Kiểm tra toàn luồng đặt sân qua trình duyệt, chuẩn bị kịch b�
 | 3 | Khách chọn hai ô **rời nhau**, một ô thường và một ô cao điểm; tổng đúng, ô giữa không bị giữ. | CHỜ |
 | 4 | Hai phiên độc lập tranh cùng ô: chỉ một giữ được; phiên thất bại có phản hồi, không tạo thành công giả. | CHỜ |
 | 5 | HOLD 10 phút: kiểm tra đồng hồ; chờ hết hạn thật trên đơn thử, tải lại để kiểm tra giải phóng và không thanh toán được đơn hết hạn. | CHỜ |
+| 5b | Giữ sân sát giờ bắt đầu (#37): Đặt ô giờ sát mốc hiện tại (còn hợp lệ); kiểm tra hệ thống giữ ô, thời hạn thanh toán hiển thị đúng và không cho phép giữ khi ô đã qua giờ. | CHỜ |
 | 6 | Bấm thanh toán **mô phỏng** trong DEMO_MODE, xem phiếu và In/Lưu PDF; có nhãn mô phỏng, đúng tiền và ô. | CHỜ |
 | 7 | Khách tài khoản gửi yêu cầu hủy/đổi → đúng OWNER duyệt/từ chối; thử đổi vào ô đã chiếm và kiểm tra lịch cũ vẫn giữ. | CHỜ |
 | 8 | Khách vãng lai nhập tên/SĐT → đặt → demo → phiếu; có số liên hệ và link riêng, không có quyền tự hủy/đổi. OWNER xử lý hủy sau cuộc gọi mô phỏng. | CHỜ |
-| 9 | Người khác không xem được phiếu/tài khoản/đơn không thuộc mình. | CHỜ |
+| 9 | Phân quyền xem đơn (#49): Người không có quyền (khách khác không sở hữu đơn, OWNER cơ sở khác) bị chặn với 403; OWNER của đúng cơ sở và ADMIN được phép xem đơn để quản lý/đối soát; khách vãng lai chỉ xem được khi có đúng token riêng. | CHỜ |
 
 ---
 
@@ -42,7 +43,7 @@ Kiểm tra toàn luồng đặt sân qua trình duyệt, chuẩn bị kịch b�
 |---|-----------------|------------|
 | G01 | Bản `main` đã merge PR #26, #27, #28; ghi SHA đối chiếu. | **ĐÃ CÓ** (SHA `7d612bc...`). |
 | G02 | Ứng dụng khởi động được (`npm start`), kết nối DB phát triển thành công, không crash. | **CHỜ** – chưa chạy. |
-| G03 | Có dữ liệu thử: ít nhất một tài khoản khách, một tài khoản OWNER (APPROVED), ít nhất một cơ sở và một sân `isActive:true`. | **CHỜ** – cần bàn giao. |
+| G03 | Có dữ liệu thử: ít nhất một tài khoản khách, một tài khoản OWNER (APPROVED), ít nhất một cơ sở và một sân `active: true`. | **CHỜ** – cần bàn giao. |
 | G04 | Môi trường test riêng biệt; `.env` không commit. | **CHỜ**. |
 
 Nếu thiếu bất kỳ G01–G04 nào, dừng và yêu cầu nhóm trưởng cung cấp.
