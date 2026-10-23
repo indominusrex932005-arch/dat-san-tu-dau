@@ -26,6 +26,12 @@
         <a href="/">Trang chủ</a>
         <a href="/facilities" aria-current="page">Cơ sở</a>
         <a href="/courts">Đặt sân</a>
+        <% if (!currentUser) { %>
+          <a href="/login">Đăng nhập</a>
+          <a href="/register/owner">Dành cho chủ sân</a>
+        <% } else { %>
+          <a href="/my-bookings">Đơn của tôi</a>
+        <% } %>
       </nav>
     </div>
   </header>

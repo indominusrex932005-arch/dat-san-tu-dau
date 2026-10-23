@@ -11,5 +11,9 @@ export default [
     rules: {
       'no-labels': 'error'
     }
+  },
+  {
+    files: ['public/js/**/*.js'],
+    languageOptions: { globals: globals.browser }
   }
 ];

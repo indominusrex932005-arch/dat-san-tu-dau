@@ -1,57 +1,48 @@
 <!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="vi"><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %> | Sân Thể Thao</title>
-  <link rel="stylesheet" href="/assets/css/app.css">
-  <link rel="stylesheet" href="/assets/css/demo.css">
-</head>
-<body class="demo-page">
-  <div class="demo-shell">
-    <%- include('partials/navigation') %>
-    <main class="demo-card demo-narrow">
-      <a href="/courts">← Danh sách sân</a>
-      <h1><%= court.name %></h1>
-      <p><%= court.facility?.name || 'Chưa có thông tin cơ sở' %></p>
-      <% if (court.facility?.address) { %>
-        <p class="demo-muted"><%= court.facility.address %></p>
-      <% } %>
-      <p class="demo-price"><%= formatMoney(court.pricePerHour) %> / lượt một giờ</p>
-      <p class="demo-muted">Khung giờ 06:00–22:00, theo giờ Việt Nam. Mỗi lần đặt chọn một khung một giờ.</p>
-
-      <form action="/courts/<%= court._id %>" method="GET" class="demo-form">
-        <label for="date">Ngày muốn đặt</label>
-        <input type="date" id="date" name="date" value="<%= date %>" required>
-        <button type="submit" class="demo-button demo-button-secondary">Xem giờ trống</button>
-      </form>
-
-      <h2>Giờ còn trống ngày <%= formatDate(date) %></h2>
-      <% if (errorMessage) { %>
-        <p class="demo-error" role="alert"><%= errorMessage %></p>
-      <% } %>
-      <% if (availableHours.length === 0) { %>
-        <p class="demo-status">Ngày này không còn khung giờ đặt được. Bạn hãy chọn ngày khác.</p>
-      <% } else if (!currentUser) { %>
-        <p>Có <%= availableHours.length %> khung giờ còn trống.</p>
-        <a class="demo-button" href="/login">Đăng nhập để đặt sân</a>
-      <% } else { %>
-        <form action="/bookings" method="POST" class="demo-form">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <input type="hidden" name="courtId" value="<%= court._id %>">
-          <input type="hidden" name="date" value="<%= date %>">
-          <label for="startHour">Chọn khung giờ</label>
-          <select id="startHour" name="startHour" required>
-            <option value="">-- Chọn giờ --</option>
-            <% for (const hour of availableHours) { %>
-              <option value="<%= hour %>"><%= String(hour).padStart(2, '0') %>:00–<%= String(hour + 1).padStart(2, '0') %>:00</option>
-            <% } %>
-          </select>
-          <p>Tổng tiền: <strong><%= formatMoney(court.pricePerHour) %></strong></p>
-          <button type="submit" class="demo-button">Xác nhận đặt sân</button>
-        </form>
-      <% } %>
-    </main>
-  </div>
-</body>
-</html>
+  <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/booking.css">
+  <script src="/assets/js/booking.js" defer></script>
+</head><body class="demo-page"><div class="demo-shell">
+  <%- include('partials/navigation') %>
+  <% const receivingBookings = typeof facilityReady !== 'boolean' || facilityReady; %>
+  <main>
+    <a href="/courts">← Danh sách sân</a><p class="booking-eyebrow">CHỌN NGÀY VÀ GIỜ</p><h1><%= court.name %></h1>
+    <p><strong><%= court.facility?.name || 'Cơ sở thể thao' %></strong> · <%= court.facility?.address || 'Địa chỉ đang cập nhật' %></p>
+    <ol class="booking-steps" aria-label="Tiến trình đặt sân"><li aria-current="step">1. Chọn ô</li><li>2. Giữ chỗ / thanh toán</li><li>3. Lưu phiếu</li></ol>
+    <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
+    <% if (!receivingBookings) { %><p class="booking-notice">Cơ sở đang chờ cấp chủ sân hoặc cập nhật số điện thoại, nên chưa nhận đơn mới.</p><% } %>
+    <form action="/courts/<%= court._id %>" method="GET" class="booking-date-form">
+      <label for="date">Ngày chơi</label><input type="date" id="date" name="date" value="<%= date %>" required>
+      <button type="submit" class="demo-button demo-button-secondary">Xem lịch</button>
+    </form>
+    <form action="/bookings" method="POST" id="slot-booking-form" class="booking-layout">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="courtId" value="<%= court._id %>"><input type="hidden" name="date" value="<%= date %>">
+      <section class="demo-card" aria-labelledby="slot-title">
+        <div class="booking-section-heading"><h2 id="slot-title">Lịch ngày <%= formatDate(date) %></h2><span class="booking-badge">30 phút / ô</span></div>
+        <p class="demo-muted">Mở cửa <%= court.openTime || '06:00' %>–<%= court.closeTime || '22:00' %>, theo giờ Việt Nam. Bạn được chọn các ô rời nhau.</p>
+        <div class="booking-legend"><span>○ Trống</span><span>◷ Đang giữ</span><span>✓ Đã đặt</span><span>— Không phục vụ</span></div>
+        <div class="booking-slot-grid">
+          <% for (const slot of slots) { %><label class="booking-slot <%= slot.status.toLowerCase() %>">
+            <input type="checkbox" name="times" value="<%= slot.time %>" data-price="<%= slot.priceVND %>" data-end="<%= slot.endTime %>" <%- slot.status !== 'AVAILABLE' || !receivingBookings ? 'disabled' : '' %>>
+            <span><strong><%= slot.time %>–<%= slot.endTime %></strong><small><%= slot.status === 'AVAILABLE' ? formatMoney(slot.priceVND) : slot.status === 'LOCKED' ? 'Đang giữ chỗ' : slot.status === 'BOOKED' ? 'Đã đặt' : 'Không phục vụ' %></small></span>
+          </label><% } %>
+        </div>
+        <% if (!slots.length || !slots.some(slot => slot.status === 'AVAILABLE')) { %><p class="booking-notice">Ngày này không còn ô trống. Bạn hãy chọn ngày khác.</p><% } %>
+      </section>
+      <aside class="demo-card booking-summary">
+        <p class="booking-eyebrow">THÔNG TIN ĐẶT SÂN</p><h2>Giữ các ô đã chọn</h2>
+        <p id="selection-summary" aria-live="polite">Chưa chọn ô giờ.</p><p class="demo-price" id="selection-total">—</p><div id="selected-slots" class="booking-selected" aria-live="polite"></div>
+        <% if (currentUser) { %><p class="booking-notice">Đơn sẽ được lưu trong tài khoản <strong><%= currentUser.email %></strong>.</p>
+        <% } else { %><p class="booking-notice">Đặt vãng lai bằng tên/SĐT. Bạn được lưu phiếu; khi muốn hủy/đổi, hãy gọi chủ sân. <a href="/login">Đăng nhập</a> để quản lý đơn trong tài khoản.</p><% } %>
+        <div class="demo-form">
+          <label for="guestName">Họ tên người chơi</label><input id="guestName" name="guestName" value="<%= currentUser?.fullName || '' %>" minlength="2" maxlength="100" autocomplete="name" required>
+          <label for="guestPhone">Số điện thoại liên hệ</label><input type="tel" id="guestPhone" name="guestPhone" value="<%= currentUser?.phone || '' %>" maxlength="24" autocomplete="tel" required>
+          <button type="submit" class="demo-button" id="hold-slots">Giữ chỗ 10 phút</button>
+        </div>
+        <p class="demo-muted">Giá cuối cùng do server tính lại. Chỉ giữ các ô bạn chọn; hết hạn chưa xác nhận, các ô được mở lại.</p>
+      </aside>
+    </form>
+  </main>
+</div></body></html>
