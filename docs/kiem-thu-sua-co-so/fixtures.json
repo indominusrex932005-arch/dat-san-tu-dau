@@ -1,0 +1,400 @@
+{
+  "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+  "date": "24/10/2026",
+  "dataSource": "Synthetic local disposable QA41 fixture; credentials/session/CSRF/guest hashes omitted.",
+  "initial": {
+    "users": [
+      {
+        "_id": "6adbe84641d39ef9ddd82881",
+        "fullName": "QA41 Chủ A",
+        "email": "qa41-owner-a@example.test",
+        "role": "OWNER",
+        "ownerStatus": "APPROVED",
+        "createdAt": "2026-10-23T23:05:42.676Z",
+        "updatedAt": "2026-10-23T23:05:42.676Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd82882",
+        "fullName": "QA41 Chủ B",
+        "email": "qa41-owner-b@example.test",
+        "role": "OWNER",
+        "ownerStatus": "APPROVED",
+        "createdAt": "2026-10-23T23:05:42.676Z",
+        "updatedAt": "2026-10-23T23:05:42.676Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd82883",
+        "fullName": "QA41 Chưa cấp cơ sở",
+        "email": "qa41-unassigned@example.test",
+        "role": "OWNER",
+        "ownerStatus": "APPROVED",
+        "createdAt": "2026-10-23T23:05:42.676Z",
+        "updatedAt": "2026-10-23T23:05:42.676Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd82884",
+        "fullName": "QA41 Khách hàng",
+        "email": "qa41-customer@example.test",
+        "role": "CUSTOMER",
+        "ownerStatus": "PENDING",
+        "createdAt": "2026-10-23T23:05:42.677Z",
+        "updatedAt": "2026-10-23T23:05:42.677Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd82885",
+        "fullName": "QA41 Chờ duyệt",
+        "email": "qa41-pending@example.test",
+        "role": "OWNER",
+        "ownerStatus": "PENDING",
+        "createdAt": "2026-10-23T23:05:42.677Z",
+        "updatedAt": "2026-10-23T23:05:42.677Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd82886",
+        "fullName": "QA41 Từ chối",
+        "email": "qa41-rejected@example.test",
+        "role": "OWNER",
+        "ownerStatus": "REJECTED",
+        "createdAt": "2026-10-23T23:05:42.677Z",
+        "updatedAt": "2026-10-23T23:05:42.677Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd82887",
+        "fullName": "QA41 Quản trị",
+        "email": "qa41-admin@example.test",
+        "role": "ADMIN",
+        "ownerStatus": "PENDING",
+        "createdAt": "2026-10-23T23:05:42.677Z",
+        "updatedAt": "2026-10-23T23:05:42.677Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd82888",
+        "fullName": "QA41 Chủ nhận chuyển",
+        "email": "qa41-replacement@example.test",
+        "role": "OWNER",
+        "ownerStatus": "APPROVED",
+        "createdAt": "2026-10-23T23:05:42.677Z",
+        "updatedAt": "2026-10-23T23:05:42.677Z",
+        "__v": 0
+      }
+    ],
+    "facilities": [
+      {
+        "_id": "6adbe84641d39ef9ddd82889",
+        "name": "QA41 Cơ sở A",
+        "address": "41 Đường A, Thành phố kiểm thử",
+        "owner": "6adbe84641d39ef9ddd82881",
+        "phone": "0912345678",
+        "createdAt": "2026-10-23T23:05:42.683Z",
+        "updatedAt": "2026-10-23T23:05:42.683Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd8288a",
+        "name": "QA41 Cơ sở B",
+        "address": "42 Đường B, Thành phố kiểm thử",
+        "owner": "6adbe84641d39ef9ddd82882",
+        "phone": "0987654321",
+        "createdAt": "2026-10-23T23:05:42.683Z",
+        "updatedAt": "2026-10-23T23:05:42.683Z",
+        "__v": 0
+      }
+    ],
+    "courts": [
+      {
+        "_id": "6adbe84641d39ef9ddd8288b",
+        "facility": "6adbe84641d39ef9ddd82889",
+        "name": "QA41 Sân A",
+        "sportType": "BADMINTON",
+        "openTime": "06:00",
+        "closeTime": "22:00",
+        "peakStartTime": "17:00",
+        "peakEndTime": "22:00",
+        "basePriceVND": 50000,
+        "peakPriceVND": 75000,
+        "active": true,
+        "createdAt": "2026-10-23T23:05:42.689Z",
+        "updatedAt": "2026-10-23T23:05:42.689Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd8288c",
+        "facility": "6adbe84641d39ef9ddd8288a",
+        "name": "QA41 Sân B",
+        "sportType": "BADMINTON",
+        "openTime": "06:00",
+        "closeTime": "22:00",
+        "peakStartTime": "17:00",
+        "peakEndTime": "22:00",
+        "basePriceVND": 60000,
+        "peakPriceVND": 80000,
+        "active": true,
+        "createdAt": "2026-10-23T23:05:42.689Z",
+        "updatedAt": "2026-10-23T23:05:42.689Z",
+        "__v": 0
+      }
+    ],
+    "bookings": [
+      {
+        "_id": "6adbe84641d39ef9ddd8288d",
+        "user": "6adbe84641d39ef9ddd82884",
+        "facility": "6adbe84641d39ef9ddd82889",
+        "court": "6adbe84641d39ef9ddd8288b",
+        "publicCode": "QA41-OLD-BOOKING",
+        "guestName": "Khách cũ QA41",
+        "guestPhone": "0901234567",
+        "date": "2026-10-27",
+        "slots": [
+          {
+            "startAt": "2026-10-27T01:00:00.000Z",
+            "endAt": "2026-10-27T01:30:00.000Z",
+            "priceVND": 50000
+          }
+        ],
+        "totalPrice": 50000,
+        "status": "CONFIRMED",
+        "paymentStatus": "DEMO_PAID",
+        "legacy": false,
+        "createdAt": "2026-10-23T23:05:42.696Z",
+        "updatedAt": "2026-10-23T23:05:42.696Z",
+        "__v": 0
+      }
+    ],
+    "locks": [
+      {
+        "_id": "6adbe84641d39ef9ddd8288e",
+        "court": "6adbe84641d39ef9ddd8288b",
+        "booking": "6adbe84641d39ef9ddd8288d",
+        "slotStart": "2026-10-27T01:00:00.000Z",
+        "expiresAt": null,
+        "createdAt": "2026-10-23T23:05:42.700Z",
+        "updatedAt": "2026-10-23T23:05:42.700Z",
+        "__v": 0
+      }
+    ],
+    "payments": [],
+    "requests": []
+  },
+  "final": {
+    "users": [
+      {
+        "_id": "6adbe84641d39ef9ddd82881",
+        "fullName": "QA41 Chủ A",
+        "email": "qa41-owner-a@example.test",
+        "role": "OWNER",
+        "ownerStatus": "APPROVED",
+        "createdAt": "2026-10-23T23:05:42.676Z",
+        "updatedAt": "2026-10-23T23:05:43.744Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd82882",
+        "fullName": "QA41 Chủ B",
+        "email": "qa41-owner-b@example.test",
+        "role": "OWNER",
+        "ownerStatus": "APPROVED",
+        "createdAt": "2026-10-23T23:05:42.676Z",
+        "updatedAt": "2026-10-23T23:05:42.676Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd82883",
+        "fullName": "QA41 Chưa cấp cơ sở",
+        "email": "qa41-unassigned@example.test",
+        "role": "OWNER",
+        "ownerStatus": "APPROVED",
+        "createdAt": "2026-10-23T23:05:42.676Z",
+        "updatedAt": "2026-10-23T23:05:42.676Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd82884",
+        "fullName": "QA41 Khách hàng",
+        "email": "qa41-customer@example.test",
+        "role": "CUSTOMER",
+        "ownerStatus": "PENDING",
+        "createdAt": "2026-10-23T23:05:42.677Z",
+        "updatedAt": "2026-10-23T23:05:42.677Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd82885",
+        "fullName": "QA41 Chờ duyệt",
+        "email": "qa41-pending@example.test",
+        "role": "OWNER",
+        "ownerStatus": "PENDING",
+        "createdAt": "2026-10-23T23:05:42.677Z",
+        "updatedAt": "2026-10-23T23:05:42.677Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd82886",
+        "fullName": "QA41 Từ chối",
+        "email": "qa41-rejected@example.test",
+        "role": "OWNER",
+        "ownerStatus": "REJECTED",
+        "createdAt": "2026-10-23T23:05:42.677Z",
+        "updatedAt": "2026-10-23T23:05:42.677Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd82887",
+        "fullName": "QA41 Quản trị",
+        "email": "qa41-admin@example.test",
+        "role": "ADMIN",
+        "ownerStatus": "PENDING",
+        "createdAt": "2026-10-23T23:05:42.677Z",
+        "updatedAt": "2026-10-23T23:05:42.677Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd82888",
+        "fullName": "QA41 Chủ nhận chuyển",
+        "email": "qa41-replacement@example.test",
+        "role": "OWNER",
+        "ownerStatus": "APPROVED",
+        "createdAt": "2026-10-23T23:05:42.677Z",
+        "updatedAt": "2026-10-23T23:05:42.677Z",
+        "__v": 0
+      }
+    ],
+    "facilities": [
+      {
+        "_id": "6adbe84641d39ef9ddd82889",
+        "name": "QA41 Tên cập nhật",
+        "address": "41 Địa chỉ mới",
+        "owner": "6adbe84641d39ef9ddd82881",
+        "phone": "0987654321",
+        "createdAt": "2026-10-23T23:05:42.683Z",
+        "updatedAt": "2026-10-23T23:05:43.833Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd8288a",
+        "name": "QA41 Cơ sở B",
+        "address": "42 Đường B, Thành phố kiểm thử",
+        "owner": "6adbe84641d39ef9ddd82882",
+        "phone": "0987654321",
+        "createdAt": "2026-10-23T23:05:42.683Z",
+        "updatedAt": "2026-10-23T23:05:42.683Z",
+        "__v": 0
+      }
+    ],
+    "courts": [
+      {
+        "_id": "6adbe84641d39ef9ddd8288b",
+        "facility": "6adbe84641d39ef9ddd82889",
+        "name": "QA41 Sân A",
+        "sportType": "BADMINTON",
+        "openTime": "06:00",
+        "closeTime": "22:00",
+        "peakStartTime": "17:00",
+        "peakEndTime": "22:00",
+        "basePriceVND": 50000,
+        "peakPriceVND": 75000,
+        "active": true,
+        "createdAt": "2026-10-23T23:05:42.689Z",
+        "updatedAt": "2026-10-23T23:05:42.689Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84641d39ef9ddd8288c",
+        "facility": "6adbe84641d39ef9ddd8288a",
+        "name": "QA41 Sân B",
+        "sportType": "BADMINTON",
+        "openTime": "06:00",
+        "closeTime": "22:00",
+        "peakStartTime": "17:00",
+        "peakEndTime": "22:00",
+        "basePriceVND": 60000,
+        "peakPriceVND": 80000,
+        "active": true,
+        "createdAt": "2026-10-23T23:05:42.689Z",
+        "updatedAt": "2026-10-23T23:05:42.689Z",
+        "__v": 0
+      }
+    ],
+    "bookings": [
+      {
+        "_id": "6adbe84641d39ef9ddd8288d",
+        "user": "6adbe84641d39ef9ddd82884",
+        "facility": "6adbe84641d39ef9ddd82889",
+        "court": "6adbe84641d39ef9ddd8288b",
+        "publicCode": "QA41-OLD-BOOKING",
+        "guestName": "Khách cũ QA41",
+        "guestPhone": "0901234567",
+        "date": "2026-10-27",
+        "slots": [
+          {
+            "startAt": "2026-10-27T01:00:00.000Z",
+            "endAt": "2026-10-27T01:30:00.000Z",
+            "priceVND": 50000
+          }
+        ],
+        "totalPrice": 50000,
+        "status": "CONFIRMED",
+        "paymentStatus": "DEMO_PAID",
+        "legacy": false,
+        "createdAt": "2026-10-23T23:05:42.696Z",
+        "updatedAt": "2026-10-23T23:05:42.696Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84741d39ef9ddd82890",
+        "user": null,
+        "facility": "6adbe84641d39ef9ddd82889",
+        "court": "6adbe84641d39ef9ddd8288b",
+        "publicCode": "DS-8B2D1E1CAF2D",
+        "guestName": "Khách mới QA41",
+        "guestPhone": "0901234567",
+        "date": "2026-10-27",
+        "slots": [
+          {
+            "startAt": "2026-10-27T02:00:00.000Z",
+            "endAt": "2026-10-27T02:30:00.000Z",
+            "priceVND": 50000
+          }
+        ],
+        "totalPrice": 50000,
+        "status": "HOLD",
+        "paymentStatus": "UNPAID",
+        "holdExpiresAt": "2026-10-23T23:15:43.855Z",
+        "legacy": false,
+        "createdAt": "2026-10-23T23:05:43.863Z",
+        "updatedAt": "2026-10-23T23:05:43.863Z",
+        "__v": 0
+      }
+    ],
+    "locks": [
+      {
+        "_id": "6adbe84641d39ef9ddd8288e",
+        "court": "6adbe84641d39ef9ddd8288b",
+        "booking": "6adbe84641d39ef9ddd8288d",
+        "slotStart": "2026-10-27T01:00:00.000Z",
+        "expiresAt": null,
+        "createdAt": "2026-10-23T23:05:42.700Z",
+        "updatedAt": "2026-10-23T23:05:42.700Z",
+        "__v": 0
+      },
+      {
+        "_id": "6adbe84741d39ef9ddd82892",
+        "court": "6adbe84641d39ef9ddd8288b",
+        "booking": "6adbe84741d39ef9ddd82890",
+        "slotStart": "2026-10-27T02:00:00.000Z",
+        "expiresAt": "2026-10-23T23:15:43.855Z",
+        "__v": 0,
+        "createdAt": "2026-10-23T23:05:43.865Z",
+        "updatedAt": "2026-10-23T23:05:43.865Z"
+      }
+    ],
+    "payments": [],
+    "requests": []
+  }
+}
