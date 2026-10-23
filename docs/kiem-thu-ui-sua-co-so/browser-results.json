@@ -1,0 +1,418 @@
+{
+  "testedUTC": "2026-10-23T23:29:02.585Z",
+  "browser": "ChatGPT in-app browser (Chromium)",
+  "applicationBaseSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+  "results": [
+    {
+      "label": "mobile-normal",
+      "action": "/owner/facilities/6adbed03339499db58573b3c",
+      "columns": "346.667px",
+      "csrfPresent": true,
+      "customScriptCount": 0,
+      "documentWidth": 375,
+      "error": null,
+      "fieldsInBounds": true,
+      "focus": {
+        "id": "",
+        "style": "none",
+        "width": "2.66667px"
+      },
+      "method": "post",
+      "names": [
+        "_csrf",
+        "name",
+        "address",
+        "phone"
+      ],
+      "noHorizontalOverflow": true,
+      "stylesheetLoaded": true,
+      "url": "/owner/facilities/6adbed03339499db58573b3c/edit",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "label": "mobile-tab-address",
+      "action": "/owner/facilities/6adbed03339499db58573b3c",
+      "columns": "362px",
+      "csrfPresent": true,
+      "customScriptCount": 0,
+      "documentWidth": 390,
+      "error": null,
+      "fieldsInBounds": true,
+      "focus": {
+        "id": "address",
+        "style": "solid",
+        "width": "2.66667px"
+      },
+      "method": "post",
+      "names": [
+        "_csrf",
+        "name",
+        "address",
+        "phone"
+      ],
+      "noHorizontalOverflow": true,
+      "stylesheetLoaded": true,
+      "url": "/owner/facilities/6adbed03339499db58573b3c/edit",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "label": "mobile-tab-phone",
+      "action": "/owner/facilities/6adbed03339499db58573b3c",
+      "columns": "362px",
+      "csrfPresent": true,
+      "customScriptCount": 0,
+      "documentWidth": 390,
+      "error": null,
+      "fieldsInBounds": true,
+      "focus": {
+        "id": "phone",
+        "style": "solid",
+        "width": "2.66667px"
+      },
+      "method": "post",
+      "names": [
+        "_csrf",
+        "name",
+        "address",
+        "phone"
+      ],
+      "noHorizontalOverflow": true,
+      "stylesheetLoaded": true,
+      "url": "/owner/facilities/6adbed03339499db58573b3c/edit",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "label": "mobile-shift-tab-address",
+      "action": "/owner/facilities/6adbed03339499db58573b3c",
+      "columns": "362px",
+      "csrfPresent": true,
+      "customScriptCount": 0,
+      "documentWidth": 390,
+      "error": null,
+      "fieldsInBounds": true,
+      "focus": {
+        "id": "address",
+        "style": "solid",
+        "width": "2.66667px"
+      },
+      "method": "post",
+      "names": [
+        "_csrf",
+        "name",
+        "address",
+        "phone"
+      ],
+      "noHorizontalOverflow": true,
+      "stylesheetLoaded": true,
+      "url": "/owner/facilities/6adbed03339499db58573b3c/edit",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "label": "mobile-long-150-500",
+      "action": "/owner/facilities/6adbed03339499db58573b3c",
+      "columns": "346.667px",
+      "csrfPresent": true,
+      "customScriptCount": 0,
+      "documentWidth": 375,
+      "error": null,
+      "fieldsInBounds": true,
+      "focus": {
+        "id": "phone",
+        "style": "solid",
+        "width": "2.66667px"
+      },
+      "method": "post",
+      "names": [
+        "_csrf",
+        "name",
+        "address",
+        "phone"
+      ],
+      "noHorizontalOverflow": true,
+      "stylesheetLoaded": true,
+      "url": "/owner/facilities/6adbed03339499db58573b3c/edit",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "label": "mobile-server-error",
+      "action": "/owner/facilities/6adbed03339499db58573b3c",
+      "columns": "346.667px",
+      "csrfPresent": true,
+      "customScriptCount": 0,
+      "documentWidth": 375,
+      "error": "Chưa lưu được thay đổi\n          Số điện thoại cơ sở bắt buộc có 10 chữ số Việt Nam, bắt đầu bằng 0 hoặc +84.\n          Kiểm tra lại thông tin bên dưới và lưu lại. Các nội dung bạn vừa nhập được giữ trong form.",
+      "fieldsInBounds": true,
+      "focus": {
+        "id": "",
+        "style": "none",
+        "width": "2.66667px"
+      },
+      "method": "post",
+      "names": [
+        "_csrf",
+        "name",
+        "address",
+        "phone"
+      ],
+      "noHorizontalOverflow": true,
+      "stylesheetLoaded": true,
+      "url": "/owner/facilities/6adbed03339499db58573b3c",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "label": "desktop-normal",
+      "action": "/owner/facilities/6adbed03339499db58573b3c",
+      "columns": "698.448px 377.552px",
+      "csrfPresent": true,
+      "customScriptCount": 0,
+      "documentWidth": 1351,
+      "error": null,
+      "fieldsInBounds": true,
+      "focus": {
+        "id": "",
+        "style": "none",
+        "width": "2.66667px"
+      },
+      "method": "post",
+      "names": [
+        "_csrf",
+        "name",
+        "address",
+        "phone"
+      ],
+      "noHorizontalOverflow": true,
+      "stylesheetLoaded": true,
+      "url": "/owner/facilities/6adbed03339499db58573b3c/edit",
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      }
+    },
+    {
+      "label": "desktop-tab-address",
+      "action": "/owner/facilities/6adbed03339499db58573b3c",
+      "columns": "698.448px 377.552px",
+      "csrfPresent": true,
+      "customScriptCount": 0,
+      "documentWidth": 1366,
+      "error": null,
+      "fieldsInBounds": true,
+      "focus": {
+        "id": "address",
+        "style": "solid",
+        "width": "2.66667px"
+      },
+      "method": "post",
+      "names": [
+        "_csrf",
+        "name",
+        "address",
+        "phone"
+      ],
+      "noHorizontalOverflow": true,
+      "stylesheetLoaded": true,
+      "url": "/owner/facilities/6adbed03339499db58573b3c/edit",
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      }
+    },
+    {
+      "label": "desktop-tab-phone",
+      "action": "/owner/facilities/6adbed03339499db58573b3c",
+      "columns": "698.448px 377.552px",
+      "csrfPresent": true,
+      "customScriptCount": 0,
+      "documentWidth": 1366,
+      "error": null,
+      "fieldsInBounds": true,
+      "focus": {
+        "id": "phone",
+        "style": "solid",
+        "width": "2.66667px"
+      },
+      "method": "post",
+      "names": [
+        "_csrf",
+        "name",
+        "address",
+        "phone"
+      ],
+      "noHorizontalOverflow": true,
+      "stylesheetLoaded": true,
+      "url": "/owner/facilities/6adbed03339499db58573b3c/edit",
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      }
+    },
+    {
+      "label": "desktop-shift-tab-address",
+      "action": "/owner/facilities/6adbed03339499db58573b3c",
+      "columns": "698.448px 377.552px",
+      "csrfPresent": true,
+      "customScriptCount": 0,
+      "documentWidth": 1366,
+      "error": null,
+      "fieldsInBounds": true,
+      "focus": {
+        "id": "address",
+        "style": "solid",
+        "width": "2.66667px"
+      },
+      "method": "post",
+      "names": [
+        "_csrf",
+        "name",
+        "address",
+        "phone"
+      ],
+      "noHorizontalOverflow": true,
+      "stylesheetLoaded": true,
+      "url": "/owner/facilities/6adbed03339499db58573b3c/edit",
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      }
+    },
+    {
+      "label": "desktop-long-150-500",
+      "action": "/owner/facilities/6adbed03339499db58573b3c",
+      "columns": "698.448px 377.552px",
+      "csrfPresent": true,
+      "customScriptCount": 0,
+      "documentWidth": 1351,
+      "error": null,
+      "fieldsInBounds": true,
+      "focus": {
+        "id": "phone",
+        "style": "solid",
+        "width": "2.66667px"
+      },
+      "method": "post",
+      "names": [
+        "_csrf",
+        "name",
+        "address",
+        "phone"
+      ],
+      "noHorizontalOverflow": true,
+      "stylesheetLoaded": true,
+      "url": "/owner/facilities/6adbed03339499db58573b3c/edit",
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      }
+    },
+    {
+      "label": "desktop-server-error",
+      "action": "/owner/facilities/6adbed03339499db58573b3c",
+      "columns": "698.448px 377.552px",
+      "csrfPresent": true,
+      "customScriptCount": 0,
+      "documentWidth": 1351,
+      "error": "Chưa lưu được thay đổi\n          Số điện thoại cơ sở bắt buộc có 10 chữ số Việt Nam, bắt đầu bằng 0 hoặc +84.\n          Kiểm tra lại thông tin bên dưới và lưu lại. Các nội dung bạn vừa nhập được giữ trong form.",
+      "fieldsInBounds": true,
+      "focus": {
+        "id": "",
+        "style": "none",
+        "width": "2.66667px"
+      },
+      "method": "post",
+      "names": [
+        "_csrf",
+        "name",
+        "address",
+        "phone"
+      ],
+      "noHorizontalOverflow": true,
+      "stylesheetLoaded": true,
+      "url": "/owner/facilities/6adbed03339499db58573b3c",
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      }
+    },
+    {
+      "label": "desktop-escaping",
+      "addressRetained": true,
+      "formDescribesError": true,
+      "injectedNodes": 0,
+      "nameRetained": true
+    },
+    {
+      "label": "desktop-save",
+      "name": true,
+      "phoneNormalized": true,
+      "url": "/owner"
+    },
+    {
+      "label": "public-facilities-1366",
+      "cards": 2,
+      "editLinks": 0,
+      "noHorizontalOverflow": true,
+      "updatedName": true,
+      "viewport": 1366,
+      "writeForms": 0
+    },
+    {
+      "label": "public-facilities-390",
+      "cards": 2,
+      "editLinks": 0,
+      "noHorizontalOverflow": true,
+      "updatedName": true,
+      "viewport": 390,
+      "writeForms": 0
+    },
+    {
+      "label": "mobile-client-width-long",
+      "addressLength": 500,
+      "clientWidth": 375,
+      "controlsInClientBounds": true,
+      "focus": "address",
+      "nameLength": 150,
+      "noHorizontalOverflow": true,
+      "scrollWidth": 375,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "label": "mobile-escaping-second-pass",
+      "addressRetained": true,
+      "formDescribesError": true,
+      "injectedNodes": 0,
+      "nameRetained": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "label": "desktop-client-width-error",
+      "clientWidth": 1351,
+      "noHorizontalOverflow": true,
+      "scrollWidth": 1351,
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      }
+    }
+  ]
+}
