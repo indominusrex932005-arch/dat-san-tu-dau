@@ -6,31 +6,61 @@
   <title><%= title %> | Sân Thể Thao</title>
   <link rel="stylesheet" href="/assets/css/app.css">
   <link rel="stylesheet" href="/assets/css/demo.css">
+  <link rel="stylesheet" href="/assets/css/courts.css">
 </head>
-<body class="demo-page">
+<body class="demo-page courts-page">
+  <a class="courts-skip-link" href="#courts-main">Đến danh sách sân</a>
   <div class="demo-shell">
     <%- include('partials/navigation') %>
-    <main>
-      <h1><%= title %></h1>
-      <p class="demo-muted">Mỗi lượt đặt kéo dài một giờ. Chọn sân để xem ngày và giờ còn trống.</p>
+    <main id="courts-main" class="courts-main" tabindex="-1">
+      <section class="courts-intro" aria-labelledby="courts-title">
+        <div>
+          <p class="courts-eyebrow">Sân Thể Thao / Đặt sân</p>
+          <h1 id="courts-title"><%= title %></h1>
+          <p class="courts-description">Mỗi lượt đặt kéo dài một giờ. Chọn sân để xem ngày và giờ còn trống.</p>
+        </div>
+        <p class="courts-count"><strong><%= courts.length %></strong> sân trong danh sách</p>
+      </section>
       <% if (courts.length === 0) { %>
-        <div class="demo-card"><p>Chưa có sân đang hoạt động.</p></div>
+        <section class="courts-empty" aria-labelledby="courts-empty-title">
+          <span class="courts-symbol" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><rect x="7" y="10" width="34" height="28" rx="2"/><path d="M24 10v28M7 24h34"/><circle cx="24" cy="24" r="7"/></svg>
+          </span>
+          <h2 id="courts-empty-title">Chưa có sân đang hoạt động.</h2>
+          <p>Bạn có thể xem các cơ sở hoặc quay lại danh sách sân sau.</p>
+          <a class="courts-button courts-button-outline" href="/facilities">Xem cơ sở <span aria-hidden="true">→</span></a>
+        </section>
       <% } else { %>
-        <div class="demo-grid">
+        <div class="courts-grid">
           <% for (const court of courts) { %>
-            <article class="demo-card">
-              <h2><%= court.name %></h2>
-              <p><strong>Cơ sở:</strong> <%= court.facility?.name || 'Chưa có thông tin cơ sở' %></p>
-              <% if (court.facility?.address) { %>
-                <p class="demo-muted"><%= court.facility.address %></p>
-              <% } %>
-              <p class="demo-price"><%= formatMoney(court.pricePerHour) %> / giờ</p>
-              <a class="demo-button" href="/courts/<%= court._id %>">Xem giờ và đặt sân</a>
+            <article class="courts-card">
+              <div class="courts-card-heading">
+                <span class="courts-symbol" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" fill="none"><rect x="7" y="10" width="34" height="28" rx="2"/><path d="M24 10v28M7 24h34"/><circle cx="24" cy="24" r="7"/></svg>
+                </span>
+                <h2><%= court.name %></h2>
+              </div>
+              <div class="courts-location">
+                <p class="courts-label">Cơ sở</p>
+                <p class="courts-facility"><%= court.facility?.name || 'Chưa có thông tin cơ sở' %></p>
+                <% if (court.facility?.address) { %>
+                  <p class="courts-address"><%= court.facility.address %></p>
+                <% } %>
+              </div>
+              <div class="courts-card-bottom">
+                <p class="courts-price"><strong><%= formatMoney(court.pricePerHour) %></strong><span>/ giờ</span></p>
+                <a class="courts-button" href="/courts/<%= court._id %>" aria-label="Xem giờ và đặt sân: <%= court.name %>">Xem giờ và đặt sân <span aria-hidden="true">→</span></a>
+              </div>
             </article>
           <% } %>
         </div>
       <% } %>
     </main>
+    <footer class="courts-footer">
+      <a class="courts-footer-brand" href="/">Sân Thể Thao</a>
+      <p>Tìm sân, chọn giờ, sẵn sàng vận động.</p>
+      <a href="/facilities">Danh sách cơ sở <span aria-hidden="true">↗</span></a>
+    </footer>
   </div>
 </body>
 </html>
