@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Sân Thể Thao</title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/demo.css">
+  <link rel="stylesheet" href="/assets/css/owner.css">
+</head>
+<body class="demo-page">
+  <div class="demo-shell">
+    <%- include('partials/navigation') %>
+    <% const ownerApplication = typeof application === 'object' && application ? application : currentUser; %>
+    <% const rejected = ownerApplication?.ownerStatus === 'REJECTED'; %>
+    <main class="demo-card demo-narrow owner-pending" aria-labelledby="pending-title">
+      <span class="owner-kicker">TÀI KHOẢN CHỦ SÂN</span>
+      <h1 id="pending-title"><%= rejected ? 'Yêu cầu chưa được chấp thuận' : 'Đang chờ duyệt tài khoản' %></h1>
+      <p><%= rejected ? 'Quản trị viên chưa cấp quyền quản lý cho tài khoản này. Bạn có thể liên hệ nhóm trưởng để kiểm tra thông tin đăng ký.' : 'Thông tin đăng ký đã được lưu. Nhóm trưởng sẽ kiểm tra và cấp cơ sở trước khi bạn quản lý sân, giá và đơn đặt.' %></p>
+      <dl class="owner-detail-list">
+        <div><dt>Người đăng ký</dt><dd><%= ownerApplication?.fullName || 'Chưa có thông tin' %></dd></div>
+        <div><dt>Email</dt><dd><%= ownerApplication?.email || 'Chưa có thông tin' %></dd></div>
+        <div><dt>Cơ sở đề nghị</dt><dd><%= ownerApplication?.requestedFacilityName || 'Chưa có thông tin' %></dd></div>
+        <div><dt>Địa chỉ đề nghị</dt><dd><%= ownerApplication?.requestedFacilityAddress || 'Chưa có thông tin' %></dd></div>
+        <div><dt>Điện thoại</dt><dd><%= ownerApplication?.phone || 'Chưa có thông tin' %></dd></div>
+      </dl>
+      <p class="owner-note">Quyền quản lý chỉ được cấp sau khi duyệt. Mỗi tài khoản chủ sân quản lý cơ sở được giao.</p>
+      <div class="demo-actions">
+        <a class="demo-button" href="/owner">Kiểm tra trạng thái</a>
+        <a class="demo-button demo-button-secondary" href="/courts">Xem sân</a>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

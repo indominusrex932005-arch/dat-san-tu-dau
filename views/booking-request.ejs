@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi"><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Sân Thể Thao</title>
+  <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/booking.css">
+  <script src="/assets/js/booking.js" defer></script>
+</head><body class="demo-page"><div class="demo-shell">
+  <%- include('partials/navigation') %>
+  <main class="demo-card booking-request-form">
+    <a href="/my-bookings">← Đơn của tôi</a><h1>Gửi yêu cầu hủy / đổi</h1>
+    <p>Đơn <strong><%= booking.publicCode || booking._id %></strong> · <%= booking.court?.name || 'Sân' %> · <%= formatDate(booking.date) %></p>
+    <p class="booking-notice">Yêu cầu áp dụng cho toàn bộ đơn. Lịch cũ vẫn được giữ cho đến khi chủ sân xử lý. Chủ sân sẽ trao đổi về tiền chênh lệch hoặc hoàn tiền thủ công.</p>
+    <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
+    <form action="/bookings/<%= booking._id %>/requests" method="POST" class="demo-form" id="booking-request-form">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <label for="requestType">Loại yêu cầu</label>
+      <select name="type" id="requestType" required><option value="CANCEL">Hủy toàn bộ đơn</option><option value="CHANGE">Đổi ngày / ô giờ / sân trong cùng cơ sở</option></select>
+      <fieldset id="request-change-fields">
+        <legend>Thông tin muốn đổi</legend>
+        <label for="requestedCourt">Sân mong muốn</label>
+        <select name="requestedCourt" id="requestedCourt">
+          <% for (const court of courts) { %><option value="<%= court._id %>" data-open="<%= court.openTime || '06:00' %>" data-close="<%= court.closeTime || '22:00' %>" <%- String(court._id) === String(booking.court?._id || booking.court) ? 'selected' : '' %>><%= court.name %></option><% } %>
+        </select>
+        <label for="requestedDate">Ngày mong muốn</label><input type="date" name="requestedDate" id="requestedDate" value="<%= booking.date %>">
+        <p class="demo-muted">Chọn các ô 30 phút. Chủ sân sẽ kiểm tra lịch trống và giá tại thời điểm duyệt.</p>
+        <div class="booking-slot-grid booking-request-times">
+          <% for (let minute = 0; minute < 24 * 60; minute += 30) { const time = String(Math.floor(minute / 60)).padStart(2,'0') + ':' + String(minute % 60).padStart(2,'0'); %>
+            <label class="booking-slot available" data-request-time="<%= time %>"><input type="checkbox" name="requestedTimes" value="<%= time %>"><span><strong><%= time %></strong></span></label>
+          <% } %>
+        </div>
+      </fieldset>
+      <label for="reason">Lý do / nội dung trao đổi</label><textarea id="reason" name="reason" rows="4" maxlength="1000" required></textarea>
+      <button type="submit" class="demo-button">Gửi yêu cầu cho chủ sân</button>
+    </form>
+  </main>
+</div></body></html>

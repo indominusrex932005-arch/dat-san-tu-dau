@@ -8,10 +8,14 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --test --test-concurrency=1 tests/*.test.js",
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "check": "npm run lint && node scripts/check-views.js",
+    "seed": "node scripts/tao-du-lieu-demo.js",
+    "migrate": "node scripts/chuyen-du-lieu-v2.js",
+    "admin:grant": "node scripts/cap-quyen-admin.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

@@ -13,10 +13,11 @@ try {
     { $setOnInsert: { name: 'Cơ sở Demo MVC', address: 'Địa chỉ minh họa phục vụ bài nhóm', phone: '' } },
     { upsert: true, returnDocument: 'after', runValidators: true }
   );
-  for (const [name, pricePerHour] of [['Sân cầu lông 1', 100000], ['Sân cầu lông 2', 120000]]) {
+  for (const [name, basePriceVND, peakPriceVND] of [['Sân cầu lông 1', 50000, 75000], ['Sân cầu lông 2', 60000, 90000]]) {
     await Court.findOneAndUpdate(
       { facility: facility._id, name },
-      { $setOnInsert: { facility: facility._id, name, pricePerHour, active: true } },
+      { $setOnInsert: { facility: facility._id, name, basePriceVND, peakPriceVND,
+        openTime: '06:00', closeTime: '22:00', peakStartTime: '17:00', peakEndTime: '22:00', active: true } },
       { upsert: true, returnDocument: 'after', runValidators: true }
     );
   }

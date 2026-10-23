@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi"><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phiếu <%= booking.publicCode || booking._id %> | Sân Thể Thao</title>
+  <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/booking.css">
+  <script src="/assets/js/receipt.js" defer></script>
+</head><body class="demo-page"><div class="demo-shell">
+  <%- include('partials/navigation') %>
+  <% const facility = booking.facility || booking.court?.facility; const accessToken = typeof token === 'string' ? token : ''; const query = accessToken ? '?token=' + encodeURIComponent(accessToken) : ''; const owned = currentUser && booking.user && String(booking.user._id || booking.user) === String(currentUser._id); %>
+  <main class="booking-receipt-wrap">
+    <div class="booking-receipt-actions no-print">
+      <a href="<%= currentUser ? '/my-bookings' : '/courts' %>">← <%= currentUser ? 'Đơn của tôi' : 'Xem sân' %></a>
+      <button type="button" class="demo-button" data-print-receipt>In / Lưu PDF</button>
+    </div>
+    <article class="demo-card booking-receipt" aria-labelledby="receipt-title">
+      <p class="booking-eyebrow">SÂN THỂ THAO</p><h1 id="receipt-title">Phiếu thông tin đặt sân</h1>
+      <p class="booking-code">Mã đơn: <strong><%= booking.publicCode || booking._id %></strong></p>
+      <p><span class="booking-badge"><%= statusLabel(booking.status) %></span></p>
+      <% if (booking.paymentStatus === 'DEMO_PAID') { %>
+        <p class="booking-notice">THANH TOÁN MÔ PHỎNG — Phiếu dùng để trình bày, chưa xác minh giao dịch ngân hàng hoặc nhận tiền thật.</p>
+      <% } else if (booking.paymentStatus !== 'PAID') { %>
+        <p class="booking-notice"><%= booking.legacy ? 'Đơn từ phiên bản cũ, chưa có thông tin xác nhận tiền.' : 'Chưa ghi nhận thanh toán. Phiếu này chưa xác nhận đã nhận đủ tiền.' %></p>
+      <% } %>
+      <dl class="booking-details">
+        <div><dt>Người chơi</dt><dd><%= booking.guestName || currentUser?.fullName || 'Đang cập nhật' %></dd></div>
+        <div><dt>SĐT người chơi</dt><dd><%= booking.guestPhone || 'Chưa cập nhật' %></dd></div>
+        <div><dt>Cơ sở</dt><dd><%= facility?.name || 'Cơ sở đang cập nhật' %></dd></div>
+        <div><dt>Địa chỉ</dt><dd><%= facility?.address || 'Đang cập nhật' %></dd></div>
+        <div><dt>Sân</dt><dd><%= booking.court?.name || 'Sân đang cập nhật' %></dd></div>
+        <div><dt>Ngày chơi</dt><dd><%= formatDate(booking.date) %></dd></div>
+        <div><dt>Thanh toán</dt><dd><%= paymentLabel(booking.paymentStatus) %></dd></div>
+      </dl>
+      <h2>Các ô đã chọn</h2>
+      <ul class="booking-time-list">
+        <% for (const slot of booking.slots || []) { %><li><span><%= formatTime(slot.startAt) %>–<%= formatTime(slot.endAt) %></span><strong><%= formatMoney(slot.priceVND) %></strong></li><% } %>
+      </ul>
+      <p class="booking-total"><span>Tổng giá đơn</span><strong><%= formatMoney(booking.totalPrice) %></strong></p>
+      <p><strong>Điện thoại cơ sở:</strong> <% if (facility?.phone) { %><a href="tel:<%= facility.phone %>"><%= facility.phone %></a><% } else { %>Chưa có số liên hệ.<% } %></p>
+      <p class="demo-muted"><%= booking.user ? 'Khách có tài khoản có thể gửi yêu cầu hủy/đổi; chủ sân sẽ xem xét và xử lý.' : 'Khách vãng lai cần gọi chủ sân khi muốn hủy/đổi. Mã đơn giúp tra cứu, không tự cấp quyền hủy đơn.' %></p>
+      <p class="booking-receipt-footer">Chủ sân đối chiếu đơn trên hệ thống. Phiếu hoặc ảnh chụp không thay thế việc xác minh tiền.</p>
+    </article>
+    <div class="demo-actions no-print">
+      <% if (owned && ['CONFIRMED', 'LEGACY_RESERVED'].includes(booking.status) && booking.slots?.length && booking.slots.every(slot => new Date(slot.startAt).getTime() > Date.now())) { %>
+        <a class="demo-button demo-button-secondary" href="/bookings/<%= booking._id %>/request">Gửi yêu cầu hủy / đổi</a>
+      <% } %>
+      <% if (booking.status === 'HOLD') { %><a class="demo-button" href="/bookings/<%= booking._id %>/checkout<%= query %>">Tiếp tục xem giữ chỗ</a><% } %>
+    </div>
+    <p class="demo-muted no-print">Chọn “In / Lưu PDF”, rồi chọn “Lưu dưới dạng PDF” trong hộp thoại của trình duyệt.</p>
+  </main>
+</div></body></html>

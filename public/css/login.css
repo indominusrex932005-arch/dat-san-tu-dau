@@ -266,7 +266,15 @@ body.login-page {
   line-height: 1.8;
 }
 
-.login-register a {
+.login-guest {
+  margin: 12px 0 0;
+  color: var(--login-muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.login-register a,
+.login-guest a {
   display: inline-block;
   padding: 4px 2px;
   color: var(--login-green);
