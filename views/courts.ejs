@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Sân Thể Thao</title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/demo.css">
+</head>
+<body class="demo-page">
+  <div class="demo-shell">
+    <%- include('partials/navigation') %>
+    <main>
+      <h1><%= title %></h1>
+      <p class="demo-muted">Mỗi lượt đặt kéo dài một giờ. Chọn sân để xem ngày và giờ còn trống.</p>
+      <% if (courts.length === 0) { %>
+        <div class="demo-card"><p>Chưa có sân đang hoạt động.</p></div>
+      <% } else { %>
+        <div class="demo-grid">
+          <% for (const court of courts) { %>
+            <article class="demo-card">
+              <h2><%= court.name %></h2>
+              <p><strong>Cơ sở:</strong> <%= court.facility?.name || 'Chưa có thông tin cơ sở' %></p>
+              <% if (court.facility?.address) { %>
+                <p class="demo-muted"><%= court.facility.address %></p>
+              <% } %>
+              <p class="demo-price"><%= formatMoney(court.pricePerHour) %> / giờ</p>
+              <a class="demo-button" href="/courts/<%= court._id %>">Xem giờ và đặt sân</a>
+            </article>
+          <% } %>
+        </div>
+      <% } %>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+flowchart TD
+    N["ĐỀ XUẤT · Điểm cần xác thực<br/>Vị trí theo Q01"] --> V{"ĐỀ XUẤT · Backend xác nhận<br/>đã đăng nhập hợp lệ?"}
+    V -->|"Có"| T["CHỜ CHỐT Q07<br/>Tiếp tục tại điểm được duyệt"]
+    V -->|"Chưa / phiên hết hạn"| I["ĐỀ XUẤT · Màn đăng nhập<br/>Định danh chờ Q02"]
+    I --> J["ĐỀ XUẤT · Gửi thông tin<br/>Backend xác thực"]
+    J --> O{"ĐỀ XUẤT · Kết quả backend?"}
+    O -->|"Thành công"| T
+    O -->|"Sai thông tin / lỗi xử lý"| E["ĐỀ XUẤT · Hiển thị lỗi được bàn giao<br/>Không điền lại mật khẩu"]
+    E --> I
+    I -->|"Không tiếp tục đăng nhập"| X["CHỜ CHỐT Q07<br/>Quay lại đâu; giữ lựa chọn nào?"]
+    L["ĐỀ XUẤT · Yêu cầu xem lịch sử"] --> V
+    T -->|"Nếu đang xem lịch sử"| H["ĐỀ XUẤT · Backend trả danh sách<br/>trong quyền của người đăng nhập"]
+    H --> D["ĐỀ XUẤT · Danh sách hoặc trạng thái rỗng<br/>Lỗi tải dữ liệu: xem mục 5"]
+    classDef proposed fill:#edf4ff,color:#172033,stroke:#64748b
+    classDef pending fill:#fff4cc,color:#4b3500,stroke:#a66b00
+    classDef error fill:#fff0f0,color:#641d1d,stroke:#b45a5a
+    class N,V,I,J,O,L,H,D proposed
+    class T,X pending
+    class E error

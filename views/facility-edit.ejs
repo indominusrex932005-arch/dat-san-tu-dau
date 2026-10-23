@@ -23,6 +23,7 @@
     <% } %>
 
     <form action="/facilities/<%= facility._id %>/edit" method="POST" class="facility-edit-form">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <div class="facility-edit-group">
         <label for="name">Tên cơ sở (*):</label>
         <input 

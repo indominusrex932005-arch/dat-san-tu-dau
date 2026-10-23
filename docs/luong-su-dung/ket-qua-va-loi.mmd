@@ -1,0 +1,16 @@
+flowchart LR
+    B{"ĐỀ XUẤT<br/>Phản hồi backend?"}
+    B -->|"Danh sách trả về rỗng"| C["ĐỀ XUẤT · Thông báo chưa có dữ liệu<br/>Danh sách cơ sở đã có trạng thái này"]
+    B -->|"Không tải được dữ liệu"| D["ĐỀ XUẤT · Báo lỗi tải dữ liệu<br/>Không đổi lỗi thành danh sách rỗng"]
+    B -->|"Chưa đăng nhập /<br/>phiên hết hạn"| E["ĐỀ XUẤT · Sang nhánh đăng nhập<br/>Vị trí theo Q01, quay lại theo Q07"]
+    B -->|"Không đủ quyền /<br/>sân không còn tồn tại"| F["ĐỀ XUẤT · Báo lý do theo backend<br/>Hướng quay lại chờ Q03/Q07"]
+    B -->|"Dữ liệu sai /<br/>giờ không còn khả dụng"| G["ĐỀ XUẤT · Hiện lỗi theo backend<br/>Sửa lựa chọn; kiểm tra lại theo Q04"]
+    B -->|"Gửi thất bại / mất phản hồi"| H["ĐỀ XUẤT · Chưa khẳng định đã lưu<br/>Không tự gửi lại"]
+    H --> I["CHỜ CHỐT Q07/Q08<br/>Cách xác minh kết quả và thử lại an toàn"]
+    B -->|"Backend xác nhận lưu được"| J["ĐỀ XUẤT · Hiện kết quả được trả về<br/>Trạng thái theo Q06; điều hướng Q07"]
+    classDef proposed fill:#edf4ff,color:#172033,stroke:#64748b
+    classDef pending fill:#fff4cc,color:#4b3500,stroke:#a66b00
+    classDef error fill:#fff0f0,color:#641d1d,stroke:#b45a5a
+    class B,C,J proposed
+    class D,E,F,G,H error
+    class I pending

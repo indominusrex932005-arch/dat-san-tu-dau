@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Sân Thể Thao</title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/demo.css">
+</head>
+<body class="demo-page">
+  <div class="demo-shell">
+    <%- include('partials/navigation') %>
+    <main class="demo-card demo-narrow">
+      <a href="/courts">← Danh sách sân</a>
+      <h1><%= court.name %></h1>
+      <p><%= court.facility?.name || 'Chưa có thông tin cơ sở' %></p>
+      <% if (court.facility?.address) { %>
+        <p class="demo-muted"><%= court.facility.address %></p>
+      <% } %>
+      <p class="demo-price"><%= formatMoney(court.pricePerHour) %> / lượt một giờ</p>
+      <p class="demo-muted">Khung giờ 06:00–22:00, theo giờ Việt Nam. Mỗi lần đặt chọn một khung một giờ.</p>
+
+      <form action="/courts/<%= court._id %>" method="GET" class="demo-form">
+        <label for="date">Ngày muốn đặt</label>
+        <input type="date" id="date" name="date" value="<%= date %>" required>
+        <button type="submit" class="demo-button demo-button-secondary">Xem giờ trống</button>
+      </form>
+
+      <h2>Giờ còn trống ngày <%= formatDate(date) %></h2>
+      <% if (errorMessage) { %>
+        <p class="demo-error" role="alert"><%= errorMessage %></p>
+      <% } %>
+      <% if (availableHours.length === 0) { %>
+        <p class="demo-status">Ngày này không còn khung giờ đặt được. Bạn hãy chọn ngày khác.</p>
+      <% } else if (!currentUser) { %>
+        <p>Có <%= availableHours.length %> khung giờ còn trống.</p>
+        <a class="demo-button" href="/login">Đăng nhập để đặt sân</a>
+      <% } else { %>
+        <form action="/bookings" method="POST" class="demo-form">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <input type="hidden" name="courtId" value="<%= court._id %>">
+          <input type="hidden" name="date" value="<%= date %>">
+          <label for="startHour">Chọn khung giờ</label>
+          <select id="startHour" name="startHour" required>
+            <option value="">-- Chọn giờ --</option>
+            <% for (const hour of availableHours) { %>
+              <option value="<%= hour %>"><%= String(hour).padStart(2, '0') %>:00–<%= String(hour + 1).padStart(2, '0') %>:00</option>
+            <% } %>
+          </select>
+          <p>Tổng tiền: <strong><%= formatMoney(court.pricePerHour) %></strong></p>
+          <button type="submit" class="demo-button">Xác nhận đặt sân</button>
+        </form>
+      <% } %>
+    </main>
+  </div>
+</body>
+</html>

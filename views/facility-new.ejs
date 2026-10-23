@@ -23,6 +23,7 @@
     <% } %>
 
     <form action="/facilities" method="POST" class="facility-new-form">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <div class="facility-new-group">
         <label for="name">Tên cơ sở (*):</label>
         <input 
