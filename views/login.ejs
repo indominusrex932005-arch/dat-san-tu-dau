@@ -6,26 +6,65 @@
   <title><%= title %> | Sân Thể Thao</title>
   <link rel="stylesheet" href="/assets/css/app.css">
   <link rel="stylesheet" href="/assets/css/demo.css">
+  <link rel="stylesheet" href="/assets/css/login.css">
 </head>
-<body class="demo-page">
-  <div class="demo-shell">
+<body class="demo-page login-page">
+  <a class="login-skip-link" href="#login-content">Đến nội dung đăng nhập</a>
+  <div class="login-shell">
     <%- include('partials/navigation') %>
-    <main class="demo-card demo-narrow">
-      <h1><%= title %></h1>
-      <p class="demo-muted">Đăng nhập để đặt sân và xem các lượt đặt của bạn.</p>
-      <% if (errorMessage) { %>
-        <p class="demo-error" role="alert"><%= errorMessage %></p>
-      <% } %>
-      <form action="/login" method="POST" class="demo-form">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" value="<%= email %>" autocomplete="username" maxlength="254" required>
-        <label for="password">Mật khẩu</label>
-        <input type="password" id="password" name="password" autocomplete="current-password" required>
-        <button type="submit" class="demo-button">Đăng nhập</button>
-      </form>
-      <p>Chưa có tài khoản? <a href="/register">Đăng ký</a>.</p>
+    <main class="login-main" id="login-content" tabindex="-1">
+      <section class="login-intro" aria-labelledby="login-intro-title">
+        <p class="login-eyebrow"><span aria-hidden="true">✳</span> Hẹn nhau ở sân</p>
+        <p class="login-intro-title" id="login-intro-title">Trở lại sân,<br>tiếp nối niềm vui.</p>
+        <p class="login-description">Một buổi chơi mới đang chờ. Đăng nhập để chọn sân và xem lại những lượt đặt của bạn.</p>
+        <div class="login-art" aria-hidden="true">
+          <svg viewBox="0 0 440 230" fill="none" focusable="false">
+            <circle cx="361" cy="49" r="29" fill="#ead684" />
+            <g transform="rotate(-8 209 123)">
+              <rect x="35" y="37" width="340" height="178" rx="12" fill="#173f35" fill-opacity=".09" />
+              <rect x="26" y="26" width="340" height="178" rx="12" fill="#326b50" />
+              <path d="M43 43h306v144H43zM59 43v144M333 43v144M43 115h306M126 43v144M266 43v144M126 69h140M126 161h140" stroke="#e9efdf" stroke-width="1.5" />
+              <path d="M196 35v160" stroke="#153f32" stroke-width="8" />
+              <path d="M196 35v160" stroke="#eee4b2" stroke-width="2" stroke-dasharray="3 3" />
+            </g>
+            <circle cx="378" cy="179" r="16" fill="#e5ebda" stroke="#8b9d4b" stroke-width="1.5" />
+            <path d="M369 166c-1 12 6 23 21 25M367 188c12 0 22-7 25-17" stroke="#8b9d4b" stroke-width="1.5" />
+          </svg>
+          <p>Thêm vận động. Thêm kết nối.</p>
+        </div>
+      </section>
+
+      <section class="login-card" aria-labelledby="login-title">
+        <p class="login-card-eyebrow">Tài khoản của bạn</p>
+        <h1 id="login-title"><%= title %></h1>
+        <p class="login-card-description">Chào mừng bạn trở lại Sân Thể Thao.</p>
+        <% if (errorMessage) { %>
+          <div class="login-error" id="login-error" role="alert">
+            <p class="login-error-title">Không thể đăng nhập</p>
+            <p><%= errorMessage %></p>
+          </div>
+        <% } %>
+        <form action="/login" method="POST" class="login-form" aria-labelledby="login-title"<% if (errorMessage) { %> aria-describedby="login-error"<% } %>>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="login-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="<%= email %>" autocomplete="username" maxlength="254" aria-describedby="login-email-help" required>
+            <p class="login-field-help" id="login-email-help">Email bạn đã dùng khi đăng ký tài khoản.</p>
+          </div>
+          <div class="login-field">
+            <label for="password">Mật khẩu</label>
+            <input type="password" id="password" name="password" autocomplete="current-password" required>
+          </div>
+          <button type="submit" class="login-submit">Đăng nhập <span aria-hidden="true">↗</span></button>
+        </form>
+        <p class="login-register">Chưa có tài khoản? <a href="/register">Đăng ký</a></p>
+      </section>
     </main>
+
+    <footer class="login-footer">
+      <p>Sân Thể Thao<span aria-hidden="true">.</span> Hẹn nhau ở sân.</p>
+      <a href="/">Về trang chủ <span aria-hidden="true">↗</span></a>
+    </footer>
   </div>
 </body>
 </html>
