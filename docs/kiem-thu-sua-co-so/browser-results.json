@@ -1,0 +1,362 @@
+{
+  "issue": 41,
+  "date": "24/10/2026",
+  "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+  "browser": "ChatGPT in-app browser (IAB)",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 1366,
+      "height": 900
+    }
+  ],
+  "dataSource": "Synthetic OWNER APPROVED A/B and CUSTOMER plus local MongoDB replica set qaOwner41; actual app/controller/EJS/CSS; no .env/Atlas",
+  "instrumentationNotes": [
+    "Tel input DOM values are redacted by tooling; retention verified in screenshots and HTTP cases.",
+    "Computed focus outline was 2.66667px despite CSS3px; criterion is visible solid nonzero outline, not exact device-pixel rounding."
+  ],
+  "result": {
+    "total": 14,
+    "pass": 14,
+    "fail": 0
+  },
+  "cases": [
+    {
+      "case": "owner-entry-normal",
+      "viewport": 390,
+      "action": "/owner/facilities/6adbe81c928ce8ec8a6f62b2",
+      "addressLength": 43,
+      "clientWidth": 375,
+      "csrfPresent": true,
+      "documentWidth": 375,
+      "fields": [
+        "_csrf",
+        "name",
+        "address",
+        "phone"
+      ],
+      "grid": "334.667px",
+      "heading": "Sửa thông tin cơ sở",
+      "method": "post",
+      "nameLength": 10,
+      "path": "/owner/facilities/6adbe81c928ce8ec8a6f62b2/edit",
+      "pass": true,
+      "id": "UI-01",
+      "title": "Mở form từ dashboard",
+      "steps": [
+        "Đăng nhập OWNER APPROVED A",
+        "Mở /owner và bấm Sửa thông tin cơ sở"
+      ],
+      "expected": "Form200 đúng action POST, đúng name/address/phone và CSRF; không cuộn ngang.",
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "image": "thuong-390.jpg"
+    },
+    {
+      "case": "keyboard-focus",
+      "viewport": 390,
+      "focusAddress": {
+        "id": "address",
+        "outline": "solid",
+        "width": "2.66667px"
+      },
+      "focusPhone": {
+        "id": "phone",
+        "outline": "solid"
+      },
+      "reverseFocus": "address",
+      "pass": true,
+      "criterion": "Focus follows Tab/Shift+Tab, outline is solid and has nonzero computed width; fractional CSS pixel rounding is allowed",
+      "id": "UI-02",
+      "title": "Tab, Shift+Tab và focus",
+      "steps": [
+        "Tab từ tên sang địa chỉ",
+        "Tab sang SĐT",
+        "Shift+Tab trở lại địa chỉ"
+      ],
+      "expected": "Đúng thứ tự focus; outline solid có độ dày lớn hơn0 và nhìn thấy.",
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "image": "focus-390.jpg"
+    },
+    {
+      "case": "invalid-phone-escaped-input",
+      "viewport": 390,
+      "addressMatches": true,
+      "clientWidth": 375,
+      "describedBy": "facility-form-error",
+      "documentWidth": 375,
+      "error": "Số điện thoại cơ sở bắt buộc có 10 chữ số Việt Nam, bắt đầu bằng 0 hoặc +84.",
+      "nameMatches": true,
+      "path": "/owner/facilities/6adbe81c928ce8ec8a6f62b2",
+      "unsafeElements": 0,
+      "phoneRetention": "QA invalid phone visible in screenshot and verified by HTTP tests; tel DOM values are redacted",
+      "pass": true,
+      "id": "UI-03",
+      "title": "SĐT sai và HTML được escape",
+      "steps": [
+        "Nhập tên chứa thẻ img, địa chỉ chứa script và SĐT090abc1234",
+        "Bấm Lưu thay đổi"
+      ],
+      "expected": "HTTP400, thông báo rõ, giữ dữ liệu và EJS escape; không tạo img/script hoặc tràn ngang.",
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "image": "loi-390.jpg"
+    },
+    {
+      "case": "long-input-150-500",
+      "viewport": 390,
+      "addressBoxRight": 336.0000114440918,
+      "addressLength": 500,
+      "clientWidth": 375,
+      "documentWidth": 375,
+      "nameBoxRight": 336.0000114440918,
+      "nameLength": 150,
+      "pass": true,
+      "id": "UI-04",
+      "title": "Tên150 và địa chỉ500 ký tự liền",
+      "steps": [
+        "Mở lại formGET",
+        "Điền chuỗi liền150/500ký tự"
+      ],
+      "expected": "Đủ độ dài, hộp input/textarea trong khung, document không tràn; giá trị dài trong input được cuộn nội bộ.",
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "image": "noi-dung-dai-390.jpg"
+    },
+    {
+      "case": "keyboard-save",
+      "viewport": 390,
+      "addressVisible": true,
+      "clientWidth": 375,
+      "documentWidth": 375,
+      "nameMatches": true,
+      "path": "/owner",
+      "phoneNormalized": true,
+      "pass": true,
+      "id": "UI-05",
+      "title": "Enter lưu thay đổi hợp lệ",
+      "steps": [
+        "Điền tên/địa chỉ mới và SĐT+84có phân cách",
+        "Enter trên nút Lưu thay đổi"
+      ],
+      "expected": "303 về /owner; hiện đúng tên/địa chỉ và SĐT chuẩn hóa; owner và các bản ghi được bảo vệ không đổi.",
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "image": null
+    },
+    {
+      "case": "back-to-dashboard",
+      "viewport": 390,
+      "hasEditLink": true,
+      "path": "/owner",
+      "pass": true,
+      "id": "UI-06",
+      "title": "Quay lại quản lý",
+      "steps": [
+        "Mở lại form",
+        "Bấm Quay lại quản lý"
+      ],
+      "expected": "GET/owner200, nút Sửa thông tin cơ sở vẫn có.",
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "image": null
+    },
+    {
+      "case": "public-list-no-edit",
+      "viewport": 390,
+      "clientWidth": 375,
+      "documentWidth": 375,
+      "path": "/facilities",
+      "writeLinks": 0,
+      "pass": true,
+      "id": "UI-07",
+      "title": "Danh sách công khai không có thao tác sửa",
+      "steps": [
+        "Từ quản lý bấm Cơ sở",
+        "Đọc các link/form của trang công khai"
+      ],
+      "expected": "GET/facilities200, không có link/form ghi thông tin cơ sở; không tràn ngang.",
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "image": "danh-sach-cong-khai-390.jpg"
+    },
+    {
+      "case": "owner-entry-normal",
+      "viewport": 1366,
+      "action": "/owner/facilities/6adbe81c928ce8ec8a6f62b2",
+      "addressLength": 23,
+      "clientWidth": 1366,
+      "csrfPresent": true,
+      "documentWidth": 1366,
+      "fields": [
+        "_csrf",
+        "name",
+        "address",
+        "phone"
+      ],
+      "grid": "717.333px 358.667px",
+      "heading": "Sửa thông tin cơ sở",
+      "method": "post",
+      "nameLength": 26,
+      "path": "/owner/facilities/6adbe81c928ce8ec8a6f62b2/edit",
+      "pass": true,
+      "id": "UI-08",
+      "title": "Mở form từ dashboard",
+      "steps": [
+        "Đăng nhập OWNER APPROVED A",
+        "Mở /owner và bấm Sửa thông tin cơ sở"
+      ],
+      "expected": "Form200 đúng action POST, đúng name/address/phone và CSRF; không cuộn ngang.",
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "image": "thuong-1366.jpg"
+    },
+    {
+      "case": "keyboard-focus",
+      "viewport": 1366,
+      "focusAddress": {
+        "id": "address",
+        "outline": "solid",
+        "width": "2.66667px"
+      },
+      "focusPhone": {
+        "id": "phone",
+        "outline": "solid"
+      },
+      "reverseFocus": "address",
+      "pass": true,
+      "criterion": "Focus follows Tab/Shift+Tab, outline is solid and has nonzero computed width; fractional CSS pixel rounding is allowed",
+      "id": "UI-09",
+      "title": "Tab, Shift+Tab và focus",
+      "steps": [
+        "Tab từ tên sang địa chỉ",
+        "Tab sang SĐT",
+        "Shift+Tab trở lại địa chỉ"
+      ],
+      "expected": "Đúng thứ tự focus; outline solid có độ dày lớn hơn0 và nhìn thấy.",
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "image": "focus-1366.jpg"
+    },
+    {
+      "case": "invalid-phone-escaped-input",
+      "viewport": 1366,
+      "addressMatches": true,
+      "clientWidth": 1351,
+      "describedBy": "facility-form-error",
+      "documentWidth": 1351,
+      "error": "Số điện thoại cơ sở bắt buộc có 10 chữ số Việt Nam, bắt đầu bằng 0 hoặc +84.",
+      "nameMatches": true,
+      "path": "/owner/facilities/6adbe81c928ce8ec8a6f62b2",
+      "unsafeElements": 0,
+      "phoneRetention": "QA invalid phone visible in screenshot and verified by HTTP tests; tel DOM values are redacted",
+      "pass": true,
+      "id": "UI-10",
+      "title": "SĐT sai và HTML được escape",
+      "steps": [
+        "Nhập tên chứa thẻ img, địa chỉ chứa script và SĐT090abc1234",
+        "Bấm Lưu thay đổi"
+      ],
+      "expected": "HTTP400, thông báo rõ, giữ dữ liệu và EJS escape; không tạo img/script hoặc tràn ngang.",
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "image": "loi-1366.jpg"
+    },
+    {
+      "case": "long-input-150-500",
+      "viewport": 1366,
+      "addressBoxRight": 825.6666717529297,
+      "addressLength": 500,
+      "clientWidth": 1366,
+      "documentWidth": 1366,
+      "nameBoxRight": 825.6666717529297,
+      "nameLength": 150,
+      "pass": true,
+      "id": "UI-11",
+      "title": "Tên150 và địa chỉ500 ký tự liền",
+      "steps": [
+        "Mở lại formGET",
+        "Điền chuỗi liền150/500ký tự"
+      ],
+      "expected": "Đủ độ dài, hộp input/textarea trong khung, document không tràn; giá trị dài trong input được cuộn nội bộ.",
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "image": "noi-dung-dai-1366.jpg"
+    },
+    {
+      "case": "keyboard-save",
+      "viewport": 1366,
+      "addressVisible": true,
+      "clientWidth": 1351,
+      "documentWidth": 1351,
+      "nameMatches": true,
+      "path": "/owner",
+      "phoneNormalized": true,
+      "pass": true,
+      "id": "UI-12",
+      "title": "Enter lưu thay đổi hợp lệ",
+      "steps": [
+        "Điền tên/địa chỉ mới và SĐT+84có phân cách",
+        "Enter trên nút Lưu thay đổi"
+      ],
+      "expected": "303 về /owner; hiện đúng tên/địa chỉ và SĐT chuẩn hóa; owner và các bản ghi được bảo vệ không đổi.",
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "image": null
+    },
+    {
+      "case": "back-to-dashboard",
+      "viewport": 1366,
+      "hasEditLink": true,
+      "path": "/owner",
+      "pass": true,
+      "id": "UI-13",
+      "title": "Quay lại quản lý",
+      "steps": [
+        "Mở lại form",
+        "Bấm Quay lại quản lý"
+      ],
+      "expected": "GET/owner200, nút Sửa thông tin cơ sở vẫn có.",
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "image": null
+    },
+    {
+      "case": "public-list-no-edit",
+      "viewport": 1366,
+      "clientWidth": 1351,
+      "documentWidth": 1351,
+      "path": "/facilities",
+      "writeLinks": 0,
+      "pass": true,
+      "id": "UI-14",
+      "title": "Danh sách công khai không có thao tác sửa",
+      "steps": [
+        "Từ quản lý bấm Cơ sở",
+        "Đọc các link/form của trang công khai"
+      ],
+      "expected": "GET/facilities200, không có link/form ghi thông tin cơ sở; không tràn ngang.",
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "image": "danh-sach-cong-khai-1366.jpg"
+    }
+  ]
+}

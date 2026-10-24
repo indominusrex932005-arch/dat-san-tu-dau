@@ -20,7 +20,7 @@ if (slotForm) {
       chips.append(chip);
     }
     submit.disabled = !selected.length || Boolean(changedDate);
-    submit.textContent = 'Giữ chỗ 10 phút';
+    submit.textContent = 'Giữ chỗ tối đa 10 phút';
   }
   slotForm.addEventListener('change', refreshSelection);
   datePicker?.addEventListener('change', refreshSelection);
@@ -34,15 +34,23 @@ if (slotForm) {
 
 for (const node of document.querySelectorAll('[data-hold-until]')) {
   const expiresAt = Date.parse(node.dataset.holdUntil);
+  const serverNow = Date.parse(node.dataset.serverNow);
+  const initialNow = Number.isFinite(serverNow) ? serverNow : Date.now();
+  const scriptStartedAt = performance.now();
+  const responseStart = performance.getEntriesByType?.('navigation')?.[0]?.responseStart;
+  // Count HTML/script loading time too; payment eligibility is still checked by the server.
+  const startedAt = Number.isFinite(serverNow) && Number.isFinite(responseStart)
+    && responseStart > 0 && responseStart <= scriptStartedAt ? responseStart : scriptStartedAt;
   function updateCountdown() {
     if (node.dataset.expired === 'true') return;
-    const remaining = Math.max(0, Math.ceil((expiresAt - Date.now()) / 1000));
+    const currentNow = initialNow + performance.now() - startedAt;
+    const remaining = Math.max(0, Math.ceil((expiresAt - currentNow) / 1000));
     if (!Number.isFinite(remaining)) { node.textContent = 'Xem thời hạn trên thông tin đơn.'; return; }
     if (remaining <= 0) {
       node.dataset.expired = 'true';
       node.setAttribute('role', 'status');
       node.setAttribute('aria-live', 'polite');
-      node.textContent = 'Đã hết hạn giữ chỗ';
+      node.textContent = 'Đã tới hạn giữ chỗ. Tải lại để cập nhật trạng thái đơn.';
       for (const button of document.querySelectorAll('[data-demo-payment]')) button.disabled = true;
       return;
     }

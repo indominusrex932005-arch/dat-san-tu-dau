@@ -1,5 +1,7 @@
 # Kiểm chứng bản tích hợp — 23/10/2026
 
+**Phạm vi lịch sử:** kết quả và số lượng test dưới đây thuộc bản ngày 23/10/2026, chưa chứng minh quy tắc thời hạn mới của issue #37 ngày 24/10/2026. Quy tắc hiện hành là giữ **tối đa 10 phút, trước khi ô đầu tiên bắt đầu**, theo UTC máy chủ; cụm “hạn 10 phút” trong bảng cũ chỉ mô tả lần thử lịch sử. Xem [hợp đồng cập nhật](HOP_DONG_TICH_HOP.md). Kết quả hồi quy #37 phải ghi riêng theo SHA và lần chạy thực tế, không lấy lint hoặc bảng cũ làm bằng chứng mới.
+
 ## Đã chạy
 
 - `npm ci`: đạt.
