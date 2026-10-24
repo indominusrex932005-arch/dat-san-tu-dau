@@ -71,6 +71,21 @@ export function quoteSelection(court, date, times, locks = [], now = new Date())
   return { slots: selected, totalMinutes: selected.length * SLOT_MINUTES, totalPriceVND };
 }
 
-export function holdExpiresAt(createdAt) {
-  return new Date(new Date(createdAt).getTime() + HOLD_MINUTES * 60000);
+export function holdExpiresAt(createdAt, slots = []) {
+  const created = Number(new Date(createdAt));
+  if (!Number.isFinite(created) || !Array.isArray(slots)) throw new RuleError('Thời hạn giữ sân không hợp lệ.');
+  const starts = slots.map(slot => Number(new Date(slot.startAt)));
+  if (starts.some(start => !Number.isFinite(start))) throw new RuleError('Mốc bắt đầu ô giữ sân không hợp lệ.');
+  return new Date(Math.min(created + HOLD_MINUTES * 60000, ...starts));
+}
+
+export function effectiveHoldExpiresAt(booking) {
+  const deadlines = [];
+  if (booking.holdExpiresAt) deadlines.push(Number(new Date(booking.holdExpiresAt)));
+  if (booking.createdAt) deadlines.push(Number(holdExpiresAt(booking.createdAt, booking.slots || [])));
+  else for (const slot of booking.slots || []) deadlines.push(Number(new Date(slot.startAt)));
+  if (!deadlines.length || deadlines.some(deadline => !Number.isFinite(deadline))) {
+    throw new RuleError('Thời hạn giữ sân không hợp lệ.');
+  }
+  return new Date(Math.min(...deadlines));
 }
