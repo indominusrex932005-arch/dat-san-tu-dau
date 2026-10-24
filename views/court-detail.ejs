@@ -8,8 +8,8 @@
   <%- include('partials/navigation') %>
   <% const receivingBookings = typeof facilityReady !== 'boolean' || facilityReady; %>
   <main>
-    <a href="/courts">← Danh sách sân</a><p class="booking-eyebrow">CHỌN NGÀY VÀ GIỜ</p><h1><%= court.name %></h1>
-    <p><strong><%= court.facility?.name || 'Cơ sở thể thao' %></strong> · <%= court.facility?.address || 'Địa chỉ đang cập nhật' %></p>
+    <a href="/courts">← Danh sách sân</a><p class="booking-eyebrow">CHỌN NGÀY VÀ GIỜ</p><h1 class="booking-court-title"><%= court.name %></h1>
+    <p class="booking-court-location"><strong><%= court.facility?.name || 'Cơ sở thể thao' %></strong> · <%= court.facility?.address || 'Địa chỉ đang cập nhật' %></p>
     <ol class="booking-steps" aria-label="Tiến trình đặt sân"><li aria-current="step">1. Chọn ô</li><li>2. Giữ chỗ / thanh toán</li><li>3. Lưu phiếu</li></ol>
     <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
     <% if (!receivingBookings) { %><p class="booking-notice">Cơ sở đang chờ cấp chủ sân hoặc cập nhật số điện thoại, nên chưa nhận đơn mới.</p><% } %>
@@ -39,9 +39,9 @@
         <div class="demo-form">
           <label for="guestName">Họ tên người chơi</label><input id="guestName" name="guestName" value="<%= currentUser?.fullName || '' %>" minlength="2" maxlength="100" autocomplete="name" required>
           <label for="guestPhone">Số điện thoại liên hệ</label><input type="tel" id="guestPhone" name="guestPhone" value="<%= currentUser?.phone || '' %>" maxlength="24" autocomplete="tel" required>
-          <button type="submit" class="demo-button" id="hold-slots">Giữ chỗ 10 phút</button>
+          <button type="submit" class="demo-button" id="hold-slots">Giữ chỗ tối đa 10 phút</button>
         </div>
-        <p class="demo-muted">Giá cuối cùng do server tính lại. Chỉ giữ các ô bạn chọn; hết hạn chưa xác nhận, các ô được mở lại.</p>
+        <p class="demo-muted">Giá cuối cùng do server tính lại. Chỉ giữ các ô bạn chọn tối đa 10 phút, trước khi ô đầu tiên bắt đầu; hết hạn chưa xác nhận, các ô được mở lại.</p>
       </aside>
     </form>
   </main>

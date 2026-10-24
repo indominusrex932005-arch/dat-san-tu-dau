@@ -1,6 +1,8 @@
 # Hợp đồng tích hợp — 23/10/2026
 
-Quyết định của nhóm trưởng: MVC ở gốc; chủ sân đăng ký chờ ADMIN duyệt/cấp cơ sở; khách CUSTOMER đăng ký hoặc đặt vãng lai; nhiều ô 30 phút rời nhau một sân/một ngày; giá thường/cao điểm/giờ mở cửa do chủ sân cấu hình; giữ 10 phút; chỉ thanh toán MÔ PHỎNG khi DEMO_MODE=true; khách có tài khoản gửi yêu cầu hủy/đổi cho chủ sân; khách vãng lai gọi điện. Phiếu có In/Lưu PDF. QR thật/ngân hàng còn dở phải có tài liệu và hình minh họa rõ.
+Quyết định của nhóm trưởng: MVC ở gốc; chủ sân đăng ký chờ ADMIN duyệt/cấp cơ sở; khách CUSTOMER đăng ký hoặc đặt vãng lai; nhiều ô 30 phút rời nhau một sân/một ngày; giá thường/cao điểm/giờ mở cửa do chủ sân cấu hình; giữ tối đa 10 phút, trước khi ô đầu tiên bắt đầu; chỉ thanh toán MÔ PHỎNG khi DEMO_MODE=true; khách có tài khoản gửi yêu cầu hủy/đổi cho chủ sân; khách vãng lai gọi điện. Phiếu có In/Lưu PDF. QR thật/ngân hàng còn dở phải có tài liệu và hình minh họa rõ.
+
+Cập nhật hạn giữ theo issue #37 ngày **24/10/2026**: máy chủ dùng UTC, `holdExpiresAt = min(now + 10 phút, earliestSelectedSlot.startAt)`. Đây là hạn chung của cả Booking và toàn bộ SlotLock của đơn; không kéo dài hạn khi đọc lại. HOLD cũ có mốc lưu muộn hơn giờ bắt đầu phải áp dụng cùng hạn thực tế. Từ đúng mốc này, HOLD chưa xác nhận hết hiệu lực và không được thanh toán; CONFIRMED/lock đã xác nhận không bị cleanup HOLD giải phóng.
 
 ## Model chung (giữ tên field cũ nếu được)
 
@@ -28,7 +30,7 @@ Auth: GET/POST /register (customer), GET/POST /register/owner (owner pending), G
 
 Court: GET /courts (view courts: courts,title); GET /courts/:id?date=... (view court-detail: court populate facility,date,slots [{time,endTime,priceVND,status AVAILABLE/BOOKED/LOCKED/UNAVAILABLE}],title,errorMessage). Form hold POST /bookings body courtId,date,times[] OR times(single),guestName,guestPhone. Người đăng nhập cũng điền SĐT, tên mặc định currentUser.fullName.
 
-Booking: POST /bookings → 303 /bookings/:id/checkout?token=... (token chỉ guest). GET /bookings/:id/checkout (booking populate court/facility,token,title,errorMessage), POST /bookings/:id/demo-payment body token,_csrf → receipt. GET /bookings/:id/receipt cùng quyền xem. GET /my-bookings (bookings,title). GET /bookings/:id/request (booking,courts cùng cơ sở,token,title,errorMessage); POST /bookings/:id/requests body type,reason,requestedCourt,requestedDate,requestedTimes[]; chỉ user sở hữu, redirect /my-bookings.
+Booking: POST /bookings → 303 /bookings/:id/checkout?token=... (token chỉ guest). GET /bookings/:id/checkout (booking populate court/facility với holdExpiresAt thực tế,serverNow ISO UTC,token,title,errorMessage), POST /bookings/:id/demo-payment body token,_csrf → receipt. Đồng hồ dùng hạn và thời điểm máy chủ; hết thời gian chỉ vô hiệu nút, không tự khẳng định DB đã chuyển EXPIRED. GET /bookings/:id/receipt cùng quyền xem. GET /my-bookings (bookings,title). GET /bookings/:id/request (booking,courts cùng cơ sở,token,title,errorMessage); POST /bookings/:id/requests body type,reason,requestedCourt,requestedDate,requestedTimes[]; chỉ user sở hữu, redirect /my-bookings.
 
 Owner: GET /owner (view owner-dashboard: facility|null,courts,bookings,requests,title,errorMessage; owner pending dùng view owner-pending:title). GET /owner/courts/new và GET /owner/courts/:id/edit (view owner-court-form: court|null,facility,title,errorMessage). POST /owner/courts tạo; POST /owner/courts/:id cập nhật các giá/giờ whitelist. POST /owner/requests/:id/approve body refundAmount,ownerNote,extraPaymentConfirmed; POST /owner/requests/:id/reject body ownerNote; POST /owner/requests/:id/refund body ownerNote; POST /owner/bookings/:id/cancel body refundAmount,ownerNote.
 
@@ -38,7 +40,7 @@ Errors: dùng views/error.ejs title,message,backUrl. Controller không trả raw
 
 ## Service exports cho agent phối hợp
 
-domain/booking-rules.js exports makeSlots(court,date,locks=[],now=new Date()), quoteSelection(court,date,times,locks=[],now), vietnamDate(now), slotInstant(date,time), holdExpiresAt(now), validateDate(date); makeSlots theo peakEndTime; fallback giá Court cũ=pricePerHour/2. Reuse pure rules từ repo gốc có điều chỉnh. utils/booking-time.js giữ formatMoney/formatDate cũ và reexport/helper phù hợp.
+domain/booking-rules.js exports makeSlots(court,date,locks=[],now=new Date()), quoteSelection(court,date,times,locks=[],now), vietnamDate(now), slotInstant(date,time), holdExpiresAt(createdAt,slots=[]), effectiveHoldExpiresAt(booking), validateDate(date); holdExpiresAt nhận slots có startAt UTC để lấy hạn sớm nhất, effectiveHoldExpiresAt giữ mốc sớm nhất từ hạn đã lưu, createdAt+10 phút và các ô của HOLD cũ, không tự gia hạn. makeSlots theo peakEndTime; fallback giá Court cũ=pricePerHour/2. Reuse pure rules từ repo gốc có điều chỉnh. utils/booking-time.js giữ formatMoney/formatDate cũ và reexport/helper phù hợp.
 
 services/booking.service.js exports getAvailability(courtId,date), createHold({courtId,date,times,guestName,guestPhone,user}), getBookingForViewer(id,{user,token}), simulatePayment(id,{user,token}), expireHolds(), createChangeRequest(id,user,body), approveRequest(requestId,owner,body), rejectRequest(requestId,owner,body), recordRefund(requestId,owner,body), cancelByOwner(bookingId,owner,body). Agent booking sở hữu service/controllers/routes và báo nếu cần đổi hợp đồng. user là object {_id,role,ownerStatus,...}. getBookingForViewer trả populated Booking plain object.
 

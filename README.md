@@ -2,7 +2,7 @@
 
 Node.js 24, Express, EJS, Mongoose/MongoDB Atlas. Giữ MVC ở thư mục gốc, không có `src`.
 
-Có tài khoản khách và chủ sân chờ duyệt; đặt vãng lai bằng tên/SĐT; nhiều ô 30 phút rời nhau; giá thường/cao điểm; giữ 10 phút; thanh toán **mô phỏng**; in/lưu PDF phiếu; chủ sân xử lý yêu cầu hủy/đổi và ghi nhận hoàn thủ công.
+Có tài khoản khách và chủ sân chờ duyệt; đặt vãng lai bằng tên/SĐT; nhiều ô 30 phút rời nhau; giá thường/cao điểm; giữ tối đa 10 phút, trước khi ô đầu tiên bắt đầu; thanh toán **mô phỏng**; in/lưu PDF phiếu; chủ sân xử lý yêu cầu hủy/đổi và ghi nhận hoàn thủ công.
 
 **Chưa nối QR/ngân hàng thật.** Hình QR không thể thanh toán; `DEMO_PAID` không phải xác minh tiền về. Xem [việc còn dở](docs/THANH_TOAN_CON_DANG_DO.md).
 
@@ -49,7 +49,9 @@ Seed thêm cơ sở/sân mẫu, không tạo tài khoản hoặc xóa dữ liệ
 
 ## Luồng trình bày
 
-ADMIN duyệt OWNER → OWNER cấu hình sân/giá → CUSTOMER hoặc khách vãng lai chọn nhiều ô → giữ 10 phút → QR minh họa → bấm thanh toán mô phỏng → phiếu có nhãn mô phỏng → In / Lưu PDF.
+ADMIN duyệt OWNER → OWNER cấu hình sân/giá → CUSTOMER hoặc khách vãng lai chọn nhiều ô → giữ tối đa 10 phút, trước khi ô đầu tiên bắt đầu → QR minh họa → bấm thanh toán mô phỏng → phiếu có nhãn mô phỏng → In / Lưu PDF.
+
+Hạn giữ là mốc sớm hơn giữa 10 phút từ lúc tạo đơn và lúc ô đầu tiên bắt đầu, tính bằng thời gian UTC của máy chủ. Ví dụ chọn ô bắt đầu sau 3 phút thì chỉ giữ 3 phút. Từ đúng mốc hết hạn, đơn HOLD không được thanh toán để giữ lại sân. Đơn CONFIRMED và các ô đã xác nhận không bị tác vụ hết hạn HOLD giải phóng.
 
 Khách có tài khoản xem `/my-bookings` và gửi yêu cầu hủy/đổi. OWNER xét duyệt, xử lý chênh lệch và ghi nhận hoàn thủ công. Khách vãng lai giữ link phiếu và gọi điện cơ sở; OWNER hủy sau khi tiếp nhận cuộc gọi.
 

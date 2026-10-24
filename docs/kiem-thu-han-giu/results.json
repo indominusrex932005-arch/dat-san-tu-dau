@@ -1,0 +1,106 @@
+{
+  "date": "24/10/2026",
+  "branch": "fix/hold-expiry-first-slot",
+  "baseSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+  "browserBaseSHA": "94ee45eeb39e3de15b3d5c05cf15ff66ee94cb49",
+  "baseUpdate": "After browser capture, fast-forwarded over PR #44 (only OWNER court form CSS/EJS); reran check and all tests on the final base. Checkout and hold code unchanged.",
+  "browser": "ChatGPT in-app browser (IAB)",
+  "clockScenario": "Only the local QA Node process used a continuously advancing simulated clock starting 2030-05-10T15:58:00+07:00. OS/browser clock unchanged. This allows real checkout to cross the16:00 deadline without waiting for a wall-clock half-hour.",
+  "dataSource": "Synthetic OWNER/CUSTOMER/Facility/Court and real createHold on a disposable local MongoDB replica set qaExpiry37; no Atlas or .env.",
+  "before": [
+    {
+      "name": "near",
+      "status": "HOLD",
+      "createdAt": "2030-05-10T08:58:00.061Z",
+      "deadline": "2030-05-10T09:00:00Z",
+      "firstSlot": "2030-05-10T09:00:00Z",
+      "millisecondsFromCreation": 119939,
+      "allLockDeadlinesMatch": true,
+      "lockCount": 2,
+      "paymentCount": 0
+    },
+    {
+      "name": "far",
+      "status": "HOLD",
+      "createdAt": "2030-05-10T08:58:00.117Z",
+      "deadline": "2030-05-10T09:08:00.117Z",
+      "firstSlot": "2030-05-10T10:00:00Z",
+      "millisecondsFromCreation": 600000,
+      "allLockDeadlinesMatch": true,
+      "lockCount": 2,
+      "paymentCount": 0
+    }
+  ],
+  "browserChecks": [
+    {
+      "state": "near-desktop",
+      "clientWidth": 1351,
+      "countdown": "00:57 còn lại",
+      "deadline": "2030-05-10T09:00:00Z",
+      "documentWidth": 1351,
+      "height": 900,
+      "paymentDisabled": false,
+      "ruleText": true,
+      "serverNow": "2030-05-10T08:58:33.181Z",
+      "width": 1366
+    },
+    {
+      "state": "near-mobile",
+      "clientWidth": 375,
+      "countdown": "00:55 còn lại",
+      "deadline": "2030-05-10T09:00:00Z",
+      "documentWidth": 375,
+      "height": 844,
+      "paymentDisabled": false,
+      "serverNow": "2030-05-10T08:58:33.181Z",
+      "width": 390
+    },
+    {
+      "state": "deadline-reached-mobile",
+      "clientWidth": 375,
+      "countdown": "Đã tới hạn giữ chỗ. Tải lại để cập nhật trạng thái đơn.",
+      "deadline": "2030-05-10T09:00:00Z",
+      "documentWidth": 375,
+      "expired": "true",
+      "height": 844,
+      "paymentDisabled": true,
+      "width": 390
+    },
+    {
+      "state": "reload-expired-mobile",
+      "clientWidth": 390,
+      "documentWidth": 390,
+      "expiredStatusVisible": true,
+      "hasPaymentButton": false,
+      "hasTimer": false,
+      "height": 844,
+      "width": 390
+    }
+  ],
+  "after": {
+    "http": {
+      "expiredCheckout": 410,
+      "latePayment": 410
+    },
+    "near": {
+      "status": "EXPIRED",
+      "deadline": "2030-05-10T09:00:00Z",
+      "lockCount": 0,
+      "paymentCount": 0
+    },
+    "far": {
+      "status": "HOLD",
+      "deadline": "2030-05-10T09:08:00.117Z",
+      "lockCount": 2,
+      "paymentCount": 0
+    }
+  },
+  "checks": {
+    "check": "ESLint and 17 EJS templates PASS",
+    "newBackendExpiryTests": "23/23 PASS",
+    "countdownVM": "8/8 PASS",
+    "fullSuite": "73/73 PASS, 0 skipped; includes the 8 checkout countdown regression tests",
+    "countdownVMLimit": "responseStart cannot measure server-to-client transit before first response bytes arrive; UI countdown is approximate and the server remains authoritative for expiry and payment."
+  },
+  "cleanup": "QA database deleted after marker check, own app/Mongo processes stopped, ports3017/27049 closed, runtime removed."
+}

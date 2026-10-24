@@ -1,0 +1,245 @@
+{
+  "date": "24/10/2026",
+  "baseSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+  "browser": "ChatGPT in-app browser (IAB)",
+  "dataSource": "Synthetic local MongoDB replica set qaCourtText, actual app/controller/service/EJS/CSS/JS; no Atlas or .env",
+  "before": {
+    "clientWidth": 375,
+    "documentWidth": 1241,
+    "locationScroll": 1221,
+    "locationWidth": 335,
+    "locationWrap": "normal",
+    "titleScroll": 335,
+    "titleWidth": 335,
+    "titleWrap": "normal",
+    "viewport": 390
+  },
+  "layout": [
+    {
+      "clientWidth": 375,
+      "date": "2026-10-27",
+      "documentWidth": 375,
+      "facilityText": "Cơ sở B kiểm thử tên dài — Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu CHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGAT",
+      "height": 844,
+      "locationOverflow": "visible",
+      "locationScroll": 335,
+      "locationText": "Cơ sở B kiểm thử tên dài — Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu CHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGAT · Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài",
+      "locationWidth": 335,
+      "locationWrap": "anywhere",
+      "slotCount": 32,
+      "titleOverflow": "visible",
+      "titleScroll": 335,
+      "titleText": "QA B01 — Trống 09–18",
+      "titleWidth": 335,
+      "titleWrap": "anywhere",
+      "viewport": 390,
+      "case": "bug01",
+      "textComplete": true,
+      "pass": true
+    },
+    {
+      "clientWidth": 375,
+      "date": "2026-10-27",
+      "documentWidth": 375,
+      "facilityText": "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+      "height": 844,
+      "locationOverflow": "visible",
+      "locationScroll": 335,
+      "locationText": "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC · DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD",
+      "locationWidth": 335,
+      "locationWrap": "anywhere",
+      "slotCount": 32,
+      "titleOverflow": "visible",
+      "titleScroll": 335,
+      "titleText": "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",
+      "titleWidth": 335,
+      "titleWrap": "anywhere",
+      "viewport": 390,
+      "case": "unbroken",
+      "textComplete": true,
+      "pass": true
+    },
+    {
+      "clientWidth": 375,
+      "date": "2026-10-27",
+      "documentWidth": 375,
+      "facilityText": "Cơ sở thử bố cục",
+      "height": 844,
+      "locationOverflow": "visible",
+      "locationScroll": 335,
+      "locationText": "Cơ sở thử bố cục · Số 1 đường Kiểm Thử, Thành phố QA",
+      "locationWidth": 335,
+      "locationWrap": "anywhere",
+      "slotCount": 32,
+      "titleOverflow": "visible",
+      "titleScroll": 335,
+      "titleText": "Sân cầu lông QA01",
+      "titleWidth": 335,
+      "titleWrap": "anywhere",
+      "viewport": 390,
+      "case": "normal",
+      "textComplete": true,
+      "pass": true
+    },
+    {
+      "clientWidth": 1351,
+      "date": "2026-10-27",
+      "documentWidth": 1351,
+      "facilityText": "Cơ sở B kiểm thử tên dài — Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu CHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGAT",
+      "height": 900,
+      "locationOverflow": "visible",
+      "locationScroll": 1100,
+      "locationText": "Cơ sở B kiểm thử tên dài — Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu CHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGAT · Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài",
+      "locationWidth": 1100,
+      "locationWrap": "anywhere",
+      "slotCount": 32,
+      "titleOverflow": "visible",
+      "titleScroll": 1100,
+      "titleText": "QA B01 — Trống 09–18",
+      "titleWidth": 1100,
+      "titleWrap": "anywhere",
+      "viewport": 1366,
+      "case": "bug01",
+      "textComplete": true,
+      "pass": true
+    },
+    {
+      "clientWidth": 1351,
+      "date": "2026-10-27",
+      "documentWidth": 1351,
+      "facilityText": "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+      "height": 900,
+      "locationOverflow": "visible",
+      "locationScroll": 1100,
+      "locationText": "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC · DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD",
+      "locationWidth": 1100,
+      "locationWrap": "anywhere",
+      "slotCount": 32,
+      "titleOverflow": "visible",
+      "titleScroll": 1100,
+      "titleText": "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",
+      "titleWidth": 1100,
+      "titleWrap": "anywhere",
+      "viewport": 1366,
+      "case": "unbroken",
+      "textComplete": true,
+      "pass": true
+    },
+    {
+      "clientWidth": 1351,
+      "date": "2026-10-27",
+      "documentWidth": 1351,
+      "facilityText": "Cơ sở thử bố cục",
+      "height": 900,
+      "locationOverflow": "visible",
+      "locationScroll": 1100,
+      "locationText": "Cơ sở thử bố cục · Số 1 đường Kiểm Thử, Thành phố QA",
+      "locationWidth": 1100,
+      "locationWrap": "anywhere",
+      "slotCount": 32,
+      "titleOverflow": "visible",
+      "titleScroll": 1100,
+      "titleText": "Sân cầu lông QA01",
+      "titleWidth": 1100,
+      "titleWrap": "anywhere",
+      "viewport": 1366,
+      "case": "normal",
+      "textComplete": true,
+      "pass": true
+    }
+  ],
+  "interactions": [
+    {
+      "viewport": 390,
+      "selection": {
+        "buttonEnabled": true,
+        "focusOutline": "solid",
+        "focusValue": "06:00",
+        "selected": true,
+        "summary": "1 ô · 30 phút",
+        "total": "50.000 ₫"
+      },
+      "dateState": {
+        "clientWidth": 375,
+        "date": "2026-10-28",
+        "documentWidth": 375,
+        "heading": "Lịch ngày 28/10/2026"
+      },
+      "listState": {
+        "heading": "Danh sách sân",
+        "path": "/courts"
+      },
+      "returnState": {
+        "date": "2026-10-28",
+        "heading": "QA B01 — Trống 09–18"
+      },
+      "pass": true
+    },
+    {
+      "viewport": 1366,
+      "selection": {
+        "buttonEnabled": true,
+        "focusOutline": "solid",
+        "focusValue": "06:00",
+        "selected": true,
+        "summary": "1 ô · 30 phút",
+        "total": "50.000 ₫"
+      },
+      "dateState": {
+        "clientWidth": 1351,
+        "date": "2026-10-28",
+        "documentWidth": 1351,
+        "heading": "Lịch ngày 28/10/2026"
+      },
+      "listState": {
+        "heading": "Danh sách sân",
+        "path": "/courts"
+      },
+      "returnState": {
+        "date": "2026-10-28",
+        "heading": "QA B01 — Trống 09–18"
+      },
+      "pass": true
+    }
+  ],
+  "fixtures": {
+    "normal": {
+      "id": "6adbe0c6b3cf5aa42845d7cb",
+      "courtName": "Sân cầu lông QA01",
+      "facilityName": "Cơ sở thử bố cục",
+      "address": "Số 1 đường Kiểm Thử, Thành phố QA"
+    },
+    "bug01": {
+      "id": "6adbe0c6b3cf5aa42845d7ce",
+      "courtName": "QA B01 — Trống 09–18",
+      "facilityName": "Cơ sở B kiểm thử tên dài — Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu CHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGAT",
+      "address": "Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài"
+    },
+    "unbroken": {
+      "id": "6adbe0c6b3cf5aa42845d7d1",
+      "courtName": "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",
+      "facilityName": "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+      "address": "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
+    }
+  },
+  "checks": {
+    "check": "ESLint and 17 EJS PASS",
+    "test": "42/42 PASS, 0 skipped",
+    "browserLayout": "6/6 PASS",
+    "browserInteraction": "2/2 PASS",
+    "consoleErrors": 0
+  },
+  "cleanup": {
+    "bookings": {
+      "bookings": 0,
+      "locks": 0,
+      "payments": 0
+    },
+    "qaDatabaseRemoved": true,
+    "disposableTestDatabasesRemoved": true,
+    "ownProcessesStopped": true,
+    "portsClosed": true,
+    "runtimeRemoved": true,
+    "viewportReset": true
+  }
+}
