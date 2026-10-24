@@ -1,0 +1,29 @@
+{
+  "counts": {
+    "bookings": 2,
+    "locks": 2,
+    "payments": 0
+  },
+  "bookings": [
+    {
+      "id": "71866818d5418f690950d9f5",
+      "courtId": "6adc5ba5c3f3481e4f7251ba",
+      "status": "HOLD",
+      "holdExpiresAt": "2030-05-10T09:08:00.000Z",
+      "slots": [
+        "2030-05-10T09:30:00.000Z"
+      ],
+      "lockCount": 1
+    },
+    {
+      "id": "71866871c3f3481e4f7251bd",
+      "courtId": "6adc5ba5c3f3481e4f7251ba",
+      "status": "HOLD",
+      "holdExpiresAt": "2030-05-10T09:00:00.000Z",
+      "slots": [
+        "2030-05-10T09:00:00.000Z"
+      ],
+      "lockCount": 1
+    }
+  ]
+}

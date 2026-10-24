@@ -1,9 +1,15 @@
 /* Booking, customer forms and printable receipt. */
+.booking-court-title, .booking-court-location { overflow-wrap: anywhere; }
 .booking-eyebrow { margin: 10px 0 6px; color: #526b57; font-size: 12px; font-weight: 700; letter-spacing: .12em; }
 .booking-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0; }
 .booking-tabs a { padding: 9px 14px; border: 1px solid #ced9cd; border-radius: 8px; text-decoration: none; }
 .booking-tabs a[aria-current="page"] { color: #fff; background: #173f35; border-color: #173f35; }
 .booking-notice { padding: 14px 16px; background: #f0f4e9; border: 1px solid #ced9bd; border-radius: 8px; overflow-wrap: anywhere; }
+.booking-form-error p { margin: 0 0 8px; }
+.booking-form-error p:last-child, .booking-form-error ul:last-child { margin-bottom: 0; }
+.booking-form-error ul { margin-top: 6px; padding-left: 22px; }
+.booking-form-error:focus { outline: 3px solid #8b9d4b; outline-offset: 3px; }
+.booking-submit-notice { grid-column: 1 / -1; margin: 0; }
 .booking-badge { display: inline-block; padding: 5px 10px; background: #eef2e7; border: 1px solid #d7e1ca; border-radius: 30px; font-size: 13px; font-weight: 700; }
 .booking-steps { display: flex; flex-wrap: wrap; gap: 10px 24px; list-style: none; padding: 15px 0; margin: 0 0 20px; border-bottom: 1px solid #dce2d5; color: #5a6d62; }
 .booking-steps [aria-current="step"] { font-weight: 700; color: #173f35; }

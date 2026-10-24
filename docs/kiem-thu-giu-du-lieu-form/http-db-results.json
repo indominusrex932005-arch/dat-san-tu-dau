@@ -1,0 +1,155 @@
+{
+  "date": "24/10/2026",
+  "baseSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+  "browserBookingPosts": {
+    "total": 8,
+    "statuses": {
+      "303": 4,
+      "400": 2,
+      "409": 2
+    }
+  },
+  "beforeRace": {
+    "counts": {
+      "bookings": 0,
+      "locks": 0,
+      "payments": 0
+    },
+    "bookings": [],
+    "uniqueLocks": 0
+  },
+  "afterMobile": {
+    "counts": {
+      "bookings": 2,
+      "locks": 2,
+      "payments": 0
+    },
+    "bookings": [
+      {
+        "id": "6adbe560c637cd35bfdc38ad",
+        "date": "2026-10-28",
+        "status": "HOLD",
+        "signedInCustomer": false,
+        "totalPrice": 50000,
+        "slots": [
+          {
+            "startAt": "2026-10-28T07:30:00.000Z",
+            "priceVND": 50000
+          }
+        ]
+      },
+      {
+        "id": "6adbe584c637cd35bfdc38b1",
+        "date": "2026-10-28",
+        "status": "HOLD",
+        "signedInCustomer": true,
+        "totalPrice": 70000,
+        "slots": [
+          {
+            "startAt": "2026-10-28T07:00:00.000Z",
+            "priceVND": 70000
+          }
+        ]
+      }
+    ],
+    "uniqueLocks": 2
+  },
+  "after": {
+    "counts": {
+      "bookings": 4,
+      "locks": 4,
+      "payments": 0
+    },
+    "bookings": [
+      {
+        "id": "6adbe560c637cd35bfdc38ad",
+        "date": "2026-10-28",
+        "status": "HOLD",
+        "signedInCustomer": false,
+        "totalPrice": 50000,
+        "slots": [
+          {
+            "startAt": "2026-10-28T07:30:00.000Z",
+            "priceVND": 50000
+          }
+        ]
+      },
+      {
+        "id": "6adbe584c637cd35bfdc38b1",
+        "date": "2026-10-28",
+        "status": "HOLD",
+        "signedInCustomer": true,
+        "totalPrice": 70000,
+        "slots": [
+          {
+            "startAt": "2026-10-28T07:00:00.000Z",
+            "priceVND": 70000
+          }
+        ]
+      },
+      {
+        "id": "6adbe592c637cd35bfdc38b4",
+        "date": "2026-10-29",
+        "status": "HOLD",
+        "signedInCustomer": false,
+        "totalPrice": 70000,
+        "slots": [
+          {
+            "startAt": "2026-10-29T07:30:00.000Z",
+            "priceVND": 70000
+          }
+        ]
+      },
+      {
+        "id": "6adbe5a2c637cd35bfdc38b8",
+        "date": "2026-10-29",
+        "status": "HOLD",
+        "signedInCustomer": true,
+        "totalPrice": 100000,
+        "slots": [
+          {
+            "startAt": "2026-10-29T07:00:00.000Z",
+            "priceVND": 100000
+          }
+        ]
+      }
+    ],
+    "uniqueLocks": 4
+  },
+  "races": [
+    {
+      "date": "2026-10-28",
+      "otherSessionStatus": 303,
+      "otherBooking": "6adbe560c637cd35bfdc38ad",
+      "occupiedTime": "14:30",
+      "latestPriceVND": 70000
+    },
+    {
+      "date": "2026-10-29",
+      "otherSessionStatus": 303,
+      "otherBooking": "6adbe592c637cd35bfdc38b4",
+      "occupiedTime": "14:30",
+      "latestPriceVND": 100000
+    }
+  ],
+  "checks": {
+    "check": "ESLint and 17 EJS PASS",
+    "test": "67/67 PASS, 0 skipped",
+    "newHTTP": "17/17 PASS (includes parent)",
+    "newScriptVM": "8/8 PASS",
+    "browserCases": "9/9 PASS"
+  },
+  "cleanup": {
+    "beforeDrop": {
+      "bookings": 4,
+      "locks": 4,
+      "payments": 0
+    },
+    "qaDatabaseRemoved": true,
+    "regressionDatabasesRemoved": true,
+    "ownProcessesStopped": true,
+    "portsClosed": true,
+    "runtimeRemoved": true,
+    "viewportReset": true
+  }
+}

@@ -7,7 +7,7 @@ import SlotLock from '../models/SlotLock.js';
 import Payment from '../models/Payment.js';
 import BookingRequest from '../models/BookingRequest.js';
 import User from '../models/User.js';
-import { makeSlots, quoteSelection, vietnamDate, slotInstant, holdExpiresAt, validateDate } from '../domain/booking-rules.js';
+import { HOLD_MINUTES, makeSlots, quoteSelection, vietnamDate, slotInstant, holdExpiresAt, effectiveHoldExpiresAt, validateDate } from '../domain/booking-rules.js';
 
 function fail(status, message) { throw Object.assign(new Error(message), { status }); }
 function objectId(value, label = 'Mã dữ liệu') {
@@ -83,12 +83,43 @@ async function transaction(work) {
   }
 }
 async function cleanupExpired(session, now) {
-  const expired = await Booking.find({ status: 'HOLD', holdExpiresAt: { $lte: now } }).select('_id').session(session).lean();
+  const filter = {
+    status: 'HOLD',
+    $or: [
+      { holdExpiresAt: { $lte: now } },
+      { 'slots.startAt': { $lte: now } },
+      { createdAt: { $lte: new Date(Number(now) - HOLD_MINUTES * 60000) } }
+    ]
+  };
+  const expired = await Booking.find(filter).select('_id').session(session).lean();
   if (!expired.length) return 0;
   const ids = expired.map(item => item._id);
-  await Booking.updateMany({ _id: { $in: ids }, status: 'HOLD', holdExpiresAt: { $lte: now } }, { $set: { status: 'EXPIRED' } }, { session });
+  await Booking.updateMany({ ...filter, _id: { $in: ids } }, { $set: { status: 'EXPIRED' } }, { session });
   await SlotLock.deleteMany({ booking: { $in: ids } }, { session });
   return ids.length;
+}
+async function expireBooking(booking, session) {
+  booking.holdExpiresAt = effectiveHoldExpiresAt(booking);
+  booking.status = 'EXPIRED';
+  await booking.save({ session });
+  await SlotLock.deleteMany({ booking: booking._id }, { session });
+}
+async function refreshHoldDeadline(id) {
+  return transaction(async session => {
+    const booking = await Booking.findById(id).session(session);
+    if (!booking || booking.status !== 'HOLD') return;
+    const deadline = effectiveHoldExpiresAt(booking);
+    if (Number(deadline) <= Date.now()) {
+      await expireBooking(booking, session);
+      return;
+    }
+    if (Number(deadline) !== Number(booking.holdExpiresAt)) {
+      booking.holdExpiresAt = deadline;
+      await booking.save({ session });
+      // Only shorten old HOLD locks; never extend or recreate a missing lock.
+      await SlotLock.updateMany({ booking: booking._id, expiresAt: { $gt: deadline } }, { $set: { expiresAt: deadline } }, { session });
+    }
+  });
 }
 async function activeCourt(id, session) {
   objectId(id, 'Mã sân');
@@ -164,7 +195,8 @@ export async function createHold({ courtId, date: inputDate, times: inputTimes, 
     }
     const quote = checkedQuote(court, date, times, await locksFor(court._id, date, session), current);
     const slots = asSlots(quote, date);
-    const expiry = holdExpiresAt(current);
+    const expiry = holdExpiresAt(current, slots);
+    if (Number(expiry) <= Date.now()) fail(400, 'Ô đầu tiên đã bắt đầu. Hãy chọn lại các ô còn trống.');
     await Booking.create([{
       _id: id, user: user?._id || null, facility: court.facility, court: court._id,
       publicCode: 'DS-' + randomBytes(6).toString('hex').toUpperCase(), ...guest,
@@ -187,8 +219,9 @@ export async function getBookingForViewer(id, { user, token } = {}) {
   }
   if (!allowed && !booking.user) allowed = tokenMatches(token, booking.guestTokenHash);
   if (!allowed) fail(403, 'Bạn không có quyền xem đơn này. Khách vãng lai cần link phiếu riêng.');
-  if (booking.status === 'HOLD' && Number(booking.holdExpiresAt) <= Date.now()) {
-    await expireHolds();
+  if (booking.status === 'HOLD' && (Number(effectiveHoldExpiresAt(booking)) !== Number(booking.holdExpiresAt)
+      || Number(effectiveHoldExpiresAt(booking)) <= Date.now())) {
+    await refreshHoldDeadline(id);
     booking = await Booking.findById(id).select('+guestTokenHash').lean();
   }
   const result = await Booking.populate(booking, [
@@ -201,21 +234,33 @@ export async function getBookingForViewer(id, { user, token } = {}) {
 export async function simulatePayment(id, { user, token } = {}) {
   if (process.env.DEMO_MODE !== 'true' || process.env.NODE_ENV === 'production') fail(403, 'Mô phỏng thanh toán chỉ mở trong chế độ demo.');
   await getBookingForViewer(id, { user, token });
-  await transaction(async session => {
+  const confirmed = await transaction(async session => {
     const now = new Date();
     const booking = await Booking.findById(id).session(session);
     if (!booking) fail(404, 'Không tìm thấy đơn đặt sân.');
-    if (booking.status === 'CONFIRMED' && booking.paymentStatus === 'DEMO_PAID') return;
-    if (booking.status === 'EXPIRED' || (booking.status === 'HOLD' && Number(booking.holdExpiresAt) <= Number(now))) {
-      fail(410, 'Đã hết 10 phút giữ sân. Hãy chọn lại các ô còn trống.');
-    }
+    if (booking.status === 'CONFIRMED' && booking.paymentStatus === 'DEMO_PAID') return true;
+    if (booking.status === 'EXPIRED') return false;
     if (booking.status !== 'HOLD') fail(409, 'Đơn không còn ở trạng thái chờ thanh toán.');
+    const deadline = effectiveHoldExpiresAt(booking);
+    if (Number(deadline) <= Number(now)) {
+      await expireBooking(booking, session);
+      return false;
+    }
     const locks = await SlotLock.find({ booking: booking._id }).session(session).lean();
-    if (locks.length !== booking.slots.length || locks.some(lock => !lock.expiresAt || Number(lock.expiresAt) <= Number(now))
+    const confirmationTime = new Date();
+    if (Number(deadline) <= Number(confirmationTime)) {
+      await expireBooking(booking, session);
+      return false;
+    }
+    if (locks.length !== booking.slots.length || locks.some(lock => !lock.expiresAt || Number(lock.expiresAt) <= Number(confirmationTime))
       || booking.slots.some(slot => !locks.some(lock => Number(lock.slotStart) === Number(slot.startAt) && sameId(lock.court, booking.court)))) {
       fail(409, 'Đơn không còn giữ đủ các ô đã chọn. Hãy chọn sân lại.');
     }
     await SlotLock.updateMany({ booking: booking._id }, { $set: { expiresAt: null } }, { session });
+    if (Number(deadline) <= Date.now()) {
+      await expireBooking(booking, session);
+      return false;
+    }
     booking.status = 'CONFIRMED';
     booking.paymentStatus = 'DEMO_PAID';
     booking.holdExpiresAt = undefined;
@@ -223,7 +268,10 @@ export async function simulatePayment(id, { user, token } = {}) {
     await Payment.updateOne({ booking: booking._id, type: 'INITIAL_DEMO' }, {
       $setOnInsert: { booking: booking._id, type: 'INITIAL_DEMO', method: 'DEMO', amountVND: booking.totalPrice, recordedBy: user?._id || null }
     }, { upsert: true, session, runValidators: true });
+    return true;
   });
+  // Commit expiry and release every slot before returning the failure response.
+  if (!confirmed) fail(410, 'Đã hết hạn giữ sân: tối đa 10 phút, trước khi ô đầu tiên bắt đầu. Hãy chọn lại các ô còn trống.');
   return getBookingForViewer(id, { user, token });
 }
 

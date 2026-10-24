@@ -1,0 +1,170 @@
+{
+  "notice": "All records are synthetic, created only in a disposable local QA database. IDs no longer resolve after cleanup; recreate records and substitute IDs to rerun.",
+  "date": "2026-10-27",
+  "otherDate": "2026-10-28",
+  "today": "2026-10-24",
+  "pastDate": "2026-10-23",
+  "facilities": {
+    "a": {
+      "id": "6adb9d4d2e58e202c0c6661b",
+      "name": "Cơ sở A kiểm thử"
+    },
+    "b": {
+      "id": "6adb9d4d2e58e202c0c6661c",
+      "name": "Cơ sở B kiểm thử tên dài — Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu CHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGAT"
+    },
+    "unowned": {
+      "id": "6adb9d4d2e58e202c0c6661d",
+      "name": "Cơ sở chưa cấp OWNER (QA)"
+    },
+    "pending": {
+      "id": "6adb9d4d2e58e202c0c6661e",
+      "name": "Cơ sở OWNER PENDING (QA)"
+    },
+    "invalidPhone": {
+      "id": "6adb9d4d2e58e202c0c6661f",
+      "name": "Cơ sở thiếu SĐT hợp lệ (QA)"
+    }
+  },
+  "courts": {
+    "free": {
+      "id": "6adb9d4d2e58e202c0c66620",
+      "name": "QA A01 — Trống",
+      "facility": "a",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "held": {
+      "id": "6adb9d4d2e58e202c0c66621",
+      "name": "QA A02 — HOLD 14:30",
+      "facility": "a",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "booked": {
+      "id": "6adb9d4d2e58e202c0c66622",
+      "name": "QA A03 — BOOKED 14:00",
+      "facility": "a",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "expired": {
+      "id": "6adb9d4d2e58e202c0c66623",
+      "name": "QA A04 — HOLD hết hạn",
+      "facility": "a",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "full": {
+      "id": "6adb9d4d2e58e202c0c66624",
+      "name": "QA A05 — Hết ô cả ngày",
+      "facility": "a",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "edge": {
+      "id": "6adb9d4d2e58e202c0c66625",
+      "name": "QA A06 — Chỉ mở 14–15",
+      "facility": "a",
+      "openTime": "14:00",
+      "closeTime": "15:00",
+      "active": true
+    },
+    "late": {
+      "id": "6adb9d4d2e58e202c0c66626",
+      "name": "QA A07 — Mở từ 15 giờ",
+      "facility": "a",
+      "openTime": "15:00",
+      "closeTime": "18:00",
+      "active": true
+    },
+    "after": {
+      "id": "6adb9d4d2e58e202c0c66627",
+      "name": "QA A08 — BOOKED ở 15:00",
+      "facility": "a",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "bFree": {
+      "id": "6adb9d4d2e58e202c0c66628",
+      "name": "QA B01 — Trống 09–18",
+      "facility": "b",
+      "openTime": "09:00",
+      "closeTime": "18:00",
+      "active": true
+    },
+    "bLong": {
+      "id": "6adb9d4d2e58e202c0c66629",
+      "name": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_",
+      "facility": "b",
+      "openTime": "10:00",
+      "closeTime": "19:00",
+      "active": true
+    },
+    "inactive": {
+      "id": "6adb9d4d2e58e202c0c6662a",
+      "name": "QA A09 — Ngừng hoạt động",
+      "facility": "a",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": false
+    },
+    "unowned": {
+      "id": "6adb9d4d2e58e202c0c6662b",
+      "name": "QA C01 — Chưa cấp chủ",
+      "facility": "unowned",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "pending": {
+      "id": "6adb9d4d2e58e202c0c6662c",
+      "name": "QA D01 — Chủ chờ duyệt",
+      "facility": "pending",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "invalidPhone": {
+      "id": "6adb9d4d2e58e202c0c6662d",
+      "name": "QA E01 — Thiếu liên hệ hợp lệ",
+      "facility": "invalidPhone",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "pastOnly": {
+      "id": "6adb9d4d2e58e202c0c6662e",
+      "name": "QA A10 — Chỉ mở 00:00–00:30",
+      "facility": "a",
+      "openTime": "00:00",
+      "closeTime": "00:30",
+      "active": true
+    }
+  },
+  "baseline": {
+    "Booking": 5,
+    "SlotLock": 36,
+    "Payment": 3,
+    "BookingRequest": 0
+  },
+  "bookingFixtures": {
+    "held": "HOLD with14:30 lock, ordinary10minute lifetime from real POST",
+    "booked": "CONFIRMED/DEMO_PAID with14:00 permanent lock",
+    "expired": "HOLD with14:30 lock; both expiry timestamps moved60seconds into the past on QA DB",
+    "full": "CONFIRMED/DEMO_PAID with all32slots06:00–22:00",
+    "after": "CONFIRMED/DEMO_PAID at15:00, outside search[14:00,15:00)"
+  },
+  "race": "After GET-only checks, sessionB held free14:30; sessionA stale14:00+14:30 rejected409. This genuine POST also cleans up the expired fixture.",
+  "reproduction": {
+    "longFacilityName": "Cơ sở B kiểm thử tên dài — Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu CHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGAT",
+    "longFacilityAddress": "Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài ",
+    "longCourtName": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_"
+  }
+}
