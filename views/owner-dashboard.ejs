@@ -27,6 +27,7 @@
         <div><span class="owner-kicker">QUẢN LÝ CƠ SỞ</span><h1 id="owner-title"><%= facility?.name || 'Cơ sở của bạn' %></h1><p><%= facility?.address || 'Tài khoản chưa được cấp cơ sở quản lý.' %></p></div>
         <% if (facility) { %>
           <nav class="demo-actions" aria-label="Thao tác cơ sở">
+            <a href="/owner/calendar" class="demo-button demo-button-secondary">Lịch điều hành sân</a>
             <a href="/owner/facilities/<%= facility._id %>/edit" class="demo-button demo-button-secondary">Sửa thông tin cơ sở</a>
             <a href="/owner/courts/new" class="demo-button">+ Thêm sân</a>
           </nav>
