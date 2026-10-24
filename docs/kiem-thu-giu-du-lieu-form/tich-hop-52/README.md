@@ -14,6 +14,8 @@ Ngày **24/10/2026 (UTC+7)**. Nhánh `fix/booking-form-recovery`, cập nhật t
 
 Commit cuối và CI của đúng head được ghi trong PR #55. Ảnh/JSON cũ của #38 và #37 giữ nguyên SHA lịch sử; bằng chứng trong thư mục này chỉ dành cho bản ghép mới.
 
+**Cách tích hợp:** #55 hiện chứa commit #52 trong lịch sử và có thể review bản ghép chung trên main hiện tại. Nếu merge #52 bằng merge commit trước, nhánh #55 đã có tổ tiên đó. Nếu chọn **squash #52 trước**, cần cập nhật #55 theo commit main thực tế sau squash rồi kiểm tra lại; phép thử lịch sử squash độc lập vẫn có vùng chồng lấn. Không coi CI của bản ghép là bảo đảm cho một SHA squash tương lai. Không tự merge hai PR hoặc đóng #52 trong tác vụ này.
+
 ## Kiểm tra tự động bản cuối
 
 - `npm run check`: **PASS**, ESLint và 17 template EJS.
