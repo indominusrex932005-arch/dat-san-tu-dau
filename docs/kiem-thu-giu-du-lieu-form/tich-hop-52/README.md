@@ -1,12 +1,13 @@
 # Kiểm thử PR #55 sau khi tích hợp PR #52
 
-Ngày **24/10/2026 (UTC+7)**. Nhánh `fix/booking-form-recovery`, cập nhật từ `main` và ghép nhánh #52, giữ PR #55 trỏ vào `main`. Không force-push hoặc thay đổi nhánh #52.
+Ngày **24/10/2026 (UTC+7)**. Nhánh `fix/booking-form-recovery`, giữ PR #55 trỏ vào `main`. Ban đầu ghép nhánh #52; trong khi kiểm tra, nhóm đã squash #52 và merge #54 nên đã cập nhật tiếp theo **main thực tế `150ba95bd31bd09682b569a2d0c2157158ac0807`**. Không force-push hoặc thay đổi nhánh #52.
 
 ## Nền và cách sửa xung đột
 
 - PR #55 trước cập nhật: `629dc35fa3b882b29a1b334b8349b9397b91cba2`.
-- Main mới: `ee1c2341f8af274c839f65ea24eecc32fd3902fd`, có tìm sân #45.
+- Main của lượt ghép đầu: `ee1c2341f8af274c839f65ea24eecc32fd3902fd`, có tìm sân #45.
 - PR #52: `532707e011031dbb6a68266bba3680ca4b6fbb26`, hết hạn giữ sân khi ô đầu tiên bắt đầu.
+- Main cuối: `150ba95bd31bd09682b569a2d0c2157158ac0807`, gồm squash #52 (`038347a`, head được nhóm cập nhật `788b23296e88134a44de6a80ff0577430b33ffd3`) và #54. Backend/countdown của head #52 mới giống bản đã ghép đầu.
 - `public/js/booking.js`: giữ nguyên phục hồi form/fetch/WeakMap/chống gửi trùng của #55; giữ nguyên countdown dùng deadline và giờ server của #52. Nhãn khi không gửi là **Giữ chỗ tối đa 10 phút**; lúc đang gửi vẫn báo đang kiểm tra.
 - `views/court-detail.ejs`: giữ giá trị form đã trả về, lựa chọn còn AVAILABLE, CSRF, tổng giá server và thông báo ô bị loại; dùng nội dung hạn giữ của #52.
 - Phần tự ghép của controller giữ cả `createBooking` phục hồi form và `showCheckout` truyền `serverNow`. Hợp đồng dữ liệu giữ cả hai thay đổi.
@@ -14,17 +15,23 @@ Ngày **24/10/2026 (UTC+7)**. Nhánh `fix/booking-form-recovery`, cập nhật t
 
 Commit cuối và CI của đúng head được ghi trong PR #55. Ảnh/JSON cũ của #38 và #37 giữ nguyên SHA lịch sử; bằng chứng trong thư mục này chỉ dành cho bản ghép mới.
 
-**Cách tích hợp:** #55 hiện chứa commit #52 trong lịch sử và có thể review bản ghép chung trên main hiện tại. Nếu merge #52 bằng merge commit trước, nhánh #55 đã có tổ tiên đó. Nếu chọn **squash #52 trước**, cần cập nhật #55 theo commit main thực tế sau squash rồi kiểm tra lại; phép thử lịch sử squash độc lập vẫn có vùng chồng lấn. Không coi CI của bản ghép là bảo đảm cho một SHA squash tương lai. Không tự merge hai PR hoặc đóng #52 trong tác vụ này.
+**Cách tích hợp hiện tại:** đã nhập commit main thực tế sau squash, giải quyết thêm vùng chồng lấn ở hợp đồng, JavaScript, EJS và test VM. Giữ `.booking-court-title/.booking-court-location` cùng `overflow-wrap:anywhere` của #54. Logic JavaScript/controller/service/domain không đổi so với lượt kết hợp đã kiểm tra. PR #55 có thể review tiếp trên nền main đã có #52; không cần merge lại phần #52. Việc merge #52/#54 do nhóm thực hiện, tác vụ này chỉ cập nhật #55.
 
 ## Kiểm tra tự động bản cuối
 
 - `npm run check`: **PASS**, ESLint và 17 template EJS.
-- `npm test`: **111/111 PASS**, không fail/skip/todo. Bao gồm toàn bộ test của main mới, #55, #52 và suite kết hợp mới.
+- `npm test`: **111/111 PASS**, không fail/skip/todo; đã chạy lại trên main cuối `150ba95`. Bao gồm toàn bộ test của main mới, #55, #52 và suite kết hợp mới.
 - [booking-recovery-expiry.test.js](../../../tests/booking-recovery-expiry.test.js): ba ca HTTP/DB (cộng test cha thành bốn kết quả) kiểm tra 400 → gửi lại sát giờ → hạn một phút; 409 → giá server/ô còn trống → hết hạn không xóa lock khách B; ô đầu đã bắt đầu bị bỏ và hạn mới lấy ô còn lại sớm nhất. Các ca đều kiểm tra checkout và POST mô phỏng muộn 410/EXPIRED/0 lock/0 Payment.
 - Tám ca script phục hồi form và tám ca countdown chạy trên cùng file JavaScript đã ghép, giữ kiểm tra chống gửi trùng/mất mạng/pageshow/redirect/giờ server/đúng hạn.
-- `git diff --check`: PASS; không còn conflict marker. Hạn, giá, quyền và transaction vẫn do backend quyết định.
+- Diff của phần thay đổi #55 so với main không có lỗi whitespace và không còn conflict marker. Không sửa whitespace có sẵn trong các file tìm sân mới từ main. Hạn, giá, quyền và transaction vẫn do backend quyết định.
 
-## Trình duyệt thật và DB
+## Chạy lại trên main sau squash #52 và merge #54
+
+Lượt cuối dùng DB QA mới, chạy lại 111 test và smoke browser sau cập nhật main. Ở 390px: 400 vẫn giữ hai ô/tên, 409 giữ ô 16:00 và giá 70.000 đồng; gửi lại tới checkout hạn 16:00. CSS tiêu đề thực tế là `overflow-wrap:anywhere`. Checkout cùng đơn được xem ở 390px và 1366px, không tràn ngang. Countdown lần đầu còn 30 giây; khi quan sát lại còn 6 giây nên nút vẫn được bật đúng trước hạn. Reload trước hạn vẫn HOLD, không kết luận EXPIRED sớm. Hành vi tới hạn đã được kiểm tra trong lượt ghép đầu bên dưới và suite HTTP/DB/countdown cuối (JavaScript/backend không đổi).
+
+Ảnh cuối: [400 mobile](main-150ba95/390-400.jpg), [409 mobile](main-150ba95/390-409.jpg), [checkout mobile](main-150ba95/390-checkout.jpg), [checkout desktop đầy đủ](main-150ba95/1366-checkout.jpg), [trước hạn](main-150ba95/1366-before-deadline.jpg). [DOM mới](main-150ba95/browser-results.json), [request log mới](main-150ba95/requests.jsonl), [DB mới](main-150ba95/database-results.json), [check/test và blob source cuối](main-150ba95/verification.json).
+
+## Lượt ghép đầu — trình duyệt thật và DB
 
 Ứng dụng/controller/service/EJS/JavaScript thật; Chromium in-app browser tại **390×844** và **1366×900**. MongoDB **8.3.11** replica `qaCombined55` tại `127.0.0.1:27054`, DB tạm `qa_combined55_*`, cơ sở và hai sân tổng hợp độc lập cho hai viewport. Không đọc `.env`, không kết nối Atlas, không sửa seed/migration/dữ liệu người dùng.
 
@@ -38,7 +45,7 @@ Chỉ tiến trình Node QA có đồng hồ `Date` giả chạy liên tục tr�
 | Đợi tới hạn | Countdown tự khóa nút thanh toán | PASS: DOM `data-expired=true`, thông báo đã tới hạn, nút mô phỏng disabled |
 | Reload checkout | HTTP 410, trạng thái EXPIRED và giải phóng đúng lock | PASS: trang ghi **Đã hết hạn**, không còn timer/nút thanh toán; đơn B vẫn HOLD |
 
-Các phép đo DOM cho mọi trạng thái đã ghi nhận đều không cuộn ngang. Tên/SĐT/ngày thường trong fixture chỉ là dữ liệu tổng hợp; báo cáo này không thay thế kiểm tra tên cơ sở cực dài của PR #54. Công cụ che trường tel trong DOM, nên việc giữ SĐT sai được kiểm chứng bằng bộ HTTP/DB và ảnh lịch sử #38; gửi lại không phải nhập lại SĐT hợp lệ giữa 409 và checkout.
+Các phép đo DOM cho mọi trạng thái đã ghi nhận đều không cuộn ngang. Tên/SĐT/ngày thường trong fixture chỉ là dữ liệu tổng hợp; ca tên cơ sở cực dài có báo cáo riêng của #54 đã vào main. Công cụ che trường tel trong DOM, nên việc giữ SĐT sai được kiểm chứng bằng bộ HTTP/DB và ảnh lịch sử #38; gửi lại không phải nhập lại SĐT hợp lệ giữa 409 và checkout.
 
 Request log của chính lượt browser có **6 POST `/bookings`**: 2×400, 2×409, 2×303. Khách B được tạo bằng service thật trên DB riêng, không tính là POST browser. Hai lần reload checkout trả 410. Cuối lượt có **4 Booking / 2 SlotLock / 0 Payment**: hai đơn A EXPIRED/0 lock; hai đơn B HOLD/mỗi đơn một lock 16:30. Không tạo đơn một phần từ các lần lỗi và không xóa lock đối chứng.
 
@@ -54,4 +61,4 @@ Request log của chính lượt browser có **6 POST `/bookings`**: 2×400, 2×
 
 Ảnh viewport checkout tập trung phần nút; deadline, giờ server và chuỗi countdown được ghi trong [browser-results.json](browser-results.json). [requests.jsonl](requests.jsonl) chỉ giữ method/path/status, không có cookie, body, CSRF hay token vãng lai. [database-results.json](database-results.json) giữ ID QA, trạng thái, hạn, ô và số lock; không xuất thông tin xác thực.
 
-DB browser được xóa sau đối chiếu marker; runtime và MongoDB QA được dọn sau khi bộ regression hoàn tất. Chưa thử Safari/Firefox hoặc điện thoại vật lý/production. PR #55 và #52 vẫn chờ nhóm trưởng review/merge; bản cập nhật này chuẩn bị khả năng tích hợp, không tự merge vào main.
+DB browser được xóa sau đối chiếu marker; runtime và MongoDB QA được dọn sau khi bộ regression hoàn tất. Chưa thử Safari/Firefox hoặc điện thoại vật lý/production. PR #52 đã được nhóm merge; PR #55 chờ review/merge. Tác vụ này không tự merge vào main.

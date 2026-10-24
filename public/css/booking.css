@@ -1,4 +1,5 @@
 /* Booking, customer forms and printable receipt. */
+.booking-court-title, .booking-court-location { overflow-wrap: anywhere; }
 .booking-eyebrow { margin: 10px 0 6px; color: #526b57; font-size: 12px; font-weight: 700; letter-spacing: .12em; }
 .booking-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0; }
 .booking-tabs a { padding: 9px 14px; border: 1px solid #ced9cd; border-radius: 8px; text-decoration: none; }

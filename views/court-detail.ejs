@@ -18,8 +18,8 @@
     const guestPhoneValue = returnedValues && Object.hasOwn(returnedValues, 'guestPhone') ? returnedValues.guestPhone : currentUser?.phone || '';
   %>
   <main>
-    <a href="/courts">← Danh sách sân</a><p class="booking-eyebrow">CHỌN NGÀY VÀ GIỜ</p><h1><%= court.name %></h1>
-    <p><strong><%= court.facility?.name || 'Cơ sở thể thao' %></strong> · <%= court.facility?.address || 'Địa chỉ đang cập nhật' %></p>
+    <a href="/courts">← Danh sách sân</a><p class="booking-eyebrow">CHỌN NGÀY VÀ GIỜ</p><h1 class="booking-court-title"><%= court.name %></h1>
+    <p class="booking-court-location"><strong><%= court.facility?.name || 'Cơ sở thể thao' %></strong> · <%= court.facility?.address || 'Địa chỉ đang cập nhật' %></p>
     <ol class="booking-steps" aria-label="Tiến trình đặt sân"><li aria-current="step">1. Chọn ô</li><li>2. Giữ chỗ / thanh toán</li><li>3. Lưu phiếu</li></ol>
     <% if (errorMessage) { %><div class="demo-error booking-form-error" id="booking-form-error" role="alert" tabindex="-1">
       <p><strong>Chưa giữ được sân.</strong> <%= errorMessage %></p>

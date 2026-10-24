@@ -1,0 +1,24 @@
+{
+  "dateVietnam": "2026-10-24",
+  "mainBaseSHA": "150ba95bd31bd09682b569a2d0c2157158ac0807",
+  "PR52Merged": true,
+  "PR54Included": true,
+  "check": {
+    "lint": "PASS",
+    "EJSTemplates": 17
+  },
+  "tests": {
+    "fail": 0,
+    "total": 111,
+    "skipped": 0,
+    "todo": 0,
+    "pass": 111
+  },
+  "blobs": {
+    "checkoutView": "80e6d018c7db3b8a2f0bd79e1ce57f178bce18e8",
+    "integrationTest": "244ec02cb978a5752b37e72d4c7c42fe9c28dc7f",
+    "script": "2233471d1bddc661c69edf54d65c7b80841463aa",
+    "courtView": "61481a325727daccf2100a10b9ef3ad296def293",
+    "controller": "59701079a4d35fed65d2376bd6bb7f3513107fb5"
+  }
+}
