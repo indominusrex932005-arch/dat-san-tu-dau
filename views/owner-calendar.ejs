@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Sân Thể Thao</title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/demo.css">
+  <style>
+    .owner-calendar-page main { min-width: 0; overflow-wrap: anywhere; }
+    .owner-calendar-page .owner-calendar-days { margin: 20px 0; }
+    .owner-calendar-page .owner-calendar-scroll { max-width: 100%; overflow-x: auto; }
+    .owner-calendar-page table { width: 100%; border-collapse: collapse; }
+    .owner-calendar-page th, .owner-calendar-page td { border: 1px solid #dce2d5; padding: 10px; text-align: left; }
+    .owner-calendar-page th[scope="col"], .owner-calendar-page td { white-space: nowrap; }
+    .owner-calendar-page th[scope="row"] { min-width: 8rem; max-width: 16rem; overflow-wrap: anywhere; }
+    .owner-calendar-page .owner-calendar-scroll:focus-visible { outline: 3px solid #8b9d4b; outline-offset: 3px; }
+  </style>
+</head>
+<body class="demo-page owner-calendar-page">
+  <div class="demo-shell">
+    <%- include('partials/navigation') %>
+    <main aria-labelledby="owner-calendar-title">
+      <a href="/owner">← Quản lý cơ sở</a>
+      <h1 id="owner-calendar-title">Lịch điều hành sân</h1>
+      <p><strong><%= facility.name %></strong> · <%= facility.address %></p>
+      <p>Ngày <%= formatDate(selectedDate) %>, theo giờ Việt Nam. Mỗi cột là một ô 30 phút.</p>
+      <form action="/owner/calendar" method="GET" class="demo-form demo-card">
+        <label for="calendar-date">Ngày xem lịch</label>
+        <input type="date" id="calendar-date" name="date" value="<%= selectedDate %>" min="<%= dayOptions[0].date %>" required>
+        <button type="submit" class="demo-button">Xem lịch</button>
+      </form>
+      <nav class="demo-actions owner-calendar-days" aria-label="Bảy ngày từ hôm nay">
+        <% for (const day of dayOptions) { %>
+          <a class="demo-button demo-button-secondary" href="/owner/calendar?date=<%= encodeURIComponent(day.date) %>" <% if (day.isSelected) { %>aria-current="date"<% } %>><%= day.label %></a>
+        <% } %>
+      </nav>
+      <p class="demo-muted" id="owner-calendar-help">Trống · Đang giữ · Đã đặt · Không phục vụ. Lịch phản ánh trạng thái khi tải trang; bấm Xem lịch để cập nhật.</p>
+      <% if (!courtRows.length) { %>
+        <p class="demo-card">Cơ sở chưa có sân.</p>
+      <% } else { %>
+        <div class="owner-calendar-scroll" role="region" aria-label="Lịch các sân, cuộn ngang để xem thêm giờ" aria-describedby="owner-calendar-help" tabindex="0">
+          <table>
+            <caption>Lịch sân ngày <%= formatDate(selectedDate) %></caption>
+            <thead><tr>
+              <th scope="col">Sân / giờ</th>
+              <% for (const column of timeColumns) { %><th scope="col"><%= column.time %>–<%= column.endTime %></th><% } %>
+            </tr></thead>
+            <tbody>
+              <% const labels = { AVAILABLE: 'Trống', LOCKED: 'Đang giữ', BOOKED: 'Đã đặt', UNAVAILABLE: 'Không phục vụ' }; %>
+              <% for (const row of courtRows) { %>
+                <tr data-court-id="<%= row.courtId %>">
+                  <th scope="row"><%= row.name %><% if (!row.active) { %><br><span>Tạm ngừng</span><% } %></th>
+                  <% for (const slot of row.slots) { %>
+                    <td data-time="<%= slot.time %>" data-status="<%= slot.status %>"><%= labels[slot.status] %></td>
+                  <% } %>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </main>
+  </div>
+</body>
+</html>
