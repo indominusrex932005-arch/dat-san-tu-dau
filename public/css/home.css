@@ -148,11 +148,11 @@ body.home-page {
   max-width: 15ch;
   margin: 0;
   color: var(--home-green);
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: 'Playfair Display', 'Times New Roman', serif;
   font-size: clamp(40px, 4.6vw, 64px);
   font-weight: 400;
-  line-height: 1.12;
-  letter-spacing: -2px;
+  line-height: 1.18;
+  letter-spacing: -0.5px;
 }
 
 .home-hero-description {
@@ -291,7 +291,7 @@ body.home-page {
 
 .home-intro h2 {
   margin: 0;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: 'Playfair Display', 'Times New Roman', serif;
   font-size: 28px;
   font-weight: 400;
   line-height: 1.35;
