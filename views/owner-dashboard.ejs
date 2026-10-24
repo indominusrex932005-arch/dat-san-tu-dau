@@ -25,7 +25,12 @@
     <main aria-labelledby="owner-title">
       <div class="owner-heading">
         <div><span class="owner-kicker">QUẢN LÝ CƠ SỞ</span><h1 id="owner-title"><%= facility?.name || 'Cơ sở của bạn' %></h1><p><%= facility?.address || 'Tài khoản chưa được cấp cơ sở quản lý.' %></p></div>
-        <% if (facility) { %><a href="/owner/courts/new" class="demo-button">+ Thêm sân</a><% } %>
+        <% if (facility) { %>
+          <nav class="demo-actions" aria-label="Thao tác cơ sở">
+            <a href="/owner/facilities/<%= facility._id %>/edit" class="demo-button demo-button-secondary">Sửa thông tin cơ sở</a>
+            <a href="/owner/courts/new" class="demo-button">+ Thêm sân</a>
+          </nav>
+        <% } %>
       </div>
       <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
       <% if (!facility) { %><p class="demo-card owner-empty">Bạn cần được quản trị viên cấp cơ sở trước khi quản lý sân và đơn đặt.</p><% } else { %>
