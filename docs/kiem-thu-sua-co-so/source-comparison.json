@@ -1,0 +1,54 @@
+{
+  "issue": 41,
+  "date": "24/10/2026",
+  "applicationSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+  "handoffSHA": "84d21c3ea2426b744f98fd51cf05d09d846188da",
+  "backendPR": 42,
+  "mergedAtUTC": "2026-10-23T14:54:27Z",
+  "squashMergeSHA": "15b8d58acda9bc3af78de8ea133f07a5471f30d8",
+  "handoffNote": "PR42 was squash merged; original handoff commit is not an ancestor, but these 7 related files are byte-identical by Git blob.",
+  "files": [
+    {
+      "path": "controllers/owner.controller.js",
+      "identical": true,
+      "handoffBlob": "d6439dd215529a8753113216db997306f32887d5",
+      "testedBlob": "d6439dd215529a8753113216db997306f32887d5"
+    },
+    {
+      "path": "middlewares/auth.middleware.js",
+      "identical": true,
+      "handoffBlob": "e938f5f6cb57cc139c9eb1dddde7ba6c62d977db",
+      "testedBlob": "e938f5f6cb57cc139c9eb1dddde7ba6c62d977db"
+    },
+    {
+      "path": "routes/owner.routes.js",
+      "identical": true,
+      "handoffBlob": "38ba6ad4b4ce5d56acb4397b1b4ee5d5546adf19",
+      "testedBlob": "38ba6ad4b4ce5d56acb4397b1b4ee5d5546adf19"
+    },
+    {
+      "path": "models/Facility.js",
+      "identical": true,
+      "handoffBlob": "24035592bce4312f1fbdc648928524cf1c2d97e3",
+      "testedBlob": "24035592bce4312f1fbdc648928524cf1c2d97e3"
+    },
+    {
+      "path": "views/owner-facility-form.ejs",
+      "identical": true,
+      "handoffBlob": "a26453d425840a2cf2dce72ea25d9294f1150c9c",
+      "testedBlob": "a26453d425840a2cf2dce72ea25d9294f1150c9c"
+    },
+    {
+      "path": "docs/SUA_THONG_TIN_CO_SO.md",
+      "identical": true,
+      "handoffBlob": "450ac498059123aa32708318829fa28620ed19c9",
+      "testedBlob": "450ac498059123aa32708318829fa28620ed19c9"
+    },
+    {
+      "path": "tests/owner-facility.test.js",
+      "identical": true,
+      "handoffBlob": "3feb02a071f43b16e47430fbe743b4d09e3ee7b7",
+      "testedBlob": "3feb02a071f43b16e47430fbe743b4d09e3ee7b7"
+    }
+  ]
+}

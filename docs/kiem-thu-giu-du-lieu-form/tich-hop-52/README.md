@@ -2,6 +2,8 @@
 
 Ngày **24/10/2026 (UTC+7)**. Nhánh `fix/booking-form-recovery`, giữ PR #55 trỏ vào `main`. Ban đầu ghép nhánh #52; trong khi kiểm tra, nhóm đã squash #52 và merge #54 nên đã cập nhật tiếp theo **main thực tế `150ba95bd31bd09682b569a2d0c2157158ac0807`**. Không force-push hoặc thay đổi nhánh #52.
 
+Đồng bộ cuối theo main `6ed6d019f9dd1b67025ad45cf1e47618ba11dc63` sau khi nhóm merge thêm tài liệu #56 và UI sửa cơ sở #57. Phần cập nhật này không đổi controller/service/domain/JavaScript/EJS đặt sân đã kiểm tra trên `150ba95`; check/EJS được chạy lại, CI trên head cuối ghi trong PR chạy toàn bộ suite.
+
 ## Nền và cách sửa xung đột
 
 - PR #55 trước cập nhật: `629dc35fa3b882b29a1b334b8349b9397b91cba2`.

@@ -1,0 +1,35 @@
+{
+  "issue": 41,
+  "date": "24/10/2026",
+  "applicationSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+  "check": "PASS: ESLint and17EJS",
+  "automatedSuite": {
+    "total": 42,
+    "pass": 42,
+    "fail": 0,
+    "skipped": 0,
+    "ownerFacilitySubset": "12 children and1parent PASS"
+  },
+  "http": {
+    "total": 66,
+    "pass": 66,
+    "fail": 0,
+    "skipped": 0
+  },
+  "browser": {
+    "total": 14,
+    "pass": 14,
+    "fail": 0
+  },
+  "bugsObserved": [],
+  "deferredCases": [],
+  "cleanup": {
+    "protectedSnapshotUnchanged": true,
+    "qaDatabasesRemoved": true,
+    "ownProcessesStopped": true,
+    "portsClosed": true,
+    "runtimeRemoved": true,
+    "viewportReset": true
+  },
+  "runtimeNote": "QA processes stopped before the final snapshot step; resumed the same local database without reseeding. After the app was ready, protected snapshot and guest booking verification passed; all owned data/processes were then cleaned."
+}

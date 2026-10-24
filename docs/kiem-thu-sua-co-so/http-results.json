@@ -1,0 +1,1487 @@
+{
+  "issue": 41,
+  "date": "24/10/2026",
+  "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+  "execution": "Node TestBrowser/fetch → real Express app → local MongoDB replica set/transactions; no mocked responses",
+  "dataSource": {
+    "kind": "Synthetic independent temporary database",
+    "database": "booking_test_1792796742539_71592",
+    "endpoint": "localhost:27052; replicaSet qaOwner41",
+    "createdAndDroppedBy": "tests/helpers/database.js createTestEnvironment/close",
+    "atlasAccessed": false
+  },
+  "result": {
+    "total": 66,
+    "pass": 66,
+    "fail": 0,
+    "skipped": 0
+  },
+  "cases": [
+    {
+      "id": "HTTP-01",
+      "title": "OWNER mở form thật từ dashboard",
+      "steps": [
+        "Đăng nhập OWNER APPROVED A",
+        "GET /owner",
+        "Theo href sửa cơ sở",
+        "GET form"
+      ],
+      "expected": "200; form POST đúng route, có CSRF và chỉ ba trường nghiệp vụ.",
+      "actual": {
+        "dashboard": 200,
+        "form": 200,
+        "action": "/owner/facilities/6adbe84641d39ef9ddd82889",
+        "method": "POST",
+        "csrfPresent": true,
+        "inputs": [
+          "name",
+          "address",
+          "phone"
+        ],
+        "domainUnchanged": true,
+        "beforeSHA256": "875e419c8f299d8563e26bf8924f4129653826cf06ec19e890a58a87eb14b6df",
+        "afterSHA256": "875e419c8f299d8563e26bf8924f4129653826cf06ec19e890a58a87eb14b6df"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:42.998Z"
+    },
+    {
+      "id": "HTTP-02",
+      "title": "POST hợp lệ và mở lại",
+      "steps": [
+        "POST ba trường hợp lệ",
+        "GET lại form và dashboard"
+      ],
+      "expected": "303 /owner; lưu đúng ba trường; sân/tài khoản/đơn cũ/cơ sở B giữ nguyên.",
+      "actual": {
+        "status": 303,
+        "location": "/owner",
+        "reopened": 200,
+        "persisted": {
+          "name": "QA41 Tên cập nhật",
+          "address": "41 Địa chỉ mới",
+          "phone": "0901234567"
+        },
+        "onlyNameAddressPhoneAndUpdatedAtChanged": true,
+        "protectedSnapshotSHA256Before": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "protectedSnapshotSHA256After": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "courtUserOldBookingOtherFacilityUnchanged": true
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.028Z"
+    },
+    {
+      "id": "HTTP-03",
+      "title": "Vãng lai GET bị đưa tới đăng nhập",
+      "steps": [
+        "Phiên mới chưa đăng nhập có CSRF hợp lệ",
+        "GET route sửa A"
+      ],
+      "expected": "303 /login; DB không đổi.",
+      "actual": {
+        "status": 303,
+        "location": "/login",
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.069Z"
+    },
+    {
+      "id": "HTTP-04",
+      "title": "Vãng lai POST bị đưa tới đăng nhập",
+      "steps": [
+        "Phiên mới chưa đăng nhập có CSRF hợp lệ",
+        "POST route sửa A"
+      ],
+      "expected": "303 /login; DB không đổi.",
+      "actual": {
+        "status": 303,
+        "location": "/login",
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.079Z"
+    },
+    {
+      "id": "HTTP-05",
+      "title": "CUSTOMER GET không được sửa A",
+      "steps": [
+        "Đăng nhập fixture CUSTOMER",
+        "GET route sửa A"
+      ],
+      "expected": "403; toàn bộ DB nghiệp vụ không đổi.",
+      "actual": {
+        "status": 403,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.092Z"
+    },
+    {
+      "id": "HTTP-06",
+      "title": "CUSTOMER POST không được sửa A",
+      "steps": [
+        "Đăng nhập fixture CUSTOMER",
+        "POST route sửa A"
+      ],
+      "expected": "403; toàn bộ DB nghiệp vụ không đổi.",
+      "actual": {
+        "status": 403,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.103Z"
+    },
+    {
+      "id": "HTTP-07",
+      "title": "OWNER_PENDING GET không được sửa A",
+      "steps": [
+        "Đăng nhập fixture OWNER_PENDING",
+        "GET route sửa A"
+      ],
+      "expected": "403; toàn bộ DB nghiệp vụ không đổi.",
+      "actual": {
+        "status": 403,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.116Z"
+    },
+    {
+      "id": "HTTP-08",
+      "title": "OWNER_PENDING POST không được sửa A",
+      "steps": [
+        "Đăng nhập fixture OWNER_PENDING",
+        "POST route sửa A"
+      ],
+      "expected": "403; toàn bộ DB nghiệp vụ không đổi.",
+      "actual": {
+        "status": 403,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.125Z"
+    },
+    {
+      "id": "HTTP-09",
+      "title": "OWNER_REJECTED GET không được sửa A",
+      "steps": [
+        "Đăng nhập fixture OWNER_REJECTED",
+        "GET route sửa A"
+      ],
+      "expected": "403; toàn bộ DB nghiệp vụ không đổi.",
+      "actual": {
+        "status": 403,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.136Z"
+    },
+    {
+      "id": "HTTP-10",
+      "title": "OWNER_REJECTED POST không được sửa A",
+      "steps": [
+        "Đăng nhập fixture OWNER_REJECTED",
+        "POST route sửa A"
+      ],
+      "expected": "403; toàn bộ DB nghiệp vụ không đổi.",
+      "actual": {
+        "status": 403,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.148Z"
+    },
+    {
+      "id": "HTTP-11",
+      "title": "ADMIN GET không được sửa A",
+      "steps": [
+        "Đăng nhập fixture ADMIN",
+        "GET route sửa A"
+      ],
+      "expected": "403; toàn bộ DB nghiệp vụ không đổi.",
+      "actual": {
+        "status": 403,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.158Z"
+    },
+    {
+      "id": "HTTP-12",
+      "title": "ADMIN POST không được sửa A",
+      "steps": [
+        "Đăng nhập fixture ADMIN",
+        "POST route sửa A"
+      ],
+      "expected": "403; toàn bộ DB nghiệp vụ không đổi.",
+      "actual": {
+        "status": 403,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.168Z"
+    },
+    {
+      "id": "HTTP-13",
+      "title": "OWNER_FOREIGN GET không được sửa A",
+      "steps": [
+        "Đăng nhập fixture OWNER_FOREIGN",
+        "GET route sửa A"
+      ],
+      "expected": "404; toàn bộ DB nghiệp vụ không đổi.",
+      "actual": {
+        "status": 404,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.182Z"
+    },
+    {
+      "id": "HTTP-14",
+      "title": "OWNER_FOREIGN POST không được sửa A",
+      "steps": [
+        "Đăng nhập fixture OWNER_FOREIGN",
+        "POST route sửa A"
+      ],
+      "expected": "404; toàn bộ DB nghiệp vụ không đổi.",
+      "actual": {
+        "status": 404,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.194Z"
+    },
+    {
+      "id": "HTTP-15",
+      "title": "OWNER_UNASSIGNED GET không được sửa A",
+      "steps": [
+        "Đăng nhập fixture OWNER_UNASSIGNED",
+        "GET route sửa A"
+      ],
+      "expected": "403; toàn bộ DB nghiệp vụ không đổi.",
+      "actual": {
+        "status": 403,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.206Z"
+    },
+    {
+      "id": "HTTP-16",
+      "title": "OWNER_UNASSIGNED POST không được sửa A",
+      "steps": [
+        "Đăng nhập fixture OWNER_UNASSIGNED",
+        "POST route sửa A"
+      ],
+      "expected": "403; toàn bộ DB nghiệp vụ không đổi.",
+      "actual": {
+        "status": 403,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.215Z"
+    },
+    {
+      "id": "HTTP-17",
+      "title": "ID sai: GET",
+      "steps": [
+        "OWNER A GET với ID sai"
+      ],
+      "expected": "400; không tạo cơ sở/đổi dữ liệu.",
+      "actual": {
+        "status": 400,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.226Z"
+    },
+    {
+      "id": "HTTP-18",
+      "title": "ID sai: POST",
+      "steps": [
+        "OWNER A POST với ID sai"
+      ],
+      "expected": "400; không tạo cơ sở/đổi dữ liệu.",
+      "actual": {
+        "status": 400,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.236Z"
+    },
+    {
+      "id": "HTTP-19",
+      "title": "ID đúng định dạng không tồn tại: GET",
+      "steps": [
+        "OWNER A GET với ID đúng định dạng không tồn tại"
+      ],
+      "expected": "404; không tạo cơ sở/đổi dữ liệu.",
+      "actual": {
+        "status": 404,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.245Z"
+    },
+    {
+      "id": "HTTP-20",
+      "title": "ID đúng định dạng không tồn tại: POST",
+      "steps": [
+        "OWNER A POST với ID đúng định dạng không tồn tại"
+      ],
+      "expected": "404; không tạo cơ sở/đổi dữ liệu.",
+      "actual": {
+        "status": 404,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.254Z"
+    },
+    {
+      "id": "HTTP-21",
+      "title": "ID cơ sở B: GET",
+      "steps": [
+        "OWNER A GET với ID cơ sở B"
+      ],
+      "expected": "404; không tạo cơ sở/đổi dữ liệu.",
+      "actual": {
+        "status": 404,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.266Z"
+    },
+    {
+      "id": "HTTP-22",
+      "title": "ID cơ sở B: POST",
+      "steps": [
+        "OWNER A POST với ID cơ sở B"
+      ],
+      "expected": "404; không tạo cơ sở/đổi dữ liệu.",
+      "actual": {
+        "status": 404,
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.278Z"
+    },
+    {
+      "id": "HTTP-23",
+      "title": "CSRF thiếu",
+      "steps": [
+        "OWNER A POST hợp lệ nhưng CSRF thiếu"
+      ],
+      "expected": "403; không ghi DB.",
+      "actual": {
+        "status": 403,
+        "csrfScenario": "thiếu",
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.302Z"
+    },
+    {
+      "id": "HTTP-24",
+      "title": "CSRF sai",
+      "steps": [
+        "OWNER A POST hợp lệ nhưng CSRF sai"
+      ],
+      "expected": "403; không ghi DB.",
+      "actual": {
+        "status": 403,
+        "csrfScenario": "sai",
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.313Z"
+    },
+    {
+      "id": "HTTP-25",
+      "title": "CSRF khác phiên",
+      "steps": [
+        "OWNER A POST hợp lệ nhưng CSRF khác phiên"
+      ],
+      "expected": "403; không ghi DB.",
+      "actual": {
+        "status": 403,
+        "csrfScenario": "khác phiên",
+        "domainUnchanged": true,
+        "beforeSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255",
+        "afterSHA256": "e251033305d4b9f1004903dc37bc9176a24918cf6512725c014c82daeb93f255"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.321Z"
+    },
+    {
+      "id": "HTTP-26",
+      "title": "Body không cấp quyền hoặc chuyển cơ sở",
+      "steps": [
+        "POST ba trường cùng owner/ownerId/facilityId/_id/role/status/ownerStatus/$set[owner] của B"
+      ],
+      "expected": "303; chỉ ba trường A thay đổi; owner/ID/quyền và cơ sở B không đổi.",
+      "actual": {
+        "status": 303,
+        "ignoredExtraFields": [
+          "owner",
+          "ownerId",
+          "facilityId",
+          "_id",
+          "role",
+          "status",
+          "ownerStatus",
+          "$set[owner]"
+        ],
+        "onlyNameAddressPhoneAndUpdatedAtChanged": true,
+        "protectedSnapshotSHA256Before": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "protectedSnapshotSHA256After": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "courtUserOldBookingOtherFacilityUnchanged": true
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.330Z"
+    },
+    {
+      "id": "HTTP-27",
+      "title": "Chuẩn hóa +84 khoảng trắng/chấm/gạch ngang",
+      "steps": [
+        "POST tên/địa chỉ có khoảng trắng hai đầu",
+        "SĐT:  +84 912.345-678 "
+      ],
+      "expected": "303; trim tên/địa chỉ; phone 0912345678.",
+      "actual": {
+        "status": 303,
+        "normalizedPhone": "0912345678",
+        "onlyNameAddressPhoneAndUpdatedAtChanged": true,
+        "protectedSnapshotSHA256Before": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "protectedSnapshotSHA256After": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "courtUserOldBookingOtherFacilityUnchanged": true
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.344Z"
+    },
+    {
+      "id": "HTTP-28",
+      "title": "Chuẩn hóa số 0 và dấu chấm",
+      "steps": [
+        "POST tên/địa chỉ có khoảng trắng hai đầu",
+        "SĐT: 090.123.4567"
+      ],
+      "expected": "303; trim tên/địa chỉ; phone 0901234567.",
+      "actual": {
+        "status": 303,
+        "normalizedPhone": "0901234567",
+        "onlyNameAddressPhoneAndUpdatedAtChanged": true,
+        "protectedSnapshotSHA256Before": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "protectedSnapshotSHA256After": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "courtUserOldBookingOtherFacilityUnchanged": true
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.356Z"
+    },
+    {
+      "id": "HTTP-29",
+      "title": "Chuẩn hóa số 0 và gạch ngang",
+      "steps": [
+        "POST tên/địa chỉ có khoảng trắng hai đầu",
+        "SĐT: 098-765-4321"
+      ],
+      "expected": "303; trim tên/địa chỉ; phone 0987654321.",
+      "actual": {
+        "status": 303,
+        "normalizedPhone": "0987654321",
+        "onlyNameAddressPhoneAndUpdatedAtChanged": true,
+        "protectedSnapshotSHA256Before": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "protectedSnapshotSHA256After": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "courtUserOldBookingOtherFacilityUnchanged": true
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.373Z"
+    },
+    {
+      "id": "HTTP-30",
+      "title": "Chuẩn hóa nguồn đúng 30 ký tự",
+      "steps": [
+        "POST tên/địa chỉ có khoảng trắng hai đầu",
+        "SĐT:                     0912345678"
+      ],
+      "expected": "303; trim tên/địa chỉ; phone 0912345678.",
+      "actual": {
+        "status": 303,
+        "normalizedPhone": "0912345678",
+        "onlyNameAddressPhoneAndUpdatedAtChanged": true,
+        "protectedSnapshotSHA256Before": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "protectedSnapshotSHA256After": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "courtUserOldBookingOtherFacilityUnchanged": true
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.386Z"
+    },
+    {
+      "id": "HTTP-31",
+      "title": "biên tối thiểu 1 ký tự",
+      "steps": [
+        "POST tên/địa chỉ tại biên cho phép"
+      ],
+      "expected": "303; dữ liệu lưu nguyên độ dài; không sửa domain khác.",
+      "actual": {
+        "status": 303,
+        "sourceLengths": {
+          "name": 1,
+          "address": 1
+        },
+        "persistedLengths": {
+          "name": 1,
+          "address": 1
+        },
+        "onlyNameAddressPhoneAndUpdatedAtChanged": true,
+        "protectedSnapshotSHA256Before": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "protectedSnapshotSHA256After": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "courtUserOldBookingOtherFacilityUnchanged": true
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.398Z"
+    },
+    {
+      "id": "HTTP-32",
+      "title": "biên tối đa 150/500",
+      "steps": [
+        "POST tên/địa chỉ tại biên cho phép"
+      ],
+      "expected": "303; dữ liệu lưu nguyên độ dài; không sửa domain khác.",
+      "actual": {
+        "status": 303,
+        "sourceLengths": {
+          "name": 150,
+          "address": 500
+        },
+        "persistedLengths": {
+          "name": 150,
+          "address": 500
+        },
+        "onlyNameAddressPhoneAndUpdatedAtChanged": true,
+        "protectedSnapshotSHA256Before": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "protectedSnapshotSHA256After": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "courtUserOldBookingOtherFacilityUnchanged": true
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.410Z"
+    },
+    {
+      "id": "HTTP-33",
+      "title": "biên sau trim 150/500",
+      "steps": [
+        "POST tên/địa chỉ tại biên cho phép"
+      ],
+      "expected": "303; dữ liệu lưu nguyên độ dài; không sửa domain khác.",
+      "actual": {
+        "status": 303,
+        "sourceLengths": {
+          "name": 154,
+          "address": 504
+        },
+        "persistedLengths": {
+          "name": 150,
+          "address": 500
+        },
+        "onlyNameAddressPhoneAndUpdatedAtChanged": true,
+        "protectedSnapshotSHA256Before": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "protectedSnapshotSHA256After": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "courtUserOldBookingOtherFacilityUnchanged": true
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.421Z"
+    },
+    {
+      "id": "HTTP-34",
+      "title": "Validation: thiếu tên",
+      "steps": [
+        "POST dữ liệu thiếu tên cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "non-string-not-reflected",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.436Z"
+    },
+    {
+      "id": "HTTP-35",
+      "title": "Validation: tên rỗng",
+      "steps": [
+        "POST dữ liệu tên rỗng cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.448Z"
+    },
+    {
+      "id": "HTTP-36",
+      "title": "Validation: tên toàn khoảng trắng",
+      "steps": [
+        "POST dữ liệu tên toàn khoảng trắng cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.458Z"
+    },
+    {
+      "id": "HTTP-37",
+      "title": "Validation: tên 151",
+      "steps": [
+        "POST dữ liệu tên 151 cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.470Z"
+    },
+    {
+      "id": "HTTP-38",
+      "title": "Validation: thiếu địa chỉ",
+      "steps": [
+        "POST dữ liệu thiếu địa chỉ cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "non-string-not-reflected",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.482Z"
+    },
+    {
+      "id": "HTTP-39",
+      "title": "Validation: địa chỉ rỗng",
+      "steps": [
+        "POST dữ liệu địa chỉ rỗng cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.494Z"
+    },
+    {
+      "id": "HTTP-40",
+      "title": "Validation: địa chỉ toàn khoảng trắng",
+      "steps": [
+        "POST dữ liệu địa chỉ toàn khoảng trắng cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.504Z"
+    },
+    {
+      "id": "HTTP-41",
+      "title": "Validation: địa chỉ 501",
+      "steps": [
+        "POST dữ liệu địa chỉ 501 cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.516Z"
+    },
+    {
+      "id": "HTTP-42",
+      "title": "Validation: thiếu SĐT",
+      "steps": [
+        "POST dữ liệu thiếu SĐT cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "non-string-not-reflected"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.528Z"
+    },
+    {
+      "id": "HTTP-43",
+      "title": "Validation: xóa SĐT",
+      "steps": [
+        "POST dữ liệu xóa SĐT cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.538Z"
+    },
+    {
+      "id": "HTTP-44",
+      "title": "Validation: SĐT toàn khoảng trắng",
+      "steps": [
+        "POST dữ liệu SĐT toàn khoảng trắng cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.548Z"
+    },
+    {
+      "id": "HTTP-45",
+      "title": "Validation: SĐT không bắt đầu 0/+84",
+      "steps": [
+        "POST dữ liệu SĐT không bắt đầu 0/+84 cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.558Z"
+    },
+    {
+      "id": "HTTP-46",
+      "title": "Validation: SĐT 9 chữ số",
+      "steps": [
+        "POST dữ liệu SĐT 9 chữ số cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.568Z"
+    },
+    {
+      "id": "HTTP-47",
+      "title": "Validation: SĐT 11 chữ số",
+      "steps": [
+        "POST dữ liệu SĐT 11 chữ số cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.577Z"
+    },
+    {
+      "id": "HTTP-48",
+      "title": "Validation: +84 quá dài",
+      "steps": [
+        "POST dữ liệu +84 quá dài cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.587Z"
+    },
+    {
+      "id": "HTTP-49",
+      "title": "Validation: SĐT có chữ",
+      "steps": [
+        "POST dữ liệu SĐT có chữ cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.599Z"
+    },
+    {
+      "id": "HTTP-50",
+      "title": "Validation: SĐT nguồn đúng 31 ký tự",
+      "steps": [
+        "POST dữ liệu SĐT nguồn đúng 31 ký tự cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.609Z"
+    },
+    {
+      "id": "HTTP-51",
+      "title": "Validation: tên nhiều giá trị",
+      "steps": [
+        "POST dữ liệu tên nhiều giá trị cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "non-string-not-reflected",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.619Z"
+    },
+    {
+      "id": "HTTP-52",
+      "title": "Validation: địa chỉ nhiều giá trị",
+      "steps": [
+        "POST dữ liệu địa chỉ nhiều giá trị cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "non-string-not-reflected",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.629Z"
+    },
+    {
+      "id": "HTTP-53",
+      "title": "Validation: SĐT nhiều giá trị",
+      "steps": [
+        "POST dữ liệu SĐT nhiều giá trị cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "retained-and-trimmed",
+          "address": "retained-and-trimmed",
+          "phone": "non-string-not-reflected"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.638Z"
+    },
+    {
+      "id": "HTTP-54",
+      "title": "Validation: thiếu tên kèm name[$ne]",
+      "steps": [
+        "POST dữ liệu thiếu tên kèm name[$ne] cùng các trường còn lại hợp lệ"
+      ],
+      "expected": "400; form cùng action, alert rõ; DB không đổi và trường văn bản được giữ/trim an toàn.",
+      "actual": {
+        "status": 400,
+        "alert": true,
+        "retention": {
+          "name": "non-string-not-reflected",
+          "address": "retained-and-trimmed",
+          "phone": "retained-and-trimmed"
+        },
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.651Z"
+    },
+    {
+      "id": "HTTP-55",
+      "title": "Lỗi giữ dữ liệu HTML dưới dạng text",
+      "steps": [
+        "POST tên script, địa chỉ img/onerror và SĐT svg/onload"
+      ],
+      "expected": "400; giữ ba chuỗi và escape EJS; không có thẻ script/img/svg nhập vào; DB không đổi.",
+      "actual": {
+        "status": 400,
+        "allThreeRetainedAndEscaped": true,
+        "domainUnchanged": true,
+        "beforeSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17",
+        "afterSHA256": "abc6990f0b33773c5666a67b278959951e33c6a435463a32b1ca709221bf5e17"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.662Z"
+    },
+    {
+      "id": "HTTP-56",
+      "title": "Tên/địa chỉ có HTML vẫn hiển thị an toàn sau lưu",
+      "steps": [
+        "POST tên/địa chỉ HTML với SĐT hợp lệ",
+        "GET lại form và dashboard"
+      ],
+      "expected": "303; HTML được lưu text và escape khi mở lại.",
+      "actual": {
+        "status": 303,
+        "reopenedFormAndDashboardEscaped": true,
+        "onlyNameAddressPhoneAndUpdatedAtChanged": true,
+        "protectedSnapshotSHA256Before": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "protectedSnapshotSHA256After": "851c67d759100ef1485a866bb80f80267b1b1588957787febce145265b611f62",
+        "courtUserOldBookingOtherFacilityUnchanged": true
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.671Z"
+    },
+    {
+      "id": "HTTP-57",
+      "title": "Session cũ sau thu hồi duyệt: GET",
+      "steps": [
+        "Giữ cookie phiên OWNER A",
+        "Fixture DB thu hồi duyệt",
+        "GET lại route sửa"
+      ],
+      "expected": "403; quyền đọc từ DB, không ghi.",
+      "actual": {
+        "status": 403,
+        "staleSessionDenied": true,
+        "domainUnchanged": true,
+        "beforeSHA256": "f76bea7fef26c8c35a4d39703e9a78e59adfbb934476fac53ddc849679753c84",
+        "afterSHA256": "f76bea7fef26c8c35a4d39703e9a78e59adfbb934476fac53ddc849679753c84"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.704Z"
+    },
+    {
+      "id": "HTTP-58",
+      "title": "Session cũ sau thu hồi duyệt: POST",
+      "steps": [
+        "Giữ cookie phiên OWNER A",
+        "Fixture DB thu hồi duyệt",
+        "POST lại route sửa"
+      ],
+      "expected": "403; quyền đọc từ DB, không ghi.",
+      "actual": {
+        "status": 403,
+        "staleSessionDenied": true,
+        "domainUnchanged": true,
+        "beforeSHA256": "f76bea7fef26c8c35a4d39703e9a78e59adfbb934476fac53ddc849679753c84",
+        "afterSHA256": "f76bea7fef26c8c35a4d39703e9a78e59adfbb934476fac53ddc849679753c84"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.714Z"
+    },
+    {
+      "id": "HTTP-59",
+      "title": "Session cũ sau thu hồi vai trò: GET",
+      "steps": [
+        "Giữ cookie phiên OWNER A",
+        "Fixture DB thu hồi vai trò",
+        "GET lại route sửa"
+      ],
+      "expected": "403; quyền đọc từ DB, không ghi.",
+      "actual": {
+        "status": 403,
+        "staleSessionDenied": true,
+        "domainUnchanged": true,
+        "beforeSHA256": "e01424398ad9ffc1ae6f3dfec1a0d979a4a417deffec507e46902c378184d683",
+        "afterSHA256": "e01424398ad9ffc1ae6f3dfec1a0d979a4a417deffec507e46902c378184d683"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.728Z"
+    },
+    {
+      "id": "HTTP-60",
+      "title": "Session cũ sau thu hồi vai trò: POST",
+      "steps": [
+        "Giữ cookie phiên OWNER A",
+        "Fixture DB thu hồi vai trò",
+        "POST lại route sửa"
+      ],
+      "expected": "403; quyền đọc từ DB, không ghi.",
+      "actual": {
+        "status": 403,
+        "staleSessionDenied": true,
+        "domainUnchanged": true,
+        "beforeSHA256": "e01424398ad9ffc1ae6f3dfec1a0d979a4a417deffec507e46902c378184d683",
+        "afterSHA256": "e01424398ad9ffc1ae6f3dfec1a0d979a4a417deffec507e46902c378184d683"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.736Z"
+    },
+    {
+      "id": "HTTP-61",
+      "title": "Session cũ sau chuyển cơ sở: GET",
+      "steps": [
+        "Giữ phiên OWNER A",
+        "Fixture đổi chủ A sang OWNER thay thế",
+        "GET route cũ"
+      ],
+      "expected": "403; chủ mới và toàn bộ dữ liệu giữ nguyên, không tự tạo cơ sở.",
+      "actual": {
+        "status": 403,
+        "staleSessionDenied": true,
+        "facilityCount": 2,
+        "domainUnchanged": true,
+        "beforeSHA256": "b6faf0546bf64055922aa367353d557713d47f10de23e29b856201c41df8404f",
+        "afterSHA256": "b6faf0546bf64055922aa367353d557713d47f10de23e29b856201c41df8404f"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.750Z"
+    },
+    {
+      "id": "HTTP-62",
+      "title": "Session cũ sau chuyển cơ sở: POST",
+      "steps": [
+        "Giữ phiên OWNER A",
+        "Fixture đổi chủ A sang OWNER thay thế",
+        "POST route cũ"
+      ],
+      "expected": "403; chủ mới và toàn bộ dữ liệu giữ nguyên, không tự tạo cơ sở.",
+      "actual": {
+        "status": 403,
+        "staleSessionDenied": true,
+        "facilityCount": 2,
+        "domainUnchanged": true,
+        "beforeSHA256": "b6faf0546bf64055922aa367353d557713d47f10de23e29b856201c41df8404f",
+        "afterSHA256": "b6faf0546bf64055922aa367353d557713d47f10de23e29b856201c41df8404f"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.761Z"
+    },
+    {
+      "id": "HTTP-63",
+      "title": "Session cũ sau xóa tài khoản: GET",
+      "steps": [
+        "Giữ phiên OWNER A",
+        "Xóa duy nhất fixture user A trong DB tạm",
+        "GET route sửa"
+      ],
+      "expected": "303 /login; không sửa cơ sở hay dữ liệu khác.",
+      "actual": {
+        "status": 303,
+        "location": "/login",
+        "staleSessionDenied": true,
+        "domainUnchanged": true,
+        "beforeSHA256": "29b1933bfac9c58fb1bfa43252aca446b857bdef1c126306180b7a5287d47a4f",
+        "afterSHA256": "29b1933bfac9c58fb1bfa43252aca446b857bdef1c126306180b7a5287d47a4f"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.780Z"
+    },
+    {
+      "id": "HTTP-64",
+      "title": "Session cũ sau xóa tài khoản: POST",
+      "steps": [
+        "Giữ phiên OWNER A",
+        "Xóa duy nhất fixture user A trong DB tạm",
+        "POST route sửa"
+      ],
+      "expected": "303 /login; không sửa cơ sở hay dữ liệu khác.",
+      "actual": {
+        "status": 303,
+        "location": "/login",
+        "staleSessionDenied": true,
+        "domainUnchanged": true,
+        "beforeSHA256": "29b1933bfac9c58fb1bfa43252aca446b857bdef1c126306180b7a5287d47a4f",
+        "afterSHA256": "29b1933bfac9c58fb1bfa43252aca446b857bdef1c126306180b7a5287d47a4f"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.789Z"
+    },
+    {
+      "id": "HTTP-65",
+      "title": "SĐT mới vẫn nhận đặt vãng lai thật",
+      "steps": [
+        "POST đổi liên hệ A với SĐT +84",
+        "Vãng lai GET lịch sân A",
+        "POST /bookings ô 09:00",
+        "GET checkout bằng quyền link riêng"
+      ],
+      "expected": "303 cập nhật; lịch 200; đặt 303; checkout 200; 1 HOLD/lock mới; sân, tài khoản, đơn cũ và cơ sở B không đổi.",
+      "actual": {
+        "edit": 303,
+        "calendar": 200,
+        "slot0900Enabled": true,
+        "booking": 303,
+        "checkout": 200,
+        "newBookingStatus": "HOLD",
+        "newBookingGuest": true,
+        "newBookingCount": 1,
+        "newLockCount": 1,
+        "onlyNameAddressPhoneAndUpdatedAtChanged": true,
+        "protectedSnapshotSHA256Before": "8984e98a78103278e9b929533a9d323fed7b8b43e276c71e670a3a45bef34179",
+        "protectedSnapshotSHA256After": "8984e98a78103278e9b929533a9d323fed7b8b43e276c71e670a3a45bef34179",
+        "courtUserOldBookingOtherFacilityUnchanged": true,
+        "protectedExistingRecordsSHA256Before": "c6888b774c7ebf0f8623f01d73406df14d3aaa49e9177ee3fd10d8d7e22d94f1",
+        "protectedExistingRecordsSHA256After": "c6888b774c7ebf0f8623f01d73406df14d3aaa49e9177ee3fd10d8d7e22d94f1",
+        "oldBookingCourtUsersOtherFacilityUnchanged": true
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.827Z"
+    },
+    {
+      "id": "HTTP-66",
+      "title": "Các trang có sẵn và danh sách công khai",
+      "steps": [
+        "Vãng lai GET / /facilities /courts /login /register",
+        "OWNER GET /owner",
+        "Kiểm tra public list không có nút ghi cơ sở"
+      ],
+      "expected": "Các trang 200; public list không có link sửa; không đổi DB.",
+      "actual": {
+        "statuses": {
+          "/": 200,
+          "/facilities": 200,
+          "/courts": 200,
+          "/login": 200,
+          "/register": 200,
+          "/owner": 200
+        },
+        "publicEditLinkAbsent": true,
+        "domainUnchanged": true,
+        "beforeSHA256": "680f5acc40fa296fe388b1bd11ae6e0002ed26194de6007ecc7ae976bb66c655",
+        "afterSHA256": "680f5acc40fa296fe388b1bd11ae6e0002ed26194de6007ecc7ae976bb66c655"
+      },
+      "status": "PASS",
+      "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+      "date": "24/10/2026",
+      "startedAtUTC": "2026-10-23T23:05:43.888Z"
+    }
+  ],
+  "cleanup": {
+    "databaseDropped": true,
+    "appServerClosed": true,
+    "mongooseDisconnected": true
+  }
+}

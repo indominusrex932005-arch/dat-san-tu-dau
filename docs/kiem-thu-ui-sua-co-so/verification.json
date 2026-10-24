@@ -1,0 +1,45 @@
+{
+  "firstBrowserPass": {
+    "immutableUnchanged": true,
+    "dbName": "qa_owner40_1792797955159_71176",
+    "timeUTC": "2026-10-23T23:27:47.236Z",
+    "counts": {
+      "bookings": 1,
+      "locks": 2,
+      "payments": 1
+    }
+  },
+  "mobileCapturePass": {
+    "immutableUnchanged": true,
+    "dbName": "qa_owner40_1792798107560_78972",
+    "timeUTC": "2026-10-23T23:32:15.573Z",
+    "counts": {
+      "bookings": 1,
+      "locks": 2,
+      "payments": 1
+    },
+    "note": "After browser capture, QA background processes exited. Restarted the same local runtime without reseeding to compare persisted records and drop the owned database."
+  },
+  "protectedEntities": [
+    "Court",
+    "User",
+    "previous CONFIRMED Booking",
+    "previous SlotLock",
+    "previous Payment",
+    "other Facility"
+  ],
+  "environment": "Disposable localhost MongoDB 8.3.11 replica qaOwner40, port 27053; no .env or Atlas",
+  "appBaseSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+  "viewBlob": "7e70005f17bc66c185beb1815acb8294849a1f43",
+  "cssBlob": "a461bb0bfc6d39473103aa2dbf87e315dab4ce27",
+  "check": "PASS: ESLint + 17 EJS templates",
+  "tests": {
+    "skipped": 0,
+    "total": 42,
+    "pass": 42,
+    "todo": 0,
+    "fail": 0
+  },
+  "browser": "ChatGPT in-app browser (Chromium)",
+  "runDateVietnam": "2026-10-24"
+}
