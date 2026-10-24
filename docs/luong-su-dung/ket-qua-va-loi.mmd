@@ -1,16 +1,19 @@
-flowchart LR
-    B{"ĐỀ XUẤT<br/>Phản hồi backend?"}
-    B -->|"Danh sách trả về rỗng"| C["ĐỀ XUẤT · Thông báo chưa có dữ liệu<br/>Danh sách cơ sở đã có trạng thái này"]
-    B -->|"Không tải được dữ liệu"| D["ĐỀ XUẤT · Báo lỗi tải dữ liệu<br/>Không đổi lỗi thành danh sách rỗng"]
-    B -->|"Chưa đăng nhập /<br/>phiên hết hạn"| E["ĐỀ XUẤT · Sang nhánh đăng nhập<br/>Vị trí theo Q01, quay lại theo Q07"]
-    B -->|"Không đủ quyền /<br/>sân không còn tồn tại"| F["ĐỀ XUẤT · Báo lý do theo backend<br/>Hướng quay lại chờ Q03/Q07"]
-    B -->|"Dữ liệu sai /<br/>giờ không còn khả dụng"| G["ĐỀ XUẤT · Hiện lỗi theo backend<br/>Sửa lựa chọn; kiểm tra lại theo Q04"]
-    B -->|"Gửi thất bại / mất phản hồi"| H["ĐỀ XUẤT · Chưa khẳng định đã lưu<br/>Không tự gửi lại"]
-    H --> I["CHỜ CHỐT Q07/Q08<br/>Cách xác minh kết quả và thử lại an toàn"]
-    B -->|"Backend xác nhận lưu được"| J["ĐỀ XUẤT · Hiện kết quả được trả về<br/>Trạng thái theo Q06; điều hướng Q07"]
-    classDef proposed fill:#edf4ff,color:#172033,stroke:#64748b
-    classDef pending fill:#fff4cc,color:#4b3500,stroke:#a66b00
+flowchart TD
+    A["Yêu cầu vào backend"] --> G{"Kiểm tra áp dụng cho route:<br/>CSRF, session/quyền và ID có hợp lệ?"}
+    G -->|"Không"| D["403 CSRF / sai quyền hoặc token khách<br/>303 /login khi route cần tài khoản<br/>400 ID sai; 404 không có bản ghi"]
+    G -->|"Có"| T["Xử lý nghiệp vụ theo route"]
+    T -->|"POST /login sai thông tin"| L["400 định dạng / 401 email-mật khẩu sai<br/>Render login, giữ email<br/>Mật khẩu không điền lại"]
+    T -->|"POST /bookings"| B{"Dữ liệu và các ô còn hợp lệ?"}
+    B -->|"Không: 400 / 409"| E["Trang lỗi chung, không giữ dở một phần<br/>Quay về sân, tải lịch và chọn lại"]
+    B -->|"Có"| H["Transaction giữ tất cả ô<br/>HOLD / UNPAID trong 10 phút"]
+    H -->|"Hết hạn giữ"| X["Backend dọn thành EXPIRED<br/>Checkout / demo quá hạn trả410<br/>Không hồi sinh đơn; chọn lại ô trống"]
+    T -->|"OWNER duyệt CHANGE"| C{"Lịch mới/giá hợp lệ, cùng cơ sở<br/>và đã xử lý chênh lệch nếu có?"}
+    C -->|"Không: 400 / 409"| R["Rollback transaction<br/>Booking và lock cũ giữ nguyên<br/>Yêu cầu vẫn PENDING"]
+    R --> F["Chủ sân tải lại và trao đổi<br/>hoặc từ chối yêu cầu"]
+    C -->|"Có"| S["Đổi toàn bộ ô trong transaction<br/>Booking cập nhật, yêu cầu APPROVED"]
+    classDef done fill:#173f35,color:#fff,stroke:#173f35
+    classDef notice fill:#fff4cc,color:#4b3500,stroke:#a66b00
     classDef error fill:#fff0f0,color:#641d1d,stroke:#b45a5a
-    class B,C,J proposed
-    class D,E,F,G,H error
-    class I pending
+    class H,S done
+    class G,B,C,F notice
+    class D,L,E,X,R error

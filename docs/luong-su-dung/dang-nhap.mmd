@@ -1,19 +1,28 @@
 flowchart TD
-    N["ĐỀ XUẤT · Điểm cần xác thực<br/>Vị trí theo Q01"] --> V{"ĐỀ XUẤT · Backend xác nhận<br/>đã đăng nhập hợp lệ?"}
-    V -->|"Có"| T["CHỜ CHỐT Q07<br/>Tiếp tục tại điểm được duyệt"]
-    V -->|"Chưa / phiên hết hạn"| I["ĐỀ XUẤT · Màn đăng nhập<br/>Định danh chờ Q02"]
-    I --> J["ĐỀ XUẤT · Gửi thông tin<br/>Backend xác thực"]
-    J --> O{"ĐỀ XUẤT · Kết quả backend?"}
-    O -->|"Thành công"| T
-    O -->|"Sai thông tin / lỗi xử lý"| E["ĐỀ XUẤT · Hiển thị lỗi được bàn giao<br/>Không điền lại mật khẩu"]
-    E --> I
-    I -->|"Không tiếp tục đăng nhập"| X["CHỜ CHỐT Q07<br/>Quay lại đâu; giữ lựa chọn nào?"]
-    L["ĐỀ XUẤT · Yêu cầu xem lịch sử"] --> V
-    T -->|"Nếu đang xem lịch sử"| H["ĐỀ XUẤT · Backend trả danh sách<br/>trong quyền của người đăng nhập"]
-    H --> D["ĐỀ XUẤT · Danh sách hoặc trạng thái rỗng<br/>Lỗi tải dữ liệu: xem mục 5"]
-    classDef proposed fill:#edf4ff,color:#172033,stroke:#64748b
-    classDef pending fill:#fff4cc,color:#4b3500,stroke:#a66b00
+    A{"Tạo tài khoản loại nào?"} -->|"Khách tài khoản"| B["GET / POST /register<br/>Tạo CUSTOMER"]
+    A -->|"Chủ sân"| C["GET / POST /register/owner<br/>Tạo OWNER / PENDING và hồ sơ đề nghị"]
+    B --> D{"Dữ liệu đăng ký hợp lệ<br/>và email chưa dùng?"}
+    C --> D
+    D -->|"Sai: 400; trùng email: 409"| E["Render lại register<br/>Giữ dữ liệu, không điền lại mật khẩu"]
+    E --> A
+    D -->|"Có; lưu tài khoản"| F["303 /login<br/>Đăng ký chưa tự đăng nhập"]
+    G["Đã có tài khoản"] --> F
+    F --> H["GET /login rồi POST /login<br/>Email và mật khẩu, kèm CSRF"]
+    H --> I{"Backend kiểm tra"}
+    I -->|"Sai định dạng: 400<br/>Sai thông tin: 401"| J["Render lại login với lỗi<br/>Giữ email, mật khẩu để trống"]
+    J --> H
+    I -->|"Đúng"| K["Tạo lại session và lưu userId<br/>303 theo role trong DB"]
+    K -->|"CUSTOMER"| L["/courts"]
+    K -->|"OWNER"| M["/owner<br/>PENDING / REJECTED: màn trạng thái<br/>APPROVED có cơ sở: dashboard"]
+    K -->|"ADMIN đã được cấp quyền"| N["/admin<br/>Không có form đăng ký ADMIN"]
+    O["Route cần đăng nhập<br/>/my-bookings hoặc yêu cầu hủy/đổi"] --> P{"Session còn tài khoản?"}
+    P -->|"Không"| F
+    P -->|"Có"| Q["Tiếp tục kiểm tra quyền và dữ liệu<br/>Không tự nhận role từ form"]
+    Q --> R["POST /logout: hủy session<br/>303 /login"]
+    R --> F
+    classDef done fill:#173f35,color:#fff,stroke:#173f35
+    classDef notice fill:#fff4cc,color:#4b3500,stroke:#a66b00
     classDef error fill:#fff0f0,color:#641d1d,stroke:#b45a5a
-    class N,V,I,J,O,L,H,D proposed
-    class T,X pending
-    class E error
+    class K,L,M,N done
+    class C,P,Q notice
+    class E,J error

@@ -27,6 +27,68 @@ async function ownFacility(user) {
   return facility;
 }
 
+async function editableFacility(req) {
+  if (!mongoose.isObjectIdOrHexString(req.params.id)) fail(400, 'Mã cơ sở không hợp lệ.');
+  const facility = await ownFacility(req.currentUser);
+  if (String(facility._id) !== req.params.id.toLowerCase()) {
+    fail(404, 'Không tìm thấy cơ sở được cấp cho bạn.');
+  }
+  return facility;
+}
+
+function facilityInput(body) {
+  const source = body && typeof body === 'object' && !Array.isArray(body) ? body : {};
+  const values = {};
+  for (const key of ['name', 'address', 'phone']) {
+    values[key] = typeof source[key] === 'string' ? source[key].trim() : '';
+  }
+  if (['name', 'address', 'phone'].some(key => typeof source[key] !== 'string')) {
+    return { values, error: 'Tên, địa chỉ và số điện thoại cơ sở phải là dữ liệu văn bản.' };
+  }
+  if (!values.name || values.name.length > 150) {
+    return { values, error: 'Tên cơ sở cần từ 1 đến 150 ký tự.' };
+  }
+  if (!values.address || values.address.length > 500) {
+    return { values, error: 'Địa chỉ cơ sở cần từ 1 đến 500 ký tự.' };
+  }
+  const phone = values.phone.replace(/[\s.-]/g, '').replace(/^\+84/, '0');
+  if (source.phone.length > 30 || !/^0\d{9}$/.test(phone)) {
+    return { values, error: 'Số điện thoại cơ sở bắt buộc có 10 chữ số Việt Nam, bắt đầu bằng 0 hoặc +84.' };
+  }
+  return { values, updates: { ...values, phone }, error: null };
+}
+
+export async function showEditFacilityForm(req, res) {
+  try {
+    const facility = await editableFacility(req);
+    return res.render('owner-facility-form', {
+      title: 'Sửa thông tin cơ sở', facility, errorMessage: null
+    });
+  } catch (error) {
+    return ownerError(res, error);
+  }
+}
+
+export async function updateFacility(req, res) {
+  try {
+    const facility = await editableFacility(req);
+    const { values, updates, error } = facilityInput(req.body);
+    if (error) {
+      return res.status(400).render('owner-facility-form', {
+        title: 'Sửa thông tin cơ sở', facility: { ...facility, ...values }, errorMessage: error
+      });
+    }
+    const saved = await Facility.findOneAndUpdate(
+      { _id: facility._id, owner: req.currentUser._id }, { $set: updates },
+      { returnDocument: 'after', runValidators: true }
+    );
+    if (!saved) fail(404, 'Không tìm thấy cơ sở được cấp cho bạn.');
+    return res.redirect(303, '/owner');
+  } catch (error) {
+    return ownerError(res, error);
+  }
+}
+
 function courtInput(body) {
   const source = body && typeof body === 'object' && !Array.isArray(body) ? body : {};
   const values = {};
