@@ -1,23 +1,29 @@
 flowchart TD
-    H["ĐÃ CÓ · Trang chủ /"] --> F["ĐÃ CÓ · Danh sách cơ sở /facilities"]
-    F --> C["ĐỀ XUẤT · Xem các sân"]
-    C --> S["ĐỀ XUẤT · Chọn sân, ngày, giờ"]
-    S --> G{"CHỜ CHỐT Q01<br/>Xác thực tại bước nào?"}
-    G -->|"Cần xác thực theo chính sách được duyệt"| A["ĐỀ XUẤT · Nhánh đăng nhập<br/>Xem mục 4"]
-    A -->|"Thành công; điểm quay lại chờ Q07"| S
-    G -->|"Đủ điều kiện theo chính sách được duyệt"| P["ĐỀ XUẤT · Gửi yêu cầu đặt"]
-    P --> B["ĐỀ XUẤT · Backend kiểm tra và xử lý<br/>Quyền, giờ, giá, trạng thái chờ Q03–Q06"]
-    B --> R{"ĐỀ XUẤT · Kết quả backend?"}
-    R -->|"Lưu được"| K["ĐỀ XUẤT · Xem kết quả theo backend<br/>CHỜ CHỐT Q06/Q07"]
-    K --> L["ĐỀ XUẤT · Xem lịch sử đặt<br/>Dữ liệu theo quyền; xem mục 4"]
-    R -->|"Backend xác nhận không lưu"| E["ĐỀ XUẤT · Nhánh lỗi<br/>Xem mục 5"]
-    R -->|"Chưa xác định đã lưu chưa"| U["CHỜ CHỐT Q07/Q08<br/>Xác minh kết quả trước khi thử lại"]
-    E -->|"Sửa hoặc chọn lại nếu backend cho phép"| S
-    classDef existing fill:#173f35,color:#ffffff,stroke:#173f35
-    classDef proposed fill:#edf4ff,color:#172033,stroke:#64748b
-    classDef pending fill:#fff4cc,color:#4b3500,stroke:#a66b00
+    A["Đăng ký CUSTOMER<br/>GET / POST /register"] --> B["303 về /login<br/>Đăng nhập bằng email và mật khẩu"]
+    B --> C["Xem sân: GET /courts<br/>Từ trang chủ hoặc danh sách cơ sở"]
+    C --> D["GET /courts/:id<br/>Chọn ngày và nhiều ô 30 phút rời nhau"]
+    D --> E["POST /bookings<br/>Gửi sân, ngày, ô giờ, tên và SĐT"]
+    E --> F["Server tính giá từng ô<br/>Transaction ghi Booking và mọi SlotLock"]
+    F --> H["HOLD / UNPAID<br/>Giữ toàn bộ ô trong 10 phút"]
+    F -->|"Ô vừa bị giữ: 409"| X["Trang lỗi; quay lại xem lịch<br/>Chọn lại ô còn trống"]
+    X --> D
+    H --> I["303 đến GET /bookings/:id/checkout"]
+    I --> J{"Demo bật, còn hạn<br/>và còn đủ lock?"}
+    J -->|"Có; người dùng bấm mô phỏng"| K["POST /bookings/:id/demo-payment"]
+    K --> L["CONFIRMED / DEMO_PAID<br/>Chỉ mô phỏng, chưa xác minh ngân hàng"]
+    L --> M["GET /bookings/:id/receipt<br/>In / Lưu PDF với nhãn mô phỏng"]
+    J -->|"Hết hạn: 410"| Y["EXPIRED<br/>Chọn lại; không hồi sinh đơn cũ"]
+    Y --> D
+    J -->|"Demo tắt hoặc trạng thái/lock sai"| Z["Không xác nhận mô phỏng<br/>Xem sơ đồ lỗi"]
+    M --> N["GET /my-bookings<br/>Chỉ dữ liệu của tài khoản đang đăng nhập"]
+    N --> O{"Đơn mình CONFIRMED / LEGACY_RESERVED,<br/>có ô, mọi ô chưa bắt đầu, chưa có yêu cầu PENDING?"}
+    O -->|"Có"| P["GET /bookings/:id/request<br/>POST /bookings/:id/requests: CANCEL hoặc CHANGE"]
+    P --> Q["Yêu cầu PENDING, lịch cũ vẫn giữ<br/>Chủ sân xét duyệt ở /owner"]
+    Q --> N
+    O -->|"Không"| R["Theo dõi đơn / yêu cầu hiện tại<br/>Server kiểm tra lại khi gửi"]
+    classDef done fill:#173f35,color:#fff,stroke:#173f35
+    classDef notice fill:#fff4cc,color:#4b3500,stroke:#a66b00
     classDef error fill:#fff0f0,color:#641d1d,stroke:#b45a5a
-    class H,F existing
-    class C,S,A,P,B,K,L proposed
-    class G,R,U pending
-    class E error
+    class H,L,M done
+    class J,O,Q,Z notice
+    class X,Y error
