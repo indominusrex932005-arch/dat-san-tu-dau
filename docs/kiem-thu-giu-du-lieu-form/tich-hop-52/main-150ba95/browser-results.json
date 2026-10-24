@@ -1,0 +1,57 @@
+{
+  "dateVietnam": "2026-10-24",
+  "mainBaseSHA": "150ba95bd31bd09682b569a2d0c2157158ac0807",
+  "note": "Final smoke covers400/409/retry/checkout and reload before deadline. At the last sample the timer still had6 seconds, so payment correctly remained enabled. Actual deadline expiry is covered by the earlier combined-browser run (identical JS/backend) and final111-test run.",
+  "results": [
+    {
+      "case": "390-400",
+      "clientWidth": 375,
+      "error": "Chưa giữ được sân. Nhập họ tên và số điện thoại Việt Nam gồm 10 số.\n      Lịch và giá bên dưới đã được cập nhật. Kiểm tra lại các ô còn chọn và thông tin liên hệ trước khi gửi lại.",
+      "focus": "booking-form-error",
+      "headingWrap": "anywhere",
+      "noHorizontalOverflow": true,
+      "scrollWidth": 375,
+      "selected": [
+        "16:00",
+        "16:30"
+      ],
+      "total": "100.000 ₫",
+      "width": 390
+    },
+    {
+      "case": "390-409",
+      "clientWidth": 375,
+      "error": "Chưa giữ được sân. Ô 16:30 đã được giữ hoặc đặt. Hãy chọn ô khác.\n      Lịch và giá bên dưới đã được cập nhật. Kiểm tra lại các ô còn chọn và thông tin liên hệ trước khi gửi lại.\n      Các ô sau đã được bỏ khỏi lựa chọn:\n        16:30–17:00: đang được người khác giữ chỗ.",
+      "focus": "booking-form-error",
+      "headingWrap": "anywhere",
+      "noHorizontalOverflow": true,
+      "scrollWidth": 375,
+      "selected": [
+        "16:00"
+      ],
+      "total": "70.000 ₫",
+      "width": 390
+    },
+    {
+      "case": "390-checkout",
+      "countdown": "00:30 còn lại",
+      "deadline": "2030-05-10T09:00:00.000Z",
+      "noHorizontalOverflow": true,
+      "paymentDisabled": false,
+      "serverNow": "2030-05-10T08:59:30.009Z",
+      "width": 390
+    },
+    {
+      "case": "actual-main-before-deadline",
+      "countdown": "00:06 còn lại",
+      "paymentDisabled": false,
+      "width": 1366
+    },
+    {
+      "case": "actual-main-reload-before-deadline",
+      "expiredState": false,
+      "hasPaymentButton": true,
+      "noHorizontalOverflow": true
+    }
+  ]
+}

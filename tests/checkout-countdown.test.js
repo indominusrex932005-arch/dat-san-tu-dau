@@ -31,7 +31,11 @@ function openCheckout({ serverNow = new Date(serverTime).toISOString(), clientNo
         return [];
       }
     },
-    window: { setInterval(callback) { tick = callback; } },
+    window: {
+      setInterval(callback) { tick = callback; },
+      // booking.js also registers the recovery form's pageshow handler on checkout.
+      addEventListener() {}
+    },
     performance, Date: ClientDate, Intl
   });
   return {
