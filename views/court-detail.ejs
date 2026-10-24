@@ -39,9 +39,9 @@
         <div class="demo-form">
           <label for="guestName">Họ tên người chơi</label><input id="guestName" name="guestName" value="<%= currentUser?.fullName || '' %>" minlength="2" maxlength="100" autocomplete="name" required>
           <label for="guestPhone">Số điện thoại liên hệ</label><input type="tel" id="guestPhone" name="guestPhone" value="<%= currentUser?.phone || '' %>" maxlength="24" autocomplete="tel" required>
-          <button type="submit" class="demo-button" id="hold-slots">Giữ chỗ 10 phút</button>
+          <button type="submit" class="demo-button" id="hold-slots">Giữ chỗ tối đa 10 phút</button>
         </div>
-        <p class="demo-muted">Giá cuối cùng do server tính lại. Chỉ giữ các ô bạn chọn; hết hạn chưa xác nhận, các ô được mở lại.</p>
+        <p class="demo-muted">Giá cuối cùng do server tính lại. Chỉ giữ các ô bạn chọn tối đa 10 phút, trước khi ô đầu tiên bắt đầu; hết hạn chưa xác nhận, các ô được mở lại.</p>
       </aside>
     </form>
   </main>
