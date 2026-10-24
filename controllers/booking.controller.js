@@ -54,7 +54,7 @@ export async function showCheckout(req, res) {
   const booking = await getBookingForViewer(req.params.id, { user: req.currentUser, token });
   if (booking.status === 'CONFIRMED') return res.redirect(303, `/bookings/${booking._id}/receipt${tokenQuery(token)}`);
   res.status(booking.status === 'EXPIRED' ? 410 : 200).render('booking-checkout', {
-    title: 'Kiểm tra và thanh toán', booking, token, errorMessage: null
+    title: 'Kiểm tra và thanh toán', booking, token, errorMessage: null, serverNow: new Date().toISOString()
   });
 }
 

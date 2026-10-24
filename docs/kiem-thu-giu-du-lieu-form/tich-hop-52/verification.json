@@ -1,0 +1,24 @@
+{
+  "dateVietnam": "2026-10-24",
+  "mainBaseSHA": "ee1c2341f8af274c839f65ea24eecc32fd3902fd",
+  "previousPR55SHA": "629dc35fa3b882b29a1b334b8349b9397b91cba2",
+  "mergedPR52SHA": "532707e011031dbb6a68266bba3680ca4b6fbb26",
+  "check": {
+    "lint": "PASS",
+    "EJSTemplates": 17
+  },
+  "tests": {
+    "todo": 0,
+    "pass": 111,
+    "skipped": 0,
+    "total": 111,
+    "fail": 0
+  },
+  "blobs": {
+    "script": "2233471d1bddc661c69edf54d65c7b80841463aa",
+    "courtView": "6320887206c5d727da896ebfcae4aedd44184e9f",
+    "controller": "59701079a4d35fed65d2376bd6bb7f3513107fb5",
+    "integrationTest": "244ec02cb978a5752b37e72d4c7c42fe9c28dc7f",
+    "checkoutView": "80e6d018c7db3b8a2f0bd79e1ce57f178bce18e8"
+  }
+}

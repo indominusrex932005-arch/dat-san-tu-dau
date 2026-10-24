@@ -29,7 +29,8 @@
       <aside class="demo-card booking-summary">
         <% if (booking.status === 'HOLD') { %>
           <h2>Chỗ đang được giữ</h2>
-          <p class="booking-countdown" role="timer" data-hold-until="<%= booking.holdExpiresAt ? new Date(booking.holdExpiresAt).toISOString() : '' %>" aria-live="off">Đang tính thời gian còn lại…</p>
+          <p class="booking-countdown" role="timer" data-hold-until="<%= booking.holdExpiresAt ? new Date(booking.holdExpiresAt).toISOString() : '' %>" data-server-now="<%= typeof serverNow === 'string' ? serverNow : '' %>" aria-live="off">Đang tính thời gian còn lại…</p>
+          <p class="demo-muted">Giữ chỗ tối đa 10 phút, trước khi ô đầu tiên bắt đầu. Đồng hồ dùng thời hạn máy chủ trả về; máy chủ kiểm tra lại khi thanh toán.</p>
           <% if (booking.holdExpiresAt) { %><p class="demo-muted">Hạn giữ: <%= formatTime(booking.holdExpiresAt) %> (giờ Việt Nam). Thời hạn được máy chủ kiểm tra.</p><% } %>
           <img src="/assets/images/qr-minh-hoa.svg" class="booking-qr" width="240" height="270" alt="Hình minh họa vị trí mã QR; chưa thể dùng để thanh toán">
           <p class="booking-notice">QR minh họa — chưa thể thanh toán. Chưa kết nối ngân hàng và chưa xác minh tiền thật.</p>

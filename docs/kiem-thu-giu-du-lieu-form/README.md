@@ -1,6 +1,6 @@
 # Kiểm thử giữ dữ liệu form đặt sân — issue #38
 
-Ngày **24/10/2026**, nhánh `fix/booking-form-recovery`, nền `main` tại SHA `b704f6cbcfe53e4781f329d41170e6f44b8bd11c`. PR ghi SHA đầu nhánh chứa source/test/bằng chứng này và CI tương ứng. Chưa gộp các PR #52/#54 đang chờ review; không dùng kết quả tại đây thay kiểm thử bản tích hợp tương lai.
+Bảng và ảnh bên dưới ghi lại lần kiểm thử ban đầu ngày **24/10/2026**, nhánh `fix/booking-form-recovery`, nền `main` tại SHA `b704f6cbcfe53e4781f329d41170e6f44b8bd11c`, head `629dc35fa3b882b29a1b334b8349b9397b91cba2`. Lần này chưa gộp PR #52/#54; không dùng kết quả lịch sử thay kiểm thử bản tích hợp. **Kết quả mới sau khi ghép #52 và cập nhật main #45 được ghi riêng tại [kiểm thử tích hợp #52](tich-hop-52/README.md).** PR #54 vẫn chưa nằm trong nhánh này.
 
 ## Hành vi đã sửa
 

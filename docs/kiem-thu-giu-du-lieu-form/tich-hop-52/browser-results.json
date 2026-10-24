@@ -1,0 +1,106 @@
+{
+  "dateVietnam": "2026-10-24",
+  "browser": "Chromium in-app browser",
+  "mainBaseSHA": "ee1c234",
+  "expiryPR52SHA": "532707e011031dbb6a68266bba3680ca4b6fbb26",
+  "originalPR55SHA": "629dc35fa3b882b29a1b334b8349b9397b91cba2",
+  "clock": "Controlled continuously advancing Date clock in own QA Node process, independent courts per viewport, no OS/browser clock change.",
+  "results": [
+    {
+      "case": "390-400",
+      "button": "Giữ chỗ tối đa 10 phút",
+      "error": "Chưa giữ được sân. Nhập họ tên và số điện thoại Việt Nam gồm 10 số.\n      Lịch và giá bên dưới đã được cập nhật. Kiểm tra lại các ô còn chọn và thông tin liên hệ trước khi gửi lại.",
+      "focusId": "booking-form-error",
+      "nameRetained": true,
+      "noHorizontalOverflow": true,
+      "path": "/courts/6adc57c72257492ae4eb4fa7",
+      "selected": [
+        "16:00",
+        "16:30"
+      ],
+      "width": 390
+    },
+    {
+      "case": "390-409",
+      "focusId": "booking-form-error",
+      "lostDisabled": true,
+      "nameRetained": true,
+      "noHorizontalOverflow": true,
+      "selected": [
+        "16:00"
+      ],
+      "summary": "1 ô · 30 phút",
+      "total": "70.000 ₫",
+      "width": 390
+    },
+    {
+      "case": "390-checkout",
+      "buttonDisabled": false,
+      "countdown": "00:10 còn lại",
+      "deadline": "2030-05-10T09:00:00.000Z",
+      "noHorizontalOverflow": true,
+      "path": "/bookings/718668862257492ae4eb4faa/checkout",
+      "remainingSeconds": 9,
+      "serverNow": "2030-05-10T08:59:50.766Z",
+      "width": 390
+    },
+    {
+      "case": "390-countdown-expired",
+      "countdown": "Đã tới hạn giữ chỗ. Tải lại để cập nhật trạng thái đơn.",
+      "expired": "true",
+      "paymentDisabled": true,
+      "width": 390
+    },
+    {
+      "case": "1366-400",
+      "button": "Giữ chỗ tối đa 10 phút",
+      "focusId": "booking-form-error",
+      "nameRetained": true,
+      "noHorizontalOverflow": true,
+      "selected": [
+        "16:00",
+        "16:30"
+      ],
+      "width": 1366
+    },
+    {
+      "case": "1366-409",
+      "focusId": "booking-form-error",
+      "lostDisabled": true,
+      "nameRetained": true,
+      "noHorizontalOverflow": true,
+      "selected": [
+        "16:00"
+      ],
+      "summary": "1 ô · 30 phút",
+      "total": "70.000 ₫",
+      "width": 1366
+    },
+    {
+      "case": "1366-checkout",
+      "countdown": "00:16 còn lại",
+      "deadline": "2030-05-10T09:00:00.000Z",
+      "noHorizontalOverflow": true,
+      "path": "/bookings/718668802257492ae4eb4fae/checkout",
+      "paymentDisabled": false,
+      "remainingSeconds": 16,
+      "serverNow": "2030-05-10T08:59:44.125Z",
+      "width": 1366
+    },
+    {
+      "case": "1366-countdown-expired",
+      "countdown": "Đã tới hạn giữ chỗ. Tải lại để cập nhật trạng thái đơn.",
+      "expired": "true",
+      "paymentDisabled": true,
+      "width": 1366
+    },
+    {
+      "case": "1366-reload-expired",
+      "expiredState": true,
+      "hasPaymentButton": false,
+      "hasTimer": false,
+      "noHorizontalOverflow": true,
+      "path": "/bookings/718668802257492ae4eb4fae/checkout"
+    }
+  ]
+}
