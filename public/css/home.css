@@ -8,7 +8,7 @@ body.home-page {
   padding: 0;
   background: #f7f8f2;
   color: var(--home-green);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -148,10 +148,10 @@ body.home-page {
   max-width: 15ch;
   margin: 0;
   color: var(--home-green);
-  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
   font-size: clamp(40px, 4.6vw, 64px);
-  font-weight: 400;
-  line-height: 1.18;
+  font-weight: 600;
+  line-height: 1.15;
   letter-spacing: -0.5px;
 }
 
@@ -291,11 +291,11 @@ body.home-page {
 
 .home-intro h2 {
   margin: 0;
-  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
   font-size: 28px;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.35;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.2px;
 }
 
 .home-intro-content p {
