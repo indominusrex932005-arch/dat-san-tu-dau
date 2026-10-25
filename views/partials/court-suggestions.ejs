@@ -1,0 +1,37 @@
+<%
+  const _suggestions = Array.isArray(suggestions) ? suggestions : [];
+  const _suggestionMessage = typeof suggestionMessage === 'string' ? suggestionMessage : null;
+%>
+<% if (_suggestions.length > 0 || _suggestionMessage) { %>
+  <section class="court-suggestions" aria-labelledby="court-suggestions-title">
+    <div class="court-suggestions-header">
+      <h2 id="court-suggestions-title">Gợi ý phương án thay thế</h2>
+      <% if (_suggestionMessage) { %>
+        <p class="court-suggestions-message"><%= _suggestionMessage %></p>
+      <% } %>
+      <p class="court-suggestions-notice">Lịch có thể thay đổi theo thời gian thực. Hệ thống sẽ kiểm tra lại tính khả dụng khi quý khách tiến hành đặt sân.</p>
+    </div>
+
+    <% if (_suggestions.length > 0) { %>
+      <div class="court-suggestions-grid">
+        <% for (const item of _suggestions) { %>
+          <article class="court-suggestion-card">
+            <div class="court-suggestion-heading">
+              <h3><%= item.courtName %></h3>
+              <span class="court-suggestion-reason"><%= item.reason %></span>
+            </div>
+            <div class="court-suggestion-details">
+              <p class="court-suggestion-facility"><strong>Cơ sở:</strong> <%= item.facilityName %></p>
+              <p class="court-suggestion-date"><strong>Ngày:</strong> <%= formatDate(item.date) %></p>
+              <p class="court-suggestion-time"><strong>Khung giờ:</strong> <%= item.startTime %> – <%= item.endTime %> (<%= item.totalMinutes %> phút)</p>
+              <p class="court-suggestion-price"><strong>Tổng giá dự tính:</strong> <%= formatMoney(item.totalPriceVND) %></p>
+            </div>
+            <div class="court-suggestion-actions">
+              <a class="courts-button" href="/courts/<%= item.courtId %>?date=<%= encodeURIComponent(item.date) %>">Xem lịch</a>
+            </div>
+          </article>
+        <% } %>
+      </div>
+    <% } %>
+  </section>
+<% } %>

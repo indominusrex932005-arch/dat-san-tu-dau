@@ -125,6 +125,9 @@
             <p>Không có sân nào thỏa mãn tất cả tiêu chí bạn đã chọn. Bạn hãy thử chọn cơ sở khác, đổi ngày hoặc nới rộng khoảng giờ tìm kiếm.</p>
             <a class="courts-button courts-button-outline" href="/courts">Xóa bộ lọc về danh sách sân <span aria-hidden="true">→</span></a>
           </section>
+          <% if (typeof suggestions !== 'undefined' && Array.isArray(suggestions) && suggestions.length > 0) { %>
+            <%- include('partials/court-suggestions', { suggestions, suggestionMessage: typeof suggestionMessage !== 'undefined' ? suggestionMessage : null }) %>
+          <% } %>
         <% } else { %>
           <section class="courts-empty" aria-labelledby="courts-empty-title">
             <span class="courts-symbol" aria-hidden="true">
