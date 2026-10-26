@@ -1,0 +1,71 @@
+{
+  "appSourceSHA": "f8c1cfb900ab4ba4cd568e520dce46d9e2dbf0b7",
+  "method": "Browser runtime tab.dev.logs; captured console messages, not a DevTools UI screenshot",
+  "mobileOwnerMetrics": {
+    "clientWidth": 375,
+    "innerHeight": 844,
+    "innerWidth": 390,
+    "scrollWidth": 375
+  },
+  "checks": [
+    {
+      "case": "customer-register-and-login",
+      "url": "http://127.0.0.1:58844/courts",
+      "at": "2026-10-26T13:43:21.348Z",
+      "logs": []
+    },
+    {
+      "case": "owner-register-and-pending-login",
+      "url": "http://127.0.0.1:58844/owner",
+      "at": "2026-10-26T13:44:09.176Z",
+      "logs": []
+    },
+    {
+      "case": "console-route",
+      "path": "/",
+      "title": "Hệ thống quản lý đặt sân thể thao",
+      "at": "2026-10-26T13:44:36.442Z",
+      "logs": []
+    },
+    {
+      "case": "console-route",
+      "path": "/facilities",
+      "title": "Danh sách cơ sở",
+      "at": "2026-10-26T13:44:36.579Z",
+      "logs": []
+    },
+    {
+      "case": "console-route",
+      "path": "/courts",
+      "title": "Danh sách sân | Sân Thể Thao",
+      "at": "2026-10-26T13:44:36.727Z",
+      "logs": []
+    },
+    {
+      "case": "console-route",
+      "path": "/login",
+      "title": "Đăng nhập | Sân Thể Thao",
+      "at": "2026-10-26T13:44:36.866Z",
+      "logs": []
+    },
+    {
+      "case": "console-route",
+      "path": "/register",
+      "title": "Đăng ký tài khoản | Sân Thể Thao",
+      "at": "2026-10-26T13:44:37.002Z",
+      "logs": []
+    },
+    {
+      "case": "console-route",
+      "path": "/register/owner",
+      "title": "Đăng ký chủ sân | Sân Thể Thao",
+      "at": "2026-10-26T13:44:37.128Z",
+      "logs": []
+    }
+  ],
+  "browser": "ChatGPT in-app browser on Windows",
+  "defaultViewport": {
+    "innerHeight": 720,
+    "innerWidth": 1280
+  }
+}
