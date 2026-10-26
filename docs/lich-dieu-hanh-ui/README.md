@@ -1,61 +1,76 @@
-# Bản nháp giao diện lịch điều hành — #63
+# Giao diện lịch điều hành — #63 / PR #69
 
-**Trạng thái: CHUẨN BỊ, CHƯA HOÀN THÀNH ISSUE #63.** Khi bắt đầu và khi bàn giao nháp, [backend PR #68](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/68) còn mở, chưa merge. Issue #63 cho phép phác bố cục trước, nhưng yêu cầu backend merge trước khi tích hợp UI. Không tự merge backend để bỏ qua bước review.
+**Cập nhật ngày 27/10/2026: đã tích hợp main, đổi base PR sang `main` và hoàn tất bằng chứng nghiệm thu UI. Sẵn sàng gửi review; chuyển khỏi Draft sau khi đẩy bản cập nhật và đối chiếu CI.**
 
-## Cập nhật nghiệm thu ngày 25/10/2026
+## Nền tích hợp hiện tại
 
-- Đã bỏ hai file `docs/KIEM_THU_LICH_DIEU_HANH.md` và `docs/kiem-thu-lich-dieu-hanh/qa-results-66.json` khỏi diff PR UI. Đây là tài liệu QA #66 của PR #71; không sửa/push nhánh #71 và không gộp kết quả đó vào nghiệm thu UI #63.
-- Bản đã chạy lần này: `777fe65bc56ac3de076d405b803ef15a840fdd35`, trên nhánh UI chứa backend `014117349e9f460fd70ebddd54765663877c8334`. Chưa phải bản tích hợp vào main.
-- **11/11 ca HTTP/DB PASS** trên app/controller/service/EJS thật và DB riêng: lịch thường/cơ sở rỗng/tên dài, ngày mặc định/bảy ngày/ngày xa hơn, đổi và tải lại ngày qua GET, navigation/CSS, quyền và snapshot dữ liệu. [Kết quả chi tiết đã lọc thông tin riêng](acceptance-2026-10-25.json).
-- `npm run check` **PASS**, 18 EJS; `npm test` **134/134 PASS**, 0 fail/skip, chạy lại trên source UI lần này. Node 24.15.0, MongoDB 8.3.11, replica set localhost riêng `qaCalendarUi69`. App/DB/MongoDB và runtime QA đã dọn.
-- Người yêu cầu báo đã thử bố cục thường/tên dài và bàn phím thấy hoạt động. Đây là xác nhận từ người yêu cầu, không được gán thành kết quả công cụ hay ảnh của lần chạy này.
-- **Chưa có ảnh 390px/1366px hoặc kết quả thao tác Tab/Enter/cuộn bảng của lần này.** Người dùng dừng Computer Use bằng phím Escape trước khi mở các trang QA; không tiếp tục thao tác trình duyệt sau đó. HTTP/DB/lint không thay thế các ca trực quan này.
+- [Backend PR #68](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/68) đã merge lúc **26/10/2026 16:42:55 UTC** (23:42:55 giờ Việt Nam).
+- Nhánh UI `draft/ui-owner-calendar` đã merge `main` tại `923543f` bằng commit **`de43a7052a0675e3cefc6d985a6a746c6c80582c`**. [PR #69](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/69) hiện có base là **`main`**.
+- SHA source cuối đã thử: **`e3aea06119c7cddadf6ec3d357d71a390986e04f`**, gồm sửa selector CSS cho góc cố định của bảng; các commit bằng chứng sau đó chỉ bổ sung tài liệu/ảnh.
+- Hợp đồng locals backend không thay đổi so với bản nháp; giữ view lịch của UI khi xử lý xung đột lịch sử merge. Hợp đồng chính thức: [backend #62](../HOP_DONG_LICH_DIEU_HANH.md).
+- Hai file QA #66 `docs/KIEM_THU_LICH_DIEU_HANH.md` và `docs/kiem-thu-lich-dieu-hanh/qa-results-66.json` đã được tách khỏi diff UI. [PR #71](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/71) tại `dbb0933f8f886352f2fd899c55bccff06d17f582` được giữ nguyên trong lần cập nhật này; kết quả của #71 không được dùng thay bằng chứng UI #63.
 
-PR vẫn Draft. Còn hai việc trước khi ready: backend #68 merge rồi đổi nền/cập nhật main và kiểm tra lại; hoàn tất ảnh/thao tác thường/rỗng/tên dài ở hai viewport. Không tự đánh dấu #63 hoặc #66 hoàn thành.
-
-## Nền và phạm vi
-
-- Main khi bắt đầu: `f8c1cfb900ab4ba4cd568e520dce46d9e2dbf0b7`.
-- Hợp đồng backend: nhánh `feat/owner-calendar` tại `014117349e9f460fd70ebddd54765663877c8334`, [tài liệu bàn giao #62](../HOP_DONG_LICH_DIEU_HANH.md).
-- Nhánh nháp UI: `draft/ui-owner-calendar`, dựa trên đúng SHA backend trên. PR UI nháp đặt base là `feat/owner-calendar` để diff chỉ gồm UI/tài liệu, không trộn các thay đổi backend chưa merge vào diff #63.
-- Không sửa controller/service/model/routes/CI/package hoặc CSS chung. Không đọc `.env`, không ghi dữ liệu Atlas; lần thử ngày 25 dùng app và DB tổng hợp riêng trên localhost.
-
-## Phần đã chuẩn bị trong source UI
+## Phạm vi UI
 
 | File | Thay đổi |
 | --- | --- |
-| `views/owner-calendar.ejs` | Bố cục riêng cho lịch, cơ sở/ngày đang xem, form GET, bảy lựa chọn ngày, chú giải, bảng và các trạng thái rỗng; bỏ CSS inline |
-| `public/css/owner-calendar.css` | CSS chỉ áp dụng trang lịch: màu dự án, tên dài xuống dòng, focus, bảng cuộn trong vùng riêng, tiêu đề giờ/cột tên sân sticky, breakpoint 700px/480px |
-| `views/owner-dashboard.ejs` | Giữ href `/owner/calendar`, nhãn liên kết là “Lịch điều hành” |
+| `views/owner-calendar.ejs` | Cơ sở/ngày đang xem, form GET, bảy lựa chọn ngày, chú giải, bảng và trạng thái rỗng; bỏ CSS inline |
+| `public/css/owner-calendar.css` | CSS riêng của trang lịch, màu dự án, tên dài xuống dòng, focus, vùng bảng cuộn và cột/tiêu đề sticky, breakpoint 700px/480px |
+| `views/owner-dashboard.ejs` | Giữ liên kết thật `/owner/calendar`, nhãn “Lịch điều hành” |
 
-View dùng đúng `facility, selectedDate, dayOptions, timeColumns, courtRows` được bàn giao. Các cột và ô được lặp từ backend, không hardcode giờ mở cửa hoặc tự suy ra sân trống. Mỗi trạng thái có chữ/ký hiệu và màu: Trống ○, Đang giữ ◷, Đã đặt ✓, Không phục vụ —; hàng inactive có nhãn Tạm ngừng. Không hiển thị giá, doanh thu hoặc thông tin riêng của đơn.
+View dùng `facility, selectedDate, dayOptions, timeColumns, courtRows` do backend truyền; không tự tạo giờ phục vụ hoặc suy ra sân trống. Trạng thái có chữ, ký hiệu và màu: Trống ○, Đang giữ ◷, Đã đặt ✓, Không phục vụ —; sân inactive có nhãn Tạm ngừng. Có hai nhánh “Cơ sở chưa có sân.” và “Chưa có giờ phục vụ.”.
 
-Tên cơ sở, địa chỉ và tên sân vẫn dùng EJS escape. Form và các liên kết ngày chỉ dùng GET hiện có; không thêm JS, API, thao tác giữ/đặt/hủy/đổi hoặc realtime. View có riêng hai nhánh “Cơ sở chưa có sân.” và “Chưa có giờ phục vụ.”, đều có liên kết về quản lý.
+Tên cơ sở, địa chỉ và tên sân giữ EJS escape. Chọn ngày chỉ dùng GET hiện có. Không thêm JS, API, thao tác đặt/giữ/hủy/đổi, giá hoặc thông tin riêng của đơn. Phần UI không sửa controller/service/model/routes/CI/package hoặc CSS chung. Chỉ dùng dữ liệu thử trên DB localhost riêng; không đọc `.env` hoặc ghi dữ liệu Atlas.
 
-## Kiểm tra nháp đã chạy
+## Nghiệm thu lại trên nền main — 27/10/2026
 
-Ngày **24/10/2026**, Node **24.15.0**:
+Chạy ứng dụng/controller/service/EJS thật với ba OWNER và cơ sở tổng hợp trên MongoDB replica set localhost riêng. Chrome **156.0.8078.48** trên Windows; dùng DevTools Responsive với viewport **390×844** và **1366×900**. Ảnh là ảnh cửa sổ Chrome gốc, có thanh công cụ hiện kích thước viewport; không cắt/chỉnh ảnh. Desktop dùng Fit (tự thu nhỏ phần hiển thị trong cửa sổ), mobile ở 100%; kích thước nêu trên là CSS viewport.
 
-- `npm run check`: **PASS**, ESLint + biên dịch **18 EJS** trên nhánh nháp phụ thuộc backend.
-- Render EJS riêng: **5/5 tình huống PASS**. Đây là locals tổng hợp để kiểm tra template, **không phải dữ liệu ứng dụng/DB** và không chứng minh route/backend hoạt động.
-- Đọc diff và đối chiếu tĩnh với hợp đồng #62; giữ escape, form GET, tên trạng thái và dữ liệu giờ backend truyền.
+[Kết quả nghiệm thu](review-2026-10-27/acceptance.json) · [Manifest 28 ảnh, SHA và thời điểm chụp UTC](review-2026-10-27/screenshot-manifest.json). Ảnh được chụp ngày 27/10 theo UTC+7; timestamp UTC trong manifest bắt đầu tối 26/10.
 
-| Tình huống render fixture | Kết quả kiểm tra template |
+| Hạng mục | Trạng thái |
 | --- | --- |
-| Normal, bốn trạng thái, trục giờ gián đoạn | Có đủ cột/ô theo fixture, bảy href ngày và input giữ ngày; form GET |
-| Chưa có sân | Hiện thông báo riêng, không tạo bảng giả |
-| Có sân nhưng không có cột giờ | Hiện “Chưa có giờ phục vụ.”, không tạo ô giờ mặc định |
-| Tên dài, payload HTML, inactive | Chuỗi được escape đầy đủ; nhãn Tạm ngừng xuất hiện |
-| Ngày đang xem nằm ngoài bảy ngày | Input giữ ngày; bảy ngày vẫn từ locals, không đánh dấu nhầm một ngày đang xem |
+| `npm run check` | **PASS**, 18 EJS tại SHA cuối `e3aea06` |
+| `npm test` trên bản tích hợp | **135/135 PASS** tại `de43a70`, trước bản sửa chỉ thay một selector CSS; không gán lần chạy này cho SHA sau sửa |
+| HTTP/DB thật: thường/rỗng/tên dài, ngày, quyền, navigation và GET không sửa dữ liệu nghiệp vụ | **11/11 PASS** chạy lại tại SHA cuối `e3aea06` |
+| Trang thường tại cả hai viewport | **PASS**: ba sân khác giờ, gồm sân inactive; xem ngày 30/10 có đủ bốn trạng thái thật, bảng cuộn trong vùng riêng |
+| Cơ sở chưa có sân tại cả hai viewport | **PASS**: đúng OWNER/cơ sở, số sân 0, thông báo rỗng và liên kết về quản lý; không tạo bảng giả |
+| Tên dài tại cả hai viewport | **PASS**: tên cơ sở/sân 150 ký tự, địa chỉ 500 ký tự xuống dòng; chuỗi HTML hiển thị dạng văn bản đã escape, không tràn trang |
+| Tab/Shift+Tab và phím trái/phải tại cả hai viewport | **PASS**: tới liên kết ngày cuối rồi vùng bảng, focus rõ; phím mũi tên cuộn cột giờ, góc và cột tên sân giữ cố định |
+| Enter/đổi ngày/liên kết về quản lý | **PASS**: Enter trong input desktop gửi GET ngày 27/10; chọn ngày 30/10 cập nhật lựa chọn. Enter trên liên kết ngày mobile gửi GET 02/11 và input giữ ngày. Enter trên liên kết footer desktop mở `/owner`; liên kết lịch trong dashboard mở lại lịch |
+| Cuộn bảng và góc cố định | **PASS sau sửa CSS**; không quan sát thấy cuộn ngang toàn trang trong các ca đã thử |
 
-[JSON kết quả render nháp](draft-render-results.json). Không lấy năm fixture, màu CSS hoặc lint để kết luận trạng thái sân hoặc độ rộng/bàn phím thực tế. Chưa có ảnh ứng dụng chạy thật trong thư mục này.
+Trong lần kiểm tra Chrome có phát hiện góc “Sân / giờ” bị cột giờ che khi cuộn ngang desktop. Selector góc có độ ưu tiên thấp hơn quy tắc tiêu đề cột; đã tăng selector thành `th.owner-calendar-corner`, giữ nguyên thuộc tính và các quy tắc khác. Đã thử lại cuộn phải của bảng thường, bảng tên dài và bàn phím trên source cuối; góc và cột tên sân giữ cố định. Không phát hiện lỗi chức năng UI mới khác trong phạm vi các ca đã chạy.
 
-## Các bước còn lại trước khi hoàn thành #63
+### Ảnh thường / rỗng / tên dài
 
-1. Nhóm trưởng review/merge #68. Sau đó lấy `main` mới, chuyển nền PR UI từ nhánh phụ thuộc sang `main`; giải quyết khác biệt hợp đồng nếu backend được chỉnh trong review.
-2. Chạy lại ứng dụng thật trên nền main mới với DB thử riêng và OWNER đã cấp cơ sở; kiểm tra normal/empty/no-hours/tên dài, các sân khác giờ phục vụ và inactive. Kết quả HTTP trên nhánh UI ngày 25 ở trên không tự áp dụng cho source thay đổi sau đó.
-3. Đổi ngày bằng form/bảy lựa chọn GET, giữ đúng ngày và xác nhận không tạo/sửa đơn/lock/giá/quyền; kiểm tra scope OWNER và navigation hiện có.
-4. Kiểm tra trình duyệt **390px và 1366px**: không tràn toàn trang, cuộn riêng trong bảng, tiêu đề/cột cố định không che nội dung, focus, Tab/Enter và phím mũi tên. Chụp ảnh thực tế thường/rỗng/tên dài cùng SHA, browser, viewport và dữ liệu thử.
-5. Chạy lại `npm run check`, các test cần thiết và CI trên nền tích hợp; chỉ đánh dấu PR ready/`Closes #63` sau khi đủ tiêu chí.
+| Dữ liệu | 390×844 | 1366×900 |
+| --- | --- | --- |
+| Thường | [Đầu trang](review-2026-10-27/normal-390-top.jpg) · [Chọn ngày](review-2026-10-27/normal-390-controls.jpg) · [Bảng](review-2026-10-27/normal-390-table-left.jpg) · [Cuộn bảng](review-2026-10-27/normal-390-table-scroll.jpg) | [Đầu trang](review-2026-10-27/normal-1366-top.jpg) · [Bảng/bốn trạng thái](review-2026-10-27/normal-1366-table-left.jpg) · [Cuộn đến giờ tối](review-2026-10-27/normal-1366-table-right.jpg) |
+| Chưa có sân | [Đầu trang](review-2026-10-27/empty-390-top.jpg) · [Thông báo rỗng](review-2026-10-27/empty-390-state.jpg) | [Đầu trang](review-2026-10-27/empty-1366-top.jpg) · [Thông báo rỗng](review-2026-10-27/empty-1366-state.jpg) |
+| Tên dài | [Đầu trang](review-2026-10-27/long-390-top.jpg) · [Tên/địa chỉ dài](review-2026-10-27/long-390-facility.jpg) · [Tên sân trong bảng](review-2026-10-27/long-390-table.jpg) | [Tên/địa chỉ dài](review-2026-10-27/long-1366-top.jpg) · [Tên sân trong bảng](review-2026-10-27/long-1366-table.jpg) · [Cuộn bảng](review-2026-10-27/long-1366-scroll.jpg) |
 
-Ở lần nháp ngày 24, chưa chạy app/DB, npm test và trình duyệt. Kết quả bổ sung ngày 25 đã chạy lại HTTP/DB và 134 test trên nhánh UI, vẫn chưa có bằng chứng trực quan và main tích hợp. Workflow hiện chỉ tự chạy PR hướng tới main; không đổi CI để ép chạy PR nháp có base là nhánh backend.
+### Ảnh thao tác bàn phím
+
+| Ca | 390×844 | 1366×900 |
+| --- | --- | --- |
+| Shift+Tab đến ngày cuối, Tab đến bảng | [Focus ngày](review-2026-10-27/keyboard-390-day-focus.jpg) · [Focus bảng](review-2026-10-27/keyboard-390-table-focus.jpg) | [Focus ngày](review-2026-10-27/keyboard-1366-day-focus.jpg) · [Focus bảng](review-2026-10-27/keyboard-1366-table-focus.jpg) |
+| Phím mũi tên cuộn cột giờ | [Sang phải](review-2026-10-27/keyboard-390-arrow-right.jpg) | [Sang trái](review-2026-10-27/keyboard-1366-arrow-left.jpg) · [Sang phải](review-2026-10-27/keyboard-1366-arrow-right.jpg) |
+| Enter điều hướng bằng GET | [Ngày 02/11 được giữ](review-2026-10-27/keyboard-390-enter-date.jpg) | [Submit input ngày](review-2026-10-27/keyboard-1366-enter-get.jpg) · [Focus liên kết về](review-2026-10-27/keyboard-1366-back-focus.jpg) · [Mở dashboard](review-2026-10-27/keyboard-1366-enter-back.jpg) |
+
+Các kết quả bố cục và bàn phím trên được quan sát trong Chrome, tách với kết quả HTTP/DB và lint. Đây là nghiệm thu UI #63 trên dữ liệu thử của PR #69; không thay báo cáo QA #66 của PR #71 hoặc quyết định review/merge của nhóm trưởng.
+
+## Bằng chứng lịch sử
+
+### Ngày 25/10/2026 — nhánh UI trước khi backend merge
+
+- SHA đã thử: `777fe65bc56ac3de076d405b803ef15a840fdd35`, chứa backend `014117349e9f460fd70ebddd54765663877c8334`; chưa phải nền main mới.
+- **11/11 ca HTTP/DB PASS** trên app/controller/service/EJS thật và DB riêng: thường/rỗng/tên dài, ngày mặc định/bảy ngày/ngày xa hơn, đổi và tải lại ngày bằng GET, navigation/CSS, quyền và snapshot dữ liệu. [JSON kết quả đã lọc thông tin riêng](acceptance-2026-10-25.json).
+- `npm run check` **PASS**, 18 EJS; `npm test` **134/134 PASS**, 0 fail/skip. Node 24.15.0, MongoDB 8.3.11, replica set localhost riêng `qaCalendarUi69`.
+- Chưa có ảnh 390px/1366px hoặc bằng chứng Tab/Enter/cuộn bảng của lần chạy này. Computer Use bị dừng trước khi hoàn tất kiểm tra. Người yêu cầu báo bố cục thường/tên dài và bàn phím hoạt động; đây là xác nhận từ người yêu cầu, không phải kết quả công cụ có ảnh/SHA đi kèm.
+
+### Ngày 24/10/2026 — chuẩn bị template
+
+- Nền nháp: main `f8c1cfb900ab4ba4cd568e520dce46d9e2dbf0b7` và backend `014117349e9f460fd70ebddd54765663877c8334`. Base PR khi đó là `feat/owner-calendar` để tách diff UI trong lúc chờ review backend.
+- `npm run check` **PASS**, 18 EJS. Render EJS riêng **5/5 tình huống PASS**: thường, rỗng, không có cột giờ, tên dài/payload escape/inactive và ngày ngoài bảy lựa chọn. [JSON kết quả render nháp](draft-render-results.json).
+- Đây là locals tổng hợp kiểm tra template; chưa chạy app/DB, `npm test` hoặc trình duyệt trong lần ngày 24. Không coi năm tình huống render là bằng chứng dữ liệu hoặc giao diện ứng dụng thật.
