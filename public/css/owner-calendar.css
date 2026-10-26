@@ -442,7 +442,7 @@ body.owner-calendar-page {
   overflow-wrap: anywhere;
 }
 
-.owner-calendar-page .owner-calendar-table .owner-calendar-corner {
+.owner-calendar-page .owner-calendar-table th.owner-calendar-corner {
   z-index: 4;
   background: #e9efdf;
 }
