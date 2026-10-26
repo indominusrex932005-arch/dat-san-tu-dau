@@ -97,11 +97,11 @@ body.login-page {
 
 .login-intro-title {
   margin: 0;
-  font-family: 'Times New Roman', Georgia, serif;
+  font-family: 'Playfair Display', 'Times New Roman', serif;
   font-size: clamp(38px, 4.1vw, 56px);
   font-weight: 400;
-  line-height: 1.15;
-  letter-spacing: -1.7px;
+  line-height: 1.18;
+  letter-spacing: -0.5px;
 }
 
 .login-description {
@@ -150,11 +150,11 @@ body.login-page {
 
 .login-card h1 {
   margin: 0;
-  font-family: 'Times New Roman', Georgia, serif;
+  font-family: 'Playfair Display', 'Times New Roman', serif;
   font-size: 38px;
   font-weight: 400;
   line-height: 1.25;
-  letter-spacing: -.8px;
+  letter-spacing: -.5px;
 }
 
 .login-card-description {
