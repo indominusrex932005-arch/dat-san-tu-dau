@@ -1,22 +1,14 @@
-# Bằng chứng và kết quả kiểm thử luồng đặt sân #33
+# Bằng chứng kiểm thử đặt sân #33
 
-Thực thi kiểm thử toàn luồng đặt sân ngày **24/10/2026**. Ứng dụng thực chạy trên nền tích hợp mới nhất của `main`.
-Báo cáo kiểm thử chi tiết từng ca nằm tại [`../KIEM_THU_LUONG_DAT_SAN.md`](../KIEM_THU_LUONG_DAT_SAN.md).
+Bộ ảnh mới ngày **26/10/2026** thay toàn bộ bộ ảnh cũ không khớp ca kiểm thử.
 
-## Danh mục ảnh minh chứng thực tế
+- [Báo cáo từng ca và giới hạn nghiệm thu](../KIEM_THU_LUONG_DAT_SAN.md)
+- [Danh mục 64 ảnh mới ở hai viewport](review-2026-10-26/README.md)
+- [Manifest thời điểm, kích thước và SHA-256 từng ảnh](review-2026-10-26/browser-evidence.json)
+- [Đối chiếu HTTP/DB đã loại query, body, cookie và token](review-2026-10-26/http-db-evidence.json)
 
-| Ca kiểm thử | Desktop 1366 × 900 | Mobile 390 × 844 |
-| --- | --- | --- |
-| **Ca 1: Khách đăng nhập / lịch sử đơn** | [Ảnh Desktop](C01-dang-nhap-1366.png) | [Ảnh Mobile](C01-dang-nhap-390.png) |
-| **Ca 2: OWNER quản lý cơ sở và sân** | [Ảnh Desktop](C02-owner-facility-1366.jpg) | [Ảnh Mobile](C02-owner-facility-390.jpg) |
-| **Ca 3: Chọn 2 ô giờ thường & cao điểm** | [Ảnh Desktop](C03-chon-o-1366.jpg) | [Ảnh Mobile](C03-chon-o-390.jpg) |
-| **Ca 4: Tranh ô đồng thời (Conflict 409)** | [Ảnh Desktop](C04-tranh-o-1366.jpg) | [Ảnh Mobile](C04-tranh-o-390.jpg) |
-| **Ca 5: Giữ chỗ & đồng hồ countdown 10 phút** | [Ảnh Desktop](C05-checkout-countdown-1366.jpg) | [Ảnh Mobile](C05-checkout-countdown-390.jpg) |
-| **Ca 5 (Hết hạn): Đơn hết hạn & giải phóng** | [Ảnh Countdown hết hạn](C05-countdown-het-han-390.jpg) | [Ảnh Đơn hết hạn](C05-don-het-han-390.jpg) |
-| **Ca 5b: Giữ sân sát giờ bắt đầu** | [Ảnh Desktop](C05b-sat-gio-1366.jpg) | [Ảnh Mobile](C05b-sat-gio-390.jpg) |
-| **Ca 6: Thanh toán mô phỏng trong DEMO_MODE** | [Ảnh Desktop](C06-thanh-toan-mo-phong-1366.jpg) | [Ảnh Mobile](C06-thanh-toan-mo-phong-390.jpg) |
-| **Ca 7: Quản lý yêu cầu đổi/hủy giờ** | [Ảnh Desktop](C07-yeu-cau-doi-huy-1366.jpg) | [Ảnh Mobile](C07-yeu-cau-doi-huy-390.jpg) |
-| **Ca 8: Khách vãng lai nhập tên/SĐT đặt sân** | [Ảnh Desktop](C08-khach-vang-lai-1366.jpg) | [Ảnh Mobile](C08-khach-vang-lai-390.jpg) |
-| **Ca 9: Phân quyền xem đơn (chặn 403)** | [Ảnh Desktop](C09-phan-quyen-chan-403-1366.jpg) | [Ảnh Mobile](C09-phan-quyen-chan-403-390.jpg) |
+Người bàn giao: Hoàng Triều (`lhtrieu2703-beep`); Codex thực thi. Source đã chạy: `ba4e9de81bfce2420a3d06bf220e9601c7a1fb53`, source ứng dụng đồng nhất main `f8c1cfb900ab4ba4cd568e520dce46d9e2dbf0b7`.
 
-Toàn bộ ảnh minh chứng được chụp trực tiếp từ ứng dụng thực tế với database phát triển và session MongoDB.
+Browser CUA in-app, HTTP User-Agent Chrome/156.0.0.0. Ảnh full-page chụp trạng thái thật ở 1366×900 và 390×844 bằng resize cùng phiên. Nội dung ảnh là fixture tổng hợp, không phải dữ liệu người thật. Định dạng ảnh JPEG do API screenshot trả về, đuôi .jpg đúng định dạng.
+
+**Chưa nghiệm thu toàn bộ #33:** chưa xuất/lưu được PDF và chưa trình bày bằng hai cửa sổ browser độc lập. Không dùng HTTP hoặc tests tự động để đánh dấu các phần này đạt. Không còn kết luận 9/9 toàn luồng từ bộ ảnh cũ.

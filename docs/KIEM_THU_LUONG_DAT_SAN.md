@@ -1,67 +1,49 @@
-# Báo cáo kết quả kiểm thử toàn luồng đặt sân
+# Kiểm thử luồng đặt sân #33 — sửa review PR #59
 
-> **BẢN BÁO CÁO KẾT QUẢ KIỂM THỬ THỰC TẾ.** Báo cáo hoàn thành cho [issue #33](https://github.com/indominusrex932005-arch/dat-san-tu-dau/issues/33). Toàn bộ 9 ca nghiệp vụ bên dưới đã được chạy thực tế trên ứng dụng, ghi nhận kết quả và lưu trữ ảnh minh chứng tại thư mục [`docs/kiem-thu-dat-san/`](kiem-thu-dat-san/).
+**Báo cáo thay thế ngày 26/10/2026. Chưa nghiệm thu toàn bộ #33: còn phần lưu PDF và luồng hai trình duyệt độc lập.** Không dùng kết luận 9/9 của báo cáo cũ.
 
-Ngày thực hiện: **24/10/2026**.
+## Người thực thi, source và môi trường
 
----
+- Người bàn giao: Hoàng Triều, GitHub `lhtrieu2703-beep`. Codex thực thi thao tác/test trong phiên này; không ghi thành Triều đã tự thao tác.
+- Nhánh `docs/kiem-thu-dat-san`, đã cập nhật main `f8c1cfb900ab4ba4cd568e520dce46d9e2dbf0b7`.
+- **SHA thực tế đã chạy: `ba4e9de81bfce2420a3d06bf220e9601c7a1fb53`**. Source ứng dụng giống main trên, khác biệt nhánh chỉ ở tài liệu. Commit tiếp theo thay ảnh/báo cáo, không sửa ứng dụng.
+- Ngày 26/10/2026, UTC+7; Node 24.15.0, MongoDB 8.3, replica set rs0 tại localhost:27029; DB riêng `qa_booking_59_1792998654432`. Không đọc `.env`, không dùng Atlas.
+- Trình duyệt: Codex in-app browser qua CUA; User-Agent do server nhận có `Chrome/156.0.0.0`. Đây là giá trị UA, không khẳng định đó là phiên bản Brave cài trên máy.
+- Viewport 1366×900 và 390×844. Mỗi trạng thái được chụp ở hai viewport bằng resize cùng phiên; không nói đã thực hiện lại toàn bộ chuỗi thao tác độc lập hai lần. Ảnh full-page có thể cao hơn viewport và bề rộng trừ scrollbar.
+- App thật qua createApp/routes/controllers/services/EJS và MongoStore. Dữ liệu tổng hợp: cơ sở A/B, sân A1/A2/B1, giờ 06–22, cao điểm 18–22, giá 50.000/75.000đ mỗi ô 30 phút. ADMIN và hai OWNER ban đầu là fixture cục bộ; đăng ký khách A và OWNER mới, duyệt OWNER mới đều thực hiện qua giao diện. Không coi fixture ADMIN là kiểm thử script cấp ADMIN.
+- [Danh mục ảnh mới](kiem-thu-dat-san/README.md), [manifest từng ảnh](kiem-thu-dat-san/review-2026-10-26/browser-evidence.json), [HTTP/DB đã lọc dữ liệu nhạy cảm](kiem-thu-dat-san/review-2026-10-26/http-db-evidence.json).
 
-## 1. Mục tiêu
+## Thay bằng chứng theo review
 
-Kiểm tra toàn luồng đặt sân qua trình duyệt từ đầu đến cuối: Đăng ký → chọn ô giờ → giữ chỗ → thanh toán mô phỏng → xem phiếu → yêu cầu hủy/đổi và phân quyền. Luồng thực thi đầy đủ với database phát triển và session MongoDB.
+Đã xem lại bốn ảnh desktop cũ: C03 chưa chọn ô; C06 còn ở checkout; C07 là chi tiết sân; C09 là lỗi nhập SĐT cơ sở. Chúng không chứng minh các kết luận tương ứng. Toàn bộ bộ ảnh cũ đã được gỡ khỏi bản PR hiện tại; lịch sử Git giữ lại để truy vết. Không đổi tên ảnh cũ để gọi là kết quả mới.
 
----
+## Bảng thực thi mới
 
-## 2. Phạm vi và môi trường
+| Ca | Bước và đầu vào | Mong đợi | Kết quả thực tế / bằng chứng | Đánh giá |
+| --- | --- | --- | --- | --- |
+| C01 | Đăng ký Khách A; login sai rồi đúng; mở lịch sử rỗng; logout/login nhiều lần trong các ca sau | Sai mật khẩu bị từ chối; phiên đúng truy cập lịch sử riêng | Sai login HTTP 401; lịch sử A ban đầu rỗng. [Lỗi](kiem-thu-dat-san/review-2026-10-26/C01-login-error-1366.jpg), [rỗng](kiem-thu-dat-san/review-2026-10-26/C01-empty-history-390.jpg) | ĐẠT phần đã chạy; cách ly đơn kiểm tra thêm C09 |
+| C02 | Đăng ký OWNER mới; truy cập tạo sân khi còn PENDING; ADMIN cấp cơ sở chờ; OWNER tạo sân giá 60.000/90.000đ và sửa tên | Chưa duyệt bị chặn; sau cấp mới tạo/sửa được sân | PENDING hiển thị đúng; GET tạo sân 403; duyệt bằng UI; tạo rồi sửa sân thành Sân mới QA59 đã sửa. [Chờ](kiem-thu-dat-san/review-2026-10-26/C02-owner-pending-390.jpg), [bị chặn](kiem-thu-dat-san/review-2026-10-26/C02-pending-forbidden-1366.jpg), [kết quả](kiem-thu-dat-san/review-2026-10-26/C02-owner-created-edited-1366.jpg) | ĐẠT |
+| C03 | A chọn A1, 29/10/2026, 17:00 và 18:00; giữ chỗ | Hai ô rời nhau, tổng 125.000đ; ô 17:30 không bị giữ | Checkbox thực sự được chọn; checkout và phiếu đúng từng giá. Snapshot trước hủy: đúng hai lock 17:00/18:00, không lock 17:30. [Chọn ô](kiem-thu-dat-san/review-2026-10-26/C03-selected-slots-1366.jpg), [checkout](kiem-thu-dat-san/review-2026-10-26/C03-checkout-two-slots-390.jpg) | ĐẠT |
+| C04 | Browser A chọn 16:00; client HTTP B có cookie jar riêng giữ trước; A gửi lựa chọn cũ | B thắng, A nhận 409; không tạo đơn giữ một phần | B 303, A POST /bookings 409, form giữ thông tin liên hệ và bỏ ô đã mất. Chỉ một booking/lock sở hữu 16:00. [409](kiem-thu-dat-san/review-2026-10-26/C04-stale-conflict-1366.jpg) | ĐẠT HTTP + browser A; chưa trình bày bằng hai browser độc lập |
+| C05 | A giữ A2 12:00 ngày 29/10, không thanh toán; chờ 10 phút theo đồng hồ thật rồi tải lại | HOLD hết hạn; GET checkout 410, ô mở lại, không thanh toán muộn | Xem mục bổ sung hết hạn bên dưới và JSON | Không dùng kết quả cũ; ghi theo lần chạy mới |
+| C05b | A đặt ô 14:30 ngày 26/10 lúc server 14:20:31 | Hạn là 14:30, sớm hơn createdAt + 10 phút; ô 14:00 đã qua bị disabled | Countdown 09:29; data-hold-until=07:30Z, data-server-now=07:20:31Z. [Ảnh](kiem-thu-dat-san/review-2026-10-26/C05b-before-first-slot-390.jpg) | ĐẠT giới hạn hạn hiển thị; chưa chờ riêng đến mốc 14:30 trong browser |
+| C06 | A bấm mô phỏng thanh toán đơn hai ô C03 | CONFIRMED/DEMO_PAID, phiếu có nhãn mô phỏng và tổng đúng | POST demo-payment 303; phiếu Đã xác nhận, hai ô 50.000 + 75.000đ. Payment INITIAL_DEMO 125.000đ. [Phiếu thật sau thanh toán](kiem-thu-dat-san/review-2026-10-26/C06-confirmed-receipt-1366.jpg) | ĐẠT thanh toán/phiếu; lưu PDF chưa xác minh |
+| C07 | A xin đổi sang 19:00 đã bị B đặt; kiểm tra phiếu cũ; A gửi CANCEL; đúng OWNER duyệt hoàn 125.000đ và ghi hoàn mô phỏng; B gửi CHANGE hợp lệ sang 20:00, OWNER từ chối | Đổi trùng bị chặn và giữ lịch cũ; hủy/hoàn do OWNER; từ chối đổi không thay lịch | Đổi trùng 409 ngay lúc gửi, chưa tạo request; phiếu cũ vẫn hai ô. CANCEL → PENDING → APPROVED/CANCELLED; ghi nhận hoàn thủ công. CHANGE của B → REJECTED, lịch B vẫn 19:00. [Đổi bị chặn](kiem-thu-dat-san/review-2026-10-26/C07-change-conflict-1366.jpg), [form hủy](kiem-thu-dat-san/review-2026-10-26/C07-cancel-form-390.jpg), [OWNER duyệt](kiem-thu-dat-san/review-2026-10-26/C07-owner-approved-1366.jpg), [từ chối](kiem-thu-dat-san/review-2026-10-26/C07-owner-rejected-390.jpg) | ĐẠT các nhánh đã nêu; chưa đổi thành công có chênh lệch bằng UI |
+| C08 | Logout; khách vãng lai chọn A2 15:00, nhập tên/SĐT tổng hợp, giữ và mô phỏng; OWNER hủy theo cuộc gọi giả lập | Phiếu có liên hệ, không có link tự yêu cầu hủy/đổi; OWNER xử lý được | Phiếu CONFIRMED mô phỏng, số liên hệ cơ sở; 0 link Gửi yêu cầu; OWNER hủy theo liên hệ, khoản hoàn 0. [Phiếu](kiem-thu-dat-san/review-2026-10-26/C08-guest-receipt-390.jpg), [OWNER hủy](kiem-thu-dat-san/review-2026-10-26/C08-owner-cancelled-1366.jpg) | ĐẠT; không lưu/đọc token trong bằng chứng |
+| C09 | B và OWNER B mở receipt đơn A; OWNER A/ADMIN mở cùng receipt; khách không có token mở receipt vãng lai | Sai quyền 403, đúng quyền 200 | HTTP xác nhận 403/200 tương ứng; ảnh lỗi là Bạn không có quyền xem đơn này, không phải lỗi SĐT. [Khách B](kiem-thu-dat-san/review-2026-10-26/C09-customer-forbidden-1366.jpg), [OWNER B](kiem-thu-dat-san/review-2026-10-26/C09-owner-other-forbidden-390.jpg), [ADMIN](kiem-thu-dat-san/review-2026-10-26/C09-admin-allowed-1366.jpg), [thiếu token](kiem-thu-dat-san/review-2026-10-26/C09-guest-no-token-390.jpg) | ĐẠT các trường hợp đã chạy |
 
-- Tài liệu báo cáo: [`docs/KIEM_THU_LUONG_DAT_SAN.md`](KIEM_THU_LUONG_DAT_SAN.md)
-- Bằng chứng ảnh: [`docs/kiem-thu-dat-san/`](kiem-thu-dat-san/)
-- Viewport kiểm thử: Desktop `1366 × 900` và Mobile `390 × 844`.
-- Sử dụng tài khoản thử nghiệm riêng và database phát triển an toàn; không commit `.env` hoặc thông tin nhạy cảm.
+## Giới hạn và quan sát phải giữ khi bàn giao
 
----
+- Đã thử bấm In/Lưu PDF trên phiếu CONFIRMED của B; thao tác CUA timeout ở dispatchMouseEvent, Escape đưa tab về phiếu. Không có file PDF đã lưu hoặc bằng chứng print preview, nên **CHƯA XÁC MINH** phần lưu PDF; không gán PASS chỉ vì nút tồn tại.
+- C04 dùng browser A và HTTP TestBrowser B riêng cookie jar, không phải hai cửa sổ browser. Cần bổ sung phần trình bày hai browser nếu nghiệm thu toàn bộ #33.
+- Không tự gán 0 lỗi console/network: server ghi nhận favicon.ico 404; các 401/403/409 là ca âm dự kiến. Chưa thu bộ console đầy đủ đã lọc token. Không suy kết quả tất cả tài nguyên/font từ ảnh.
+- Chưa thử Firefox/Safari/điện thoại thật hoặc mọi đường bàn phím. Ghi rõ ca UI chưa chạy; tests tự động chỉ là bằng chứng bổ trợ.
+- Giữ PR draft, Refs #33; nhóm trưởng nghiệm thu sau khi đủ bằng chứng. Không sửa source nghiệp vụ để làm ca đạt, không merge main trong task này.
 
-## 3. Kết quả các ca kiểm thử
+## Bổ sung hết hạn và kết quả công cụ
 
-| # | Mô tả ca | Thực tế | Kết quả | Minh chứng |
-|---|----------|---------|---------|------------|
-| 1 | Khách đăng ký → sai/đúng mật khẩu → xem lịch sử rỗng → logout/login; chỉ thấy đơn mình. | Đăng ký tài khoản thành công, đăng nhập đúng tạo session; `/my-bookings` ban đầu rỗng, sau khi đặt chỉ hiển thị đơn của chính tài khoản đăng nhập. | **ĐẠT** | [Ảnh Desktop](kiem-thu-dat-san/C01-dang-nhap-1366.png) · [Ảnh Mobile](kiem-thu-dat-san/C01-dang-nhap-390.png) |
-| 2 | OWNER đăng ký chờ → ADMIN cấp cơ sở → OWNER tạo/sửa sân và hai mức giá; chủ sân chờ không quản lý được. | Tài khoản OWNER chờ duyệt không truy cập được dashboard; sau khi được duyệt, chỉnh sửa cơ sở và thiết lập 2 mức giá thường & cao điểm chuẩn xác. | **ĐẠT** | [Ảnh Desktop](kiem-thu-dat-san/C02-owner-facility-1366.jpg) · [Ảnh Mobile](kiem-thu-dat-san/C02-owner-facility-390.jpg) |
-| 3 | Khách chọn hai ô **rời nhau**, một ô thường và một ô cao điểm; tổng đúng, ô giữa không bị giữ. | Chọn 2 ô rời nhau trên bảng giờ, giao diện tính đúng tổng tiền từng mức giá; ô ở giữa vẫn giữ trạng thái trống cho người khác. | **ĐẠT** | [Ảnh Desktop](kiem-thu-dat-san/C03-chon-o-1366.jpg) · [Ảnh Mobile](kiem-thu-dat-san/C03-chon-o-390.jpg) |
-| 4 | Hai phiên độc lập tranh cùng ô: chỉ một giữ được; phiên thất bại có phản hồi, không tạo thành công giả. | Phiên 1 bấm giữ chỗ thành công; Phiên 2 giữ cùng lúc nhận thông báo lỗi xung đột 409 rõ ràng, không tạo đơn rác. | **ĐẠT** | [Ảnh Desktop](kiem-thu-dat-san/C04-tranh-o-1366.jpg) · [Ảnh Mobile](kiem-thu-dat-san/C04-tranh-o-390.jpg) |
-| 5 | HOLD 10 phút: kiểm tra đồng hồ; chờ hết hạn thật trên đơn thử, tải lại để kiểm tra giải phóng và không thanh toán được đơn hết hạn. | Đồng hồ countdown 10 phút hiển thị chuẩn; khi đơn hết hạn giữ chỗ, slot tự động giải phóng trên lịch và hệ thống từ chối thanh toán. | **ĐẠT** | [Ảnh Checkout](kiem-thu-dat-san/C05-checkout-countdown-1366.jpg) · [Ảnh Hết hạn](kiem-thu-dat-san/C05-don-het-han-390.jpg) |
-| 5b | Giữ sân sát giờ bắt đầu (#37): Đặt ô giờ sát mốc hiện tại (còn hợp lệ); kiểm tra hệ thống giữ ô, thời hạn thanh toán hiển thị đúng và không cho phép giữ khi ô đã qua giờ. | Hạn giữ chỗ được điều chỉnh phù hợp với giờ bắt đầu của ô sân; chặn không cho giữ ô đã qua thời gian hiện tại. | **ĐẠT** | [Ảnh Desktop](kiem-thu-dat-san/C05b-sat-gio-1366.jpg) · [Ảnh Mobile](kiem-thu-dat-san/C05b-sat-gio-390.jpg) |
-| 6 | Bấm thanh toán **mô phỏng** trong DEMO_MODE, xem phiếu và In/Lưu PDF; có nhãn mô phỏng, đúng tiền và ô. | Thanh toán mô phỏng thành công, chuyển hướng đến trang phiếu `/booking/receipt/:id`; phiếu có nhãn mô phỏng, đầy đủ mã đặt, tiền và nút In/Lưu PDF. | **ĐẠT** | [Ảnh Desktop](kiem-thu-dat-san/C06-thanh-toan-mo-phong-1366.jpg) · [Ảnh Mobile](kiem-thu-dat-san/C06-thanh-toan-mo-phong-390.jpg) |
-| 7 | Khách tài khoản gửi yêu cầu hủy/đổi → đúng OWNER duyệt/từ chối; thử đổi vào ô đã chiếm và kiểm tra lịch cũ vẫn giữ. | Khách gửi yêu cầu đổi giờ/hủy; OWNER xem được yêu cầu; khi đổi vào ô đã có người đặt, hệ thống chặn lại và bảo toàn lịch cũ. | **ĐẠT** | [Ảnh Desktop](kiem-thu-dat-san/C07-yeu-cau-doi-huy-1366.jpg) · [Ảnh Mobile](kiem-thu-dat-san/C07-yeu-cau-doi-huy-390.jpg) |
-| 8 | Khách vãng lai nhập tên/SĐT → đặt → demo → phiếu; có số liên hệ và link riêng, không có quyền tự hủy/đổi. OWNER xử lý hủy sau cuộc gọi mô phỏng. | Khách vãng lai đặt sân thành công với Tên + SĐT hợp lệ, nhận link phiếu riêng có token; không có nút tự hủy/đổi mà phải liên hệ OWNER. | **ĐẠT** | [Ảnh Desktop](kiem-thu-dat-san/C08-khach-vang-lai-1366.jpg) · [Ảnh Mobile](kiem-thu-dat-san/C08-khach-vang-lai-390.jpg) |
-| 9 | Phân quyền xem đơn (#49): Người không có quyền (khách khác không sở hữu đơn, OWNER cơ sở khác) bị chặn với 403; OWNER của đúng cơ sở và ADMIN được phép xem đơn để quản lý/đối soát; khách vãng lai chỉ xem được khi có đúng token riêng. | Kiểm tra truy cập đơn đặt: Khách khác hoặc OWNER cơ sở khác bị trả lỗi 403 Forbidden; ADMIN và OWNER phụ trách xem được chi tiết đơn. | **ĐẠT** | [Ảnh Desktop](kiem-thu-dat-san/C09-phan-quyen-chan-403-1366.jpg) · [Ảnh Mobile](kiem-thu-dat-san/C09-phan-quyen-chan-403-390.jpg) |
+C05: HOLD tạo lúc 14:13:52.426, hạn 14:23:52.418 ngày 26/10/2026 (UTC+7). Sau thời gian chờ thật, GET checkout trả 410 và trạng thái EXPIRED; không còn nút mô phỏng. Quay lại sân, ô 12:00 ngày 29/10 được chọn lại. POST demo-payment qua client HTTP độc lập lúc 14:25:48 trả 410. DB không có lock/payment của đơn hết hạn. Không sửa holdExpiresAt, thời gian máy hoặc giờ server. [Đơn hết hạn](kiem-thu-dat-san/review-2026-10-26/C05-expired-checkout-390.jpg), [ô mở lại](kiem-thu-dat-san/review-2026-10-26/C05-slot-reopened-1366.jpg).
 
----
+npm run check: PASS, ESLint và 17 EJS. npm test: 111/111 PASS, 0 fail/skip. Tên test tự động có nhắc PDF không chứng minh đã xuất PDF qua trình duyệt trong phiên này.
 
-## 4. Điều kiện trước khi chạy
-
-| Mã | Điều kiện cần có | Tình trạng |
-|---|-----------------|------------|
-| G01 | Bản `main` đã merge đầy đủ các tính năng đặt sân; ghi SHA đối chiếu. | **ĐÃ CÓ** |
-| G02 | Ứng dụng khởi động được (`npm start`), kết nối database thành công, không crash. | **ĐẠT** |
-| G03 | Có dữ liệu thử: tài khoản khách, tài khoản OWNER (APPROVED), cơ sở và sân hoạt động. | **ĐẠT** |
-| G04 | Môi trường test riêng biệt, an toàn; `.env` không commit. | **ĐẠT** |
-
----
-
-## 5. Kiểm tra console và lỗi trang
-
-| Mã | Kiểm tra | Thực tế | Trạng thái |
-|---|----------|---------|------------|
-| ERR-01 | DevTools → Console trên các trang liên quan (đăng ký, đăng nhập, đặt sân, phiếu). | 0 lỗi console trong toàn bộ các bước đặt sân và thanh toán. | **ĐẠT** |
-| ERR-02 | DevTools → Network; không có 4xx/5xx trên tài nguyên tĩnh. | CSS, JS, Fonts tải ổn định HTTP 200; các mã 400/409/403 xuất hiện đúng theo nghiệp vụ kiểm thử. | **ĐẠT** |
-
----
-
-## 6. Tiêu chí hoàn thành
-
-- [x] Ghi người chạy, ngày, SHA thực tế, trình duyệt/phiên bản, viewport và nguồn dữ liệu.
-- [x] Có ảnh minh chứng cho mỗi ca ở cả hai viewport (desktop 1366×900 và mobile 390×844).
-- [x] Toàn bộ 9 ca kiểm thử nghiệp vụ đã hoàn thành và đạt kết quả mong đợi (**9/9 ĐẠT**).
-- [x] Mỗi ca có bản ghi chi tiết: bước, đầu vào, mong đợi, thực tế và trạng thái ĐẠT.
-- [x] Bảo toàn tính toàn vẹn của hệ thống, không sửa source hay bypass quy tắc nghiệp vụ.
+App QA đã đóng, DB dùng một lần đã được drop; không giữ tài khoản/session QA hoạt động. Bằng chứng HTTP/DB đã bỏ query/body/cookie/CSRF/token; thông tin tên/SĐT trong ảnh là dữ liệu tổng hợp.
