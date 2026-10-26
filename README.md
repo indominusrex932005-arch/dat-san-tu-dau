@@ -47,8 +47,6 @@ Seed thêm cơ sở/sân mẫu, không tạo tài khoản hoặc xóa dữ liệ
 3. Chủ sân đăng ký tại `/register/owner`, chờ duyệt. ADMIN đăng nhập lại vào `/admin`, cấp cơ sở mẫu chưa có chủ hoặc tạo cơ sở từ hồ sơ đề nghị.
 4. OWNER vào `/owner`, cấu hình sân/giờ/giá. Cơ sở chưa được cấp chủ sân/số liên hệ chưa nhận đơn mới. Mỗi chủ quản lý một cơ sở với nhiều sân.
 
-OWNER đã được cấp cơ sở có thể mở **Lịch điều hành sân** tại `/owner/calendar`: xem tất cả sân theo ngày, trạng thái từng ô 30 phút và bảy ngày từ hôm nay. Đây là bảng chỉ đọc; [hợp đồng backend và kết quả thử](docs/HOP_DONG_LICH_DIEU_HANH.md) bàn giao cho phần UI tiếp theo.
-
 ## Luồng trình bày
 
 ADMIN duyệt OWNER → OWNER cấu hình sân/giá → CUSTOMER hoặc khách vãng lai chọn nhiều ô → giữ tối đa 10 phút, trước khi ô đầu tiên bắt đầu → QR minh họa → bấm thanh toán mô phỏng → phiếu có nhãn mô phỏng → In / Lưu PDF.
