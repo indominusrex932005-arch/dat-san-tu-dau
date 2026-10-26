@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-24",
+  "subject": "Issue #37 checkout countdown",
+  "runner": "Node.js vm with deterministic browser clocks and DOM stubs",
+  "status": "PASS",
+  "cases": [
+    {
+      "name": "Delayed script subtracts 4 seconds between responseStart=1000 and performance.now=5000",
+      "status": "PASS"
+    },
+    {
+      "name": "Browser wall clock in year 2040 and another one-year change do not affect server countdown",
+      "status": "PASS"
+    },
+    {
+      "name": "Exact effective deadline disables demo payment and asks for refreshed DB status",
+      "status": "PASS"
+    },
+    {
+      "name": "Old template without serverNow anchors Date.now fallback at script start without subtracting preload twice",
+      "status": "PASS"
+    },
+    {
+      "name": "Browser without navigation timing falls back to script performance start",
+      "status": "PASS"
+    },
+    {
+      "name": "Unavailable responseStart=0 uses safe script anchor",
+      "status": "PASS"
+    },
+    {
+      "name": "Response timestamp after script start is rejected as invalid",
+      "status": "PASS"
+    },
+    {
+      "name": "Deadline passed during loading disables payment on initial render",
+      "status": "PASS"
+    }
+  ],
+  "limit": "responseStart cannot measure server-to-client transit before first response bytes arrive; UI countdown is approximate and the server remains authoritative for expiry and payment."
+}

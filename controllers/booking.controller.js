@@ -1,21 +1,52 @@
 import Court from '../models/Court.js';
 import Booking from '../models/Booking.js';
 import BookingRequest from '../models/BookingRequest.js';
-import { createHold, getBookingForViewer, simulatePayment, createChangeRequest, expireHolds } from '../services/booking.service.js';
+import { createHold, getAvailability, getBookingForViewer, simulatePayment, createChangeRequest, expireHolds } from '../services/booking.service.js';
 
 function tokenFrom(req) {
   const token = req.body?.token ?? req.query.token;
   return typeof token === 'string' ? token : '';
 }
 function tokenQuery(token) { return token ? '?token=' + encodeURIComponent(token) : ''; }
+function submittedText(value, fallback = '') {
+  return typeof value === 'string' ? value : value === undefined ? fallback : '';
+}
+function requestedTimes(value) {
+  const times = typeof value === 'string' ? [value] : Array.isArray(value) ? value : [];
+  return [...new Set(times.filter(time => typeof time === 'string' && /^(?:[01]\d|2[0-3]):[03]0$/.test(time)))].sort();
+}
 
 export async function createBooking(req, res) {
   const body = req.body ?? {};
-  const { booking, token } = await createHold({
-    courtId: body.courtId, date: body.date, times: body.times ?? body['times[]'],
-    guestName: body.guestName, guestPhone: body.guestPhone, user: req.currentUser
-  });
-  res.redirect(303, `/bookings/${booking._id}/checkout${tokenQuery(token)}`);
+  let result;
+  try {
+    result = await createHold({
+      courtId: body.courtId, date: body.date, times: body.times ?? body['times[]'],
+      guestName: body.guestName, guestPhone: body.guestPhone, user: req.currentUser
+    });
+  } catch (error) {
+    if (![400, 409].includes(error.status) || typeof body.courtId !== 'string' || typeof body.date !== 'string') throw error;
+    // Read the calendar again after the failed transaction; never restore a stale availability or price.
+    // Invalid IDs/dates, disappeared courts and database failures keep their own error handling.
+    const calendar = await getAvailability(body.courtId, body.date);
+    const requested = requestedTimes(body.times ?? body['times[]']);
+    const selectedTimes = calendar.facilityReady
+      ? calendar.slots.filter(slot => slot.status === 'AVAILABLE' && requested.includes(slot.time)).map(slot => slot.time) : [];
+    const unavailableSelections = requested.filter(time => !selectedTimes.includes(time)).map(time => {
+      const slot = calendar.slots.find(slot => slot.time === time);
+      return { time, endTime: slot?.endTime, status: slot?.status === 'LOCKED' || slot?.status === 'BOOKED' ? slot.status : 'UNAVAILABLE' };
+    });
+    const recoveryUrl = `/courts/${calendar.court._id}?date=${calendar.date}`;
+    return res.status(error.status).set('Content-Location', recoveryUrl).render('court-detail', {
+      title: `Đặt ${calendar.court.name}`, ...calendar, errorMessage: error.message,
+      bookingFormError: true, recoveryUrl, selectedTimes, unavailableSelections,
+      formValues: {
+        guestName: submittedText(body.guestName, req.currentUser?.fullName || ''),
+        guestPhone: submittedText(body.guestPhone, req.currentUser?.phone || '')
+      }
+    });
+  }
+  res.redirect(303, `/bookings/${result.booking._id}/checkout${tokenQuery(result.token)}`);
 }
 
 export async function showCheckout(req, res) {
@@ -23,7 +54,7 @@ export async function showCheckout(req, res) {
   const booking = await getBookingForViewer(req.params.id, { user: req.currentUser, token });
   if (booking.status === 'CONFIRMED') return res.redirect(303, `/bookings/${booking._id}/receipt${tokenQuery(token)}`);
   res.status(booking.status === 'EXPIRED' ? 410 : 200).render('booking-checkout', {
-    title: 'Kiểm tra và thanh toán', booking, token, errorMessage: null
+    title: 'Kiểm tra và thanh toán', booking, token, errorMessage: null, serverNow: new Date().toISOString()
   });
 }
 

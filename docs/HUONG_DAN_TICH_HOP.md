@@ -48,7 +48,7 @@ Hồ sơ chủ sân mới chỉ kiểm tra định dạng, chưa OTP hoặc xác
 POST /bookings → app đọc body/session → CSRF
 → route → controller → service kiểm tra khách/sân/ngày/ô/giá
 → transaction Booking HOLD + tất cả SlotLock
-→ checkout đếm 10 phút
+→ checkout đếm tới hạn thực tế: tối đa 10 phút, trước khi ô đầu tiên bắt đầu
 → POST demo-payment khi DEMO_MODE=true
 → kiểm tra quyền, hạn và đủ lock → CONFIRMED/DEMO_PAID
 → phiếu từ Booking thật, ghi mô phỏng → In / Lưu PDF
@@ -57,6 +57,8 @@ POST /bookings → app đọc body/session → CSRF
 Khách có tài khoản gắn Booking.user. Khách vãng lai có hash token xem riêng. Mã đơn/SĐT không cấp quyền quản lý; token vãng lai không cho tự hủy/đổi.
 
 Giá được lưu từng ô lúc đặt; đổi bảng giá không thay đơn cũ. Các ô rời nhau không làm giữ ô nằm giữa. Giữ đủ mọi ô hoặc không giữ ô nào. Hết hạn không được thanh toán để lấy lại sân.
+
+Theo cập nhật issue #37 ngày 24/10/2026, hạn giữ bằng `min(thời điểm tạo đơn + 10 phút, thời điểm bắt đầu sớm nhất của các ô đã chọn)`. Ví dụ ô đầu bắt đầu sau 3 phút thì không được giữ đủ 10 phút. Máy chủ tính, lưu và so sánh các mốc UTC; giờ Việt Nam chỉ để hiển thị. Đơn HOLD cũ có hạn muộn hơn ô đầu tiên cũng phải dùng hạn sớm hơn khi đọc, thanh toán hoặc dọn hết hạn; không tự đổi hạn của đơn CONFIRMED. Checkout nhận hạn thực tế và thời điểm máy chủ để đếm, không dùng đồng hồ máy khách làm căn cứ cấp quyền thanh toán. Đồng hồ chỉ cập nhật giao diện; server vẫn kiểm tra lại trạng thái, hạn và lock trước khi xác nhận.
 
 ## Hủy/đổi và hoàn thủ công
 

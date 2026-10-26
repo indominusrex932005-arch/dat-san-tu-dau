@@ -1,0 +1,263 @@
+.owner-facility-page .demo-shell {
+  padding-bottom: 60px;
+}
+
+.owner-facility-page main {
+  min-width: 0;
+}
+
+.owner-facility-page .owner-facility-back {
+  color: #53685d;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.owner-facility-page .owner-facility-back:hover {
+  color: #173f35;
+  text-decoration: underline;
+}
+
+.owner-facility-page .owner-facility-heading {
+  margin: 18px 0 28px;
+}
+
+.owner-facility-page .owner-facility-heading h1 {
+  font-size: clamp(26px, 3vw, 34px);
+  letter-spacing: -.025em;
+}
+
+.owner-facility-page .owner-facility-heading p {
+  max-width: 680px;
+}
+
+.owner-facility-page .owner-facility-layout {
+  grid-template-columns: minmax(0, 1.85fr) minmax(0, 1fr);
+}
+
+.owner-facility-page .owner-facility-card,
+.owner-facility-page .owner-facility-aside {
+  min-width: 0;
+  margin-bottom: 0;
+  border-radius: 16px;
+  box-shadow: 0 3px 14px rgb(23 63 53 / 4%);
+}
+
+.owner-facility-page .owner-facility-card {
+  padding: 28px;
+}
+
+.owner-facility-page .owner-facility-card-heading {
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #e5eadf;
+}
+
+.owner-facility-page .owner-facility-card-heading h2 {
+  margin: 0 0 4px;
+  font-size: 21px;
+  line-height: 1.35;
+}
+
+.owner-facility-page .owner-facility-card-heading p {
+  margin: 0;
+  color: #53685d;
+  font-size: 14px;
+}
+
+.owner-facility-page .owner-facility-form {
+  min-width: 0;
+  gap: 24px;
+}
+
+.owner-facility-page .owner-facility-field {
+  display: grid;
+  min-width: 0;
+  gap: 8px;
+}
+
+.owner-facility-page .owner-facility-field label {
+  font-size: 15px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.owner-facility-page .owner-facility-field input,
+.owner-facility-page .owner-facility-field textarea {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  border: 1px solid #879988;
+  border-radius: 9px;
+  padding: 12px 14px;
+  background: #fff;
+  color: #173f35;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.owner-facility-page .owner-facility-field textarea {
+  min-height: 128px;
+  overflow-wrap: anywhere;
+  resize: vertical;
+}
+
+.owner-facility-page .owner-field-help {
+  line-height: 1.55;
+}
+
+.owner-facility-page .owner-facility-actions {
+  align-items: stretch;
+  margin-top: 2px;
+  padding-top: 22px;
+  border-top: 1px solid #e5eadf;
+}
+
+.owner-facility-page .owner-facility-actions .demo-button {
+  display: inline-flex;
+  min-height: 48px;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 11px 22px;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+
+.owner-facility-page .owner-facility-save:hover {
+  background: #123028;
+}
+
+.owner-facility-page .owner-facility-cancel {
+  border-color: #c9d4bf;
+  background: #eef2e6;
+}
+
+.owner-facility-page .owner-facility-cancel:hover {
+  background: #e2e8d7;
+}
+
+.owner-facility-page .owner-facility-aside {
+  border-top: 4px solid #72964e;
+  padding: 24px;
+}
+
+.owner-facility-page .owner-facility-aside-kicker {
+  display: block;
+  margin-bottom: 10px;
+  color: #53685d;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .09em;
+}
+
+.owner-facility-page .owner-facility-aside h2 {
+  margin-bottom: 12px;
+  font-size: 21px;
+  line-height: 1.35;
+}
+
+.owner-facility-page .owner-facility-aside > p {
+  margin: 0;
+  color: #53685d;
+  font-size: 14px;
+}
+
+.owner-facility-page .owner-facility-note {
+  margin: 20px 0;
+  padding: 14px;
+  font-size: 14px;
+}
+
+.owner-facility-page .owner-facility-note strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.owner-facility-page .owner-facility-note p {
+  margin: 0;
+}
+
+.owner-facility-page .owner-facility-aside .owner-facility-permission {
+  padding-top: 18px;
+  border-top: 1px solid #e5eadf;
+  font-size: 13px;
+}
+
+.owner-facility-page .owner-facility-error {
+  margin: 0 0 24px;
+  border: 1px solid #dca7a0;
+  border-left: 4px solid #a3352c;
+  border-radius: 10px;
+  padding: 16px 20px;
+  background: #fff2f0;
+  color: #812424;
+  overflow-wrap: anywhere;
+}
+
+.owner-facility-page .owner-facility-error p {
+  margin: 4px 0 0;
+}
+
+.owner-facility-page .owner-facility-error-hint {
+  font-size: 14px;
+}
+
+.owner-facility-page a:focus-visible,
+.owner-facility-page button:focus-visible,
+.owner-facility-page input:focus-visible,
+.owner-facility-page textarea:focus-visible {
+  outline: 3px solid #173f35;
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .owner-facility-page .owner-facility-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .owner-facility-page .owner-facility-card,
+  .owner-facility-page .owner-facility-aside {
+    padding: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .owner-facility-page .demo-shell {
+    width: calc(100% - 28px);
+    padding-top: 20px;
+    padding-bottom: 40px;
+  }
+
+  .owner-facility-page .owner-facility-heading {
+    margin: 14px 0 22px;
+  }
+
+  .owner-facility-page .owner-facility-heading p {
+    font-size: 15px;
+  }
+
+  .owner-facility-page .owner-facility-card,
+  .owner-facility-page .owner-facility-aside {
+    padding: 22px 18px;
+  }
+
+  .owner-facility-page .owner-facility-form {
+    gap: 22px;
+  }
+
+  .owner-facility-page .owner-facility-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .owner-facility-page .owner-facility-actions .demo-button {
+    width: 100%;
+  }
+
+  .owner-facility-page .owner-facility-error {
+    padding: 14px 16px;
+  }
+}

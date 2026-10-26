@@ -10,7 +10,7 @@ Hình này không chứa tài khoản ngân hàng hoặc payload VietQR. `DEMO_M
 
 ```mermaid
 flowchart LR
-    A[Chọn ô trống] --> B[HOLD - giữ tất cả ô 10 phút]
+    A[Chọn ô trống] --> B[HOLD - tối đa 10 phút, trước ô đầu tiên]
     B --> C[Thông tin đơn và QR minh họa]
     C --> D[Thanh toán mô phỏng]
     D --> E[CONFIRMED và DEMO_PAID]
@@ -20,6 +20,8 @@ flowchart LR
 ```
 
 Nút mô phỏng vẫn kiểm tra CSRF, quyền xem đơn, hạn giữ và đủ ô thuộc đơn. Bấm lại không tạo hai giao dịch ban đầu. Không hồi sinh đơn hết hạn để chiếm ô đã có người khác đặt.
+
+Hạn giữ áp dụng từ issue #37 ngày 24/10/2026 là mốc sớm hơn giữa 10 phút từ lúc tạo đơn và giờ bắt đầu của ô đầu tiên, theo UTC của máy chủ. Từ đúng mốc này, HOLD không được xác nhận thanh toán; không được kéo dài tới hết 10 phút khi sân đã bắt đầu. Quy tắc dọn HOLD không giải phóng đơn CONFIRMED.
 
 ## Công việc cần nối sau
 
@@ -39,4 +41,4 @@ Chủ sân tự xử lý khoản chênh lệch/hoàn bên ngoài rồi ghi nhậ
 
 ## Cách trình bày với thầy
 
-“Em đã có khách/chủ sân, duyệt quyền theo cơ sở, đặt nhiều ô 30 phút, giữ sân 10 phút và lưu phiếu PDF. Thanh toán đang mô phỏng có nhãn riêng; QR/ngân hàng thật chờ hướng dẫn. Hủy/đổi và ghi nhận hoàn do chủ sân xử lý thủ công.”
+“Em đã có khách/chủ sân, duyệt quyền theo cơ sở, đặt nhiều ô 30 phút, giữ sân tối đa 10 phút nhưng phải xác nhận trước khi ô đầu tiên bắt đầu và lưu phiếu PDF. Thanh toán đang mô phỏng có nhãn riêng; QR/ngân hàng thật chờ hướng dẫn. Hủy/đổi và ghi nhận hoàn do chủ sân xử lý thủ công.”

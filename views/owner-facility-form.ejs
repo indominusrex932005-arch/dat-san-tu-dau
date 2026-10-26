@@ -7,44 +7,65 @@
   <link rel="stylesheet" href="/assets/css/app.css">
   <link rel="stylesheet" href="/assets/css/demo.css">
   <link rel="stylesheet" href="/assets/css/owner.css">
+  <link rel="stylesheet" href="/assets/css/owner-facility-form.css">
 </head>
-<body class="demo-page">
+<body class="demo-page owner-facility-page">
   <div class="demo-shell">
     <%- include('partials/navigation') %>
     <main aria-labelledby="facility-form-title">
-      <a class="owner-back" href="/owner">← Quản lý cơ sở</a>
-      <div class="owner-heading">
+      <a class="owner-back owner-facility-back" href="/owner">← Quản lý cơ sở</a>
+      <div class="owner-heading owner-facility-heading">
         <div>
           <span class="owner-kicker">THÔNG TIN CƠ SỞ ĐƯỢC CẤP</span>
           <h1 id="facility-form-title"><%= title %></h1>
-          <p>Cập nhật tên, địa chỉ và số điện thoại liên hệ của cơ sở bạn đang quản lý.</p>
+          <p>Cập nhật thông tin rõ ràng để khách dễ tìm đến và liên hệ với cơ sở bạn đang quản lý.</p>
         </div>
       </div>
       <% if (errorMessage) { %>
-        <p id="facility-form-error" class="demo-error" role="alert"><%= errorMessage %></p>
+        <div id="facility-form-error" class="owner-facility-error" role="alert">
+          <strong>Chưa lưu được thay đổi</strong>
+          <p><%= errorMessage %></p>
+          <p class="owner-facility-error-hint">Kiểm tra lại thông tin bên dưới và lưu lại. Các nội dung bạn vừa nhập được giữ trong form.</p>
+        </div>
       <% } %>
-      <div class="owner-form-layout">
-        <section class="demo-card" aria-label="Thông tin cơ sở">
+      <div class="owner-form-layout owner-facility-layout">
+        <section class="demo-card owner-facility-card" aria-labelledby="facility-details-title">
+          <div class="owner-facility-card-heading">
+            <h2 id="facility-details-title">Thông tin cơ sở</h2>
+            <p>Cả ba trường đều bắt buộc.</p>
+          </div>
           <form class="demo-form owner-form owner-facility-form" action="/owner/facilities/<%= facility._id %>" method="POST" <% if (errorMessage) { %>aria-describedby="facility-form-error"<% } %>>
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <label for="name">Tên cơ sở (bắt buộc)</label>
-            <input id="name" name="name" type="text" value="<%= facility.name || '' %>" maxlength="150" autocomplete="organization" required>
-            <label for="address">Địa chỉ (bắt buộc)</label>
-            <textarea id="address" name="address" rows="3" maxlength="500" autocomplete="street-address" required><%= facility.address || '' %></textarea>
-            <label for="phone">Số điện thoại liên hệ (bắt buộc)</label>
-            <input id="phone" name="phone" type="tel" value="<%= facility.phone || '' %>" maxlength="30" autocomplete="tel" aria-describedby="facility-phone-help" required>
-            <p id="facility-phone-help" class="owner-field-help">Nhập số Việt Nam 10 chữ số, bắt đầu bằng 0 hoặc +84. Có thể dùng khoảng trắng, dấu chấm hoặc dấu gạch ngang để phân cách.</p>
-            <div class="demo-actions">
-              <button class="demo-button" type="submit">Lưu thay đổi</button>
-              <a class="demo-button demo-button-secondary" href="/owner">Quay lại quản lý</a>
+            <div class="owner-facility-field">
+              <label for="name">Tên cơ sở (bắt buộc)</label>
+              <input id="name" name="name" type="text" value="<%= facility.name || '' %>" maxlength="150" autocomplete="organization" aria-describedby="facility-name-help" required>
+              <p id="facility-name-help" class="owner-field-help">Từ 1 đến 150 ký tự sau khi bỏ khoảng trắng ở hai đầu.</p>
+            </div>
+            <div class="owner-facility-field">
+              <label for="address">Địa chỉ (bắt buộc)</label>
+              <textarea id="address" name="address" rows="4" maxlength="500" autocomplete="street-address" aria-describedby="facility-address-help" required><%= facility.address || '' %></textarea>
+              <p id="facility-address-help" class="owner-field-help">Ghi rõ số nhà, đường và khu vực để khách tìm đến. Từ 1 đến 500 ký tự sau khi bỏ khoảng trắng ở hai đầu.</p>
+            </div>
+            <div class="owner-facility-field">
+              <label for="phone">Số điện thoại liên hệ (bắt buộc)</label>
+              <input id="phone" name="phone" type="tel" value="<%= facility.phone || '' %>" maxlength="30" autocomplete="tel" aria-describedby="facility-phone-help" required>
+              <p id="facility-phone-help" class="owner-field-help">Dùng số Việt Nam 10 chữ số bắt đầu bằng 0, hoặc thay 0 bằng +84. Ví dụ: 0912 345 678 hoặc +84 912 345 678. Có thể phân cách bằng khoảng trắng, dấu chấm hoặc dấu gạch ngang; tối đa 30 ký tự nhập.</p>
+            </div>
+            <div class="demo-actions owner-facility-actions">
+              <button class="demo-button owner-facility-save" type="submit">Lưu thay đổi</button>
+              <a class="demo-button demo-button-secondary owner-facility-cancel" href="/owner">Quay lại quản lý</a>
             </div>
           </form>
         </section>
-        <aside class="demo-card owner-info-card">
-          <h2>Số liên hệ của cơ sở</h2>
-          <p>Khách vãng lai dùng số này để liên hệ chủ sân khi cần hủy đơn.</p>
-          <p class="owner-note">Cần giữ số điện thoại hợp lệ để cơ sở tiếp tục nhận đơn mới. Để trống hoặc nhập sai sẽ báo lỗi khi lưu.</p>
-          <p class="owner-field-help">Việc cấp cơ sở và thay đổi chủ quản lý do quản trị viên xử lý.</p>
+        <aside class="demo-card owner-info-card owner-facility-aside" aria-labelledby="facility-contact-title">
+          <span class="owner-facility-aside-kicker">KẾT NỐI VỚI NGƯỜI ĐẶT</span>
+          <h2 id="facility-contact-title">Giữ số liên hệ chính xác</h2>
+          <p>Khách vãng lai dùng số điện thoại này để liên hệ chủ sân khi cần hủy đơn.</p>
+          <div class="owner-note owner-facility-note">
+            <strong>Số điện thoại là bắt buộc</strong>
+            <p>Không xóa số liên hệ. Cần giữ số hợp lệ để cơ sở tiếp tục nhận đơn mới; để trống hoặc nhập sai sẽ báo lỗi khi lưu.</p>
+          </div>
+          <p class="owner-field-help owner-facility-permission">Bạn chỉ cập nhật thông tin cơ sở được cấp. Việc cấp cơ sở và thay đổi chủ quản lý do quản trị viên xử lý.</p>
         </aside>
       </div>
     </main>

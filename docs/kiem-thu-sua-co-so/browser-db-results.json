@@ -1,0 +1,41 @@
+{
+  "issue": 41,
+  "evidenceSHA": "b704f6cbcfe53e4781f329d41170e6f44b8bd11c",
+  "date": "24/10/2026",
+  "browserFacilityPosts": {
+    "total": 4,
+    "status400": 2,
+    "status303": 2
+  },
+  "updatedFields": {
+    "name": "Cơ sở A QA đã cập nhật 1366",
+    "address": "Địa chỉ QA cập nhật 1366",
+    "phone": "0902345678"
+  },
+  "ownerUnchanged": true,
+  "protectedUnchanged": true,
+  "protectedBeforeSHA256": "8a0fb67f6ef263cb011c1453d4c7edadd9aed513758f0e712438b42fab90f30b",
+  "protectedAfterSHA256": "8a0fb67f6ef263cb011c1453d4c7edadd9aed513758f0e712438b42fab90f30b",
+  "protectedCollections": [
+    "Court",
+    "User",
+    "old Booking",
+    "old SlotLock",
+    "old Payment",
+    "other Facility"
+  ],
+  "guestAfterPhoneUpdate": {
+    "calendar": 200,
+    "hold": 303,
+    "checkout": 200,
+    "phoneInCheckout": true,
+    "slots": 1,
+    "locks": 1,
+    "totalPrice": 50000
+  },
+  "finalCounts": {
+    "bookings": 2,
+    "locks": 3,
+    "payments": 1
+  }
+}

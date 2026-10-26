@@ -2,6 +2,8 @@
 
 Đối chiếu ngày **23/10/2026**, trên `main` tại SHA [`7d612bc00ba0fbda8efab3ba0c02ddf0ab73ee69`](https://github.com/indominusrex932005-arch/dat-san-tu-dau/tree/7d612bc00ba0fbda8efab3ba0c02ddf0ab73ee69), sau khi tích hợp PR #26, #27, #28. Tài liệu phục vụ [issue #31](https://github.com/indominusrex932005-arch/dat-san-tu-dau/issues/31); các sơ đồ mô tả hành vi đã có ở SHA này. PR chưa merge không được tính vào bản đối chiếu.
 
+**Lưu ý cập nhật 24/10/2026 — issue #37:** các sơ đồ và lời trình bày bên dưới giữ nguyên bản đối chiếu 23/10/2026. Cụm “giữ 10 phút” ở bản lịch sử này đã được thay bằng **“tối đa 10 phút, trước khi ô đầu tiên bắt đầu”** trong cập nhật #37; không dùng sơ đồ cũ để hiểu rằng được giữ sau giờ sân bắt đầu. Xem quy tắc hiện hành tại mục 11.
+
 ## 1. Cách đọc và dữ liệu chung
 
 - **Facility / cơ sở** là địa điểm kinh doanh: tên, địa chỉ, SĐT và OWNER được cấp. **Court / sân** là từng sân trong cơ sở, có giờ hoạt động, giá thường/cao điểm và trạng thái nhận đặt. Một cơ sở có nhiều sân; mỗi OWNER được cấp một cơ sở.
@@ -304,3 +306,11 @@ Nếu đăng nhập sai, ô vừa bị giữ, hết hạn hoặc sai quyền, ba
 Bản nháp của #15 từng đối chiếu `432e755`, khi mới có trang chủ/danh sách cơ sở; giữ bản cũ trong [lịch sử Git tại a212007](https://github.com/indominusrex932005-arch/dat-san-tu-dau/blob/a212007/docs/LUONG_SU_DUNG_NHAP.md). Các câu hỏi chờ backend và nhãn chức năng chưa có ở bản đó đã lỗi thời đối với SHA đầu tài liệu.
 
 Khi sửa: đối chiếu code trước, cập nhật tệp `.mmd` rồi đồng bộ khối Mermaid; kiểm tra render và liên kết file. Phạm vi #31 chỉ gồm tài liệu này và `docs/luong-su-dung/`. Kết quả kiểm tra lần bàn giao ghi trong PR liên kết issue #31: SHA, parser/render Mermaid, nguồn/khối Markdown đồng bộ và các liên kết đã kiểm tra; không coi việc kiểm tra tài liệu là đã chạy lại mọi luồng nghiệp vụ trên database.
+
+## 11. Cập nhật thời hạn giữ chỗ — issue #37, 24/10/2026
+
+Hạn HOLD hiện hành là `min(thời điểm máy chủ tạo đơn + 10 phút, thời điểm bắt đầu sớm nhất trong các ô đã chọn)`, tính bằng UTC trên máy chủ. Booking và toàn bộ SlotLock có cùng hạn; các ô rời nhau vẫn lấy ô bắt đầu sớm nhất. Ô đầu bắt đầu sau 3 phút thì chỉ giữ 3 phút; còn hơn 10 phút thì tối đa 10 phút. Từ đúng hạn này, HOLD không được thanh toán để hồi sinh đơn hoặc chiếm lại sân.
+
+HOLD cũ có `holdExpiresAt` sau giờ bắt đầu phải dùng hạn thực tế sớm hơn khi đọc, dọn hết hạn và thanh toán. Checkout đếm theo hạn thực tế và thời điểm máy chủ trả về; đồng hồ trình duyệt chỉ vô hiệu nút, còn trạng thái DB và quyền thanh toán do máy chủ quyết định. Không giải phóng đơn CONFIRMED hoặc lock đã xác nhận bằng tác vụ hết hạn HOLD.
+
+Các luồng đăng ký, phân quyền, mô phỏng, phiếu và hủy/đổi giữ phạm vi bản đối chiếu ở đầu tài liệu. Phần bổ sung này chỉ thay quy tắc thời hạn, không thay SHA lịch sử hoặc coi các kiểm tra của issue #31 là bằng chứng kiểm thử nghiệp vụ #37. Hợp đồng hiện hành nằm ở [HOP_DONG_TICH_HOP.md](HOP_DONG_TICH_HOP.md); kết quả chạy mới phải ghi riêng trong PR của issue #37.
