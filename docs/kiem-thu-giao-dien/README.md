@@ -21,3 +21,16 @@ Chạy lại ngày **26/10/2026** trên SHA `f8c1cfb900ab4ba4cd568e520dce46d9e2d
 Ảnh gốc JPEG do browser capture trả về, không ghép/chỉnh sửa. Kích thước, thời điểm, URL, viewport đo được và SHA-256 nằm trong [browser observations](review-2026-10-26/browser-observations.json); hash và pixel dimensions của file trong [manifest](review-2026-10-26/screenshot-manifest.json). [Audit HTTP tối giản](review-2026-10-26/http-evidence.json) không chứa query, body, header, cookie, CSRF hoặc dữ liệu đăng nhập.
 
 Ảnh ca sân rỗng/cơ sở rỗng được chụp sau khi xóa fixture **chỉ trong DB tạm local**; fixtures sau đó được dọn bằng drop database. Một lỗi UI BUG-01 được tái hiện và mô tả trong báo cáo để nhóm trưởng phân công.
+
+## Bổ sung đăng ký và console tối 26/10/2026
+
+Chạy cùng SHA ứng dụng trên DB local riêng ban đầu rỗng. Hai tài khoản được tạo bằng form UI rồi đăng nhập; DB xác nhận CUSTOMER và OWNER/PENDING, chưa tạo cơ sở. Đã drop DB sau kiểm tra.
+
+| Ca | Bằng chứng |
+| --- | --- |
+| Đăng ký khách và đăng nhập tài khoản vừa tạo | [Nav khách sau đăng nhập](followup-2026-10-26/customer-created-login.jpg) |
+| Đăng ký chủ sân, đăng nhập và chờ duyệt | [Desktop](followup-2026-10-26/owner-created-pending.jpg), [mobile](followup-2026-10-26/owner-created-pending-mobile.jpg) |
+| Console của hai luồng và sáu trang công khai | [JSON console capture](followup-2026-10-26/console-results.json) — 8 lần đọc, 0 message trong phạm vi đã chạy |
+| Vai trò thực trong DB tạm và dọn dữ liệu | [JSON kết quả đăng ký](followup-2026-10-26/registration-results.json) |
+
+[Manifest ảnh bổ sung](followup-2026-10-26/screenshot-manifest.json) ghi kích thước và hash file gốc. Dữ liệu hiển thị trong ảnh là thông tin tổng hợp cho QA local. Console được đọc qua API capture của browser, không phải ảnh chụp DevTools; giới hạn phạm vi được ghi trong báo cáo chính.
