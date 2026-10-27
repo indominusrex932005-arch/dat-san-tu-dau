@@ -166,6 +166,18 @@ test('Court Suggestion Unit Tests', async (suite) => {
     }
   });
 
+  await suite.test('ObjectId cơ sở viết hoa và viết thường trả cùng gợi ý', async () => {
+    suite.mock.method(SlotLock, 'find', () => ({ lean: async () => [] }));
+    const facility = { ...facilityA, _id: new mongoose.Types.ObjectId('abcdef654321654321654321') };
+    const candidates = [{ ...court1A, facility }, courtB];
+    const query = { date: validDate, startTime: '18:00', endTime: '19:00' };
+    const lower = await suggestCourts({ ...query, facilityId: String(facility._id) }, fixedNow, { candidates });
+    const upper = await suggestCourts({ ...query, facilityId: String(facility._id).toUpperCase() }, fixedNow, { candidates });
+    assert.ok(lower.suggestions.length > 0);
+    assert.deepEqual(upper, lower);
+    assert.ok(upper.suggestions.every(item => item.courtId === String(court1A._id)));
+  });
+
   await suite.test('Bỏ qua lock hết hạn, loại bỏ BOOKED và HOLD còn hạn', async () => {
     const expiredLock = {
       slotStart: slotInstant(validDate, '18:00'),

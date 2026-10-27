@@ -84,7 +84,7 @@ export async function suggestCourts(query = {}, now = new Date(), options = {}) 
     // Nếu người dùng đã chọn facilityId, bảo đảm sân đúng cơ sở đó
     if (rawFacilityId) {
       const facId = court.facility?._id ? String(court.facility._id) : String(court.facility);
-      if (facId !== rawFacilityId) {
+      if (!new mongoose.Types.ObjectId(rawFacilityId).equals(facId)) {
         continue;
       }
     }
