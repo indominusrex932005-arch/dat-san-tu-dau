@@ -1,0 +1,18 @@
+{
+  "appSourceSHA": "f8c1cfb900ab4ba4cd568e520dce46d9e2dbf0b7",
+  "verifiedAt": "2026-10-26T13:48:54.329Z",
+  "dbName": "qa60_followup_1793022096973",
+  "accountResults": [
+    {
+      "role": "CUSTOMER",
+      "createdAt": "2026-10-26T13:42:51.592Z"
+    },
+    {
+      "role": "OWNER",
+      "ownerStatus": "PENDING",
+      "createdAt": "2026-10-26T13:43:38.454Z"
+    }
+  ],
+  "facilityCount": 0,
+  "cleanup": "database dropped after verification"
+}

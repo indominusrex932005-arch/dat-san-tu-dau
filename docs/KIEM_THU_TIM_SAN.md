@@ -1,5 +1,23 @@
 # Kiểm thử bộ lọc tìm sân theo cơ sở/ngày/giờ — issue #36
 
+## Kết quả mới nhất: tái kiểm thử trên main sau #54
+
+Ngày **24/10/2026**, chạy ứng dụng thật trên `origin/main` tại SHA [`590388158f8f3982259dde43f311e7604f74437f`](https://github.com/indominusrex932005-arch/dat-san-tu-dau/tree/590388158f8f3982259dde43f311e7604f74437f), đã có bản sửa [#54](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/54). [Báo cáo mới, bảng từng ca và 13 ảnh](kiem-thu-tim-san/main-5903881/README.md).
+
+| Phần đã chạy lại | Kết quả trên main 5903881 |
+| --- | --- |
+| HTTP/DB | **41/41 PASS**; GET không ghi dữ liệu; hai session tranh chấp trả 303/409, không giữ một phần |
+| UI theo 10 tiêu chí gốc | **10/10 PASS**, IAB ở **390×844 / 1366×900**; giữ/reset bộ lọc, bàn phím và chuyển đúng ngày sang detail |
+| BUG-01 sau #54 | **PASS RETEST** với đúng chuỗi dài cũ: document mobile **375/375px**, desktop **1351/1351px**; tên cơ sở/địa chỉ xuống dòng |
+| Kiểm tra bổ trợ | `npm run check` PASS (**17 EJS**); `npm test` **111/111 PASS** |
+| Quan sát UX còn lại | **OBS-01**: query sai vẫn có khối không có kết quả; **OBS-02**: cùng lỗi xuất hiện trong **hai alert**. Không kết luận UI đã hết mọi vấn đề |
+
+HTTP-29 được cập nhật theo hợp đồng backend đã merge: query lặp bị từ chối **400**, thay cho hành vi lấy chuỗi đầu của bản cũ. Toàn bộ ma trận đã chạy lại trên DB mới sau khi đối chiếu thay đổi này. [JSON mới](kiem-thu-tim-san/main-5903881/http-results.json), [DOM/focus](kiem-thu-tim-san/main-5903881/browser-results.json), [fixture](kiem-thu-tim-san/main-5903881/fixtures.json), [đối chiếu kiểm tra](kiem-thu-tim-san/main-5903881/verification.json).
+
+Chỉ bổ sung tài liệu/bằng chứng; không sửa source ứng dụng hoặc dùng Atlas. Nhóm trưởng review kết quả mới và quyết định đóng issue #36; các quan sát UX cần quyết định xử lý riêng. Bằng chứng bên dưới giữ nguyên SHA và kết quả của lần đầu để truy vết, không phải kết luận hiện tại của main.
+
+## Lần kiểm thử ban đầu — lịch sử trên SHA 30ee256
+
 Ngày chạy: **24/10/2026**, giờ Việt Nam (UTC+7). Kết quả: **41/41 ca HTTP/DB PASS**; **9/10 ca giao diện PASS, 1 FAIL** khi mở trang chi tiết với tên cơ sở dài trên mobile. Lỗi được ghi tại BUG-01 để nhóm trưởng phân công; báo cáo QA không sửa source.
 
 ## 1. Bản được kiểm thử và môi trường
@@ -158,9 +176,9 @@ HTTP-38/39 dùng **hai session HTTP riêng** cùng thấy QA A01 trong kết qu�
 
 | Phần | Trạng thái | Lý do / việc cần làm |
 | --- | --- | --- |
-| Chạy lại trên `main` sau merge #34/#35 | **CHƯA CHẠY** | Main lúc QA chưa có hai phần này. Sau merge hoặc sửa nguồn cần ghi SHA mới và chạy lại ca bị ảnh hưởng; báo cáo hiện tại không phê duyệt bản chưa thử |
+| Chạy lại trên `main` sau merge #34/#35 | **ĐÃ CHẠY BỔ SUNG** | Lần đầu main chưa có hai phần này; nay đã chạy trên `5903881`. Xem [báo cáo mới](kiem-thu-tim-san/main-5903881/README.md); các kết quả lịch sử ở trên vẫn thuộc `30ee256` |
 | Firefox, Safari và điện thoại thật | **CHƯA CHẠY** | Bài đã thử IAB ở hai viewport, không đánh đồng với mọi browser/thiết bị |
 | Toàn luồng đặt sân #33, ngân hàng/QR thật | **KHÔNG THAY THẾ / NGOÀI PHẠM VI** | Bài #36 tập trung tìm kiếm và một ca tranh chấp POST; không kết luận đã hoàn tất #33 hoặc thanh toán thật |
-| BUG-01 sau khi được sửa | **CHƯA RETEST** | Chờ nhóm trưởng phân công, có commit sửa mới chạy lại và thêm ảnh |
+| BUG-01 sau khi được sửa | **PASS RETEST TRÊN MAIN** | Đã kiểm tra bản sửa #54 trên `5903881` với đúng chuỗi dài cũ, có [ảnh và số đo mới](kiem-thu-tim-san/main-5903881/README.md). Không thay ảnh lỗi của lần đầu |
 
 Nguồn đối chiếu: [controller](https://github.com/indominusrex932005-arch/dat-san-tu-dau/blob/30ee256133ac87417481ccf52407281af9e385e7/controllers/court.controller.js), [service tìm sân](https://github.com/indominusrex932005-arch/dat-san-tu-dau/blob/30ee256133ac87417481ccf52407281af9e385e7/services/court-search.service.js), [quy tắc ô](https://github.com/indominusrex932005-arch/dat-san-tu-dau/blob/30ee256133ac87417481ccf52407281af9e385e7/domain/booking-rules.js), [service đặt sân](https://github.com/indominusrex932005-arch/dat-san-tu-dau/blob/30ee256133ac87417481ccf52407281af9e385e7/services/booking.service.js), [view tìm kiếm](https://github.com/indominusrex932005-arch/dat-san-tu-dau/blob/30ee256133ac87417481ccf52407281af9e385e7/views/courts.ejs). [Mục lục ảnh và JSON](kiem-thu-tim-san/README.md).
