@@ -1,0 +1,322 @@
+{
+  "issue": 67,
+  "branch": "docs/kiem-thu-goi-y-san",
+  "basedOn": "feat/ui-court-suggestions",
+  "baseCommit": "ae55bac",
+  "testDate": "2026-10-26",
+  "testedBy": "lhtrieu2703-beep",
+  "testFile": "docs/kiem-thu-goi-y-san/court-suggestion-qa.test.js.txt",
+  "environment": {
+    "nodeVersion": "v22.x",
+    "db": "none (unit test + mock)",
+    "npmCheckResult": "PASS",
+    "ejsTemplatesChecked": 18
+  },
+  "summary": {
+    "total": 51,
+    "pass": 51,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "suites": [
+    {
+      "id": "QA-01",
+      "name": "Điều kiện kích hoạt gợi ý",
+      "cases": [
+        {
+          "id": "QA-01-a",
+          "desc": "Query đủ + 0 kết quả chính → gợi ý được sinh",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-01-b",
+          "desc": "Có kết quả chính → KHÔNG sinh gợi ý",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-01-c",
+          "desc": "Chỉ có date (thiếu start/endTime) → KHÔNG sinh gợi ý",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-01-d",
+          "desc": "Query lỗi (endTime ≤ startTime) → RuleError",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-01-e",
+          "desc": "suggestCourts trực tiếp — thiếu date → RuleError",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-01-f",
+          "desc": "Tham số lặp lại (array) → RuleError",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "id": "QA-02",
+      "name": "Đúng ngày, đúng thời lượng, lọc facilityId",
+      "cases": [
+        {
+          "id": "QA-02-a",
+          "desc": "Gợi ý đúng ngày tìm kiếm",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-02-b",
+          "desc": "Tất cả gợi ý có đúng thời lượng yêu cầu (90 phút)",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-02-c",
+          "desc": "facilityId lọc đúng — chỉ trả sân thuộc cơ sở đó",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-02-d",
+          "desc": "Không có facilityId → gợi ý từ nhiều cơ sở, reason ghi tên cơ sở",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-02-e",
+          "desc": "Sân giờ phục vụ hẹp không đủ thời lượng → bị loại",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "id": "QA-03",
+      "name": "Xử lý locks và trạng thái sân/cơ sở",
+      "cases": [
+        {
+          "id": "QA-03-a",
+          "desc": "HOLD còn hạn → ô đó không được gợi ý",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-03-b",
+          "desc": "BOOKED (expiresAt=null) → ô đó không được gợi ý",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-03-c",
+          "desc": "Lock hết hạn → ô được xem là AVAILABLE, có thể gợi ý",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-03-d",
+          "desc": "Sân inactive → không bao giờ được gợi ý",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-03-e",
+          "desc": "Cơ sở chủ sân PENDING → sân không được gợi ý",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-03-f",
+          "desc": "Cơ sở SĐT không hợp lệ → không gợi ý",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-03-g",
+          "desc": "Ô quá khứ (hôm nay, giờ qua) → không gợi ý",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "id": "QA-04",
+      "name": "Xếp hạng và giới hạn 3 gợi ý",
+      "cases": [
+        {
+          "id": "QA-04-a",
+          "desc": "Độ lệch giờ tuyệt đối tăng dần (offset ascending)",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-04-b",
+          "desc": "Cùng offset → giá tăng dần",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-04-c",
+          "desc": "Tối đa 3 gợi ý không trùng courtId+date+startTime",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-04-d",
+          "desc": "0 sân khả dụng → suggestions=[], message mời đổi ngày",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-04-e",
+          "desc": "Đúng 1 ô trống → trả 1 gợi ý",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "id": "QA-05",
+      "name": "Tính đúng giá qua mốc cao điểm",
+      "cases": [
+        {
+          "id": "QA-05-a",
+          "desc": "Khung 16:30-17:30 vắt qua peak: 50k+80k=130k",
+          "expected": 130000,
+          "actual": 130000,
+          "result": "PASS"
+        },
+        {
+          "id": "QA-05-b",
+          "desc": "Khung 20:00-21:00 ngoài peak: 2×50k=100k",
+          "expected": 100000,
+          "actual": 100000,
+          "result": "PASS"
+        },
+        {
+          "id": "QA-05-c",
+          "desc": "quoteSelection — 4 ô peak 80k = 320k",
+          "expected": 320000,
+          "actual": 320000,
+          "result": "PASS"
+        },
+        {
+          "id": "QA-05-d",
+          "desc": "quoteSelection — 2 ô hỗn hợp: 50k+80k=130k",
+          "expected": 130000,
+          "actual": 130000,
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "id": "QA-06",
+      "name": "Link Xem lịch và tính GET-idempotent",
+      "cases": [
+        {
+          "id": "QA-06-a",
+          "desc": "HTML chứa link đúng /courts/<courtId>?date=<date>",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-06-b",
+          "desc": "Link là thẻ <a> GET, không có form POST",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-06-c",
+          "desc": "aria-label chứa courtName và date",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "id": "QA-07",
+      "name": "Ca tranh chỗ (race condition logic)",
+      "cases": [
+        {
+          "id": "QA-07-a",
+          "desc": "B HOLD ô → A không thấy ô đó trong gợi ý",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-07-b",
+          "desc": "B BOOK ô → A không thấy ô đó trong gợi ý",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-07-c",
+          "desc": "HOLD của B hết hạn → A thấy lại ô đó",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-07-d",
+          "desc": "suggestCourts không tạo SlotLock (chỉ đọc)",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "id": "QA-08",
+      "name": "View — biên giới và accessibility",
+      "cases": [
+        {
+          "id": "QA-08-a",
+          "desc": "0 gợi ý + message → section hiện, không có card",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-08-b",
+          "desc": "1 gợi ý → đúng 1 card",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-08-c",
+          "desc": "3 gợi ý → đúng 3 card",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-08-d",
+          "desc": "Tên sân 200 ký tự không lỗi render",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-08-e",
+          "desc": "XSS escape — script/HTML trong tên được escape",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-08-f",
+          "desc": "aria-labelledby trên section gợi ý",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-08-g",
+          "desc": "filterError → không hiển thị section gợi ý",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-08-h",
+          "desc": "Thiếu startTime/endTime → không hiển thị gợi ý",
+          "result": "PASS"
+        },
+        {
+          "id": "QA-08-i",
+          "desc": "formatMoney đúng + nhãn Tổng giá phương án",
+          "result": "PASS"
+        }
+      ]
+    }
+  ],
+  "npmCheck": "PASS",
+  "baselineTests": {
+    "files": [
+      "tests/booking-rules.test.js",
+      "tests/court-search.test.js",
+      "tests/court-suggestion.test.js",
+      "tests/court-suggestions-view.test.js",
+      "tests/court-suggestion-qa.test.js"
+    ],
+    "pass": 87,
+    "fail": 0
+  },
+  "outOfScope": [
+    "HTTP end-to-end qua live server (cần PR merge + DB live)",
+    "Viewport thực trên trình duyệt (cần Playwright/Selenium)",
+    "Tab/Enter keyboard navigation",
+    "Back từ trang chi tiết giữ filter"
+  ],
+  "acceptance": "INCOMPLETE_DRAFT",
+  "evidenceType": "HISTORICAL_MOCK_EJS_REPORTED_NOT_REAL_SESSION_DB_BROWSER",
+  "integratedTargetSHA": null,
+  "missingRequiredCases": [
+    "Two real sessions: stale suggestion POST 409",
+    "DB: no partial A booking, no duplicate slot lock",
+    "390/1366 browser Tab Enter detail Back",
+    "Booking data hashes unchanged after GET suggestions"
+  ]
+}
