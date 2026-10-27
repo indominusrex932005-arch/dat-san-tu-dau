@@ -7,8 +7,6 @@ export async function showCourts(req, res, next) {
     const result = await searchCourts(req.query);
     res.render('courts', {
       title: 'Danh sách sân',
-      suggestions: [],
-      suggestionMessage: null,
       ...result
     });
   } catch (error) {
@@ -25,9 +23,7 @@ export async function showCourts(req, res, next) {
         courts: [],
         facilities,
         filters,
-        filterError: error.message,
-        suggestions: [],
-        suggestionMessage: null
+        filterError: error.message
       });
     }
     next(error);

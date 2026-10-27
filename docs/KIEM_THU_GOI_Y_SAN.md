@@ -1,3 +1,10 @@
+> **DRAFT — CHƯA NGHIỆM THU #67 (review 27/10/2026).** Các bảng PASS bên dưới là kết quả mock/EJS lịch sử được báo cáo, không chứng minh hai phiên thật, transaction/DB hoặc trình duyệt. Chưa chạy lại trên SHA tích hợp cuối.
+>
+> PR #74 đã loại source backend #70/UI #73 khỏi diff main. Runner mock lịch sử được lưu dạng `.txt` tại `docs/kiem-thu-goi-y-san/court-suggestion-qa.test.js.txt`, không chạy trên main đang thiếu backend/UI. Sau khi #70/#73 merge, khôi phục runner phù hợp và chạy lại; không cherry-pick cả chuỗi source qua PR QA.
+>
+> Bắt buộc còn thiếu: A thấy gợi ý, B giữ trước, A gửi lựa chọn cũ nhận HTTP 409; snapshot DB chứng minh không đơn A một phần/không lock trùng; browser 390/1366, Tab/Enter, chi tiết rồi Back; hash dữ liệu đặt sân trước/sau GET gợi ý. Đây là tiêu chí #67, không phải ngoài phạm vi.
+>
+> #73 có bằng chứng UI bổ sung trên source f056f19; không tự chuyển thành nghiệm thu #67 hoặc main cuối. #74 giữ Draft, chỉ Refs #67. Người bàn giao: Triều; Codex thực hiện phiên sửa này.
 # Kiểm thử gợi ý sân và giờ thay thế — Issue #67
 
 ## Thông tin tổng quan
@@ -27,7 +34,7 @@
 | QA-08: View — biên giới và accessibility | 9 | **9** | 0 |
 | **TỔNG** | **43** | **43** | **0** |
 
-> **Ghi chú**: File test `tests/court-suggestion-qa.test.js` chứa 51 assertion nodes (Node.js test runner đếm theo `assert` calls và sub-tests). Tất cả `pass 51 / fail 0`.
+> **Ghi chú**: File test `tests/court-suggestion-qa.test.js` chứa 51 test nodes được báo cáo (test runner đếm test/subtest, không đếm từng assert). Tất cả `pass 51 / fail 0`.
 
 ---
 
@@ -150,7 +157,7 @@ pass 87 / fail 0 / cancelled 0 / skipped 0
 
 ---
 
-## Phạm vi không kiểm thử trong issue này
+## Các ca bắt buộc chưa chạy trong báo cáo lịch sử
 
 | Hạng mục | Lý do |
 |---------|-------|
@@ -176,6 +183,10 @@ pass 87 / fail 0 / cancelled 0 / skipped 0
 
 ## Refs
 
-- Closes #67
+- Refs #67
 - Depends on #64 (feat/backend-court-suggestions) + #65 (feat/ui-court-suggestions)
-- Liên quan: PR #70 (#64), PR cho #65
+- Liên quan: PR #70 (#64), PR #73 (#65)
+
+## Kiểm tra sau khi tách source (27/10/2026)
+
+Nền main f8c1cfb; diff chỉ còn ba tệp tài liệu/JSON/runner lịch sử dạng txt. npm run check PASS (17 EJS), npm test 111/111 PASS, 0 fail/skip trên DB QA localhost riêng. Đây là kiểm tra nền main, không phải nghiệm thu gợi ý. Không force-push hoặc merge.

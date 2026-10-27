@@ -11,9 +11,8 @@ import {
   slotInstant,
   makeSlots
 } from '../domain/booking-rules.js';
-import { suggestCourts } from './court-suggestion.service.js';
 
-export function isFacilityReady(facility) {
+function isFacilityReady(facility) {
   const phone = typeof facility?.phone === 'string'
     ? facility.phone.trim().replace(/[\s.-]/g, '').replace(/^\+84/, '0') : '';
   if (!facility?.owner || !/^0\d{9}$/.test(phone)) return false;
@@ -96,9 +95,7 @@ export async function searchCourts(query = {}, now = new Date()) {
       courts: candidates,
       facilities,
       filters,
-      filterError: null,
-      suggestions: [],
-      suggestionMessage: null
+      filterError: null
     };
   }
 
@@ -151,21 +148,10 @@ export async function searchCourts(query = {}, now = new Date()) {
     }
   }
 
-  let suggestions = [];
-  let suggestionMessage = null;
-
-  if (matchedCourts.length === 0 && rawDate && hasStart && hasEnd) {
-    const suggestionResult = await suggestCourts(query, now, { candidates, facilities });
-    suggestions = suggestionResult.suggestions;
-    suggestionMessage = suggestionResult.suggestionMessage;
-  }
-
   return {
     courts: matchedCourts,
     facilities,
     filters,
-    filterError: null,
-    suggestions,
-    suggestionMessage
+    filterError: null
   };
 }
