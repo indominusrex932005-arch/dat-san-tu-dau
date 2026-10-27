@@ -1,0 +1,455 @@
+{
+  "issue": 63,
+  "pullRequest": 69,
+  "date": "2026-10-25",
+  "timezone": "Asia/Ho_Chi_Minh",
+  "testedSHA": "777fe65bc56ac3de076d405b803ef15a840fdd35",
+  "backendSHA": "014117349e9f460fd70ebddd54765663877c8334",
+  "mainAtRun": "f8c1cfb900ab4ba4cd568e520dce46d9e2dbf0b7",
+  "backendMerged": false,
+  "scope": "Real app HTTP/DB on current UI branch; not main integration or graphical browser acceptance.",
+  "runtime": {
+    "node": "v24.15.0",
+    "mongo": "8.3.11",
+    "replicaSet": "qaCalendarUi69",
+    "port": 27058
+  },
+  "http": {
+    "issue": 63,
+    "pr": 69,
+    "targetSHA": "777fe65bc56ac3de076d405b803ef15a840fdd35",
+    "executedAtUTC": "2026-10-25T13:10:30.445Z",
+    "timezone": "Asia/Ho_Chi_Minh",
+    "source": {
+      "kind": "Real createApp/controller/service/EJS/CSS through localhost HTTP",
+      "database": "booking_test_1792933695807_77312",
+      "replicaSet": "qaCalendarUi69",
+      "date": "2026-10-28",
+      "otherDate": "2026-11-06"
+    },
+    "transport": "Node fetch through repository TestBrowser; browser visual and keyboard results must be recorded separately.",
+    "privacy": "Synthetic fixtures only. No raw HTML, credentials, cookies, CSRF, guest receipt token, booking ID, code or guest contact values included.",
+    "summary": {
+      "total": 11,
+      "passed": 11,
+      "failed": 0
+    },
+    "cases": [
+      {
+        "id": "UI-HTTP-01",
+        "steps": [
+          "OWNER normal GET calendar at fixture date."
+        ],
+        "expected": {
+          "http": 200,
+          "courtCount": 3,
+          "selectedDate": "2026-10-28",
+          "fixtureHold": "LOCKED",
+          "fixtureConfirmed": "BOOKED"
+        },
+        "actual": {
+          "http": 200,
+          "courtRows": [
+            "6addff4088450831fdecab52",
+            "6addff4088450831fdecab53",
+            "6addff4088450831fdecab54"
+          ],
+          "selectedDate": "2026-10-28",
+          "hold0530": "LOCKED",
+          "booked0600": "BOOKED",
+          "holdRemainingMsAtCheckStart": 466147,
+          "states": [
+            "AVAILABLE",
+            "BOOKED",
+            "LOCKED",
+            "UNAVAILABLE"
+          ]
+        },
+        "status": "PASS",
+        "startedAtUTC": "2026-10-25T13:10:30.145Z"
+      },
+      {
+        "id": "UI-HTTP-02",
+        "steps": [
+          "OWNER long GET calendar at fixture date; inspect escaped fixture text and inactive row."
+        ],
+        "expected": {
+          "http": 200,
+          "scopedRows": 2,
+          "escapedLongData": true,
+          "inactiveLabel": true
+        },
+        "actual": {
+          "http": 200,
+          "courtRows": [
+            "6addff4088450831fdecab55",
+            "6addff4088450831fdecab56"
+          ],
+          "fullEscapedTextPresent": true,
+          "noExecutablePayload": true,
+          "inactiveLabel": true
+        },
+        "status": "PASS",
+        "startedAtUTC": "2026-10-25T13:10:30.162Z"
+      },
+      {
+        "id": "UI-HTTP-03",
+        "steps": [
+          "OWNER empty GET calendar at fixture date."
+        ],
+        "expected": {
+          "http": 200,
+          "courtRows": 0,
+          "emptyState": true,
+          "tableAbsent": true
+        },
+        "actual": {
+          "http": 200,
+          "courtCount": 0,
+          "emptyState": true,
+          "tableAbsent": true,
+          "returnToOwner": true,
+          "selectedDate": "2026-10-28"
+        },
+        "status": "PASS",
+        "startedAtUTC": "2026-10-25T13:10:30.177Z"
+      },
+      {
+        "id": "UI-HTTP-04",
+        "steps": [
+          "Guest GET calendar.",
+          "CUSTOMER and any optional pending/unassigned fixtures GET calendar.",
+          "Other OWNER GET own calendar and normal OWNER attempts query scope switch."
+        ],
+        "expected": {
+          "guest": "303 /login",
+          "customer": 403,
+          "twoOwnerScopes": true,
+          "injectedScopeIgnored": true
+        },
+        "actual": {
+          "guestStatus": 303,
+          "guestLoginRedirect": true,
+          "denied": {
+            "customer": 403
+          },
+          "otherOwnerStatus": 200,
+          "otherOwnerRows": [
+            "6addff4088450831fdecab57"
+          ],
+          "attemptedSwitchStatus": 200,
+          "attemptedSwitchRows": [
+            "6addff4088450831fdecab52",
+            "6addff4088450831fdecab53",
+            "6addff4088450831fdecab54"
+          ]
+        },
+        "status": "PASS",
+        "startedAtUTC": "2026-10-25T13:10:30.193Z"
+      },
+      {
+        "id": "UI-HTTP-05",
+        "steps": [
+          "GET calendar without date; inspect selected date and seven day links."
+        ],
+        "expected": {
+          "http": 200,
+          "defaultDate": "Vietnam today",
+          "sevenDaysFromToday": true
+        },
+        "actual": {
+          "http": 200,
+          "selectedDate": "2026-10-25",
+          "dayLinks": [
+            "2026-10-25",
+            "2026-10-26",
+            "2026-10-27",
+            "2026-10-28",
+            "2026-10-29",
+            "2026-10-30",
+            "2026-10-31"
+          ]
+        },
+        "status": "PASS",
+        "startedAtUTC": "2026-10-25T13:10:30.249Z"
+      },
+      {
+        "id": "UI-HTTP-06",
+        "steps": [
+          "GET fixture alternative date beyond seven days, then repeat identical URL."
+        ],
+        "expected": {
+          "http": [
+            200,
+            200
+          ],
+          "selectedDate": "2026-11-06",
+          "reloadStable": true,
+          "weekUnchanged": true
+        },
+        "actual": {
+          "statuses": [
+            200,
+            200
+          ],
+          "selectedDate": "2026-11-06",
+          "reloadStable": true,
+          "dayLinks": [
+            "2026-10-25",
+            "2026-10-26",
+            "2026-10-27",
+            "2026-10-28",
+            "2026-10-29",
+            "2026-10-30",
+            "2026-10-31"
+          ],
+          "noIncorrectWeekSelection": true
+        },
+        "status": "PASS",
+        "startedAtUTC": "2026-10-25T13:10:30.270Z"
+      },
+      {
+        "id": "UI-HTTP-07",
+        "steps": [
+          "GET owner dashboard, calendar HTML and calendar CSS asset."
+        ],
+        "expected": {
+          "ownerDashboard": 200,
+          "realCalendarLink": true,
+          "stylesheet": 200,
+          "getDateForm": true
+        },
+        "actual": {
+          "ownerDashboard": 200,
+          "calendarStatus": 200,
+          "realCalendarLink": true,
+          "stylesheet": 200,
+          "stylesheetContentType": "text/css; charset=utf-8",
+          "linkedStylesheet": true,
+          "getDateForm": true,
+          "noWriteActionAdded": true
+        },
+        "status": "PASS",
+        "startedAtUTC": "2026-10-25T13:10:30.294Z"
+      },
+      {
+        "id": "UI-HTTP-08",
+        "steps": [
+          "GET invalid, nonexistent, past and repeated dates."
+        ],
+        "expected": {
+          "allResponses": 400,
+          "noEmptyStateSubstitute": true
+        },
+        "actual": {
+          "responses": [
+            {
+              "status": 400,
+              "rowCount": 0,
+              "notEmptyPage": true
+            },
+            {
+              "status": 400,
+              "rowCount": 0,
+              "notEmptyPage": true
+            },
+            {
+              "status": 400,
+              "rowCount": 0,
+              "notEmptyPage": true
+            },
+            {
+              "status": 400,
+              "rowCount": 0,
+              "notEmptyPage": true
+            },
+            {
+              "status": 400,
+              "rowCount": 0,
+              "notEmptyPage": true
+            }
+          ]
+        },
+        "status": "PASS",
+        "startedAtUTC": "2026-10-25T13:10:30.333Z"
+      },
+      {
+        "id": "UI-HTTP-09",
+        "steps": [
+          "Read owner calendar HTML; compare response against private fields of own test bookings without recording those fields."
+        ],
+        "expected": {
+          "noPrivateBookingData": true,
+          "noReceiptTokenLink": true
+        },
+        "actual": {
+          "http": 200,
+          "bookingRecordsCompared": 2,
+          "noPrivateBookingData": true,
+          "noReceiptTokenLink": true
+        },
+        "status": "PASS",
+        "startedAtUTC": "2026-10-25T13:10:30.407Z"
+      },
+      {
+        "id": "UI-HTTP-10",
+        "steps": [
+          "Inspect real response table semantics, discontinuous hour columns, outside-hours cells and inactive row."
+        ],
+        "expected": {
+          "semanticHeaderAndRegion": true,
+          "gapPreserved": true,
+          "outsideHoursUnavailable": true,
+          "inactiveAllUnavailable": true
+        },
+        "actual": {
+          "http": 200,
+          "sameAxis": true,
+          "axisTimes": [
+            "05:00",
+            "05:30",
+            "06:00",
+            "06:30",
+            "07:00",
+            "07:30",
+            "08:00",
+            "08:30",
+            "21:00",
+            "21:30",
+            "22:00",
+            "22:30",
+            "23:00"
+          ],
+          "gapPreserved": true,
+          "outsideHoursUnavailable": true,
+          "inactiveAllUnavailable": true,
+          "semanticHeaderAndRegion": true,
+          "limitation": "HTML semantics only; does not establish rendered geometry, sticky behavior, keyboard interactions or viewport width."
+        },
+        "status": "PASS",
+        "startedAtUTC": "2026-10-25T13:10:30.422Z"
+      },
+      {
+        "id": "UI-HTTP-11",
+        "steps": [
+          "Compare counts and SHA-256 digests of seven business collections before/after all GET checks; sessions excluded."
+        ],
+        "expected": {
+          "businessDataUnchanged": true
+        },
+        "actual": {
+          "unchanged": true,
+          "before": {
+            "User": {
+              "count": 5,
+              "sha256": "99fb65d992103a4bfa81901cb5cc4ce2d2ad2517b4147df458dc167fc8364bf6"
+            },
+            "Facility": {
+              "count": 4,
+              "sha256": "d0e7bfb8167ee9220e4fbcbd36d892eee0c7f3c5d8b099206a328fd8befe0e49"
+            },
+            "Court": {
+              "count": 6,
+              "sha256": "06b9630d640f7bc93ed31d156103f2a33e286e014bc4bf61f73ae55d53acb320"
+            },
+            "Booking": {
+              "count": 2,
+              "sha256": "7d9578145928f1c4cb632fd3c4e4ab57733365f317c9c93643b1a262c3270ce5"
+            },
+            "SlotLock": {
+              "count": 2,
+              "sha256": "9ff288e9bc47ee092eb00091f7f109e5005453b7bb2f33d661e587c724525d0a"
+            },
+            "Payment": {
+              "count": 1,
+              "sha256": "a3575faefe1bb8db6d91f92a8a1bf337de725f1ab8bf2534b2432ff5190532e9"
+            },
+            "BookingRequest": {
+              "count": 0,
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          },
+          "after": {
+            "User": {
+              "count": 5,
+              "sha256": "99fb65d992103a4bfa81901cb5cc4ce2d2ad2517b4147df458dc167fc8364bf6"
+            },
+            "Facility": {
+              "count": 4,
+              "sha256": "d0e7bfb8167ee9220e4fbcbd36d892eee0c7f3c5d8b099206a328fd8befe0e49"
+            },
+            "Court": {
+              "count": 6,
+              "sha256": "06b9630d640f7bc93ed31d156103f2a33e286e014bc4bf61f73ae55d53acb320"
+            },
+            "Booking": {
+              "count": 2,
+              "sha256": "7d9578145928f1c4cb632fd3c4e4ab57733365f317c9c93643b1a262c3270ce5"
+            },
+            "SlotLock": {
+              "count": 2,
+              "sha256": "9ff288e9bc47ee092eb00091f7f109e5005453b7bb2f33d661e587c724525d0a"
+            },
+            "Payment": {
+              "count": 1,
+              "sha256": "a3575faefe1bb8db6d91f92a8a1bf337de725f1ab8bf2534b2432ff5190532e9"
+            },
+            "BookingRequest": {
+              "count": 0,
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          }
+        },
+        "status": "PASS",
+        "startedAtUTC": "2026-10-25T13:10:30.445Z"
+      }
+    ],
+    "notEstablishedByTheseChecks": [
+      "390px/1366px actual rendered layout",
+      "Tab/Enter or horizontal scrolling interaction",
+      "Screenshots",
+      "Integration into main before backend PR68 merges"
+    ]
+  },
+  "checks": {
+    "check": "PASS",
+    "ejsTemplates": 18,
+    "fullSuite": {
+      "total": 134,
+      "passed": 134,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "browser": {
+    "status": "STOPPED_BY_USER",
+    "reason": "Physical Escape stopped Computer Use before QA pages were opened. No further Computer Use calls made.",
+    "screenshots": [],
+    "pending": [
+      "Normal, empty and long-name pages at390x844 and1366x900",
+      "Tab/Enter and horizontal table scrolling with screenshots"
+    ]
+  },
+  "requesterReported": {
+    "source": "User message requesting PR69 update",
+    "statement": "Normal and long-name layouts and keyboard operation worked in the requester’s check.",
+    "shaAndBrowserAndViewportEvidence": "Not supplied; not counted as this run’s graphical PASS."
+  },
+  "separation": {
+    "removedFromUiDiff": [
+      "docs/KIEM_THU_LICH_DIEU_HANH.md",
+      "docs/kiem-thu-lich-dieu-hanh/qa-results-66.json"
+    ],
+    "preservedPr71Head": "bde7ba5d93ebf7d240aa81030986f0865be00586"
+  },
+  "cleanup": {
+    "atUTC": "2026-10-25T13:12:46.109Z",
+    "ownReplicaAndMarkerVerified": true,
+    "ownAppStopped": true,
+    "ownDatabaseRemoved": true,
+    "otherDatabaseNamesUnchanged": true,
+    "noTestDatabasesRemain": true,
+    "ownMongoShutdown": true
+  },
+  "privacy": "No .env or Atlas used; no password, cookie, CSRF, receipt token or raw HTML included."
+}

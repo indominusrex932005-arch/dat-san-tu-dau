@@ -1,0 +1,288 @@
+{
+  "issue": 63,
+  "pr": 69,
+  "date": "2026-10-27",
+  "timezone": "Asia/Bangkok",
+  "source": {
+    "uiSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+    "mainSHA": "923543f",
+    "integrationSHA": "de43a7052a0675e3cefc6d985a6a746c6c80582c",
+    "backendPR68MergedAtUTC": "2026-10-26T16:42:55Z",
+    "base": "main",
+    "applicationStartSHA": "de43a7052a0675e3cefc6d985a6a746c6c80582c",
+    "finalCSSVerification": {
+      "testedUISHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "appManifestRetainsOriginalStartSHA": true,
+      "reason": "App backend/EJS unchanged; CSS-only commit is served dynamically from disk and fetched SHA-256 matches that exact Git commit.",
+      "changedFiles": [
+        "public/css/owner-calendar.css"
+      ],
+      "sourceHashes": {
+        "views/owner-calendar.ejs": "734fae7df295d25436dd16401595d88a7e38bfc63a3b84865b7b634c978fab99",
+        "public/css/owner-calendar.css": "26572da773c8151916e9512160aeceec08f594db57216c41261d6b8af89a5291",
+        "views/owner-dashboard.ejs": "261743943de6f193993184fb78aaadfc7419db21b54081cecdaa75ead77f9762"
+      },
+      "sourceCommitChecks": {
+        "views/owner-calendar.ejs": {
+          "workingSHA256": "734fae7df295d25436dd16401595d88a7e38bfc63a3b84865b7b634c978fab99",
+          "committedSHA256": "3cde3356089a093be6f14f7ebd77f44ad3245a6d97d4f4d296d1f5c978b8db63",
+          "matchesAfterGitLineEndingNormalization": true
+        },
+        "public/css/owner-calendar.css": {
+          "workingSHA256": "26572da773c8151916e9512160aeceec08f594db57216c41261d6b8af89a5291",
+          "committedSHA256": "26572da773c8151916e9512160aeceec08f594db57216c41261d6b8af89a5291",
+          "matchesAfterGitLineEndingNormalization": true
+        },
+        "views/owner-dashboard.ejs": {
+          "workingSHA256": "261743943de6f193993184fb78aaadfc7419db21b54081cecdaa75ead77f9762",
+          "committedSHA256": "e544631a9d3b8126225964c5b003a26a12e603968aea7b63df701167e4052faf",
+          "matchesAfterGitLineEndingNormalization": true
+        }
+      },
+      "servedCSS": {
+        "http": 200,
+        "contentType": "text/css; charset=utf-8",
+        "sha256": "26572da773c8151916e9512160aeceec08f594db57216c41261d6b8af89a5291",
+        "matchesCommittedCSS": true
+      },
+      "verifiedAtUTC": "2026-10-26T22:18:10.218Z"
+    },
+    "note": "Only one CSS selector changed after app startup; backend/EJS unchanged. Served CSS verified against final Git commit. Browser screenshots are all after the fix."
+  },
+  "environment": {
+    "browser": "Google Chrome",
+    "installedExecutableVersion": "156.0.8078.48",
+    "node": "24.15.0",
+    "mongoDB": "8.3.11",
+    "replica": "qaCalendarUi69 localhost only",
+    "viewports": [
+      {
+        "width": 390,
+        "height": 844
+      },
+      {
+        "width": 1366,
+        "height": 900
+      }
+    ],
+    "method": "Native Windows Computer Use, Chrome DevTools Responsive mode. Viewport size is visible in each original full-window photo. Fit-to-window scales desktop display; CSS viewport remains1366x900. No image edits.",
+    "fixture": {
+      "kind": "Disposable local MongoDB fixtures through actual app/controller/service/EJS; no Atlas or production data.",
+      "normal": "OWNER, facility with3courts:05:00–08:00, inactive08:00–09:00,21:00–23:30. Real HTTP HOLD05:30 and confirmed DEMO06:00 on2026-10-30.",
+      "empty": "Different approved OWNER, assigned facility with0courts, default2026-10-27.",
+      "long": "Different approved OWNER,150charfacility/court,500charaddress, literalHTML payloads, active morning +inactive evening court, default2026-10-27.",
+      "holdNote": "HOLD remains subject to real10minute expiry. Four-state photos record the loaded response; the UI explicitly says it reflects state at page load."
+    }
+  },
+  "summary": {
+    "browserCases": 12,
+    "passed": 12,
+    "failed": 0,
+    "screenshots": 28
+  },
+  "cases": [
+    {
+      "id": "UI-01",
+      "steps": "OWNER normal: open calendar for 2026-10-30 at 1366x900; scroll page to table.",
+      "expected": "Correct facility/date, three courts, mixed hours, inactive badge and four actual states; no body horizontal overflow.",
+      "actual": "Observed correct facility/date/count, AVAILABLE/LOCKED/BOOKED/UNAVAILABLE and inactive row; labels remain readable.",
+      "evidence": [
+        "normal-1366-top.jpg",
+        "normal-1366-table-left.jpg"
+      ],
+      "status": "PASS",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f"
+    },
+    {
+      "id": "UI-02",
+      "steps": "Resize normal calendar to390x844, scroll page to controls/table.",
+      "expected": "Navigation, form, seven days and legend wrap; wide table scrolls in its own region.",
+      "actual": "Single-column form/two-column days, readable legend; first court column wraps; page bounds stay inside viewport.",
+      "evidence": [
+        "normal-390-top.jpg",
+        "normal-390-controls.jpg",
+        "normal-390-table-left.jpg"
+      ],
+      "status": "PASS",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f"
+    },
+    {
+      "id": "UI-03",
+      "steps": "Log in as empty-facility OWNER and open real calendar,1366x900.",
+      "expected": "Correct facility,0courts, clear empty message, no fabricated table, return link.",
+      "actual": "Observed0count and Cơ sở chưa có sân card with working-route return link.",
+      "evidence": [
+        "empty-1366-top.jpg",
+        "empty-1366-state.jpg"
+      ],
+      "status": "PASS",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f"
+    },
+    {
+      "id": "UI-04",
+      "steps": "Same real empty-facility calendar at390x844; scroll to empty card.",
+      "expected": "Message and return link readable without horizontal page overflow.",
+      "actual": "Observed correct empty facility/count; card text and return button fit mobile width.",
+      "evidence": [
+        "empty-390-top.jpg",
+        "empty-390-state.jpg"
+      ],
+      "status": "PASS",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f"
+    },
+    {
+      "id": "UI-05",
+      "steps": "Long-facility OWNER opens calendar at1366x900; inspect facility/address and table, then scroll horizontally.",
+      "expected": "150character names and500character address wrap; HTML payload stays text; inactive row and sticky court column readable.",
+      "actual": "Literal em/img strings displayed safely; entire long court name wraps in first column; late-hour columns reachable.",
+      "evidence": [
+        "long-1366-top.jpg",
+        "long-1366-table.jpg",
+        "long-1366-scroll.jpg"
+      ],
+      "status": "PASS",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f"
+    },
+    {
+      "id": "UI-06",
+      "steps": "Same long-data OWNER at390x844; scroll facility/address through table.",
+      "expected": "Long unbroken strings wrap without overlapping form or overflowing page.",
+      "actual": "150char facility/court and500char address fit card/firstcolumn; inactive label readable, form starts below card.",
+      "evidence": [
+        "long-390-top.jpg",
+        "long-390-facility.jpg",
+        "long-390-table.jpg"
+      ],
+      "status": "PASS",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f"
+    },
+    {
+      "id": "UI-07",
+      "steps": "At1366x900 click within table, Shift+Tab to last day, Tab to region, Left then Right.",
+      "expected": "Visible focus and logical tab order; arrows move time columns only, fixed names/corner stay readable.",
+      "actual": "Observed outlined day then outlined region, left/right column movement; Sân / giờ stays above headers.",
+      "evidence": [
+        "keyboard-1366-day-focus.jpg",
+        "keyboard-1366-table-focus.jpg",
+        "keyboard-1366-arrow-left.jpg",
+        "keyboard-1366-arrow-right.jpg"
+      ],
+      "status": "PASS",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f"
+    },
+    {
+      "id": "UI-08",
+      "steps": "At390x844 focus table; Shift+Tab to last day, Tab to table, ArrowRight.",
+      "expected": "Focus clear on mobile; arrow scrolls table while body and first column remain fixed.",
+      "actual": "Visible outline follows day/region; time columns move horizontally, fixed corner/court names remain in place.",
+      "evidence": [
+        "keyboard-390-day-focus.jpg",
+        "keyboard-390-table-focus.jpg",
+        "keyboard-390-arrow-right.jpg",
+        "normal-390-table-scroll.jpg"
+      ],
+      "status": "PASS",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f"
+    },
+    {
+      "id": "UI-09",
+      "steps": "At1366x900 focus native date input with current27Oct value and press Enter; click30Oct day link.",
+      "expected": "Form submits GET; date is retained and links update date without booking actions.",
+      "actual": "URL becomes /owner/calendar?date=2026-10-27 after Enter; clicking30Oct sets URL/input/active day to2026-10-30.",
+      "evidence": [
+        "keyboard-1366-enter-get.jpg",
+        "normal-1366-top.jpg"
+      ],
+      "status": "PASS",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f"
+    },
+    {
+      "id": "UI-10",
+      "steps": "At390x844 Shift+Tab from region to final day02Nov, then Enter.",
+      "expected": "Keyboard activates existing GET link; input retains selected date.",
+      "actual": "Real URL becomes /owner/calendar?date=2026-11-02 and date field shows11/02/2026.",
+      "evidence": [
+        "keyboard-390-day-focus.jpg",
+        "keyboard-390-enter-date.jpg"
+      ],
+      "status": "PASS",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f"
+    },
+    {
+      "id": "UI-11",
+      "steps": "At1366x900 Shift+Tab to footer return link, Enter, then click calendar link on dashboard.",
+      "expected": "Existing /owner navigation works both ways for same facility.",
+      "actual": "Enter opens real OWNER dashboard; dashboard calendar link opens /owner/calendar.",
+      "evidence": [
+        "keyboard-1366-back-focus.jpg",
+        "keyboard-1366-enter-back.jpg",
+        "keyboard-1366-enter-get.jpg"
+      ],
+      "status": "PASS",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f"
+    },
+    {
+      "id": "UI-12",
+      "steps": "Normal1366 table: scroll horizontally from morning through evening after CSS fix.",
+      "expected": "Sân / giờ corner and court names remain above moving time headers; body does not shift.",
+      "actual": "Late21:00–23:30 columns visible; fixed corner and court column remain intact after specificity fix.",
+      "evidence": [
+        "normal-1366-table-left.jpg",
+        "normal-1366-table-right.jpg",
+        "long-1366-scroll.jpg"
+      ],
+      "status": "PASS",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f"
+    }
+  ],
+  "fixedFinding": {
+    "id": "UI-CORNER-01",
+    "actualBefore": "On desktop horizontal scroll, later time headers painted over sticky Sân / giờ corner because th[scope=col] selector overrode its z-index.",
+    "fix": "Increase only corner z-index rule specificity from .owner-calendar-corner to th.owner-calendar-corner; keep z-index4.",
+    "commit": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+    "status": "FIXED_AND_RETESTED",
+    "evidence": [
+      "normal-1366-table-right.jpg",
+      "long-1366-scroll.jpg",
+      "keyboard-1366-arrow-right.jpg",
+      "keyboard-390-arrow-right.jpg"
+    ]
+  },
+  "validation": {
+    "check": {
+      "status": "PASS",
+      "ejs": 18,
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f"
+    },
+    "httpDB": {
+      "status": "PASS",
+      "passed": 11,
+      "failed": 0,
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "evidence": "http-results.json"
+    },
+    "npmTest": {
+      "status": "PASS",
+      "passed": 135,
+      "failed": 0,
+      "skipped": 0,
+      "testedSHA": "de43a7052a0675e3cefc6d985a6a746c6c80582c",
+      "note": "Executed on integrated main before the CSS-only selector correction; not represented as a rerun after that change.",
+      "recorded": {
+        "status": "PASS",
+        "passed": 135,
+        "failed": 0,
+        "skipped": 0,
+        "log": "acceptance-tests-2026-10-27.log"
+      }
+    }
+  },
+  "limits": [
+    "Chrome responsive emulation only; not a physical Android/iOS browser test.",
+    "No claim of cross-browser, screen-reader, realtime or performance acceptance.",
+    "Long and empty browser photos use default27Oct; their HTTP cases also ran against future30Oct. Normal browser photos use30Oct except explicit keyboard date tests.",
+    "CI status and PR Draft transition are verified separately after pushing this evidence."
+  ],
+  "privacy": "Only synthetic fixture data and calendar/dashboard screenshots. No private manifest, password, cookie, CSRF value, receipt URL/token or real user data published.",
+  "cleanup": "cleanup.json"
+}

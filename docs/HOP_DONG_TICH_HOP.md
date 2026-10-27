@@ -38,6 +38,8 @@ JavaScript gửi bằng fetch cùng origin, thay nội dung form lỗi và giữ
 
 Owner: GET /owner (view owner-dashboard: facility|null,courts,bookings,requests,title,errorMessage; owner pending dùng view owner-pending:title). GET /owner/courts/new và GET /owner/courts/:id/edit (view owner-court-form: court|null,facility,title,errorMessage). POST /owner/courts tạo; POST /owner/courts/:id cập nhật các giá/giờ whitelist. POST /owner/requests/:id/approve body refundAmount,ownerNote,extraPaymentConfirmed; POST /owner/requests/:id/reject body ownerNote; POST /owner/requests/:id/refund body ownerNote; POST /owner/bookings/:id/cancel body refundAmount,ownerNote.
 
+Lịch điều hành (#62): GET `/owner/calendar?date=YYYY-MM-DD`, chỉ OWNER APPROVED có cơ sở. View `owner-calendar` nhận `facility, selectedDate, dayOptions, timeColumns, courtRows, title`; dùng chung makeSlots, đọc lock theo lô, GET không ghi dữ liệu nghiệp vụ. Hợp đồng kiểu dữ liệu, quyền/ngày/trạng thái và kết quả kiểm thử tại [HOP_DONG_LICH_DIEU_HANH.md](HOP_DONG_LICH_DIEU_HANH.md); UI hoàn thiện ở #63 sau khi backend merge.
+
 Admin: GET /admin (view admin-dashboard: applications,facilities,owners,title,errorMessage). POST /admin/owners/:id/approve body facilityId optional (cấp cơ sở chưa có owner; nếu trống tạo theo đề nghị). POST /admin/owners/:id/reject.
 
 Errors: dùng views/error.ejs title,message,backUrl. Controller không trả rawerror/dbconnection. HTTP400 input,403 quyền/CSRF,404 missing,409 tranh chấp/trạng thái,410 hết hạn. Success303.
