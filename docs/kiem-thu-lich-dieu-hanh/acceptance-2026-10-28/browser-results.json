@@ -1,0 +1,88 @@
+{
+  "issue": 66,
+  "targetSHA": "bb8057999970e9d063cf107699164971a2ea15cc",
+  "mainSHA": "36e75cdf33dc7cf7bd568ed3ae938698af47bca1",
+  "date": "2026-10-28",
+  "browser": "Codex in-app browser via CUA",
+  "engineVersion": null,
+  "engineVersionNote": "Browser API does not expose navigator.userAgent in read-only page scope; no version guessed",
+  "status": "PASS",
+  "metrics": [
+    {
+      "scenario": "normal",
+      "focus": "Lịch các sân, cuộn ngang để xem thêm giờ",
+      "pageWidth": 1366,
+      "scrollLeft": 40,
+      "tableClient": 1133,
+      "tableWidth": 2648,
+      "width": 1366
+    },
+    {
+      "scenario": "normal-keyboard",
+      "focus": "Lịch các sân, cuộn ngang để xem thêm giờ",
+      "pageWidth": 375,
+      "scrollLeft": 40,
+      "tableClient": 304,
+      "tableWidth": 2576,
+      "width": 390
+    },
+    {
+      "scenario": "long",
+      "pageWidth": 390,
+      "rows": 3,
+      "tableClient": 319,
+      "tableWidth": 2576,
+      "width": 390
+    },
+    {
+      "scenario": "long",
+      "pageWidth": 1366,
+      "rows": 3,
+      "tableClient": 1133,
+      "tableWidth": 2648,
+      "width": 1366
+    },
+    {
+      "scenario": "empty",
+      "emptyText": true,
+      "pageWidth": 1366,
+      "tables": 0,
+      "width": 1366
+    },
+    {
+      "scenario": "empty",
+      "emptyText": true,
+      "pageWidth": 390,
+      "tables": 0,
+      "width": 390
+    }
+  ],
+  "keyboard": [
+    {
+      "viewport": [
+        1366,
+        900
+      ],
+      "actions": "Fill date 2026-10-29; Tab through 4 native segments/stops to Xem lịch; Enter",
+      "result": "GET /owner/calendar?date=2026-10-29; correct input and heading; focus outline 2.4px"
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "actions": "Fill date 2026-10-30; 4 Tabs to Xem lịch; Enter",
+      "result": "GET /owner/calendar?date=2026-10-30; correct input date; focus outline 2.4px"
+    },
+    {
+      "viewport": "both",
+      "actions": "Tab from last day link into calendar region; ArrowRight",
+      "result": "Focused region, scrollLeft increased 0 -> 40px, document stayed within viewport; labels and sticky court names readable"
+    }
+  ],
+  "limitations": [
+    "Viewport emulation in desktop browser, not physical phone",
+    "Keyboard paths listed only; no cross-browser claim",
+    "Normal/long/empty fixture identities are synthetic"
+  ]
+}

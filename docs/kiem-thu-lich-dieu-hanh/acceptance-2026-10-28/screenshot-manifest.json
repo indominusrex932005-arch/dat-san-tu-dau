@@ -1,0 +1,111 @@
+{
+  "targetSHA": "bb8057999970e9d063cf107699164971a2ea15cc",
+  "format": "Original JPEG bytes returned by browser screenshot API; some captures exclude scrollbar",
+  "images": [
+    {
+      "name": "date-focus-1366.jpg",
+      "viewportWidth": 1366,
+      "width": 1351,
+      "height": 890,
+      "sha256": "8b42739494b278f56a733c869c8018e93f3e137535f36659d01658d464d11626"
+    },
+    {
+      "name": "date-focus-390.jpg",
+      "viewportWidth": 390,
+      "width": 375,
+      "height": 811,
+      "sha256": "85ef37318be9c0acb5c7d186626d2f142fd76e6e54d3f7b389cba0eec9b9351c"
+    },
+    {
+      "name": "empty-1366.jpg",
+      "viewportWidth": 1366,
+      "width": 1351,
+      "height": 1379,
+      "sha256": "0b808026f01d816903f7d1e29d34f4ed9713f246b6ae6f1ae4d9b99572410605"
+    },
+    {
+      "name": "empty-390.jpg",
+      "viewportWidth": 390,
+      "width": 375,
+      "height": 1895,
+      "sha256": "45b600b2aa566005f5f1ae71970dccdd1d3022afb4b765f61083a9959fb6a0c3"
+    },
+    {
+      "name": "long-1366.jpg",
+      "viewportWidth": 1366,
+      "width": 1351,
+      "height": 1801,
+      "sha256": "7455b0999238f22ed59f779193e5e0810ab208be4b5c3aff98cc452cbe0b55b7"
+    },
+    {
+      "name": "long-390.jpg",
+      "viewportWidth": 390,
+      "width": 375,
+      "height": 2582,
+      "sha256": "0390e74ce23b1e33e4a40cadf2ad77e744e34d7336e7e8936bec40ad4f0ea200"
+    },
+    {
+      "name": "long-table-1366.jpg",
+      "viewportWidth": 1366,
+      "width": 1366,
+      "height": 900,
+      "sha256": "88362a7a936c2cd096fc64d94bb164717cc466161bc95eeffdf408558246debb"
+    },
+    {
+      "name": "long-table-390.jpg",
+      "viewportWidth": 390,
+      "width": 390,
+      "height": 843,
+      "sha256": "413cb7b0c8253f19dfec888770d4bdc226a873a425382990a497249609364a6d"
+    },
+    {
+      "name": "normal-1366.jpg",
+      "viewportWidth": 1366,
+      "width": 1351,
+      "height": 1376,
+      "sha256": "762814eb31ae74ecc6e877c5763497afeccbc7fcd800035424d582012ddfaf79"
+    },
+    {
+      "name": "normal-390.jpg",
+      "viewportWidth": 390,
+      "width": 375,
+      "height": 1932,
+      "sha256": "ab0a66fd176d3cd0e12833d264563da6c7d7086b90bb43ae74b1a658584d5c23"
+    },
+    {
+      "name": "table-focus-1366.jpg",
+      "viewportWidth": 1366,
+      "width": 1366,
+      "height": 900,
+      "sha256": "f7e78a2b953d77b4bd2515be7214230acd0aef8a8a8ebd1fc08703aba1bf7ea1"
+    },
+    {
+      "name": "table-focus-390.jpg",
+      "viewportWidth": 390,
+      "width": 375,
+      "height": 811,
+      "sha256": "ec4227276854bf95927c9a17282d718a8a2312477052c976460391364c6c730d"
+    },
+    {
+      "name": "table-left-1366.jpg",
+      "viewportWidth": 1366,
+      "width": 1366,
+      "height": 900,
+      "sha256": "91eba7a587031ffba99d31fa672a8d148d8d23cebef66b7c16eefb402a82166b"
+    },
+    {
+      "name": "table-right-1366.jpg",
+      "viewportWidth": 1366,
+      "width": 1366,
+      "height": 900,
+      "sha256": "a3552e5018955502d0a824b79878886468db4c449b037e5aecbee81c0a24deea"
+    },
+    {
+      "name": "table-right-390.jpg",
+      "viewportWidth": 390,
+      "width": 375,
+      "height": 811,
+      "sha256": "198982c7ad1296adf610ca845636fd0bb31b2eb0568e4fe159cac0f037b0a153"
+    }
+  ]
+}
