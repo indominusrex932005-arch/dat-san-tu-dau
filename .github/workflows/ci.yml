@@ -11,7 +11,9 @@ permissions:
 
 jobs:
   lint:
-    runs-on: ubuntu-24.04
+    # MongoDB 8.0 cannot start on the newer runner kernel (SERVER-121912).
+    # Ubuntu 22.04 uses the compatible 6.8 kernel; keep real replica-set tests.
+    runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
       - name: Lay code
