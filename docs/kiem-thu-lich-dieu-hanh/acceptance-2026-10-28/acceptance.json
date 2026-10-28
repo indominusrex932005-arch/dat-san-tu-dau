@@ -1,0 +1,53 @@
+{
+  "issue": 66,
+  "date": "2026-10-28",
+  "targetSHA": "bb8057999970e9d063cf107699164971a2ea15cc",
+  "mainSHA": "36e75cdf33dc7cf7bd568ed3ae938698af47bca1",
+  "applicationIdenticalToMain": true,
+  "cases": [
+    {
+      "id": "TC-01",
+      "status": "PASS"
+    },
+    {
+      "id": "TC-02",
+      "status": "PASS"
+    },
+    {
+      "id": "TC-03",
+      "status": "PASS"
+    },
+    {
+      "id": "TC-04",
+      "status": "PASS"
+    },
+    {
+      "id": "TC-05",
+      "status": "PASS"
+    },
+    {
+      "id": "TC-06",
+      "status": "PASS"
+    },
+    {
+      "id": "TC-07",
+      "status": "PASS"
+    }
+  ],
+  "automatedChecks": {
+    "check": "PASS, 19 EJS",
+    "tests": {
+      "pass": 149,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  "browserReadOnlyHashesEqual": true,
+  "cleanup": {
+    "database": "booking_test_1793179475132_22092",
+    "dropped": true,
+    "appStopped": true,
+    "at": "2026-10-28T09:37:02.782Z"
+  },
+  "readyForReview": true
+}

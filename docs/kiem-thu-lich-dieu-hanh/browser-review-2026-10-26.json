@@ -1,0 +1,76 @@
+{
+  "sourceSHA": "bde7ba5d93ebf7d240aa81030986f0865be00586",
+  "applicationSourceSHA": "3d76e102bdc88a94778c889e1ad9ff5f328b9b50",
+  "date": "2026-10-26",
+  "browser": "Codex in-app browser",
+  "method": "Real browser through CUA; real Express/controller/service/EJS and disposable local MongoDB",
+  "measurements": [
+    {
+      "case": "long",
+      "clientWidth": 1366,
+      "pageWidth": 1366,
+      "tableClient": 1133,
+      "tableWidth": 4552,
+      "viewport": [
+        1366,
+        900
+      ]
+    },
+    {
+      "case": "long",
+      "clientWidth": 390,
+      "pageWidth": 390,
+      "tableClient": 319,
+      "tableWidth": 4480,
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "case": "empty",
+      "clientWidth": 390,
+      "emptyText": true,
+      "pageWidth": 390,
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "case": "empty",
+      "clientWidth": 1366,
+      "emptyText": true,
+      "pageWidth": 1366,
+      "viewport": [
+        1366,
+        900
+      ]
+    }
+  ],
+  "keyboard": {
+    "date": "Tab through native date segments -> Xem lịch; Enter navigated to ?date=2026-10-27; heading confirmed",
+    "table": "Focused region, ArrowRight moved scrollLeft from 0 to 86.4 while document stayed 390px",
+    "limitations": "Keyboard sequence tested at 390px; no claim for every browser or desktop full keyboard sequence"
+  },
+  "acceptance": "Supplementary evidence; pending final backend/UI merge and rerun",
+  "automatedChecks": {
+    "applicationSource": {
+      "check": "PASS, 18 EJS",
+      "tests": {
+        "pass": 134,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    "qaOnlyDiffOnMain": {
+      "check": "PASS, 17 EJS",
+      "tests": {
+        "pass": 111,
+        "fail": 0,
+        "skip": 0
+      }
+    }
+  },
+  "cleanup": "Application stopped; both disposable fixture databases dropped"
+}
