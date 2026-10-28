@@ -22,11 +22,6 @@
            nếu view chạy trên main chưa merge thì vẫn an toàn */
         const _filterError = typeof filterError === 'string' && filterError ? filterError : null;
       %>
-      <% if (_filterError) { %>
-        <div class="courts-filter-error" role="alert" style="background:#fde8e8;border:1px solid #f8b4b4;border-left:4px solid #c81e1e;color:#9b1c1c;padding:10px 14px;border-radius:6px;font-size:13.5px;margin:16px 0;">
-          <p style="margin:0"><%= _filterError %></p>
-        </div>
-      <% } %>
       <section class="courts-intro" aria-labelledby="courts-title">
         <div>
           <p class="courts-eyebrow">Sân Thể Thao / Đặt sân</p>
@@ -46,9 +41,9 @@
       <section class="courts-filter-section" aria-labelledby="courts-filter-heading">
         <h2 id="courts-filter-heading" class="courts-filter-heading">Tìm sân phù hợp</h2>
 
-        <% if (typeof filterError === 'string' && filterError) { %>
+        <% if (_filterError) { %>
           <div class="courts-filter-error" role="alert">
-            <p><%= filterError %></p>
+            <p><%= _filterError %></p>
           </div>
         <% } %>
 
