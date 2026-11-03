@@ -1,0 +1,10 @@
+{
+  "sourceSHA": "f056f19ff1a987a438bf2ffb4ed70d0c87974703",
+  "method": "SHA256(JSON.stringify(await Model.find().sort({_id:1}).lean())) before/after browser GET list, error query, detail and Back",
+  "beforeEqualsAfter": true,
+  "Booking": { "count": 3, "sha256": "f5a7b7c44ef668e560a18d1e6611c32bb6684bd3aae8ff9297f0450e9307b691" },
+  "SlotLock": { "count": 6, "sha256": "c4c5b398a5fcd9ef2514484da04cf989724ef69663c93c99649b0469da1f0cfe" },
+  "Payment": { "count": 0, "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945" },
+  "BookingRequest": { "count": 0, "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945" },
+  "limitation": "No two-real-browser stale suggestion race executed; not acceptance of issue 67"
+}

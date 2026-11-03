@@ -1,0 +1,50 @@
+{
+  "sourceSHA": "f056f19ff1a987a438bf2ffb4ed70d0c87974703",
+  "backendSHA": "30d0fa6",
+  "date": "2026-10-27",
+  "metrics": [
+    {
+      "scenario": "one",
+      "cards": 1,
+      "message": "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:",
+      "pageWidth": 1351,
+      "width": 1366
+    },
+    {
+      "scenario": "one",
+      "cards": 1,
+      "message": "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:",
+      "pageWidth": 375,
+      "width": 390
+    },
+    {
+      "scenario": "empty",
+      "cards": 0,
+      "message": "Không tìm thấy phương án thay thế phù hợp cùng thời lượng trong ngày. Bạn vui lòng đổi ngày hoặc chọn khoảng giờ khác.",
+      "pageWidth": 1351,
+      "width": 1366
+    },
+    {
+      "scenario": "empty",
+      "cards": 0,
+      "message": "Không tìm thấy phương án thay thế phù hợp cùng thời lượng trong ngày. Bạn vui lòng đổi ngày hoặc chọn khoảng giờ khác.",
+      "pageWidth": 375,
+      "width": 390
+    },
+    {
+      "scenario": "error",
+      "cards": 0,
+      "error": "\n          Cơ sở không hợp lệ.\n        ",
+      "pageWidth": 1351,
+      "width": 1366
+    },
+    {
+      "scenario": "error",
+      "cards": 0,
+      "error": "\n          Cơ sở không hợp lệ.\n        ",
+      "pageWidth": 375,
+      "width": 390
+    }
+  ],
+  "keyboard": "Tab from clear-filter link to first suggestion, Enter opens correct court/date, Back preserves filters and three cards, at 390 and 1366"
+}
