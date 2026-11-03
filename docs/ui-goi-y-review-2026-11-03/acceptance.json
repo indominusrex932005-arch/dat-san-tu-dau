@@ -1,0 +1,74 @@
+{
+  "issue": 75,
+  "pullRequest": 73,
+  "date": "2026-11-03",
+  "timezone": "Asia/Bangkok",
+  "status": "Implementation and local acceptance passed; awaiting team-lead review and merge",
+  "source": {
+    "branch": "feat/ui-court-suggestions",
+    "testedUISHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+    "applicationStartSHA": "4b5c02d7c025ec29bff30bece3f9a629e312b7d5",
+    "mainSHA": "36e75cdf33dc7cf7bd568ed3ae938698af47bca1",
+    "mergedBackendPR": 70,
+    "backendHeadSHA": "d115d4ad3bb562d1a46681dd4a662ea57480ac15",
+    "note": "Only four mobile CSS lines changed after application start. HTTP evidence verifies all three served UI files match testedUISHA. Later evidence-only commits do not change application source."
+  },
+  "change": {
+    "path": "public/css/court-suggestions.css",
+    "description": "Use flex: 0 1 auto for suggestion info items in the existing max-width:480px block; remove the inherited 80px vertical basis when the parent becomes a column.",
+    "observedMobileInfoHeight": { "beforePixels": 80, "afterPixels": 41.1875 },
+    "backendPricingRankingChanges": false
+  },
+  "fixture": {
+    "kind": "Synthetic disposable local MongoDB replica set, real application/controller/service/EJS",
+    "replica": "qaSuggestionsUi75",
+    "port": 27060,
+    "mongoDBVersion": "8.3.11",
+    "nodeVersion": "24.15.0",
+    "searchDate": "2026-11-07",
+    "primaryResultDate": "2026-11-08",
+    "facilitiesAndCourts": 4,
+    "confirmedBlockers": "4 real POST bookings with DEMO confirmation, 8 confirmed slot locks",
+    "longData": "150-character court/facility names and 500-character address, including literal HTML-like text",
+    "peakQuote": "16:30-17:30 = 50,000 VND base slot + 75,000 VND peak slot = 125,000 VND for 60 minutes",
+    "sharedAtlasUsed": false
+  },
+  "browser": {
+    "name": "Codex in-app browser via CUA",
+    "engineVersion": "Unavailable from supported browser API",
+    "viewports": ["390x844", "1366x900"],
+    "cases": 20,
+    "passed": 20,
+    "failed": 0,
+    "screenshots": 20,
+    "report": "browser-results.json",
+    "coverage": [
+      "0, 1 and 3 suggestions, long escaped data, peak-boundary total, invalid time range, missing date and primary results at both viewports",
+      "Real Tab focus, Enter to correct court/date with zero preselected slots and disabled hold button, real browser Back preserving filters at both viewports"
+    ],
+    "captureNote": "Original JPEG captures; full-page content widths 375/1351 reflect a 15px vertical scrollbar within CSS viewports 390/1366. No image resizing or retouching."
+  },
+  "validation": {
+    "check": "PASS, JavaScript lint and 19 EJS templates, final UI SHA e353727",
+    "httpAndDatabase": "10/10 PASS on final UI SHA e353727; details in http-results.json",
+    "fullSuite": "156/156 PASS, 0 failed/skipped at 4b5c02d before the CSS-only correction; not claimed as a local rerun at e353727",
+    "relatedViewTest": "7/7 PASS, 0 failed/skipped at final UI SHA e353727",
+    "report": "validation-summary.json",
+    "readOnly": "Seven business collections compared by counts and SHA256 digests; HTTP and subsequent browser snapshots recorded separately",
+    "cleanupReport": "cleanup-summary.json",
+    "privacyReport": "privacy-review.json"
+  },
+  "ciReview": {
+    "diff": "ubuntu-24.04 to ubuntu-22.04 and two comments only; npm ci, check, real MongoDB replica readiness, npm test and always-cleanup retained",
+    "previousFailedRun": 40661959085,
+    "baselinePassingRun": 40667598117,
+    "limitation": "Kernel 6.8 / SERVER-121912 causality in historical comments was not independently established by this review.",
+    "finalPushRun": "See CI status on PR #73; final run metadata will be linked in the PR body after push."
+  },
+  "limits": [
+    "No physical-device, cross-browser, full-screen-reader or full tab-order certification",
+    "No two-session race/409 claim for separate QA issue #67",
+    "Issue #75 remains open until team-lead review and merge; no auto-merge or Closes keyword",
+    "Historical 2026-10-27 report and evidence preserved unchanged"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "issue": 75,
+  "pr": 73,
+  "reviewedAtUTC": "2026-11-03T07:10:51.672Z",
+  "sourceUISHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+  "status": "PASS",
+  "photosScanned": 20,
+  "textArtifactsScanned": 7,
+  "checks": {
+    "privateFixturePasswordAbsent": true,
+    "privateQAMarkerAbsent": true,
+    "privateGuestReceiptOrCheckoutTokenURLAbsent": true,
+    "sessionCookieAbsent": true,
+    "rawCSRFFormValueAbsent": true,
+    "copiedHTTPAndValidationReportsMatchRecordedSHAs": true,
+    "publicCheckAndTestLogReferencesExist": true
+  },
+  "screenshotScope": "Root observed anonymous public /courts listing and court detail pages only; all data are synthetic local fixtures. No credential entry or booking POST occurred during browser acceptance.",
+  "limitation": "Automated privacy scan checks known private strings and token/cookie/CSRF patterns in artifact bytes; it does not OCR the photos. Visual page scope comes from root browser observations."
+}
