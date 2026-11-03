@@ -223,4 +223,8 @@
     flex-direction: column;
     gap: 8px;
   }
+
+  .court-suggestion-info-item {
+    flex: 0 1 auto;
+  }
 }
