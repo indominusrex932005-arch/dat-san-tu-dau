@@ -1,0 +1,68 @@
+{
+  "issue": 76,
+  "date": "2026-11-03",
+  "timezone": "Asia/Bangkok",
+  "status": "Current-main QA executed; follow-up awaits team-lead review and merge",
+  "source": {
+    "branch": "docs/qa-calendar-76",
+    "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+    "mainSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+    "applicationChangesInThisQA": false,
+    "previousRoundSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+    "previousRoundDirectory": "../acceptance-2026-11-03/",
+    "note": "Fresh app, database, HTTP tests and browser captures on main5c. Earlier507 evidence is preserved as a separate execution, not relabeled."
+  },
+  "tracking": {
+    "previousPullRequest": 71,
+    "previousPullRequestMergedAtUTC": "2026-11-03T07:27:58Z",
+    "previousPullRequestMergeSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+    "reasonForFollowupPR": "PR71 merged while QA was in progress; current main also includes PR73. Evidence is submitted on a new branch based on that main.",
+    "issueReference": "Refs #76",
+    "autoMerge": false
+  },
+  "fixture": {
+    "kind": "New synthetic disposable local database; real Express/controller/service/EJS/MongoStore and POST booking/DEMO payment",
+    "replica": "qaOwnerCalendar76",
+    "databasePort": 27061,
+    "applicationPort": 61470,
+    "nodeVersion": "24.15.0",
+    "mongoDBVersion": "8.3.11",
+    "users": 7,
+    "facilities": 4,
+    "courts": 9,
+    "courtDistribution": { "ownerA": 4, "ownerB": 2, "longNames": 3, "emptyFacility": 0 },
+    "todayVN": "2026-11-03",
+    "businessDate": "2026-11-06",
+    "futureDate": "2026-11-23",
+    "longTextLengths": { "facility": 150, "court": 150, "address": 500 },
+    "sharedAtlasUsed": false
+  },
+  "caseGroups": [
+    { "id": "TC-01", "status": "PASS", "evidence": "http-results.json: HTTP-AUTH, HTTP-OWNER-SCOPE" },
+    { "id": "TC-02", "status": "PASS", "evidence": "http-results.json: HTTP-AXIS-INACTIVE; browser-results.json: normal-*" },
+    { "id": "TC-03", "status": "PASS", "evidence": "http-results.json: HTTP-TRANSITION; real POST AVAILABLE to LOCKED to BOOKED" },
+    { "id": "TC-04", "status": "PASS", "evidence": "http-results.json: HTTP-LIVE-EXPIRED-HOLD, HTTP-STARTED-POST" },
+    { "id": "TC-05", "status": "PASS", "evidence": "http-results.json: HTTP-DATES, HTTP-BAD-DATES; browser-results.json: date-*" },
+    { "id": "TC-06", "status": "PASS", "evidence": "browser-results.json:17freshcases; screenshot-manifest.json:17originalJPEGs" },
+    { "id": "TC-07", "status": "PASS", "evidence": "http-results.json: HTTP-READ-ONLY; browser-db-before.json; browser-db-after.json; final-db-readonly.json" }
+  ],
+  "validation": {
+    "check": "PASS, ESLint and19EJS templates at5c3e72d",
+    "independentHTTP": { "passed": 12, "failed": 0, "report": "http-results.json" },
+    "browser": { "passed": 17, "failed": 0, "originalJPEGs": 17, "report": "browser-results.json", "browser": "Codex in-app browser via CUA", "engineVersion": "Unavailable from supported browser API" },
+    "fullSuite": { "passed": 156, "failed": 0, "skipped": 0, "note": "Full rerun; initial run and migration diagnostic retained separately" },
+    "initialSuiteFailure": { "total": 152, "passed": 151, "failed": 1, "scope": "migration.test.js file-level exit; detailed cause not established", "isolatedMigrationRerun": "5/5 PASS", "sourceModifiedToObtainPass": false },
+    "report": "validation-summary.json",
+    "ci": "Follow-up PR description records CI URL/status after push; no workflow changes in this QA"
+  },
+  "cleanupReport": "cleanup-summary.json",
+  "privacyReport": "privacy-review.json",
+  "limits": [
+    "HOLD expiry uses a1.5second fixture deadline and actual short wait recorded in HTTP evidence; not10minutes elapsed. No system clock or application source changed.",
+    "Business snapshots start after fixture POST/deadline preparation; seven model collections are compared and sessions excluded.",
+    "DB500 and revoked-session coverage comes from the fresh repository suite. DB errors are injected via model-method mocks, not claimed as a real replica outage or manual browser fault.",
+    "Initial migration file-level failure remains unexplained; standalone and full rerun pass are reported without declaring a source fix.",
+    "No physical-device, cross-browser, full-tab-order or screen-reader certification.",
+    "Independent agent review does not establish independent human QA approval. Issue76 remains open pending review and merge of the follow-up."
+  ]
+}

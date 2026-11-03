@@ -1,0 +1,9 @@
+
+> dat-san-tu-dau@1.0.0 check
+> npm run lint && node scripts/check-views.js
+
+
+> dat-san-tu-dau@1.0.0 lint
+> eslint .
+
+Đã kiểm tra cú pháp 19 template EJS.

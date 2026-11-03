@@ -1,0 +1,50 @@
+{
+  "issue": 76,
+  "pr": 71,
+  "date": "2026-11-03",
+  "timezone": "Asia/Bangkok",
+  "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+  "mainSHA": "36e75cdf33dc7cf7bd568ed3ae938698af47bca1",
+  "environment": {
+    "node": "24.15.0",
+    "mongoDB": "8.3.11",
+    "replica": "qaOwnerCalendar76",
+    "port": 27061,
+    "app": "http://127.0.0.1:61470",
+    "data": "Synthetic local7users/4facilities/9courts; no.env/Atlas."
+  },
+  "check": {
+    "status": "PASS",
+    "templates": 19,
+    "log": "check.log",
+    "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d"
+  },
+  "test": {
+    "status": "PASS",
+    "passed": 149,
+    "failed": 0,
+    "skipped": 0,
+    "log": "test.log",
+    "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d"
+  },
+  "independentHTTP": {
+    "status": "PASS",
+    "total": 12,
+    "passed": 12,
+    "failed": 0,
+    "report": "http-results.json",
+    "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d"
+  },
+  "suiteEvidence": {
+    "calendarServiceFile": "tests/owner-calendar.test.js",
+    "calendarHTTPFile": "tests/owner-calendar-http.test.js",
+    "coveredInFullSuite": [
+      "GETbody/queryscope",
+      "RevokedOWNERstatus/roleandfacilitytransferstalesession",
+      "UT C+7yearboundarywithcontrolledserviceclock",
+      "DBreadfailurepropagation/HTTP500genericresponse"
+    ],
+    "limitation": "DBfailureautomatedcasesmockmodelmethodsinthetestprocess,notmanualreplicafailure. Serviceclockboundaryiscontrolledunit/serviceclock. These are notbrowserobservations."
+  },
+  "browserCoverage": "Separate browser-results.json from root; check/test/HTTP do not prove geometry or keyboard."
+}
