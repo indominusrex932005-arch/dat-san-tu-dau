@@ -1,3 +1,50 @@
+# Kiểm thử gợi ý sân và hai khách tranh cùng ô — Issue #77
+
+Kiểm thử ngày **04/11/2026 (UTC+7)** trên `main` tại `5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47`, đã chứa bản tích hợp UI #75 qua PR #73 (`23b6cdc2950facb92ef870e75da8c2074321fa4a`). Báo cáo này tiếp tục PR #74 trên nhánh `docs/kiem-thu-goi-y-san`.
+
+- **Môi trường** dùng Google Chrome 156.0.8078.80 headless qua Playwright, Node.js 24.15.0 và MongoDB 8.3.11 replica set `qa77` tại localhost. Express/EJS chạy qua `createApp` với MongoStore thật. Fixture tổng hợp trong DB riêng, gồm các bản ghi `SlotLock` để dựng trạng thái lịch. Các yêu cầu tìm và đặt đi qua route thật. DB thử đã được dọn sau phiên chạy.
+- **Kết quả** 18/18 ca tìm kiếm HTTP, 8/8 ca viewport/bàn phím và ca tranh chỗ hai phiên đều đạt. `npm run check` đạt ESLint và 19 template EJS. `npm test` đạt 156/156, 0 lỗi và 0 bỏ qua.
+- **Bằng chứng** ghi SHA, phiên bản, ID fixture, query, trạng thái HTTP, thẻ thực tế, từng ảnh và snapshot DB. [JSON kết quả #77](kiem-thu-goi-y-san/acceptance-2026-11-04/qa-results-77.json)
+
+## Tìm kiếm và xếp hạng
+
+| Ca | Đầu vào | Kết quả thật |
+| --- | --- | --- |
+| Kích hoạt gợi ý | Cơ sở xếp hạng, 06/11/2026, 17:00–18:00 | HTTP 200, 0 kết quả chính, 3 thẻ. |
+| Có kết quả chính hoặc chỉ có ngày | Cùng cơ sở và giờ vào 07/11, hoặc chỉ lọc ngày 06/11 | Tương ứng 3 và 4 kết quả chính, đều không có mục gợi ý. |
+| Query lỗi | Giờ đảo, phút ngoài bước 30, thiếu ngày, thiếu giờ kết thúc, hoặc lặp một trong bốn tham số | 8 ca đều HTTP 400, mỗi ca có một thông báo lỗi và không có mục gợi ý. |
+| Cùng ngày, cơ sở và thời lượng | Cơ sở xếp hạng, 06/11, 17:00–18:30 | Ba thẻ đều cùng cơ sở, đúng ngày 06/11 và đủ 90 phút (16:00–17:30). |
+| Trạng thái sân và cơ sở | Sân inactive cùng cơ sở xếp hạng, cơ sở chủ chưa duyệt, cơ sở thiếu SĐT | Sân inactive không vào kết quả. Hai cơ sở còn lại đều trả 0 kết quả chính và 0 thẻ. |
+| Giờ đã qua | Tìm một ô đã bắt đầu trong ngày 04/11 | Không có kết quả chính. Mọi gợi ý có giờ bắt đầu sau thời điểm kiểm tra. |
+| BOOKED, HOLD và lock hết hạn | BOOKED 17:30 và lock hết hạn 16:30 ngày 06/11, HOLD còn hạn 17:00 ngày 07/11 | Ngày 06/11 có đúng một gợi ý 16:30–17:30, trong khi bản ghi hết hạn vẫn tồn tại. Ngày 07/11 có 0 thẻ vì cả hai phương án đều cắt qua ô HOLD. |
+| Độ lệch, giá và `courtId` | Yêu cầu 17:00–18:00, có ba phương án lệch 30 phút và sân rẻ hơn có phương án tốt nhất lệch 90 phút | Ba thẻ lệch 30 phút đứng đầu, giá lần lượt 125.000đ, 125.000đ, 140.000đ. Hai phương án cùng giá xếp theo `courtId` tăng dần dù tên sân có thứ tự khác. |
+| `startTime` khi đồng hạng | Một sân, giá bằng nhau, khóa 17:00 và 17:30, tìm 17:00–18:00 | 16:00 và 18:00 cùng lệch 60 phút, thẻ 16:00 đứng trước. Thẻ thứ ba là 15:30, lệch 90 phút. |
+| Giá qua cao điểm | Khung gợi ý 16:30–17:30, bắt đầu cao điểm lúc 17:00 | Tổng 125.000đ bằng 50.000đ của ô 16:30 cộng 75.000đ của ô 17:00. |
+
+## Trình duyệt và tính chỉ đọc của GET
+
+| Viewport | Số thẻ | Bàn phím và lịch sử |
+| --- | --- | --- |
+| 390×844 | [0 thẻ](kiem-thu-goi-y-san/acceptance-2026-11-04/cards-0-390.png), [1 thẻ](kiem-thu-goi-y-san/acceptance-2026-11-04/cards-1-390.png), [3 thẻ](kiem-thu-goi-y-san/acceptance-2026-11-04/cards-3-390.png), [toàn bộ mục ba thẻ](kiem-thu-goi-y-san/acceptance-2026-11-04/cards-3-section-390.png) | [Tab](kiem-thu-goi-y-san/acceptance-2026-11-04/tab-390.png), [Enter](kiem-thu-goi-y-san/acceptance-2026-11-04/enter-390.png), [Back](kiem-thu-goi-y-san/acceptance-2026-11-04/back-390.png) |
+| 1366×900 | [0 thẻ](kiem-thu-goi-y-san/acceptance-2026-11-04/cards-0-1366.png), [1 thẻ](kiem-thu-goi-y-san/acceptance-2026-11-04/cards-1-1366.png), [3 thẻ](kiem-thu-goi-y-san/acceptance-2026-11-04/cards-3-1366.png) | [Tab](kiem-thu-goi-y-san/acceptance-2026-11-04/tab-1366.png), [Enter](kiem-thu-goi-y-san/acceptance-2026-11-04/enter-1366.png), [Back](kiem-thu-goi-y-san/acceptance-2026-11-04/back-1366.png) |
+
+Cả hai viewport không tràn ngang. Tab tới **Xem lịch** có viền focus. Enter gửi GET và mở đúng sân cùng ngày 06/11/2026, với 0 ô được chọn và nút giữ chỗ bị vô hiệu hóa. Back khôi phục URL, bốn giá trị bộ lọc và ba thẻ.
+
+Số bản ghi và SHA-256 của bảy collection nghiệp vụ giống nhau trước và sau toàn bộ GET tìm kiếm và xem lịch. Phép so sánh bỏ qua `sessions`, vì phiên có thể được tạo khi mở form. Xem `snapshots.beforeGet` và `snapshots.afterGet` trong JSON.
+
+## Hai phiên tranh cùng ô
+
+1. A tìm 17:00–18:00 ngày 06/11, mở thẻ gợi ý 16:30–17:30 và chọn hai ô 16:30, 17:00. [Form A trước khi gửi](kiem-thu-goi-y-san/acceptance-2026-11-04/race-a-before.png)
+2. B mở cùng sân/ngày trong browser context và session độc lập. B gửi ô 17:00, nhận HTTP 303 và checkout HTTP 200. DB tăng đúng một đơn `HOLD` và một lock cho ô 17:00.
+3. A gửi form cũ và nhận HTTP 409. Form phục hồi hiển thị lỗi, bỏ chọn và khóa thao tác với ô 17:00, giữ lựa chọn 16:30 để A có thể xem lại. [Phản hồi 409](kiem-thu-goi-y-san/acceptance-2026-11-04/race-a-409.png)
+4. Sau POST của A, số bản ghi và hash của bảy collection bằng snapshot ngay sau POST của B. DB có 0 đơn của A, không có lock cho ô 16:30 và đúng một lock cho ô 17:00 trỏ tới đơn của B. Xem `race` và `snapshots.race` trong JSON.
+
+**Trạng thái PR** cần review và merge PR #74 bởi nhóm trưởng. Tham chiếu `Refs #77`.
+
+## Báo cáo mock/EJS lịch sử của #67
+
+Phần dưới là kiểm thử bổ trợ trên nền cũ. Các mốc và trạng thái trong phần này thuộc báo cáo #67.
+
 > **DRAFT — CHƯA NGHIỆM THU #67 (review 27/10/2026).** Các bảng PASS bên dưới là kết quả mock/EJS lịch sử được báo cáo, không chứng minh hai phiên thật, transaction/DB hoặc trình duyệt. Chưa chạy lại trên SHA tích hợp cuối.
 >
 > PR #74 đã loại source backend #70/UI #73 khỏi diff main. Runner mock lịch sử được lưu dạng `.txt` tại `docs/kiem-thu-goi-y-san/court-suggestion-qa.test.js.txt`, không chạy trên main đang thiếu backend/UI. Sau khi #70/#73 merge, khôi phục runner phù hợp và chạy lại; không cherry-pick cả chuỗi source qua PR QA.
