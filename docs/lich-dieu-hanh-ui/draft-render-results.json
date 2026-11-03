@@ -1,0 +1,54 @@
+{
+  "issue": 63,
+  "status": "DRAFT_PREPARATION_ONLY",
+  "backendPR": 68,
+  "backendSHA": "014117349e9f460fd70ebddd54765663877c8334",
+  "backendMergedAtStart": false,
+  "executedAtUTC": "2026-10-24T16:36:50.164Z",
+  "node": "v24.15.0",
+  "scope": "Local EJS template render only, synthetic locals; not functional integration QA or visual evidence.",
+  "cases": [
+    {
+      "id": "DRAFT-01-normal",
+      "result": "PASS",
+      "kind": "Standalone EJS render with synthetic locals; no app route, browser or database"
+    },
+    {
+      "id": "DRAFT-02-empty",
+      "result": "PASS",
+      "kind": "Standalone EJS render with synthetic locals; no app route, browser or database"
+    },
+    {
+      "id": "DRAFT-03-no-hours",
+      "result": "PASS",
+      "kind": "Standalone EJS render with synthetic locals; no app route, browser or database"
+    },
+    {
+      "id": "DRAFT-04-long-escaped-inactive",
+      "result": "PASS",
+      "kind": "Standalone EJS render with synthetic locals; no app route, browser or database"
+    },
+    {
+      "id": "DRAFT-05-beyond-week",
+      "result": "PASS",
+      "kind": "Standalone EJS render with synthetic locals; no app route, browser or database"
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "passed": 5
+  },
+  "notRun": [
+    "Real app route/controller/service/DB integration",
+    "390px / 1366px browser layouts and photos",
+    "Real Tab/Enter or horizontal scroll interactions",
+    "npm test on new draft UI"
+  ],
+  "privacy": "No .env, credentials, session, guest token or Atlas read. No app server or database started.",
+  "compilation": {
+    "command": "npm run check",
+    "status": "PASS",
+    "ejsTemplates": 18,
+    "note": "Compilation/lint only; not proof of CSS layout or functionality."
+  }
+}

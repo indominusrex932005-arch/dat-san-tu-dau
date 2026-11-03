@@ -1,0 +1,448 @@
+{
+  "issue": 63,
+  "pr": 69,
+  "targetSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+  "executedAtUTC": "2026-10-26T22:17:13.477Z",
+  "timezone": "Asia/Ho_Chi_Minh",
+  "source": {
+    "kind": "Real createApp/controller/service/EJS/CSS through localhost HTTP",
+    "database": "booking_test_1793052788462_43912",
+    "replicaSet": "qaCalendarUi69",
+    "date": "2026-10-30",
+    "otherDate": "2026-11-08"
+  },
+  "transport": "Node fetch through repository TestBrowser; browser visual and keyboard results must be recorded separately.",
+  "privacy": "Synthetic fixtures only. No raw HTML, credentials, cookies, CSRF, guest receipt token, booking ID, code or guest contact values included.",
+  "summary": {
+    "total": 11,
+    "passed": 11,
+    "failed": 0
+  },
+  "cases": [
+    {
+      "id": "UI-HTTP-01",
+      "steps": [
+        "OWNER normal GET calendar at fixture date."
+      ],
+      "expected": {
+        "http": 200,
+        "courtCount": 3,
+        "selectedDate": "2026-10-30",
+        "fixtureHold": "LOCKED",
+        "fixtureConfirmed": "BOOKED"
+      },
+      "actual": {
+        "http": 200,
+        "courtRows": [
+          "6adfd0746f5d81776f43f4cc",
+          "6adfd0746f5d81776f43f4cd",
+          "6adfd0746f5d81776f43f4ce"
+        ],
+        "selectedDate": "2026-10-30",
+        "hold0530": "LOCKED",
+        "booked0600": "BOOKED",
+        "holdRemainingMsAtCheckStart": 356913,
+        "states": [
+          "AVAILABLE",
+          "BOOKED",
+          "LOCKED",
+          "UNAVAILABLE"
+        ]
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-10-26T22:17:12.810Z"
+    },
+    {
+      "id": "UI-HTTP-02",
+      "steps": [
+        "OWNER long GET calendar at fixture date; inspect escaped fixture text and inactive row."
+      ],
+      "expected": {
+        "http": 200,
+        "scopedRows": 2,
+        "escapedLongData": true,
+        "inactiveLabel": true
+      },
+      "actual": {
+        "http": 200,
+        "courtRows": [
+          "6adfd0746f5d81776f43f4cf",
+          "6adfd0746f5d81776f43f4d0"
+        ],
+        "fullEscapedTextPresent": true,
+        "noExecutablePayload": true,
+        "inactiveLabel": true
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-10-26T22:17:12.829Z"
+    },
+    {
+      "id": "UI-HTTP-03",
+      "steps": [
+        "OWNER empty GET calendar at fixture date."
+      ],
+      "expected": {
+        "http": 200,
+        "courtRows": 0,
+        "emptyState": true,
+        "tableAbsent": true
+      },
+      "actual": {
+        "http": 200,
+        "courtCount": 0,
+        "emptyState": true,
+        "tableAbsent": true,
+        "returnToOwner": true,
+        "selectedDate": "2026-10-30"
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-10-26T22:17:12.845Z"
+    },
+    {
+      "id": "UI-HTTP-04",
+      "steps": [
+        "Guest GET calendar.",
+        "CUSTOMER and any optional pending/unassigned fixtures GET calendar.",
+        "Other OWNER GET own calendar and normal OWNER attempts query scope switch."
+      ],
+      "expected": {
+        "guest": "303 /login",
+        "customer": 403,
+        "twoOwnerScopes": true,
+        "injectedScopeIgnored": true
+      },
+      "actual": {
+        "guestStatus": 303,
+        "guestLoginRedirect": true,
+        "denied": {
+          "customer": 403
+        },
+        "otherOwnerStatus": 200,
+        "otherOwnerRows": [
+          "6adfd0746f5d81776f43f4d1"
+        ],
+        "attemptedSwitchStatus": 200,
+        "attemptedSwitchRows": [
+          "6adfd0746f5d81776f43f4cc",
+          "6adfd0746f5d81776f43f4cd",
+          "6adfd0746f5d81776f43f4ce"
+        ]
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-10-26T22:17:12.860Z"
+    },
+    {
+      "id": "UI-HTTP-05",
+      "steps": [
+        "GET calendar without date; inspect selected date and seven day links."
+      ],
+      "expected": {
+        "http": 200,
+        "defaultDate": "Vietnam today",
+        "sevenDaysFromToday": true
+      },
+      "actual": {
+        "http": 200,
+        "selectedDate": "2026-10-27",
+        "dayLinks": [
+          "2026-10-27",
+          "2026-10-28",
+          "2026-10-29",
+          "2026-10-30",
+          "2026-10-31",
+          "2026-11-01",
+          "2026-11-02"
+        ]
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-10-26T22:17:12.923Z"
+    },
+    {
+      "id": "UI-HTTP-06",
+      "steps": [
+        "GET fixture alternative date beyond seven days, then repeat identical URL."
+      ],
+      "expected": {
+        "http": [
+          200,
+          200
+        ],
+        "selectedDate": "2026-11-08",
+        "reloadStable": true,
+        "weekUnchanged": true
+      },
+      "actual": {
+        "statuses": [
+          200,
+          200
+        ],
+        "selectedDate": "2026-11-08",
+        "reloadStable": true,
+        "dayLinks": [
+          "2026-10-27",
+          "2026-10-28",
+          "2026-10-29",
+          "2026-10-30",
+          "2026-10-31",
+          "2026-11-01",
+          "2026-11-02"
+        ],
+        "noIncorrectWeekSelection": true
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-10-26T22:17:12.935Z"
+    },
+    {
+      "id": "UI-HTTP-07",
+      "steps": [
+        "GET owner dashboard, calendar HTML and calendar CSS asset."
+      ],
+      "expected": {
+        "ownerDashboard": 200,
+        "realCalendarLink": true,
+        "stylesheet": 200,
+        "getDateForm": true
+      },
+      "actual": {
+        "ownerDashboard": 200,
+        "calendarStatus": 200,
+        "realCalendarLink": true,
+        "stylesheet": 200,
+        "stylesheetContentType": "text/css; charset=utf-8",
+        "linkedStylesheet": true,
+        "getDateForm": true,
+        "noWriteActionAdded": true
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-10-26T22:17:12.972Z"
+    },
+    {
+      "id": "UI-HTTP-08",
+      "steps": [
+        "GET invalid, nonexistent, past and repeated dates."
+      ],
+      "expected": {
+        "allResponses": 400,
+        "noEmptyStateSubstitute": true
+      },
+      "actual": {
+        "responses": [
+          {
+            "status": 400,
+            "rowCount": 0,
+            "notEmptyPage": true
+          },
+          {
+            "status": 400,
+            "rowCount": 0,
+            "notEmptyPage": true
+          },
+          {
+            "status": 400,
+            "rowCount": 0,
+            "notEmptyPage": true
+          },
+          {
+            "status": 400,
+            "rowCount": 0,
+            "notEmptyPage": true
+          },
+          {
+            "status": 400,
+            "rowCount": 0,
+            "notEmptyPage": true
+          }
+        ]
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-10-26T22:17:13.003Z"
+    },
+    {
+      "id": "UI-HTTP-09",
+      "steps": [
+        "Read owner calendar HTML; compare response against private fields of own test bookings without recording those fields."
+      ],
+      "expected": {
+        "noPrivateBookingData": true,
+        "noReceiptTokenLink": true
+      },
+      "actual": {
+        "http": 200,
+        "bookingRecordsCompared": 2,
+        "noPrivateBookingData": true,
+        "noReceiptTokenLink": true
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-10-26T22:17:13.158Z"
+    },
+    {
+      "id": "UI-HTTP-10",
+      "steps": [
+        "Inspect real response table semantics, discontinuous hour columns, outside-hours cells and inactive row."
+      ],
+      "expected": {
+        "semanticHeaderAndRegion": true,
+        "gapPreserved": true,
+        "outsideHoursUnavailable": true,
+        "inactiveAllUnavailable": true
+      },
+      "actual": {
+        "http": 200,
+        "sameAxis": true,
+        "axisTimes": [
+          "05:00",
+          "05:30",
+          "06:00",
+          "06:30",
+          "07:00",
+          "07:30",
+          "08:00",
+          "08:30",
+          "21:00",
+          "21:30",
+          "22:00",
+          "22:30",
+          "23:00"
+        ],
+        "gapPreserved": true,
+        "outsideHoursUnavailable": true,
+        "inactiveAllUnavailable": true,
+        "semanticHeaderAndRegion": true,
+        "limitation": "HTML semantics only; does not establish rendered geometry, sticky behavior, keyboard interactions or viewport width."
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-10-26T22:17:13.317Z"
+    },
+    {
+      "id": "UI-HTTP-11",
+      "steps": [
+        "Compare counts and SHA-256 digests of seven business collections before/after all GET checks; sessions excluded."
+      ],
+      "expected": {
+        "businessDataUnchanged": true
+      },
+      "actual": {
+        "unchanged": true,
+        "before": {
+          "User": {
+            "count": 5,
+            "sha256": "c72d3989791b0fb2e3eaa368c22507e78b84dfe6b1f103444536806962bb8afa"
+          },
+          "Facility": {
+            "count": 4,
+            "sha256": "777053c1287f9affc496af79f9b7eaf0da99cb0bda020e25648e94af10718d95"
+          },
+          "Court": {
+            "count": 6,
+            "sha256": "9214d3a9e0fceed7d4886689b85c7b52731c2984f4b407bb57ad635314ff9eed"
+          },
+          "Booking": {
+            "count": 2,
+            "sha256": "9ef735929a457af2de2eb8f63fbf1d81a7b4da41c8550789ba68770ed50090e5"
+          },
+          "SlotLock": {
+            "count": 2,
+            "sha256": "cafeb317bb75ac305369704a6237605873ea95026ae270dec8a38e714ea22909"
+          },
+          "Payment": {
+            "count": 1,
+            "sha256": "41d327fa887b97e4b290d8e25aa2b1fd5c79ea426f712a0fe437ee2d84635e48"
+          },
+          "BookingRequest": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        },
+        "after": {
+          "User": {
+            "count": 5,
+            "sha256": "c72d3989791b0fb2e3eaa368c22507e78b84dfe6b1f103444536806962bb8afa"
+          },
+          "Facility": {
+            "count": 4,
+            "sha256": "777053c1287f9affc496af79f9b7eaf0da99cb0bda020e25648e94af10718d95"
+          },
+          "Court": {
+            "count": 6,
+            "sha256": "9214d3a9e0fceed7d4886689b85c7b52731c2984f4b407bb57ad635314ff9eed"
+          },
+          "Booking": {
+            "count": 2,
+            "sha256": "9ef735929a457af2de2eb8f63fbf1d81a7b4da41c8550789ba68770ed50090e5"
+          },
+          "SlotLock": {
+            "count": 2,
+            "sha256": "cafeb317bb75ac305369704a6237605873ea95026ae270dec8a38e714ea22909"
+          },
+          "Payment": {
+            "count": 1,
+            "sha256": "41d327fa887b97e4b290d8e25aa2b1fd5c79ea426f712a0fe437ee2d84635e48"
+          },
+          "BookingRequest": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        }
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-10-26T22:17:13.477Z"
+    }
+  ],
+  "notEstablishedByTheseChecks": [
+    "390px/1366px rendered layout",
+    "Tab/Enter or horizontal scrolling interaction",
+    "Screenshots"
+  ],
+  "applicationStartSHA": "de43a7052a0675e3cefc6d985a6a746c6c80582c",
+  "revisionValidation": {
+    "testedUISHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+    "appManifestRetainsOriginalStartSHA": true,
+    "reason": "App backend/EJS unchanged; CSS-only commit is served dynamically from disk and fetched SHA-256 matches that exact Git commit.",
+    "changedFiles": [
+      "public/css/owner-calendar.css"
+    ],
+    "sourceHashes": {
+      "views/owner-calendar.ejs": "734fae7df295d25436dd16401595d88a7e38bfc63a3b84865b7b634c978fab99",
+      "public/css/owner-calendar.css": "26572da773c8151916e9512160aeceec08f594db57216c41261d6b8af89a5291",
+      "views/owner-dashboard.ejs": "261743943de6f193993184fb78aaadfc7419db21b54081cecdaa75ead77f9762"
+    },
+    "sourceCommitChecks": {
+      "views/owner-calendar.ejs": {
+        "workingSHA256": "734fae7df295d25436dd16401595d88a7e38bfc63a3b84865b7b634c978fab99",
+        "committedSHA256": "3cde3356089a093be6f14f7ebd77f44ad3245a6d97d4f4d296d1f5c978b8db63",
+        "matchesAfterGitLineEndingNormalization": true
+      },
+      "public/css/owner-calendar.css": {
+        "workingSHA256": "26572da773c8151916e9512160aeceec08f594db57216c41261d6b8af89a5291",
+        "committedSHA256": "26572da773c8151916e9512160aeceec08f594db57216c41261d6b8af89a5291",
+        "matchesAfterGitLineEndingNormalization": true
+      },
+      "views/owner-dashboard.ejs": {
+        "workingSHA256": "261743943de6f193993184fb78aaadfc7419db21b54081cecdaa75ead77f9762",
+        "committedSHA256": "e544631a9d3b8126225964c5b003a26a12e603968aea7b63df701167e4052faf",
+        "matchesAfterGitLineEndingNormalization": true
+      }
+    },
+    "servedCSS": {
+      "http": 200,
+      "contentType": "text/css; charset=utf-8",
+      "sha256": "26572da773c8151916e9512160aeceec08f594db57216c41261d6b8af89a5291",
+      "matchesCommittedCSS": true
+    },
+    "verifiedAtUTC": "2026-10-26T22:18:10.218Z"
+  },
+  "check": {
+    "status": "PASS",
+    "ejs": 18,
+    "log": "acceptance-check-e3aea06.log",
+    "testedUISHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f"
+  },
+  "fullSuite": {
+    "passed": 135,
+    "failed": 0,
+    "skipped": 0,
+    "testedSHA": "de43a7052a0675e3cefc6d985a6a746c6c80582c",
+    "scope": "Ran before CSS-only selector correction; not rerun for one CSS specificity change.",
+    "log": "acceptance-tests-2026-10-27.log"
+  }
+}

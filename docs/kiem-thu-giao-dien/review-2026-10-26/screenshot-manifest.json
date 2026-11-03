@@ -1,0 +1,320 @@
+{
+  "date": "2026-10-26",
+  "files": [
+    {
+      "file": "BUG01-duplicate-filter-error-1366.jpg",
+      "bytes": 66029,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "55a12b9631b3c3607a4f722818367edf05d2cd85575a729e37e15884aca54cc8"
+    },
+    {
+      "file": "BUG01-duplicate-filter-error-390.jpg",
+      "bytes": 33359,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "df39a7deaa269eb59b5683b0a8e5c5b75d19f63fa895f77d026276188c36f634"
+    },
+    {
+      "file": "C01-courts-filter-1366.jpg",
+      "bytes": 84069,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "8e80c74b27789f53da9e99609cf9464b6ad546dd9d79c43ff06dcb0659e03171"
+    },
+    {
+      "file": "C01-courts-filter-390.jpg",
+      "bytes": 29946,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "e68149454a298c7e2aebfd3cfa6aa8e41a3c4fe7d6f33bfbbefbd0c72f4bf42a"
+    },
+    {
+      "file": "C01-detail-selected-1366.jpg",
+      "bytes": 119494,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "14c9174b86b759cdb262e99f428e1c63e0cb719b4901e5a4f7c896e4b44c828d"
+    },
+    {
+      "file": "C01-prices-notice-long-1366.jpg",
+      "bytes": 93679,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "e0724634728fe32d6bb0c756ba956e359263637bd72721aba0acd9b21c360344"
+    },
+    {
+      "file": "C02-missing-info-390.jpg",
+      "bytes": 46182,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "8c970feca3da9ce6cc171e6e3b777a2008ad321567b833d120dbec0679ce9086"
+    },
+    {
+      "file": "C03-empty-1366.jpg",
+      "bytes": 60701,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "f797b9e12ac839b1ab79d5e158b8f7b3eb52d68f31cf7e390147c0ea897beec2"
+    },
+    {
+      "file": "C03-empty-390.jpg",
+      "bytes": 28317,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "b266e1facdd430d6f12c9975de761c90a29e10f665beeb82ea2125fbf97d7b64"
+    },
+    {
+      "file": "C04-long-keyboard-390.jpg",
+      "bytes": 42442,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "d63653a3143709a1dbcc55e6d1e575dc2a2c16d60fc7674103bc715809d127ea"
+    },
+    {
+      "file": "C05-filter-applied-1366.jpg",
+      "bytes": 58958,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "95259b95417f4f9e6613fbbb25993c54fadcc23f53daa8a70241b82f1275dc19"
+    },
+    {
+      "file": "C05-filter-applied-390.jpg",
+      "bytes": 31379,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "31a313870fff9fa9cb4bc95248b3ba4452d5078cfdfbc702b8872f19298852e9"
+    },
+    {
+      "file": "C05-filter-no-results-390.jpg",
+      "bytes": 34233,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "76130aab8c2f22aa49cd36f66e9a0404ef4375f364826d11a4c3993a4461c3e4"
+    },
+    {
+      "file": "C05-filter-result-390.jpg",
+      "bytes": 30695,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "3c590caaf36bfef1f567a2576f1c04891d898b659d62cba0c0730bfec7c02dec"
+    },
+    {
+      "file": "F01-facilities-long-1366.jpg",
+      "bytes": 84731,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "27adc17a44cff853e7272f55bcbea8ae12fa67cc8f7be847fb6e25b0ddb54fb2"
+    },
+    {
+      "file": "F01-facilities-long-390.jpg",
+      "bytes": 30450,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "347d65e0e346d3b52eacb502383ec1bec31792e1a5dad9b986e276f077a13d4b"
+    },
+    {
+      "file": "F02-empty-1366.jpg",
+      "bytes": 49298,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "9fe68675258be059df4c0bb3b9c4ff8f95c20bc65d1b4ee57ebbf416d191a1c3"
+    },
+    {
+      "file": "F02-empty-390.jpg",
+      "bytes": 32230,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "72f7e2a76dd813a05db6f4d33a1faab46c144ddc9a8833dff43598aecb17cac6"
+    },
+    {
+      "file": "F03-long-scroll-390.jpg",
+      "bytes": 44086,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "e3850633f020cb14bdf9b527177d1957b6503893a9c0d800daf302daeadfdbe4"
+    },
+    {
+      "file": "H01-home-1366.jpg",
+      "bytes": 82710,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "dd2e3fbd5d899e393b5cf753f80ee641e819fcf4a174c8716115df5e6adb4080"
+    },
+    {
+      "file": "H01-home-390.jpg",
+      "bytes": 32899,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "571d6f293320522189d1019148d62d2aa3538d2f5af5dda8f5148099ad401c27"
+    },
+    {
+      "file": "H01-home-bottom-390.jpg",
+      "bytes": 36980,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "ba4699a0cebe1ec4fce91910c9d7fbc7c4d0d86161dafcc7061e48a41ed34aea"
+    },
+    {
+      "file": "H01-home-keyboard-1366.jpg",
+      "bytes": 81362,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "8d24754a5c66d142bec24b091870904fa90c4d5158ea24d187d08aece3629492"
+    },
+    {
+      "file": "H01-home-keyboard-390.jpg",
+      "bytes": 33793,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "598fb749ac846bc346f8ea620a84448195dc6a7be9f546f6e41e4516546aa52b"
+    },
+    {
+      "file": "H02-customer-nav-1366.jpg",
+      "bytes": 78942,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "423d3d18d219b9b210985a76402b0a125b0036117a7bcf92a2b1cb55cab0db49"
+    },
+    {
+      "file": "H02-owner-nav-390.jpg",
+      "bytes": 31927,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "e837a90e80ee93f4db65eea08e842ad985a4234888b9f609b0b81d8dad29b76b"
+    },
+    {
+      "file": "L01-customer-register-link-1366.jpg",
+      "bytes": 47534,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "1b426e1c2a41ecfe0451895bace2ab6a40fe756d4a23c8adfab3afe635da4ffe"
+    },
+    {
+      "file": "L01-guest-link-1366.jpg",
+      "bytes": 84058,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "aa97dfc59dee8080d0c67ce50783589afc3e0a4d45161b842c4c3e71cbe26b11"
+    },
+    {
+      "file": "L01-keyboard-submit-1366.jpg",
+      "bytes": 73128,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "454b743fbbb2b9f1b79491b868f192d2780c7ecd26935023ad9f5f878e461dd2"
+    },
+    {
+      "file": "L01-login-1366.jpg",
+      "bytes": 69321,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "8b1a38e0ce396b6dd2135a0587ef7e9fe8d1d8fc4fd93c6d9c7ff22c72f2e774"
+    },
+    {
+      "file": "L01-login-390.jpg",
+      "bytes": 32093,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "b575b0b45195fcebb5d8f79aec7b76192b23bf8734cf2efa891f748bd9195e6f"
+    },
+    {
+      "file": "L01-owner-register-link-1366.jpg",
+      "bytes": 46353,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "9fe6fc3659cc78af7e595d8a7c637e071d72f6f8df6941c413ad223f3884c5ec"
+    },
+    {
+      "file": "L03-owner-login-390.jpg",
+      "bytes": 35511,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "fdf224eb697cb8ff06c62571a49a2e9cba1fa43e1923f6fa7ed313045f43b2ae"
+    },
+    {
+      "file": "L04-login-error-1366.jpg",
+      "bytes": 72896,
+      "pixelSize": [
+        1351,
+        890
+      ],
+      "sha256": "55dec9008efa2259058708bc8fdc2295846eee4a0cb03cf5545d8f6b5bdd1c34"
+    },
+    {
+      "file": "L04-login-error-390.jpg",
+      "bytes": 34503,
+      "pixelSize": [
+        375,
+        811
+      ],
+      "sha256": "438a32ccb0b4207dc0a0476cdb691b566f82a29b66370ae79500345d1facc63a"
+    }
+  ]
+}

@@ -1,0 +1,1025 @@
+{
+  "issue": 36,
+  "targetSHA": "590388158f8f3982259dde43f311e7604f74437f",
+  "targetBackendSHA": "590388158f8f3982259dde43f311e7604f74437f",
+  "executedAtUTC": "2026-10-24T12:46:03.081Z",
+  "timezone": "Asia/Ho_Chi_Minh",
+  "source": {
+    "kind": "Disposable local MongoDB replica set",
+    "database": "qa_search36main_1792845937362_8192f1",
+    "fixtureDate": "2026-10-27",
+    "otherDate": "2026-10-28"
+  },
+  "transport": "Node fetch through repository TestBrowser HTTP helper; browser visual QA recorded separately.",
+  "privacy": "No cookies, CSRF values, private receipt tokens, token URLs, credentials or raw HTML stored.",
+  "summary": {
+    "total": 41,
+    "passed": 41,
+    "failed": 0
+  },
+  "cases": [
+    {
+      "id": "HTTP-01",
+      "steps": [
+        "GET /courts?"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [
+          "after",
+          "bFree",
+          "bLong",
+          "booked",
+          "edge",
+          "expired",
+          "free",
+          "full",
+          "held",
+          "invalidPhone",
+          "late",
+          "pastOnly",
+          "pending",
+          "unowned"
+        ],
+        "notes": "No availability criterion: all active courts, including non-ready facilities."
+      },
+      "actual": {
+        "http": 200,
+        "courts": [
+          "after",
+          "bFree",
+          "bLong",
+          "booked",
+          "edge",
+          "expired",
+          "free",
+          "full",
+          "held",
+          "invalidPhone",
+          "late",
+          "pastOnly",
+          "pending",
+          "unowned"
+        ],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-01]"
+    },
+    {
+      "id": "HTTP-02",
+      "steps": [
+        "GET /courts?facilityId=6adca8713ddc5e01c14dca19"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [
+          "after",
+          "booked",
+          "edge",
+          "expired",
+          "free",
+          "full",
+          "held",
+          "late",
+          "pastOnly"
+        ],
+        "notes": ""
+      },
+      "actual": {
+        "http": 200,
+        "courts": [
+          "after",
+          "booked",
+          "edge",
+          "expired",
+          "free",
+          "full",
+          "held",
+          "late",
+          "pastOnly"
+        ],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-02]"
+    },
+    {
+      "id": "HTTP-03",
+      "steps": [
+        "GET /courts?facilityId=6adca8713ddc5e01c14dca1a"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [
+          "bFree",
+          "bLong"
+        ],
+        "notes": ""
+      },
+      "actual": {
+        "http": 200,
+        "courts": [
+          "bFree",
+          "bLong"
+        ],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-03]"
+    },
+    {
+      "id": "HTTP-04",
+      "steps": [
+        "GET /courts?date=2026-10-27"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [
+          "after",
+          "bFree",
+          "bLong",
+          "booked",
+          "edge",
+          "expired",
+          "free",
+          "held",
+          "late",
+          "pastOnly"
+        ],
+        "notes": "Date-only search requires at least one available half-hour; fully booked court excluded."
+      },
+      "actual": {
+        "http": 200,
+        "courts": [
+          "after",
+          "bFree",
+          "bLong",
+          "booked",
+          "edge",
+          "expired",
+          "free",
+          "held",
+          "late",
+          "pastOnly"
+        ],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-04]"
+    },
+    {
+      "id": "HTTP-05",
+      "steps": [
+        "GET /courts?date=2026-10-28"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [
+          "after",
+          "bFree",
+          "bLong",
+          "booked",
+          "edge",
+          "expired",
+          "free",
+          "full",
+          "held",
+          "late",
+          "pastOnly"
+        ],
+        "notes": "Locks on the fixture date must not affect another day."
+      },
+      "actual": {
+        "http": 200,
+        "courts": [
+          "after",
+          "bFree",
+          "bLong",
+          "booked",
+          "edge",
+          "expired",
+          "free",
+          "full",
+          "held",
+          "late",
+          "pastOnly"
+        ],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-05]"
+    },
+    {
+      "id": "HTTP-06",
+      "steps": [
+        "GET /courts?date=2026-10-27&startTime=14%3A00&endTime=15%3A00"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [
+          "after",
+          "bFree",
+          "bLong",
+          "edge",
+          "expired",
+          "free"
+        ],
+        "notes": "Every half-hour in the entire [14:00,15:00) interval must be AVAILABLE."
+      },
+      "actual": {
+        "http": 200,
+        "courts": [
+          "after",
+          "bFree",
+          "bLong",
+          "edge",
+          "expired",
+          "free"
+        ],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-06]"
+    },
+    {
+      "id": "HTTP-07",
+      "steps": [
+        "GET /courts?facilityId=6adca8713ddc5e01c14dca19&date=2026-10-27&startTime=14%3A00&endTime=15%3A00"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [
+          "after",
+          "edge",
+          "expired",
+          "free"
+        ],
+        "notes": ""
+      },
+      "actual": {
+        "http": 200,
+        "courts": [
+          "after",
+          "edge",
+          "expired",
+          "free"
+        ],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-07]"
+    },
+    {
+      "id": "HTTP-08",
+      "steps": [
+        "GET /courts?facilityId=6adca8713ddc5e01c14dca1a&date=2026-10-27&startTime=14%3A00&endTime=15%3A00"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [
+          "bFree",
+          "bLong"
+        ],
+        "notes": ""
+      },
+      "actual": {
+        "http": 200,
+        "courts": [
+          "bFree",
+          "bLong"
+        ],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-08]"
+    },
+    {
+      "id": "HTTP-09",
+      "steps": [
+        "GET /courts?facilityId=6adca8713ddc5e01c14dca19&date=2026-10-27&startTime=14%3A00&endTime=14%3A30"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [
+          "after",
+          "edge",
+          "expired",
+          "free",
+          "held"
+        ],
+        "notes": "The HOLD at 14:30 lies exactly outside the requested interval."
+      },
+      "actual": {
+        "http": 200,
+        "courts": [
+          "after",
+          "edge",
+          "expired",
+          "free",
+          "held"
+        ],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-09]"
+    },
+    {
+      "id": "HTTP-10",
+      "steps": [
+        "GET /courts?facilityId=6adca8713ddc5e01c14dca19&date=2026-10-27&startTime=14%3A30&endTime=15%3A00"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [
+          "after",
+          "booked",
+          "edge",
+          "expired",
+          "free"
+        ],
+        "notes": "The BOOKED slot at 14:00 lies before the requested interval."
+      },
+      "actual": {
+        "http": 200,
+        "courts": [
+          "after",
+          "booked",
+          "edge",
+          "expired",
+          "free"
+        ],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-10]"
+    },
+    {
+      "id": "HTTP-11",
+      "steps": [
+        "GET /courts?facilityId=6adca8713ddc5e01c14dca19&date=2026-10-27&startTime=13%3A30&endTime=14%3A30"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [
+          "after",
+          "expired",
+          "free",
+          "held"
+        ],
+        "notes": "The edge court opens at14:00 and must not satisfy a range starting13:30."
+      },
+      "actual": {
+        "http": 200,
+        "courts": [
+          "after",
+          "expired",
+          "free",
+          "held"
+        ],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-11]"
+    },
+    {
+      "id": "HTTP-12",
+      "steps": [
+        "GET /courts?facilityId=6adca8713ddc5e01c14dca19&date=2026-10-27&startTime=14%3A30&endTime=15%3A30"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [
+          "booked",
+          "expired",
+          "free"
+        ],
+        "notes": "The edge court closes at15:00; the after court is booked at15:00."
+      },
+      "actual": {
+        "http": 200,
+        "courts": [
+          "booked",
+          "expired",
+          "free"
+        ],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-12]"
+    },
+    {
+      "id": "HTTP-13",
+      "steps": [
+        "GET /courts?facilityId=6adca8713ddc5e01c14dca19&date=2026-10-27&startTime=22%3A00&endTime=22%3A30"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [],
+        "notes": "Range outside every court opening window."
+      },
+      "actual": {
+        "http": 200,
+        "courts": [],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-13]"
+    },
+    {
+      "id": "HTTP-14",
+      "steps": [
+        "GET /courts?facilityId=000000000000000000000000&date=2026-10-27"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [],
+        "notes": "Well-formed but unknown facility has no courts."
+      },
+      "actual": {
+        "http": 200,
+        "courts": [],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-14]"
+    },
+    {
+      "id": "HTTP-15-unowned",
+      "steps": [
+        "GET /courts?facilityId=6adca8713ddc5e01c14dca1b&date=2026-10-27"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [],
+        "notes": "Facilities unable to accept bookings must not satisfy date search."
+      },
+      "actual": {
+        "http": 200,
+        "courts": [],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-15-unowned]"
+    },
+    {
+      "id": "HTTP-15-pending",
+      "steps": [
+        "GET /courts?facilityId=6adca8713ddc5e01c14dca1c&date=2026-10-27"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [],
+        "notes": "Facilities unable to accept bookings must not satisfy date search."
+      },
+      "actual": {
+        "http": 200,
+        "courts": [],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-15-pending]"
+    },
+    {
+      "id": "HTTP-15-invalidPhone",
+      "steps": [
+        "GET /courts?facilityId=6adca8713ddc5e01c14dca1d&date=2026-10-27"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [],
+        "notes": "Facilities unable to accept bookings must not satisfy date search."
+      },
+      "actual": {
+        "http": 200,
+        "courts": [],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-15-invalidPhone]"
+    },
+    {
+      "id": "HTTP-16",
+      "steps": [
+        "GET /courts?facilityId=not-an-object-id"
+      ],
+      "expected": {
+        "http": 400,
+        "clearFilterError": true
+      },
+      "actual": {
+        "http": 400,
+        "courts": [],
+        "alert": "Cơ sở không hợp lệ."
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-16]"
+    },
+    {
+      "id": "HTTP-17",
+      "steps": [
+        "GET /courts?date=24%2F10%2F2026"
+      ],
+      "expected": {
+        "http": 400,
+        "clearFilterError": true
+      },
+      "actual": {
+        "http": 400,
+        "courts": [],
+        "alert": "Ngày không hợp lệ."
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-17]"
+    },
+    {
+      "id": "HTTP-18",
+      "steps": [
+        "GET /courts?date=2030-02-30"
+      ],
+      "expected": {
+        "http": 400,
+        "clearFilterError": true
+      },
+      "actual": {
+        "http": 400,
+        "courts": [],
+        "alert": "Ngày không tồn tại."
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-18]"
+    },
+    {
+      "id": "HTTP-19",
+      "steps": [
+        "GET /courts?date=2026-10-23"
+      ],
+      "expected": {
+        "http": 400,
+        "clearFilterError": true
+      },
+      "actual": {
+        "http": 400,
+        "courts": [],
+        "alert": "Ngày tìm kiếm không được trong quá khứ."
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-19]"
+    },
+    {
+      "id": "HTTP-20",
+      "steps": [
+        "GET /courts?date=2026-10-27&startTime=14%3A00"
+      ],
+      "expected": {
+        "http": 400,
+        "clearFilterError": true
+      },
+      "actual": {
+        "http": 400,
+        "courts": [],
+        "alert": "Vui lòng chọn đầy đủ cả giờ bắt đầu và giờ kết thúc."
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-20]"
+    },
+    {
+      "id": "HTTP-21",
+      "steps": [
+        "GET /courts?date=2026-10-27&endTime=15%3A00"
+      ],
+      "expected": {
+        "http": 400,
+        "clearFilterError": true
+      },
+      "actual": {
+        "http": 400,
+        "courts": [],
+        "alert": "Vui lòng chọn đầy đủ cả giờ bắt đầu và giờ kết thúc."
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-21]"
+    },
+    {
+      "id": "HTTP-22",
+      "steps": [
+        "GET /courts?startTime=14%3A00&endTime=15%3A00"
+      ],
+      "expected": {
+        "http": 400,
+        "clearFilterError": true
+      },
+      "actual": {
+        "http": 400,
+        "courts": [],
+        "alert": "Vui lòng chọn ngày khi tìm theo khoảng giờ."
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-22]"
+    },
+    {
+      "id": "HTTP-23",
+      "steps": [
+        "GET /courts?date=2026-10-27&startTime=14%3A15&endTime=15%3A00"
+      ],
+      "expected": {
+        "http": 400,
+        "clearFilterError": true
+      },
+      "actual": {
+        "http": 400,
+        "courts": [],
+        "alert": "Giờ phải có dạng HH:00 hoặc HH:30."
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-23]"
+    },
+    {
+      "id": "HTTP-24",
+      "steps": [
+        "GET /courts?date=2026-10-27&startTime=24%3A00&endTime=23%3A30"
+      ],
+      "expected": {
+        "http": 400,
+        "clearFilterError": true
+      },
+      "actual": {
+        "http": 400,
+        "courts": [],
+        "alert": "Giờ phải có dạng HH:00 hoặc HH:30."
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-24]"
+    },
+    {
+      "id": "HTTP-25",
+      "steps": [
+        "GET /courts?date=2026-10-27&startTime=14%3A00&endTime=14%3A00"
+      ],
+      "expected": {
+        "http": 400,
+        "clearFilterError": true
+      },
+      "actual": {
+        "http": 400,
+        "courts": [],
+        "alert": "Giờ kết thúc phải sau giờ bắt đầu."
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-25]"
+    },
+    {
+      "id": "HTTP-26",
+      "steps": [
+        "GET /courts?date=2026-10-27&startTime=15%3A00&endTime=14%3A00"
+      ],
+      "expected": {
+        "http": 400,
+        "clearFilterError": true
+      },
+      "actual": {
+        "http": 400,
+        "courts": [],
+        "alert": "Giờ kết thúc phải sau giờ bắt đầu."
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-26]"
+    },
+    {
+      "id": "HTTP-27",
+      "steps": [
+        "GET /courts?date=2026-10-27&startTime=8%3A00&endTime=15%3A00"
+      ],
+      "expected": {
+        "http": 400,
+        "clearFilterError": true
+      },
+      "actual": {
+        "http": 400,
+        "courts": [],
+        "alert": "Giờ phải có dạng HH:00 hoặc HH:30."
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-27]"
+    },
+    {
+      "id": "HTTP-28",
+      "steps": [
+        "GET /courts?date=2030-13-01"
+      ],
+      "expected": {
+        "http": 400,
+        "clearFilterError": true
+      },
+      "actual": {
+        "http": 400,
+        "courts": [],
+        "alert": "Ngày không tồn tại."
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-28]"
+    },
+    {
+      "id": "HTTP-29",
+      "steps": [
+        "GET repeated facilityId=A&facilityId=B, with valid date/range."
+      ],
+      "expected": {
+        "duplicatePolicy": "reject repeated search parameters on current main",
+        "http": 400,
+        "courts": []
+      },
+      "actual": {
+        "http": 400,
+        "courts": [],
+        "selectedFacility": "",
+        "alert": "Tham số tìm kiếm không được lặp lại."
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-29]"
+    },
+    {
+      "id": "HTTP-30",
+      "steps": [
+        "GET /courts?facilityId=+6adca8713ddc5e01c14dca19+&date=+2026-10-27+&startTime=+14%3A00+&endTime=+15%3A00+"
+      ],
+      "expected": {
+        "http": 200,
+        "courts": [
+          "after",
+          "edge",
+          "expired",
+          "free"
+        ],
+        "notes": "Controller trims scalar query values."
+      },
+      "actual": {
+        "http": 200,
+        "courts": [
+          "after",
+          "edge",
+          "expired",
+          "free"
+        ],
+        "alert": ""
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-30]"
+    },
+    {
+      "id": "HTTP-31",
+      "steps": [
+        "GET facility A, 2026-10-27,14:00–15:00, then reload identical URL."
+      ],
+      "expected": {
+        "retained": [
+          "facilityId",
+          "date",
+          "startTime",
+          "endTime"
+        ],
+        "reloadStable": true
+      },
+      "actual": {
+        "facilityId": "6adca8713ddc5e01c14dca19",
+        "date": "2026-10-27",
+        "startTime": "14:00",
+        "endTime": "15:00",
+        "reloadStable": true
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-31]"
+    },
+    {
+      "id": "HTTP-32",
+      "steps": [
+        "Search impossible range, inspect empty-state reset link, GET /courts."
+      ],
+      "expected": {
+        "emptyMessage": true,
+        "resetHref": "/courts",
+        "resetRestoresAllActive": true
+      },
+      "actual": {
+        "emptyMessage": true,
+        "resetHref": "/courts",
+        "afterReset": [
+          "after",
+          "bFree",
+          "bLong",
+          "booked",
+          "edge",
+          "expired",
+          "free",
+          "full",
+          "held",
+          "invalidPhone",
+          "late",
+          "pastOnly",
+          "pending",
+          "unowned"
+        ],
+        "resetFields": [
+          "",
+          "",
+          "",
+          ""
+        ]
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-32]"
+    },
+    {
+      "id": "HTTP-33",
+      "steps": [
+        "Search B with 2026-10-27; follow bLong court detail link."
+      ],
+      "expected": {
+        "longNamePreserved": true,
+        "escapedData": true,
+        "dateInLinkAndDetail": "2026-10-27"
+      },
+      "actual": {
+        "http": 200,
+        "detailHttp": 200,
+        "nameCharacters": 150,
+        "fullNamePreserved": true,
+        "detailDate": "2026-10-27",
+        "bookingDate": "2026-10-27",
+        "rawExecutableTag": false
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-33]"
+    },
+    {
+      "id": "HTTP-34",
+      "steps": [
+        "GET malicious query value with HTML tags."
+      ],
+      "expected": {
+        "http": 400,
+        "escapedQuery": true,
+        "noExecutableTag": true
+      },
+      "actual": {
+        "http": 400,
+        "clearError": true,
+        "rawPayloadPresent": false,
+        "executablePayloadPresent": false
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-34]"
+    },
+    {
+      "id": "HTTP-35",
+      "steps": [
+        "GET /courts?date=today; compare current date in Asia/Ho_Chi_Minh and a court whose only slot ended at00:30."
+      ],
+      "expected": {
+        "dateUsesVietnamTimezone": true,
+        "pastOnlyCourtAbsentAfter0030": true
+      },
+      "actual": {
+        "http": 200,
+        "todayVN": "2026-10-24",
+        "manifestToday": "2026-10-24",
+        "currentTimeVN": "19:46",
+        "pastOnlyPresent": false,
+        "availableCourtCount": 6
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-35]"
+    },
+    {
+      "id": "HTTP-36",
+      "steps": [
+        "GET both CSS assets used by the filter page."
+      ],
+      "expected": {
+        "assets": {
+          "/assets/css/courts.css": 200,
+          "/assets/css/demo.css": 200
+        }
+      },
+      "actual": {
+        "assets": {
+          "/assets/css/courts.css": 200,
+          "/assets/css/demo.css": 200
+        }
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-36]"
+    },
+    {
+      "id": "HTTP-37",
+      "steps": [
+        "Compare Booking/SlotLock/Payment/BookingRequest count+digest before and after all preceding GETs."
+      ],
+      "expected": {
+        "noBusinessDataMutated": true,
+        "expiredLockRemainsStored": true
+      },
+      "actual": {
+        "unchanged": true,
+        "before": {
+          "Booking": {
+            "count": 5,
+            "sha256": "5dc0df0140a29ae53df4b430ee8b24ff4f44628d8f303e481d3aa021aa290400"
+          },
+          "SlotLock": {
+            "count": 36,
+            "sha256": "b8731facead33f28d125a73b70b3da826676210702edcbf5b753ddc2c60e0709"
+          },
+          "Payment": {
+            "count": 3,
+            "sha256": "da3a452fdac25029d89f298e13ac741f4d793e7b180249e962f90468efc506aa"
+          },
+          "BookingRequest": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        },
+        "after": {
+          "Booking": {
+            "count": 5,
+            "sha256": "5dc0df0140a29ae53df4b430ee8b24ff4f44628d8f303e481d3aa021aa290400"
+          },
+          "SlotLock": {
+            "count": 36,
+            "sha256": "b8731facead33f28d125a73b70b3da826676210702edcbf5b753ddc2c60e0709"
+          },
+          "Payment": {
+            "count": 3,
+            "sha256": "da3a452fdac25029d89f298e13ac741f4d793e7b180249e962f90468efc506aa"
+          },
+          "BookingRequest": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        },
+        "expiredStatus": "HOLD",
+        "expiredLockCount": 1
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-37]"
+    },
+    {
+      "id": "HTTP-38",
+      "steps": [
+        "Create independent HTTP cookie jars A/B; obtain CSRF through /login; both GET the same search results."
+      ],
+      "expected": {
+        "bothSeeFreeCourt": true,
+        "distinctSessions": true,
+        "noBusinessDataMutated": true
+      },
+      "actual": {
+        "statuses": [
+          200,
+          200
+        ],
+        "bothSeeFreeCourt": true,
+        "distinctSessions": true,
+        "noBusinessDataMutated": true
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-38]"
+    },
+    {
+      "id": "HTTP-39",
+      "steps": [
+        "Session B POST /bookings holds only14:30.",
+        "Session A submits stale selection14:00+14:30.",
+        "Inspect locks and refresh search."
+      ],
+      "expected": {
+        "B": 303,
+        "A": 409,
+        "noPartialLockAt1400": true,
+        "rejectedPostPreservesBusinessData": true,
+        "refreshedSearchExcludesFreeCourt": true
+      },
+      "actual": {
+        "B": 303,
+        "BRedirectsToCheckout": true,
+        "A": 409,
+        "lock1400": 0,
+        "lock1430": 1,
+        "rejectedPostPreservesBusinessData": true,
+        "refreshedSearchExcludesFreeCourt": true
+      },
+      "status": "PASS",
+      "evidence": "http-results.json; cases[id=HTTP-39]"
+    }
+  ],
+  "baseline": "origin/main",
+  "expectationChanges": [
+    {
+      "case": "HTTP-29",
+      "previousSHA": "30ee256133ac87417481ccf52407281af9e385e7",
+      "previousExpected": "200; first repeated value wins",
+      "currentExpected": "400; reject repeated search parameters",
+      "reason": "Current main service rejects arrays; integrated backend fix 02dbe9c. The first exploratory run used the old expectation and returned 40/41; after checking the contract, all 41 cases were rerun on a newly created disposable database."
+    }
+  ]
+}

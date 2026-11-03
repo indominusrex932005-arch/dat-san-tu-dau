@@ -1,0 +1,266 @@
+{
+  "issue": 66,
+  "targetSHA": "bb8057999970e9d063cf107699164971a2ea15cc",
+  "mainSHA": "36e75cdf33dc7cf7bd568ed3ae938698af47bca1",
+  "executedAt": "2026-10-28T09:24:35.257Z",
+  "method": "Real HTTP/Express/controller/service/MongoDB transactions, no mocked routes",
+  "database": "booking_test_1793179475132_22092",
+  "node": "v24.15.0",
+  "today": "2026-10-28",
+  "date": "2026-10-29",
+  "cases": [
+    {
+      "id": "TC-01",
+      "title": "Phân quyền và phạm vi hai OWNER",
+      "status": "PASS",
+      "actual": {
+        "guest": 303,
+        "denied": {
+          "customer": 403,
+          "pending": 403,
+          "unassigned": 403
+        },
+        "ownerAStatus": 200,
+        "ownerBStatus": 200,
+        "rowsA": [
+          "6ae1bf53dd88a9be8f937888",
+          "6ae1bf53dd88a9be8f937889",
+          "6ae1bf53dd88a9be8f93788a"
+        ],
+        "rowsB": [
+          "6ae1bf53dd88a9be8f93788c",
+          "6ae1bf53dd88a9be8f93788d",
+          "6ae1bf53dd88a9be8f93788e"
+        ],
+        "injectedScopeUnchanged": true
+      }
+    },
+    {
+      "id": "TC-02",
+      "title": "Giờ phục vụ khác nhau và sân inactive",
+      "status": "PASS",
+      "actual": {
+        "columns": [
+          {
+            "time": "05:00",
+            "endTime": "05:30"
+          },
+          {
+            "time": "05:30",
+            "endTime": "06:00"
+          },
+          {
+            "time": "06:00",
+            "endTime": "06:30"
+          },
+          {
+            "time": "06:30",
+            "endTime": "07:00"
+          },
+          {
+            "time": "07:00",
+            "endTime": "07:30"
+          },
+          {
+            "time": "07:30",
+            "endTime": "08:00"
+          },
+          {
+            "time": "08:00",
+            "endTime": "08:30"
+          },
+          {
+            "time": "08:30",
+            "endTime": "09:00"
+          },
+          {
+            "time": "17:00",
+            "endTime": "17:30"
+          },
+          {
+            "time": "17:30",
+            "endTime": "18:00"
+          },
+          {
+            "time": "18:00",
+            "endTime": "18:30"
+          },
+          {
+            "time": "18:30",
+            "endTime": "19:00"
+          },
+          {
+            "time": "19:00",
+            "endTime": "19:30"
+          },
+          {
+            "time": "19:30",
+            "endTime": "20:00"
+          },
+          {
+            "time": "20:00",
+            "endTime": "20:30"
+          },
+          {
+            "time": "20:30",
+            "endTime": "21:00"
+          },
+          {
+            "time": "21:00",
+            "endTime": "21:30"
+          },
+          {
+            "time": "21:30",
+            "endTime": "22:00"
+          }
+        ],
+        "inactiveAllUnavailable": true,
+        "morningCourtAt1700": "UNAVAILABLE",
+        "maintenanceNotInvented": true
+      }
+    },
+    {
+      "id": "TC-03",
+      "title": "Đặt thật AVAILABLE -> LOCKED -> BOOKED",
+      "status": "PASS",
+      "actual": {
+        "flow": [
+          "AVAILABLE",
+          "LOCKED",
+          "BOOKED"
+        ],
+        "holdHTTP": 303,
+        "demoPaymentHTTP": 303,
+        "confirmedSlots": [
+          "05:30",
+          "06:00"
+        ],
+        "confirmedLockCount": 2,
+        "paymentCount": 1,
+        "otherHoldAt0630": "LOCKED"
+      }
+    },
+    {
+      "id": "TC-04",
+      "title": "HOLD hết hạn, ô đã qua và bảo toàn đơn khác",
+      "status": "PASS",
+      "actual": {
+        "expiryMethod": "Real POST hold then fixture deadline set to now+1.5s in isolated QA DB; waited past deadline; no source/system-clock changes",
+        "deadline": "2026-10-28T09:24:37.566Z",
+        "expiredFutureSlot": "AVAILABLE",
+        "pastTodaySlot": "UNAVAILABLE",
+        "confirmedSlot": "BOOKED",
+        "otherHold": "LOCKED",
+        "confirmedLockCount": 2,
+        "otherHoldLockCount": 1,
+        "expiredBookingStillHoldAndLockNotDeletedByGET": true
+      }
+    },
+    {
+      "id": "TC-05",
+      "title": "Ngày Việt Nam, bảy lựa chọn và lỗi ngày",
+      "status": "PASS",
+      "actual": {
+        "today": "2026-10-28",
+        "choices": [
+          "2026-10-28",
+          "2026-10-29",
+          "2026-10-30",
+          "2026-10-31",
+          "2026-11-01",
+          "2026-11-02",
+          "2026-11-03"
+        ],
+        "future": "2026-11-17",
+        "futureStatus": 200,
+        "errors": [
+          {
+            "path": "/owner/calendar?date=bad-date",
+            "status": 400
+          },
+          {
+            "path": "/owner/calendar?date=2030-02-30",
+            "status": 400
+          },
+          {
+            "path": "/owner/calendar?date=2026-10-27",
+            "status": 400
+          },
+          {
+            "path": "/owner/calendar?date=2026-10-29&date=2026-10-29",
+            "status": 400
+          }
+        ]
+      }
+    },
+    {
+      "id": "TC-07",
+      "title": "GET không đổi nghiệp vụ, giá hoặc quyền",
+      "status": "PASS",
+      "actual": {
+        "before": {
+          "User": {
+            "count": 7,
+            "sha256": "00ca95ecba5063429504b152b01b71e96030535441a3a1b77e2a890e1ff07a74"
+          },
+          "Facility": {
+            "count": 4,
+            "sha256": "637ad7d1d8a2c49df0bc8d61a06625c6052cc32939d427502d2368809a099097"
+          },
+          "Court": {
+            "count": 9,
+            "sha256": "6b2ae5aeb69f4439e0bb9fb47de952d45ffd010a85af433b22d6004ae93b62c5"
+          },
+          "Booking": {
+            "count": 3,
+            "sha256": "312f5788fd0267efeeae79219b49136a4535469883625f08550fd0397e9739ea"
+          },
+          "SlotLock": {
+            "count": 4,
+            "sha256": "bb709834a9d65c2072474f04c73f332cc3f05432de6beef45b5f84cc1a6e9339"
+          },
+          "Payment": {
+            "count": 1,
+            "sha256": "fc98cef0579e8c457646482405c8729b82a5343704819bedf6f7e43ca088ec7c"
+          },
+          "BookingRequest": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        },
+        "after": {
+          "User": {
+            "count": 7,
+            "sha256": "00ca95ecba5063429504b152b01b71e96030535441a3a1b77e2a890e1ff07a74"
+          },
+          "Facility": {
+            "count": 4,
+            "sha256": "637ad7d1d8a2c49df0bc8d61a06625c6052cc32939d427502d2368809a099097"
+          },
+          "Court": {
+            "count": 9,
+            "sha256": "6b2ae5aeb69f4439e0bb9fb47de952d45ffd010a85af433b22d6004ae93b62c5"
+          },
+          "Booking": {
+            "count": 3,
+            "sha256": "312f5788fd0267efeeae79219b49136a4535469883625f08550fd0397e9739ea"
+          },
+          "SlotLock": {
+            "count": 4,
+            "sha256": "bb709834a9d65c2072474f04c73f332cc3f05432de6beef45b5f84cc1a6e9339"
+          },
+          "Payment": {
+            "count": 1,
+            "sha256": "fc98cef0579e8c457646482405c8729b82a5343704819bedf6f7e43ca088ec7c"
+          },
+          "BookingRequest": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        },
+        "equal": true,
+        "excludes": "Session/CSRF collection only"
+      }
+    }
+  ]
+}

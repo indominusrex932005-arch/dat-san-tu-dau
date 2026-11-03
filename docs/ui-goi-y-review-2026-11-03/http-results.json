@@ -1,0 +1,396 @@
+{
+  "issue": 75,
+  "pr": 73,
+  "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+  "applicationStartSHA": "4b5c02d7c025ec29bff30bece3f9a629e312b7d5",
+  "executedAtUTC": "2026-11-03T06:54:16.617Z",
+  "timezone": "Asia/Bangkok",
+  "source": "Real createApp/controller/service/EJS via Node fetch/TestBrowser; dedicated local replica qaSuggestionsUi75.",
+  "fixture": {
+    "date": "2026-11-07",
+    "primaryDate": "2026-11-08",
+    "blockers": "4 real POST booking + DEMO confirmation,8non-expiring confirmed SlotLocks; synthetic local fixtures only."
+  },
+  "summary": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0
+  },
+  "cases": [
+    {
+      "id": "HTTP-ZERO",
+      "steps": [
+        "GET real /courts with controlled facility/date/time filters."
+      ],
+      "expected": {
+        "suggestions": 0,
+        "primaryResults": 0,
+        "facilityScoped": true,
+        "serverQuoteAndReason": true
+      },
+      "actual": {
+        "http": 200,
+        "suggestionCount": 0,
+        "primaryCount": 0,
+        "query": {
+          "facilityId": "6ae984523fc6cafa9c626a68",
+          "date": "2026-11-07",
+          "startTime": "17:00",
+          "endTime": "18:00"
+        },
+        "filtersRetained": true,
+        "proposals": []
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-11-03T06:54:16.311Z"
+    },
+    {
+      "id": "HTTP-ONE",
+      "steps": [
+        "GET real /courts with controlled facility/date/time filters."
+      ],
+      "expected": {
+        "suggestions": 1,
+        "primaryResults": 0,
+        "facilityScoped": true,
+        "serverQuoteAndReason": true
+      },
+      "actual": {
+        "http": 200,
+        "suggestionCount": 1,
+        "primaryCount": 0,
+        "query": {
+          "facilityId": "6ae984533fc6cafa9c626a6f",
+          "date": "2026-11-07",
+          "startTime": "17:00",
+          "endTime": "18:00"
+        },
+        "filtersRetained": true,
+        "proposals": [
+          {
+            "courtId": "6ae984533fc6cafa9c626a70",
+            "date": "2026-11-07",
+            "startTime": "16:00",
+            "endTime": "17:00",
+            "totalMinutes": 60,
+            "totalPriceVND": 100000,
+            "reason": "Cùng cơ sở, sớm hơn 60 phút"
+          }
+        ]
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-11-03T06:54:16.351Z"
+    },
+    {
+      "id": "HTTP-THREE",
+      "steps": [
+        "GET real /courts with controlled facility/date/time filters."
+      ],
+      "expected": {
+        "suggestions": 3,
+        "primaryResults": 0,
+        "facilityScoped": true,
+        "serverQuoteAndReason": true
+      },
+      "actual": {
+        "http": 200,
+        "suggestionCount": 3,
+        "primaryCount": 0,
+        "query": {
+          "facilityId": "6ae984533fc6cafa9c626a76",
+          "date": "2026-11-07",
+          "startTime": "17:00",
+          "endTime": "18:00"
+        },
+        "filtersRetained": true,
+        "proposals": [
+          {
+            "courtId": "6ae984533fc6cafa9c626a77",
+            "date": "2026-11-07",
+            "startTime": "16:00",
+            "endTime": "17:00",
+            "totalMinutes": 60,
+            "totalPriceVND": 100000,
+            "reason": "Cùng cơ sở, sớm hơn 60 phút"
+          },
+          {
+            "courtId": "6ae984533fc6cafa9c626a77",
+            "date": "2026-11-07",
+            "startTime": "18:00",
+            "endTime": "19:00",
+            "totalMinutes": 60,
+            "totalPriceVND": 150000,
+            "reason": "Cùng cơ sở, muộn hơn 60 phút"
+          },
+          {
+            "courtId": "6ae984533fc6cafa9c626a77",
+            "date": "2026-11-07",
+            "startTime": "18:30",
+            "endTime": "19:30",
+            "totalMinutes": 60,
+            "totalPriceVND": 150000,
+            "reason": "Cùng cơ sở, muộn hơn 90 phút"
+          }
+        ],
+        "escapedLongData": true
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-11-03T06:54:16.368Z"
+    },
+    {
+      "id": "HTTP-PEAK",
+      "steps": [
+        "GET real /courts with controlled facility/date/time filters."
+      ],
+      "expected": {
+        "suggestions": 1,
+        "primaryResults": 0,
+        "facilityScoped": true,
+        "serverQuoteAndReason": true
+      },
+      "actual": {
+        "http": 200,
+        "suggestionCount": 1,
+        "primaryCount": 0,
+        "query": {
+          "facilityId": "6ae984533fc6cafa9c626a7d",
+          "date": "2026-11-07",
+          "startTime": "17:30",
+          "endTime": "18:30"
+        },
+        "filtersRetained": true,
+        "proposals": [
+          {
+            "courtId": "6ae984533fc6cafa9c626a7e",
+            "date": "2026-11-07",
+            "startTime": "16:30",
+            "endTime": "17:30",
+            "totalMinutes": 60,
+            "totalPriceVND": 125000,
+            "reason": "Cùng cơ sở, sớm hơn 60 phút"
+          }
+        ],
+        "peakCalculation": "16:30 base50000 +17:00 peak75000 =125000VND; total60minutes"
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-11-03T06:54:16.382Z"
+    },
+    {
+      "id": "HTTP-INVALID",
+      "steps": [
+        "GET invalid/missing-date filter query."
+      ],
+      "expected": {
+        "http": 400,
+        "suggestions": 0,
+        "filterError": true
+      },
+      "actual": {
+        "http": 400,
+        "suggestions": 0,
+        "filterError": true,
+        "noSuggestionMessage": true
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-11-03T06:54:16.396Z"
+    },
+    {
+      "id": "HTTP-MISSINGDATE",
+      "steps": [
+        "GET invalid/missing-date filter query."
+      ],
+      "expected": {
+        "http": 400,
+        "suggestions": 0,
+        "filterError": true
+      },
+      "actual": {
+        "http": 400,
+        "suggestions": 0,
+        "filterError": true,
+        "noSuggestionMessage": true
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-11-03T06:54:16.402Z"
+    },
+    {
+      "id": "HTTP-PRIMARY",
+      "steps": [
+        "GET same court/facility filter on unblocked next day."
+      ],
+      "expected": {
+        "http": 200,
+        "primaryCount": 1,
+        "suggestions": 0
+      },
+      "actual": {
+        "http": 200,
+        "primaryCount": 1,
+        "suggestions": 0,
+        "date": "2026-11-08",
+        "correctDetailDate": true
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-11-03T06:54:16.409Z"
+    },
+    {
+      "id": "HTTP-DETAIL-GET",
+      "steps": [
+        "GET each real suggestion detail link, then repeat source list URL as Back equivalent."
+      ],
+      "expected": {
+        "correctCourtAndDate": true,
+        "preselected": 0,
+        "sourceFilterRestored": true
+      },
+      "actual": {
+        "links": [
+          {
+            "courtId": "6ae984533fc6cafa9c626a70",
+            "date": "2026-11-07",
+            "http": 200,
+            "preselected": 0
+          },
+          {
+            "courtId": "6ae984533fc6cafa9c626a77",
+            "date": "2026-11-07",
+            "http": 200,
+            "preselected": 0
+          },
+          {
+            "courtId": "6ae984533fc6cafa9c626a77",
+            "date": "2026-11-07",
+            "http": 200,
+            "preselected": 0
+          },
+          {
+            "courtId": "6ae984533fc6cafa9c626a77",
+            "date": "2026-11-07",
+            "http": 200,
+            "preselected": 0
+          },
+          {
+            "courtId": "6ae984533fc6cafa9c626a7e",
+            "date": "2026-11-07",
+            "http": 200,
+            "preselected": 0
+          }
+        ],
+        "sourceQuery": {
+          "facilityId": "6ae984533fc6cafa9c626a76",
+          "date": "2026-11-07",
+          "startTime": "17:00",
+          "endTime": "18:00"
+        },
+        "sourceRestored": true,
+        "limitation": "HTTP reload only; browser Back and keyboard must be independently observed."
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-11-03T06:54:16.421Z"
+    },
+    {
+      "id": "HTTP-CSS-SOURCE",
+      "steps": [
+        "GET linked stylesheet and compare all scoped UI files to target Git commit."
+      ],
+      "expected": {
+        "http": 200,
+        "contentType": "text/css",
+        "exactCommittedUI": true
+      },
+      "actual": {
+        "http": 200,
+        "contentType": "text/css; charset=utf-8",
+        "targetSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+        "sourceHashes": {
+          "views/partials/court-suggestions.ejs": "dd390cb0e9660cd69c5742bdbc7164820ed7b37e619a81aea5a53ec333fab725",
+          "public/css/court-suggestions.css": "cb9b55e18b781bc7144ae423cc81cb221c966ff2a9ded8140743a36b099b65e2",
+          "views/courts.ejs": "61984b9b724dbfa0d07708c68d082e8ab3f2218e5c2977c2a8c1c115d10c4774"
+        },
+        "exactCommittedUI": true
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-11-03T06:54:16.480Z"
+    },
+    {
+      "id": "HTTP-READ-ONLY",
+      "steps": [
+        "Compare seven business collection counts and SHA256 digests before/after all real GET requests."
+      ],
+      "expected": {
+        "unchanged": true
+      },
+      "actual": {
+        "unchanged": true,
+        "before": {
+          "User": {
+            "count": 4,
+            "sha256": "9a62896a2d0a685ccf6933eae98302cc29c502b6d25aa39e3a01cd32aeb988aa"
+          },
+          "Facility": {
+            "count": 4,
+            "sha256": "f64d55b7d35dc93d12f41588dbf747b68d47abdfba42ca9573da738ce6564f01"
+          },
+          "Court": {
+            "count": 4,
+            "sha256": "a3abfaf53cadb800864d03b189d3a44c22bacc9a97f0bf417e2613664a5e8867"
+          },
+          "Booking": {
+            "count": 4,
+            "sha256": "d1f428d09c3a398677f1f2aa40ade5d6c7aba38abf8f5a7d0833148aa885b0db"
+          },
+          "SlotLock": {
+            "count": 8,
+            "sha256": "f562426d897700a62d9baf568fdea48890871c7b01f7cd943de5ad2fa6619f10"
+          },
+          "Payment": {
+            "count": 4,
+            "sha256": "9e1446292d8ee3eda2e2523699e9241863600dbb008af7c931036b4c8056ef11"
+          },
+          "BookingRequest": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        },
+        "after": {
+          "User": {
+            "count": 4,
+            "sha256": "9a62896a2d0a685ccf6933eae98302cc29c502b6d25aa39e3a01cd32aeb988aa"
+          },
+          "Facility": {
+            "count": 4,
+            "sha256": "f64d55b7d35dc93d12f41588dbf747b68d47abdfba42ca9573da738ce6564f01"
+          },
+          "Court": {
+            "count": 4,
+            "sha256": "a3abfaf53cadb800864d03b189d3a44c22bacc9a97f0bf417e2613664a5e8867"
+          },
+          "Booking": {
+            "count": 4,
+            "sha256": "d1f428d09c3a398677f1f2aa40ade5d6c7aba38abf8f5a7d0833148aa885b0db"
+          },
+          "SlotLock": {
+            "count": 8,
+            "sha256": "f562426d897700a62d9baf568fdea48890871c7b01f7cd943de5ad2fa6619f10"
+          },
+          "Payment": {
+            "count": 4,
+            "sha256": "9e1446292d8ee3eda2e2523699e9241863600dbb008af7c931036b4c8056ef11"
+          },
+          "BookingRequest": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        },
+        "sessionsExcluded": true
+      },
+      "status": "PASS",
+      "startedAtUTC": "2026-11-03T06:54:16.610Z"
+    }
+  ],
+  "limits": [
+    "No browser or layout claims from HTTP. Keyboard, Back and viewport screenshots are separate root acceptance.",
+    "No two-session race409 coverage for QA67; not part of current UI75 acceptance."
+  ],
+  "privacy": "No credentials, private marker, rawHTML, cookies, CSRF, booking IDs, guest token or receipt URLs are published."
+}

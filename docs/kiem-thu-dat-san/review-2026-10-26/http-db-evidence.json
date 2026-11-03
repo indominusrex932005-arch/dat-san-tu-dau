@@ -1,0 +1,1378 @@
+{
+  "sourceSHA": "ba4e9de81bfce2420a3d06bf220e9601c7a1fb53",
+  "date": "2026-10-26",
+  "timezone": "Asia/Ho_Chi_Minh",
+  "database": "qa_booking_59_1792998654432",
+  "method": "Real browser via CUA and independent HTTP TestBrowser for competitor/late-payment; real Express/MongoStore/local MongoDB",
+  "httpPathNote": "Paths captured on response finish may be relative to Express router mount. Query strings, request bodies, session cookies and CSRF are never stored.",
+  "browserUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+  "beforeCancellation": {
+    "bookings": [
+      {
+        "_id": "6adefd94a4e979cd515d8c2b",
+        "user": "6adefd68a4e979cd515d8c2a",
+        "court": "6adefcfea4e979cd515d8c27",
+        "publicCode": "DS-9BD0A07B5353",
+        "date": "2026-10-29",
+        "slots": [
+          {
+            "startAt": "2026-10-29T10:00:00.000Z",
+            "endAt": "2026-10-29T10:30:00.000Z",
+            "priceVND": 50000
+          },
+          {
+            "startAt": "2026-10-29T11:00:00.000Z",
+            "endAt": "2026-10-29T11:30:00.000Z",
+            "priceVND": 75000
+          }
+        ],
+        "totalPrice": 125000,
+        "status": "CONFIRMED",
+        "paymentStatus": "DEMO_PAID",
+        "createdAt": "2026-10-26T07:13:24.517Z"
+      },
+      {
+        "_id": "6adefdb0a4e979cd515d8c2f",
+        "user": "6adefd68a4e979cd515d8c2a",
+        "court": "6adefcfea4e979cd515d8c28",
+        "publicCode": "DS-3C2C17F14057",
+        "date": "2026-10-29",
+        "slots": [
+          {
+            "startAt": "2026-10-29T05:00:00.000Z",
+            "endAt": "2026-10-29T05:30:00.000Z",
+            "priceVND": 50000
+          }
+        ],
+        "totalPrice": 50000,
+        "status": "HOLD",
+        "paymentStatus": "UNPAID",
+        "holdExpiresAt": "2026-10-26T07:23:52.418Z",
+        "createdAt": "2026-10-26T07:13:52.426Z"
+      },
+      {
+        "_id": "6adefdc6a4e979cd515d8c32",
+        "user": "6adefcfea4e979cd515d8c22",
+        "court": "6adefcfea4e979cd515d8c27",
+        "publicCode": "DS-F99D67BAA987",
+        "date": "2026-10-29",
+        "slots": [
+          {
+            "startAt": "2026-10-29T12:00:00.000Z",
+            "endAt": "2026-10-29T12:30:00.000Z",
+            "priceVND": 75000
+          }
+        ],
+        "totalPrice": 75000,
+        "status": "CONFIRMED",
+        "paymentStatus": "DEMO_PAID",
+        "createdAt": "2026-10-26T07:14:14.502Z"
+      }
+    ],
+    "locks": [
+      {
+        "_id": "6adefd94a4e979cd515d8c2d",
+        "court": "6adefcfea4e979cd515d8c27",
+        "booking": "6adefd94a4e979cd515d8c2b",
+        "slotStart": "2026-10-29T10:00:00.000Z",
+        "expiresAt": null
+      },
+      {
+        "_id": "6adefd94a4e979cd515d8c2e",
+        "court": "6adefcfea4e979cd515d8c27",
+        "booking": "6adefd94a4e979cd515d8c2b",
+        "slotStart": "2026-10-29T11:00:00.000Z",
+        "expiresAt": null
+      },
+      {
+        "_id": "6adefdb0a4e979cd515d8c31",
+        "court": "6adefcfea4e979cd515d8c28",
+        "booking": "6adefdb0a4e979cd515d8c2f",
+        "slotStart": "2026-10-29T05:00:00.000Z",
+        "expiresAt": "2026-10-26T07:23:52.418Z"
+      },
+      {
+        "_id": "6adefdc6a4e979cd515d8c34",
+        "court": "6adefcfea4e979cd515d8c27",
+        "booking": "6adefdc6a4e979cd515d8c32",
+        "slotStart": "2026-10-29T12:00:00.000Z",
+        "expiresAt": null
+      }
+    ],
+    "payments": [
+      {
+        "_id": "6adefd9c9c76038fee204606",
+        "type": "INITIAL_DEMO",
+        "booking": "6adefd94a4e979cd515d8c2b",
+        "amountVND": 125000
+      },
+      {
+        "_id": "6adefdc69c76038fee204607",
+        "type": "INITIAL_DEMO",
+        "booking": "6adefdc6a4e979cd515d8c32",
+        "amountVND": 75000
+      }
+    ]
+  },
+  "final": {
+    "bookings": [
+      {
+        "_id": "6adefd94a4e979cd515d8c2b",
+        "user": "6adefd68a4e979cd515d8c2a",
+        "court": "6adefcfea4e979cd515d8c27",
+        "publicCode": "DS-9BD0A07B5353",
+        "date": "2026-10-29",
+        "slots": [
+          {
+            "startAt": "2026-10-29T10:00:00.000Z",
+            "endAt": "2026-10-29T10:30:00.000Z",
+            "priceVND": 50000
+          },
+          {
+            "startAt": "2026-10-29T11:00:00.000Z",
+            "endAt": "2026-10-29T11:30:00.000Z",
+            "priceVND": 75000
+          }
+        ],
+        "totalPrice": 125000,
+        "status": "CANCELLED",
+        "paymentStatus": "DEMO_PAID",
+        "createdAt": "2026-10-26T07:13:24.517Z"
+      },
+      {
+        "_id": "6adefdb0a4e979cd515d8c2f",
+        "user": "6adefd68a4e979cd515d8c2a",
+        "court": "6adefcfea4e979cd515d8c28",
+        "publicCode": "DS-3C2C17F14057",
+        "date": "2026-10-29",
+        "slots": [
+          {
+            "startAt": "2026-10-29T05:00:00.000Z",
+            "endAt": "2026-10-29T05:30:00.000Z",
+            "priceVND": 50000
+          }
+        ],
+        "totalPrice": 50000,
+        "status": "EXPIRED",
+        "paymentStatus": "UNPAID",
+        "holdExpiresAt": "2026-10-26T07:23:52.418Z",
+        "createdAt": "2026-10-26T07:13:52.426Z"
+      },
+      {
+        "_id": "6adefdc6a4e979cd515d8c32",
+        "user": "6adefcfea4e979cd515d8c22",
+        "court": "6adefcfea4e979cd515d8c27",
+        "publicCode": "DS-F99D67BAA987",
+        "date": "2026-10-29",
+        "slots": [
+          {
+            "startAt": "2026-10-29T12:00:00.000Z",
+            "endAt": "2026-10-29T12:30:00.000Z",
+            "priceVND": 75000
+          }
+        ],
+        "totalPrice": 75000,
+        "status": "CONFIRMED",
+        "paymentStatus": "DEMO_PAID",
+        "createdAt": "2026-10-26T07:14:14.502Z"
+      },
+      {
+        "_id": "6adefe94a4e979cd515d8c38",
+        "user": "6adefcfea4e979cd515d8c22",
+        "court": "6adefcfea4e979cd515d8c27",
+        "publicCode": "DS-3AE263B79464",
+        "date": "2026-10-29",
+        "slots": [
+          {
+            "startAt": "2026-10-29T09:00:00.000Z",
+            "endAt": "2026-10-29T09:30:00.000Z",
+            "priceVND": 50000
+          }
+        ],
+        "totalPrice": 50000,
+        "status": "HOLD",
+        "paymentStatus": "UNPAID",
+        "holdExpiresAt": "2026-10-26T07:27:40.310Z",
+        "createdAt": "2026-10-26T07:17:40.324Z"
+      },
+      {
+        "_id": "6adefeb3a4e979cd515d8c3c",
+        "user": null,
+        "court": "6adefcfea4e979cd515d8c28",
+        "publicCode": "DS-9FE2D5AE9767",
+        "date": "2026-10-29",
+        "slots": [
+          {
+            "startAt": "2026-10-29T08:00:00.000Z",
+            "endAt": "2026-10-29T08:30:00.000Z",
+            "priceVND": 50000
+          }
+        ],
+        "totalPrice": 50000,
+        "status": "CANCELLED",
+        "paymentStatus": "DEMO_PAID",
+        "createdAt": "2026-10-26T07:18:11.204Z"
+      },
+      {
+        "_id": "6adeff3fa4e979cd515d8c40",
+        "user": "6adefd68a4e979cd515d8c2a",
+        "court": "6adefcfea4e979cd515d8c28",
+        "publicCode": "DS-760773799C75",
+        "date": "2026-10-26",
+        "slots": [
+          {
+            "startAt": "2026-10-26T07:30:00.000Z",
+            "endAt": "2026-10-26T08:00:00.000Z",
+            "priceVND": 50000
+          }
+        ],
+        "totalPrice": 50000,
+        "status": "HOLD",
+        "paymentStatus": "UNPAID",
+        "holdExpiresAt": "2026-10-26T07:30:00.000Z",
+        "createdAt": "2026-10-26T07:20:31.331Z"
+      }
+    ],
+    "locks": [
+      {
+        "_id": "6adefdc6a4e979cd515d8c34",
+        "court": "6adefcfea4e979cd515d8c27",
+        "booking": "6adefdc6a4e979cd515d8c32",
+        "slotStart": "2026-10-29T12:00:00.000Z",
+        "expiresAt": null
+      },
+      {
+        "_id": "6adefe94a4e979cd515d8c3a",
+        "court": "6adefcfea4e979cd515d8c27",
+        "booking": "6adefe94a4e979cd515d8c38",
+        "slotStart": "2026-10-29T09:00:00.000Z",
+        "expiresAt": "2026-10-26T07:27:40.310Z"
+      },
+      {
+        "_id": "6adeff3fa4e979cd515d8c42",
+        "court": "6adefcfea4e979cd515d8c28",
+        "booking": "6adeff3fa4e979cd515d8c40",
+        "slotStart": "2026-10-26T07:30:00.000Z",
+        "expiresAt": "2026-10-26T07:30:00.000Z"
+      }
+    ],
+    "payments": [
+      {
+        "_id": "6adefd9c9c76038fee204606",
+        "type": "INITIAL_DEMO",
+        "booking": "6adefd94a4e979cd515d8c2b",
+        "amountVND": 125000
+      },
+      {
+        "_id": "6adefdc69c76038fee204607",
+        "type": "INITIAL_DEMO",
+        "booking": "6adefdc6a4e979cd515d8c32",
+        "amountVND": 75000
+      },
+      {
+        "_id": "6adefeb39c76038fee204608",
+        "booking": "6adefeb3a4e979cd515d8c3c",
+        "type": "INITIAL_DEMO",
+        "amountVND": 50000
+      }
+    ],
+    "requests": [
+      {
+        "_id": "6adefddda4e979cd515d8c35",
+        "booking": "6adefd94a4e979cd515d8c2b",
+        "type": "CANCEL",
+        "source": "CUSTOMER",
+        "status": "APPROVED",
+        "requestedTimes": [],
+        "ownerNote": "QA59 xác nhận hoàn trong kịch bản mô phỏng, không có tiền thật.",
+        "refundAmount": 125000,
+        "refundStatus": "TRANSFERRED"
+      },
+      {
+        "_id": "6adefecaa4e979cd515d8c3f",
+        "booking": "6adefeb3a4e979cd515d8c3c",
+        "type": "CANCEL",
+        "source": "OWNER_CALL",
+        "status": "APPROVED",
+        "requestedTimes": [],
+        "ownerNote": "QA59 cuộc gọi mô phỏng, đối chiếu mã/tên/SĐT tổng hợp; hủy, hoàn 0 đồng.",
+        "refundAmount": 0,
+        "refundStatus": "NONE"
+      },
+      {
+        "_id": "6adeffa0a4e979cd515d8c43",
+        "booking": "6adefdc6a4e979cd515d8c32",
+        "type": "CHANGE",
+        "source": "CUSTOMER",
+        "status": "REJECTED",
+        "requestedDate": "2026-10-29",
+        "requestedTimes": [
+          "20:00"
+        ],
+        "ownerNote": "QA59 thử từ chối, giữ nguyên lịch 19:00.",
+        "refundAmount": 0,
+        "refundStatus": "NONE"
+      }
+    ]
+  },
+  "http": [
+    {
+      "at": "2026-10-26T07:12:33.385Z",
+      "method": "GET",
+      "path": "/register",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:12:33.570Z",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "status": 404,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:12:39.630Z",
+      "method": "POST",
+      "path": "/register",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:12:40.020Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:12:44.282Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 401,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:13:06.809Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:13:07.194Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:13:07.365Z",
+      "method": "GET",
+      "path": "/my-bookings",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:13:14.031Z",
+      "method": "GET",
+      "path": "/6adefcfea4e979cd515d8c27",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:13:24.482Z",
+      "method": "POST",
+      "path": "/bookings",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:13:24.544Z",
+      "method": "GET",
+      "path": "/bookings/6adefd94a4e979cd515d8c2b/checkout",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:13:24.569Z",
+      "method": "GET",
+      "path": "/bookings/6adefd94a4e979cd515d8c2b/checkout",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:13:32.738Z",
+      "method": "POST",
+      "path": "/bookings/6adefd94a4e979cd515d8c2b/demo-payment",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:13:32.803Z",
+      "method": "GET",
+      "path": "/bookings/6adefd94a4e979cd515d8c2b/receipt",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:13:51.979Z",
+      "method": "GET",
+      "path": "/6adefcfea4e979cd515d8c28",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:13:52.412Z",
+      "method": "POST",
+      "path": "/bookings",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:13:52.456Z",
+      "method": "GET",
+      "path": "/bookings/6adefdb0a4e979cd515d8c2f/checkout",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:13:52.484Z",
+      "method": "GET",
+      "path": "/bookings/6adefdb0a4e979cd515d8c2f/checkout",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:14:00.862Z",
+      "method": "GET",
+      "path": "/bookings/6adefd94a4e979cd515d8c2b/request",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:14:14.444Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "HTTP TestBrowser"
+    },
+    {
+      "at": "2026-10-26T07:14:14.462Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "HTTP TestBrowser"
+    },
+    {
+      "at": "2026-10-26T07:14:14.476Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "HTTP TestBrowser"
+    },
+    {
+      "at": "2026-10-26T07:14:14.493Z",
+      "method": "POST",
+      "path": "/bookings",
+      "status": 303,
+      "client": "HTTP TestBrowser"
+    },
+    {
+      "at": "2026-10-26T07:14:14.516Z",
+      "method": "GET",
+      "path": "/bookings/6adefdc6a4e979cd515d8c32/checkout",
+      "status": 200,
+      "client": "HTTP TestBrowser"
+    },
+    {
+      "at": "2026-10-26T07:14:14.533Z",
+      "method": "POST",
+      "path": "/bookings/6adefdc6a4e979cd515d8c32/demo-payment",
+      "status": 303,
+      "client": "HTTP TestBrowser"
+    },
+    {
+      "at": "2026-10-26T07:14:24.190Z",
+      "method": "POST",
+      "path": "/bookings/6adefd94a4e979cd515d8c2b/requests",
+      "status": 409,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:14:33.994Z",
+      "method": "GET",
+      "path": "/bookings/6adefd94a4e979cd515d8c2b/receipt",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:14:36.389Z",
+      "method": "GET",
+      "path": "/bookings/6adefd94a4e979cd515d8c2b/request",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:14:37.750Z",
+      "method": "POST",
+      "path": "/bookings/6adefd94a4e979cd515d8c2b/requests",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:14:37.783Z",
+      "method": "GET",
+      "path": "/my-bookings",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:14:52.103Z",
+      "method": "POST",
+      "path": "/logout",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:14:52.131Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:14:52.250Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:14:52.467Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:14:52.489Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:14:52.647Z",
+      "method": "GET",
+      "path": "/bookings/6adefd94a4e979cd515d8c2b/receipt",
+      "status": 403,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:15:00.563Z",
+      "method": "POST",
+      "path": "/logout",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:15:00.576Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:15:00.672Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:15:00.856Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:15:00.897Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:15:01.031Z",
+      "method": "GET",
+      "path": "/bookings/6adefd94a4e979cd515d8c2b/receipt",
+      "status": 403,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:15:08.216Z",
+      "method": "POST",
+      "path": "/logout",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:15:08.225Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:15:08.291Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:15:08.415Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:15:08.432Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:15:53.808Z",
+      "method": "POST",
+      "path": "/requests/6adefddda4e979cd515d8c35/approve",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:15:53.838Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:03.410Z",
+      "method": "POST",
+      "path": "/requests/6adefddda4e979cd515d8c35/refund",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:03.441Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:05.957Z",
+      "method": "GET",
+      "path": "/bookings/6adefd94a4e979cd515d8c2b/receipt",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:18.321Z",
+      "method": "POST",
+      "path": "/logout",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:18.345Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:18.440Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:18.626Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:18.671Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:18.791Z",
+      "method": "GET",
+      "path": "/bookings/6adefd94a4e979cd515d8c2b/receipt",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:21.254Z",
+      "method": "POST",
+      "path": "/logout",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:21.269Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:21.365Z",
+      "method": "GET",
+      "path": "/register/owner",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:28.427Z",
+      "method": "POST",
+      "path": "/register/owner",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:28.783Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:28.968Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:29.374Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:38.873Z",
+      "method": "GET",
+      "path": "/courts/new",
+      "status": 403,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:39.137Z",
+      "method": "POST",
+      "path": "/logout",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:39.151Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:39.235Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:39.402Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:39.435Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:39.559Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:46.386Z",
+      "method": "POST",
+      "path": "/owners/6adefe4ca4e979cd515d8c36/approve",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:46.421Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:48.761Z",
+      "method": "POST",
+      "path": "/logout",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:48.774Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:48.859Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:49.014Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:49.390Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:16:49.551Z",
+      "method": "GET",
+      "path": "/courts/new",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:17:16.520Z",
+      "method": "POST",
+      "path": "/courts",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:17:16.543Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:17:16.689Z",
+      "method": "GET",
+      "path": "/courts/6adefe7ca4e979cd515d8c37/edit",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:17:24.265Z",
+      "method": "POST",
+      "path": "/courts/6adefe7ca4e979cd515d8c37",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:17:24.288Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:17:26.772Z",
+      "method": "POST",
+      "path": "/logout",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:17:26.782Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:17:26.874Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:17:27.040Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:17:27.467Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:17:27.586Z",
+      "method": "GET",
+      "path": "/6adefcfea4e979cd515d8c27",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:17:40.240Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "HTTP TestBrowser"
+    },
+    {
+      "at": "2026-10-26T07:17:40.264Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "HTTP TestBrowser"
+    },
+    {
+      "at": "2026-10-26T07:17:40.283Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "HTTP TestBrowser"
+    },
+    {
+      "at": "2026-10-26T07:17:40.305Z",
+      "method": "POST",
+      "path": "/bookings",
+      "status": 303,
+      "client": "HTTP TestBrowser"
+    },
+    {
+      "at": "2026-10-26T07:17:45.351Z",
+      "method": "POST",
+      "path": "/bookings",
+      "status": 409,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:18:08.254Z",
+      "method": "POST",
+      "path": "/logout",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:18:08.280Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:18:08.372Z",
+      "method": "GET",
+      "path": "/6adefcfea4e979cd515d8c28",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:18:11.191Z",
+      "method": "POST",
+      "path": "/bookings",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:18:11.220Z",
+      "method": "GET",
+      "path": "/bookings/6adefeb3a4e979cd515d8c3c/checkout",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:18:11.246Z",
+      "method": "GET",
+      "path": "/bookings/6adefeb3a4e979cd515d8c3c/checkout",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:18:11.423Z",
+      "method": "POST",
+      "path": "/bookings/6adefeb3a4e979cd515d8c3c/demo-payment",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:18:11.459Z",
+      "method": "GET",
+      "path": "/bookings/6adefeb3a4e979cd515d8c3c/receipt",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:18:21.850Z",
+      "method": "GET",
+      "path": "/bookings/6adefeb3a4e979cd515d8c3c/receipt",
+      "status": 403,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:18:22.133Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:18:22.302Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:18:22.340Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:18:34.604Z",
+      "method": "POST",
+      "path": "/bookings/6adefeb3a4e979cd515d8c3c/cancel",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:18:34.641Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:20:30.007Z",
+      "method": "POST",
+      "path": "/logout",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:20:30.022Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:20:30.151Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:20:30.375Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:20:30.766Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:20:30.878Z",
+      "method": "GET",
+      "path": "/6adefcfea4e979cd515d8c28",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:20:31.320Z",
+      "method": "POST",
+      "path": "/bookings",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:20:31.345Z",
+      "method": "GET",
+      "path": "/bookings/6adeff3fa4e979cd515d8c40/checkout",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:20:31.365Z",
+      "method": "GET",
+      "path": "/bookings/6adeff3fa4e979cd515d8c40/checkout",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:20:49.092Z",
+      "method": "POST",
+      "path": "/logout",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:20:49.111Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:20:49.192Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:20:49.346Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:20:49.378Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:20:49.489Z",
+      "method": "GET",
+      "path": "/bookings/6adefdc6a4e979cd515d8c32/receipt",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:07.857Z",
+      "method": "GET",
+      "path": "/bookings/6adefdc6a4e979cd515d8c32/request",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:08.278Z",
+      "method": "POST",
+      "path": "/bookings/6adefdc6a4e979cd515d8c32/requests",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:08.296Z",
+      "method": "GET",
+      "path": "/my-bookings",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:09.604Z",
+      "method": "POST",
+      "path": "/logout",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:09.615Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:09.675Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:09.806Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:09.822Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:17.960Z",
+      "method": "POST",
+      "path": "/requests/6adeffa0a4e979cd515d8c43/reject",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:17.979Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:20.706Z",
+      "method": "POST",
+      "path": "/logout",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:20.718Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:20.808Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:20.974Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:21.375Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:22:21.484Z",
+      "method": "GET",
+      "path": "/bookings/6adefdb0a4e979cd515d8c2f/checkout",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:24:40.726Z",
+      "method": "GET",
+      "path": "/bookings/6adefdb0a4e979cd515d8c2f/checkout",
+      "status": 410,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:25:18.275Z",
+      "method": "GET",
+      "path": "/6adefcfea4e979cd515d8c28",
+      "status": 200,
+      "client": "CUA browser"
+    },
+    {
+      "at": "2026-10-26T07:25:47.693Z",
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "client": "HTTP TestBrowser"
+    },
+    {
+      "at": "2026-10-26T07:25:47.709Z",
+      "method": "POST",
+      "path": "/login",
+      "status": 303,
+      "client": "HTTP TestBrowser"
+    },
+    {
+      "at": "2026-10-26T07:25:48.095Z",
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "client": "HTTP TestBrowser"
+    },
+    {
+      "at": "2026-10-26T07:25:48.127Z",
+      "method": "POST",
+      "path": "/bookings/6adefdb0a4e979cd515d8c2f/demo-payment",
+      "status": 410,
+      "client": "HTTP TestBrowser"
+    }
+  ],
+  "latePayment": {
+    "at": "2026-10-26T07:25:48.172Z",
+    "method": "HTTP client, not browser",
+    "path": "/bookings/6adefdb0a4e979cd515d8c2f/demo-payment",
+    "status": 410
+  },
+  "assertions": {
+    "twoSelectedSlotsTotal": 125000,
+    "twoLocksOnly": true,
+    "gap1730NotLocked": true,
+    "expiredHasNoLocksOrPayment": true,
+    "accountAndGuestCancelled": true,
+    "refundRecordedManually": true,
+    "changeRejected": true
+  },
+  "cleanup": "App closed and disposable QA database dropped; no Atlas/.env access",
+  "checks": {
+    "check": "PASS, 17 EJS",
+    "tests": {
+      "passed": 111,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "limitations": [
+    "No saved PDF; print attempt timed out and was dismissed with Escape.",
+    "Competitor used independent HTTP client, not second graphical browser.",
+    "No claim that entire workflow executed independently once per viewport."
+  ]
+}

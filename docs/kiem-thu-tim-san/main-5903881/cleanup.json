@@ -1,0 +1,15 @@
+{
+  "targetSHA": "590388158f8f3982259dde43f311e7604f74437f",
+  "atUTC": "2026-10-24T12:53:52.321Z",
+  "removedDatabase": "qa_search36main_1792845937362_8192f1",
+  "replicaSet": "qaSearch36Main",
+  "port": 27056,
+  "mongoVersion": "8.3.11",
+  "markerAndReplicaChecked": true,
+  "databaseRemoved": true,
+  "otherDatabaseNamesUnchanged": true,
+  "noIntegrationTestDatabasesRemain": true,
+  "appStoppedBeforeCleanup": true,
+  "ownMongoShutdown": true,
+  "note": "Only the isolated localhost QA replica/database was used. No Atlas connection and no .env read."
+}

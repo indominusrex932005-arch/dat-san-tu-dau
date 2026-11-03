@@ -1,0 +1,173 @@
+{
+  "notice": "Synthetic fixtures only; disposable local DB removed after QA. Recreate records and substitute fresh IDs to rerun.",
+  "targetSHA": "590388158f8f3982259dde43f311e7604f74437f",
+  "database": "qa_search36main_1792845937362_8192f1",
+  "date": "2026-10-27",
+  "otherDate": "2026-10-28",
+  "today": "2026-10-24",
+  "pastDate": "2026-10-23",
+  "facilities": {
+    "a": {
+      "id": "6adca8713ddc5e01c14dca19",
+      "name": "Cơ sở A kiểm thử"
+    },
+    "b": {
+      "id": "6adca8713ddc5e01c14dca1a",
+      "name": "Cơ sở B kiểm thử tên dài — Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu CHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGAT"
+    },
+    "unowned": {
+      "id": "6adca8713ddc5e01c14dca1b",
+      "name": "Cơ sở chưa cấp OWNER (QA)"
+    },
+    "pending": {
+      "id": "6adca8713ddc5e01c14dca1c",
+      "name": "Cơ sở OWNER PENDING (QA)"
+    },
+    "invalidPhone": {
+      "id": "6adca8713ddc5e01c14dca1d",
+      "name": "Cơ sở thiếu SĐT hợp lệ (QA)"
+    }
+  },
+  "courts": {
+    "free": {
+      "id": "6adca8713ddc5e01c14dca1e",
+      "name": "QA A01 — Trống",
+      "facility": "a",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "held": {
+      "id": "6adca8713ddc5e01c14dca1f",
+      "name": "QA A02 — HOLD 14:30",
+      "facility": "a",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "booked": {
+      "id": "6adca8713ddc5e01c14dca20",
+      "name": "QA A03 — BOOKED 14:00",
+      "facility": "a",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "expired": {
+      "id": "6adca8713ddc5e01c14dca21",
+      "name": "QA A04 — HOLD hết hạn",
+      "facility": "a",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "full": {
+      "id": "6adca8713ddc5e01c14dca22",
+      "name": "QA A05 — Hết ô cả ngày",
+      "facility": "a",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "edge": {
+      "id": "6adca8713ddc5e01c14dca23",
+      "name": "QA A06 — Chỉ mở 14–15",
+      "facility": "a",
+      "openTime": "14:00",
+      "closeTime": "15:00",
+      "active": true
+    },
+    "late": {
+      "id": "6adca8713ddc5e01c14dca24",
+      "name": "QA A07 — Mở từ 15 giờ",
+      "facility": "a",
+      "openTime": "15:00",
+      "closeTime": "18:00",
+      "active": true
+    },
+    "after": {
+      "id": "6adca8713ddc5e01c14dca25",
+      "name": "QA A08 — BOOKED ở 15:00",
+      "facility": "a",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "bFree": {
+      "id": "6adca8713ddc5e01c14dca26",
+      "name": "QA B01 — Trống 09–18",
+      "facility": "b",
+      "openTime": "09:00",
+      "closeTime": "18:00",
+      "active": true
+    },
+    "bLong": {
+      "id": "6adca8713ddc5e01c14dca27",
+      "name": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_",
+      "facility": "b",
+      "openTime": "10:00",
+      "closeTime": "19:00",
+      "active": true
+    },
+    "inactive": {
+      "id": "6adca8713ddc5e01c14dca28",
+      "name": "QA A09 — Ngừng hoạt động",
+      "facility": "a",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": false
+    },
+    "unowned": {
+      "id": "6adca8713ddc5e01c14dca29",
+      "name": "QA C01 — Chưa cấp chủ",
+      "facility": "unowned",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "pending": {
+      "id": "6adca8713ddc5e01c14dca2a",
+      "name": "QA D01 — Chủ chờ duyệt",
+      "facility": "pending",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "invalidPhone": {
+      "id": "6adca8713ddc5e01c14dca2b",
+      "name": "QA E01 — Thiếu liên hệ hợp lệ",
+      "facility": "invalidPhone",
+      "openTime": "06:00",
+      "closeTime": "22:00",
+      "active": true
+    },
+    "pastOnly": {
+      "id": "6adca8713ddc5e01c14dca2c",
+      "name": "QA A10 — Chỉ mở 00:00–00:30",
+      "facility": "a",
+      "openTime": "00:00",
+      "closeTime": "00:30",
+      "active": true
+    }
+  },
+  "baseline": {
+    "Booking": 5,
+    "SlotLock": 36,
+    "Payment": 3,
+    "BookingRequest": 0
+  },
+  "bookingFixtures": {
+    "held": "HOLD with14:30 lock, ordinary10minute lifetime from real POST",
+    "booked": "CONFIRMED/DEMO_PAID with14:00 permanent lock",
+    "expired": "HOLD with14:30 lock; both expiry timestamps moved60seconds into the past on QA DB",
+    "full": "CONFIRMED/DEMO_PAID with all32slots06:00–22:00",
+    "after": "CONFIRMED/DEMO_PAID at15:00, outside search[14:00,15:00)"
+  },
+  "race": "After GET-only checks, sessionB held free14:30; sessionA stale14:00+14:30 rejected409. This genuine POST also cleans up the expired fixture.",
+  "reproduction": {
+    "longFacilityName": "Cơ sở B kiểm thử tên dài — Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu CHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGAT",
+    "longFacilityAddress": "Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài ",
+    "longCourtName": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_"
+  },
+  "sameLongStringsAsHistoricalFixture": true
+}

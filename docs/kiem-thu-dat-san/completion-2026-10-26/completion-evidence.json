@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-26",
+  "timezone": "Asia/Saigon",
+  "operator": "Codex; bàn giao Hoàng Triều (lhtrieu2703-beep)",
+  "sourceSHA": "ec14ee0c55b296af80f137936847618c08b6034b",
+  "browserA": "Codex in-app browser; UA Chrome/156.0.0.0",
+  "browserB": "Google Chrome 155.0.8059.86, Windows, native UI",
+  "pdf": {
+    "method": "Chrome In / Lưu PDF → Microsoft Print to PDF → Save Print Output As",
+    "pages": 1,
+    "inspection": "Rendered with pypdfium2 and visually inspected: Vietnamese readable, correct code, two slots, total 125.000đ, demo label, no guest token. PDF text extraction is empty; no claim of searchable text."
+  },
+  "files": [
+    {
+      "file": "A-iab-conflict-no-partial.jpg",
+      "bytes": 185620,
+      "sha256": "d83ff97ea1cba27096bfe03c804420d3d0cc449f78ba141914ab7d1662285457"
+    },
+    {
+      "file": "A-iab-stale-selection.jpg",
+      "bytes": 160620,
+      "sha256": "b560511bb6f796661d8ed67a24c6c5f4fcaddcee361a320dce729aec52cae595"
+    },
+    {
+      "file": "after-conflict.json",
+      "bytes": 1384,
+      "sha256": "6838c901d1bba2fc4ed6231446a8290f0f8fa3ea38ca66adb24724e18e9313f6"
+    },
+    {
+      "file": "after-payment.json",
+      "bytes": 1549,
+      "sha256": "c5dc6bab6e601e9dbef228ff11c3a321eb361467843003558d5a17e77e389a14"
+    },
+    {
+      "file": "B-chrome-confirmed-receipt.jpg",
+      "bytes": 68647,
+      "sha256": "2429cd39f74f5d757e31282982cbffbe5153b49b562771fd2c05ef82a414b84e"
+    },
+    {
+      "file": "B-chrome-hold-winner.jpg",
+      "bytes": 67715,
+      "sha256": "493a6831bbfcf517d7a872caa22e3dac8d4d37c081300fa338e74650f5b827bb"
+    },
+    {
+      "file": "B-chrome-selected.jpg",
+      "bytes": 70032,
+      "sha256": "4232641ceb6d2bc7dd56c8e5670b4dfbd5086f437716a3d5c18f851cbaaa8c54"
+    },
+    {
+      "file": "C06-print-preview-one-page.jpg",
+      "bytes": 58343,
+      "sha256": "1bb8b78928b3f0f3c7a65b711c2336212a2702c950e9734442d8228afe03fe4b"
+    },
+    {
+      "file": "phieu-DS-11B6089C64A4.pdf",
+      "bytes": 106248,
+      "sha256": "5c921516f32b3991e4f1870ac64066e9bebb6d5c3a7f95666d064a91c9c19793"
+    },
+    {
+      "file": "phieu-page-1.png",
+      "bytes": 111915,
+      "sha256": "1926a74dc0d631c6b56907aca53c3fe82452b435f1c8c2de3bb895e8554e579d"
+    },
+    {
+      "file": "README.md",
+      "bytes": 2720,
+      "sha256": "2384447b4337b0cf20cb38fcc1c6063b0bf3ff761dfdf003054aa8c4972f8af4"
+    },
+    {
+      "file": "screenshot-manifest.json",
+      "bytes": 533,
+      "sha256": "1c3117e500e5f10199c1f2194c15bbdca6e1727b1b948640950f7d1d8d23229a"
+    }
+  ]
+}

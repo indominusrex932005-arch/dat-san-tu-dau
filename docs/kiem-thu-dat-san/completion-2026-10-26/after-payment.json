@@ -1,0 +1,56 @@
+{
+  "base": "http://127.0.0.1:50269",
+  "dbName": "booking_test_1793001502500_19124",
+  "courtId": "6adf081e2d56614ab4f572fb",
+  "userA": "6adf081e2d56614ab4f572f8",
+  "userB": "6adf081e2d56614ab4f572f9",
+  "sourceSHA": "ec14ee0c55b296af80f137936847618c08b6034b",
+  "at": "2026-10-26T08:25:10.751Z",
+  "bookings": [
+    {
+      "_id": "6adf0b452d56614ab4f572fc",
+      "user": "6adf081e2d56614ab4f572f9",
+      "court": "6adf081e2d56614ab4f572fb",
+      "publicCode": "DS-11B6089C64A4",
+      "date": "2026-10-29",
+      "slots": [
+        {
+          "startAt": "2026-10-29T09:00:00.000Z",
+          "endAt": "2026-10-29T09:30:00.000Z",
+          "priceVND": 50000
+        },
+        {
+          "startAt": "2026-10-29T11:00:00.000Z",
+          "endAt": "2026-10-29T11:30:00.000Z",
+          "priceVND": 75000
+        }
+      ],
+      "totalPrice": 125000,
+      "status": "CONFIRMED",
+      "paymentStatus": "DEMO_PAID",
+      "createdAt": "2026-10-26T08:11:49.222Z"
+    }
+  ],
+  "locks": [
+    {
+      "_id": "6adf0b452d56614ab4f572fe",
+      "court": "6adf081e2d56614ab4f572fb",
+      "booking": "6adf0b452d56614ab4f572fc",
+      "slotStart": "2026-10-29T09:00:00.000Z"
+    },
+    {
+      "_id": "6adf0b452d56614ab4f572ff",
+      "court": "6adf081e2d56614ab4f572fb",
+      "booking": "6adf0b452d56614ab4f572fc",
+      "slotStart": "2026-10-29T11:00:00.000Z"
+    }
+  ],
+  "payments": [
+    {
+      "_id": "6adf0b822ca1793828975cb1",
+      "type": "INITIAL_DEMO",
+      "booking": "6adf0b452d56614ab4f572fc",
+      "amountVND": 125000
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "issue": 63,
+  "pr": 69,
+  "cleanedAtUTC": "2026-10-26T22:26:49.1638827Z",
+  "applicationStartSHA": "de43a7052a0675e3cefc6d985a6a746c6c80582c",
+  "testedUISHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+  "ownFixtureDatabaseDropped": true,
+  "dropScope": "Only the manifest-named booking_test database after exact localhost URI, replica set, name pattern and private marker checks.",
+  "otherDatabaseNamesUnchanged": true,
+  "remainingTestDatabaseCount": 0,
+  "replicaShutdownRequested": true,
+  "ownedProcessesStopped": true,
+  "runtimeRemoved": true,
+  "preserved": [
+    "Ignored helper sources",
+    "Private manifests and archives",
+    "Sanitized HTTP/validation/check/test evidence",
+    "Tracked Chrome screenshots"
+  ]
+}

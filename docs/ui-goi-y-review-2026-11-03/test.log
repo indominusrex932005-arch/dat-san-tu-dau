@@ -1,0 +1,230 @@
+
+> dat-san-tu-dau@1.0.0 test
+> node --test --test-concurrency=1 tests/*.test.js
+
+▶ Khôi phục form đặt sân từ lỗi thật, giữ dữ liệu an toàn và đọc lại lịch trên MongoDB transaction
+  ✔ Sai điện thoại trả400 ở form thật và giữ tên, điện thoại, ngày cùng các ô hợp lệ (118.2605ms)
+  ✔ Tên bỏ trống giữ nguyên chuỗi trống và SĐT đã nhập, không tạo đơn (31.4627ms)
+  ✔ Khách đăng nhập xóa rõ tên/SĐT thì lỗi giữ trống, không tự lấy lại dữ liệu hồ sơ (92.8619ms)
+  ✔ Trường người chơi không được gửi vẫn dùng đúng hồ sơ khách khi lỗi chọn giờ, khác với xóa rõ trường (59.2497ms)
+  ✔ Tên và SĐT chứa HTML/dấu ngoặc được escape mà vẫn giữ nguyên giá trị nhập (25.0305ms)
+  ✔ Tên/SĐT dạng mảng không bị stringify thành giá trị hoặc HTML trên form (28.7658ms)
+  ✔ Alias times[] và ô trùng/sai chỉ khôi phục từng ô đúng một lần, không tạo đơn một phần (24.9632ms)
+  ✔ Thiếu hoặc chỉ gửi ô không hợp lệ vẫn hiện lịch thật và không chọn mặc định (64.7379ms)
+  ✔ Hai khách HTTP tranh cùng nhiều ô: một303, một409 với lịch cập nhật, chỉ một đơn đủ tất cả lock (90.593ms)
+  ✔ Xung đột một ô giữ lại ô còn trống, bỏ ô bị chiếm, giá mới lấy server và chỉ đặt khi gửi lại rõ ràng (84.3358ms)
+  ✔ Giờ phục vụ đổi sau khi mở form: bỏ ô không phục vụ, không cấp một phần các ô còn hợp lệ (58.7459ms)
+  ✔ Cơ sở ngừng nhận đặt trả409 với lịch thật nhưng khóa chọn, giữ thông tin nhập và không tạo đơn (31.5149ms)
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: RuleError
+Lỗi xử lý yêu cầu: RuleError
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+  ✔ courtId thiếu/sai/dạng mảng hoặc ngày thiếu/sai/quá khứ vẫn trả lỗi400, không dựng lịch ngày khác (66.6637ms)
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+  ✔ Sân bị ngừng hoặc xóa sau khi mở form và ObjectId không tồn tại vẫn404, không che lỗi bằng lịch rỗng (54.4962ms)
+  ✔ CSRF thiếu/sai vẫn403 trên trang lỗi chung, không lọt qua luồng phục hồi form (26.1603ms)
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+  ✔ Lỗi server khi tạo đơn hoặc đọc lại lịch vẫn500, không giả thành lịch rỗng/thành công (28.511ms)
+✔ Khôi phục form đặt sân từ lỗi thật, giữ dữ liệu an toàn và đọc lại lịch trên MongoDB transaction (1161.6612ms)
+✔ Một POST đang chờ không bị gửi lần hai; request giữ CSRF và các ô đã chọn (19.3861ms)
+✔ Mất kết nối giữ dữ liệu và báo kết quả chưa xác nhận, không tự POST lại (1.6551ms)
+✔ Phản hồi không phân tích được không làm mất form hoặc tự gửi lại (1.3547ms)
+✔ 400: dùng lịch/giá mới, khởi tạo form phục hồi và giữ history tại GET lịch (1.6007ms)
+✔ 409: dùng lịch/giá mới, khởi tạo form phục hồi và giữ history tại GET lịch (2.7068ms)
+✔ 403/500 hiển thị lỗi server, không biến lỗi thành lịch trống hoặc form phục hồi (2.1087ms)
+✔ 303 đã theo redirect chuyển tới checkout và không gửi thêm POST (1.2848ms)
+✔ pageshow cập nhật checkbox được khôi phục, không nhân đôi handler hoặc POST (1.5646ms)
+Lỗi xử lý yêu cầu: Error
+▶ Phục hồi form và hạn giữ theo ô đầu hoạt động chung qua HTTP/MongoDB
+  ✔ 400 giữ thông tin và ô; sửa rồi gửi sát giờ tạo hạn một phút, checkout dùng giờ server và hết hạn không thanh toán được (183.0778ms)
+Lỗi xử lý yêu cầu: Error
+  ✔ 409 giữ ô sắp bắt đầu còn trống với giá mới; hạn ngắn của retry không xóa lock người khác (119.8738ms)
+Lỗi xử lý yêu cầu: Error
+  ✔ Ô đầu trôi qua khi nhập bị bỏ sau400; retry các ô còn lại lấy hạn ô mới sớm nhất (98.9986ms)
+✔ Phục hồi form và hạn giữ theo ô đầu hoạt động chung qua HTTP/MongoDB (661.2349ms)
+✔ Lịch chia 30 phút và chỉ áp giá cao điểm trong khoảng đã cấu hình (3.5188ms)
+✔ Ô rời nhau chỉ tính những ô đã chọn và sắp xếp theo giờ (10.9736ms)
+✔ Không chọn trùng ô, ô ngoài giờ hoặc đầu vào không phải mảng giờ (0.744ms)
+✔ Không chọn ô đã bắt đầu theo thời điểm Việt Nam (0.2953ms)
+✔ Phân biệt lock còn hạn, booked và lock hết hạn ngay khi đọc (0.7352ms)
+✔ Giữ chỗ đúng 10 phút tính từ thời điểm server (0.1614ms)
+✔ Ngày không tồn tại và sai kiểu bị từ chối (0.1939ms)
+✔ Giá sân cũ được đọc tương thích theo nửa giờ, không sửa đơn cũ (0.8663ms)
+✔ Checkout trừ thời gian tải HTML/script khỏi thời gian giữ còn lại (3.4742ms)
+✔ Đồng hồ máy khách sai năm hoặc đổi trong lúc xem không thay hạn server (0.7794ms)
+✔ Đúng hạn checkout khóa thanh toán và yêu cầu tải lại trạng thái đơn (0.7741ms)
+✔ Template cũ thiếu giờ server vẫn đếm mà không trừ thời gian tải hai lần (0.7216ms)
+✔ Trình duyệt thiếu navigation timing vẫn đếm từ giờ server (0.6558ms)
+✔ Navigation timing chưa có thời điểm nhận phản hồi không làm lệch đồng hồ (0.6303ms)
+✔ Navigation timing nằm sau lúc script chạy không kéo dài thời gian giữ (0.646ms)
+✔ Hạn đã qua trong lúc tải trang khóa thanh toán ngay khi script chạy (0.6582ms)
+▶ searchCourts validate query đầu vào
+  ✔ Từ chối facilityId không phải ObjectId hợp lệ (1.1555ms)
+  ✔ Từ chối khi chỉ có startTime mà không có endTime (0.2281ms)
+  ✔ Từ chối khi chỉ có endTime mà không có startTime (0.1833ms)
+  ✔ Từ chối khoảng giờ khi thiếu ngày (0.189ms)
+  ✔ Từ chối giờ không đúng định dạng HH:00 hoặc HH:30 (0.262ms)
+  ✔ Từ chối khi giờ kết thúc trước hoặc bằng giờ bắt đầu (0.3712ms)
+  ✔ Từ chối ngày trong quá khứ (1.235ms)
+  ✔ Từ chối khi tham số tìm kiếm bị lặp lại (0.4345ms)
+✔ searchCourts validate query đầu vào (5.9073ms)
+✔ Trang danh sách hiển thị thông báo hết phương án khi gợi ý rỗng (4.6173ms)
+▶ Court Suggestion Unit Tests
+  ✔ Validate query đầu vào cho suggestCourts (3.1885ms)
+  ✔ Loại bỏ sân inactive, chủ sân chưa duyệt hoặc thiếu số điện thoại hợp lệ (0.6735ms)
+  ✔ Lọc đúng facilityId đã chọn, không mở rộng sang cơ sở khác (15.4001ms)
+  ✔ ObjectId cơ sở viết hoa và viết thường trả cùng gợi ý (8.1061ms)
+  ✔ Bỏ qua lock hết hạn, loại bỏ BOOKED và HOLD còn hạn (5.7309ms)
+  ✔ Xếp hạng: độ lệch giờ tuyệt đối tăng dần -> tổng giá tăng dần -> courtId -> startTime (6.443ms)
+  ✔ Tính đúng tổng giá qua mốc cao điểm (3.4424ms)
+  ✔ Không gợi ý ô đã qua trong quá khứ so với now (2.6135ms)
+  ✔ Lỗi DB không bị biến thành không có gợi ý (0.4238ms)
+  ✔ searchCourts tích hợp suggestions khi kết quả chính bằng 0 (5.2129ms)
+  ✔ searchCourts không sinh gợi ý khi có kết quả chính (0.5507ms)
+  ✔ searchCourts không sinh gợi ý khi không lọc theo khoảng giờ (0.6561ms)
+✔ Court Suggestion Unit Tests (55.705ms)
+▶ Court Suggestions View (Issue #65)
+  ✔ CSS court-suggestions.css được liên kết trong views/courts.ejs (0.7006ms)
+  ✔ Render đúng 3 thẻ gợi ý với thông tin đầy đủ, giá server và link Xem lịch (6.5306ms)
+  ✔ Tối đa chỉ render 3 thẻ ngay cả khi backend truyền nhiều hơn 3 (2.3241ms)
+  ✔ Khi 0 gợi ý: hiển thị thông báo mời đổi ngày/khoảng giờ, không vỡ layout (0.5217ms)
+  ✔ Tích hợp trong views/courts.ejs: chỉ hiện gợi ý khi không có kết quả chính và có đủ ngày/khoảng giờ (6.5665ms)
+  ✔ Tên cơ sở và sân dài hoặc ký tự đặc biệt được escape an toàn (0.8473ms)
+✔ Court Suggestions View (Issue #65) (23.0927ms)
+✔ courts view renders invalid filter feedback once inside the filter section (4.1049ms)
+✔ Giữ tương thích 10 phút khi lời gọi cũ không truyền ô (0.9994ms)
+✔ Ô đầu còn xa hơn 10 phút vẫn chỉ được giữ 10 phút (0.2872ms)
+✔ Ô đầu sắp bắt đầu rút ngắn hạn giữ xuống dưới 10 phút (0.1385ms)
+✔ Nhiều ô rời nhau lấy ô sớm nhất kể cả đầu vào chưa sắp xếp (0.1082ms)
+✔ Ô đầu bắt đầu đúng mốc 10 phút có cùng hạn UTC (0.1029ms)
+✔ Hạn bằng thời điểm ô đầu bắt đầu, không cộng thêm một ô 30 phút (0.0913ms)
+✔ HOLD cũ có hạn lưu quá muộn bị giới hạn bởi ô sớm nhất (0.2473ms)
+✔ HOLD cũ không được kéo dài quá 10 phút từ createdAt hoặc kéo dài hạn đã ngắn hơn (0.1608ms)
+✔ HOLD cũ thiếu createdAt vẫn giữ giới hạn hạn đã lưu và ô bắt đầu (0.1597ms)
+▶ Hạn giữ theo ô đầu được bảo vệ bằng HTTP và MongoDB transaction thật
+  ✔ Đơn mới và tất cả lock lưu cùng hạn 10 phút UTC khi ô đầu còn xa (110.8417ms)
+  ✔ Đơn sát giờ lấy ô sớm nhất, lưu đồng nhất UTC và checkout dùng đúng hạn (59.9689ms)
+  ✔ Không tạo đơn mới tại đúng thời điểm ô đầu đã bắt đầu (32.8068ms)
+  ✔ Trước hạn ô đầu 1 ms vẫn thanh toán được; cleanup và replay không đổi đơn đã xác nhận (93.2567ms)
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+  ✔ Thanh toán tại 16:00:00 trả 410 và commit EXPIRED cùng giải phóng mọi ô (109.8636ms)
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+  ✔ Thanh toán tại 16:00:00.001 trả 410 và commit EXPIRED cùng giải phóng mọi ô (93.819ms)
+Lỗi xử lý yêu cầu: Error
+  ✔ Đi qua hạn giữa đọc checkout và transaction payment vẫn commit hết hạn trước khi trả 410 (60.6507ms)
+Lỗi xử lý yêu cầu: Error
+  ✔ Chờ ghi lock qua hạn ô đầu không được xác nhận; transaction commit EXPIRED và xóa đủ lock (48.3381ms)
+Lỗi xử lý yêu cầu: Error
+  ✔ HOLD cũ lưu hạn muộn hiển thị hạn thực; hết giờ đầu thì payment và checkout đều 410 (88.4616ms)
+  ✔ Cleanup bắt HOLD cũ đã tới ô đầu dù hạn Booking và lock vẫn còn trong tương lai (44.3317ms)
+  ✔ Cleanup bắt HOLD cũ quá 10 phút từ createdAt dù ô đầu và hạn lưu còn tương lai (43.0785ms)
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+  ✔ Tranh chấp tại ô đầu: payment, cleanup và hai người giữ lại ô sau không hồi sinh hay giữ một phần (136.6506ms)
+  ✔ Tranh chấp trước hạn: cleanup không xóa lock của payment thắng, người khác không chiếm ô (62.6489ms)
+✔ Hạn giữ theo ô đầu được bảo vệ bằng HTTP và MongoDB transaction thật (1239.2894ms)
+▶ Đặt nhiều ô, vai trò, khách vãng lai và xử lý đơn trên MongoDB transaction thật
+  ✔ Đăng ký khách kiểm tra dữ liệu, CSRF và không nhận quyền từ client (1111.9736ms)
+  ✔ Chủ sân đăng ký phải chờ admin, không tự nhận cơ sở hoặc tự duyệt (801.7136ms)
+  ✔ Chủ sân chỉ sửa sân của mình, giá tính theo ô 30 phút (44.2545ms)
+  ✔ Hai lần duyệt đồng thời không thể cấp một cơ sở cho hai chủ sân (78.8541ms)
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+  ✔ Khách vãng lai giữ đúng ô rời nhau, server tính lại giá và không nhận user giả (69.8392ms)
+  ✔ Thanh toán chỉ mô phỏng, idempotent; phiếu có nhãn và lưu PDF (55.9762ms)
+  ✔ Hai request đồng thời tranh cùng ô: một thắng, một 409; không chiếm ô một phần (75.381ms)
+Lỗi xử lý yêu cầu: Error
+  ✔ Hết 10 phút giải phóng ô và từ chối thanh toán muộn (100.3604ms)
+  ✔ Tắt DEMO_MODE không được xác nhận tiền mô phỏng (35.411ms)
+  ✔ NODE_ENV production chặn mô phỏng dù DEMO_MODE bật (32.7756ms)
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+  ✔ Khách có tài khoản chỉ xem/quản lý đơn của mình (105.3735ms)
+Lỗi xử lý yêu cầu: Error
+  ✔ Yêu cầu hủy giữ lịch đến khi chủ sân duyệt, hoàn tiền chỉ ghi nhận thủ công (117.3876ms)
+Lỗi xử lý yêu cầu: Error
+  ✔ Đổi lịch thất bại giữ đơn cũ; từ chối đổi sang cơ sở khác (162.878ms)
+  ✔ Đổi nhiều ô thành công cần xác nhận khoản chênh lệch (114.3019ms)
+  ✔ Chủ sân xử lý hủy qua điện thoại cho khách vãng lai (30.6285ms)
+✔ Đặt nhiều ô, vai trò, khách vãng lai và xử lý đơn trên MongoDB transaction thật (3465.0796ms)
+▶ Chuyển dữ liệu v1 có dry-run, giữ đơn/tiền/giờ và chạy lại an toàn
+  ✔ Dry-run không sửa document hoặc index (15.9048ms)
+  ✔ Apply chia một giờ thành hai ô, giữ ID/tổng tiền và chưa tự ghi nhận đã trả (31.3991ms)
+  ✔ Chạy apply lần hai không tạo thêm đơn hoặc lock (11.2293ms)
+  ✔ Hai đơn mới không có startHour không đụng index null cũ; giờ đã đặt cũ vẫn bị giữ (74.9468ms)
+✔ Chuyển dữ liệu v1 có dry-run, giữ đơn/tiền/giờ và chạy lại an toàn (529.8919ms)
+Lỗi xử lý yêu cầu: Error
+▶ Lịch OWNER qua HTTP chỉ đọc đúng cơ sở và trả lỗi an toàn
+  ✔ Khách chuyển sang login; CUSTOMER, ADMIN, OWNER chưa duyệt/bị từ chối/chưa cấp cơ sở không xem được (44.4983ms)
+  ✔ Hai OWNER chỉ thấy đủ sân cơ sở mình, kể cả sân inactive; dữ liệu query không đổi phạm vi (54.7857ms)
+  ✔ View tối thiểu có form GET đúng ngày và 7 lựa chọn từ hôm nay; ngày xa hơn vẫn xem được (24.8649ms)
+Lỗi xử lý yêu cầu: RuleError
+Lỗi xử lý yêu cầu: RuleError
+Lỗi xử lý yêu cầu: RuleError
+Lỗi xử lý yêu cầu: RuleError
+Lỗi xử lý yêu cầu: RuleError
+Lỗi xử lý yêu cầu: RuleError
+Lỗi xử lý yêu cầu: RuleError
+Lỗi xử lý yêu cầu: RuleError
+Lỗi xử lý yêu cầu: RuleError
+  ✔ Ngày sai, ngày không tồn tại, quá khứ và ngày lặp trả 400 thay vì lịch rỗng hoặc lỗi 500 (73.8362ms)
+  ✔ Cơ sở chưa có sân render 200 với trạng thái rỗng, không mượn trục giờ hoặc sân cơ sở khác (9.9775ms)
+  ✔ Tên cơ sở/địa chỉ/tên sân dài được escape; lịch không lộ người đặt, mã đơn hoặc token (13.4219ms)
+Lỗi xử lý yêu cầu: RuleError
+Lỗi xử lý yêu cầu: RuleError
+  ✔ Mọi GET lịch, cả ngày lỗi và query đổi cơ sở, không sửa dữ liệu nghiệp vụ, bảng giá hoặc quyền (103.6014ms)
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+Lỗi xử lý yêu cầu: Error
+  ✔ Lỗi đọc Facility/Court/SlotLock trả 500 chung, không bị biến thành trang lịch trống (27.6752ms)
+Lỗi xử lý yêu cầu: Error
+  ✔ Session cũ mất quyền ngay khi DB thu hồi duyệt/vai trò hoặc chuyển cơ sở sang OWNER khác (50.4507ms)
+  ✔ Trang công khai và quản lý cơ sở hiện có vẫn mở được sau khi thêm route lịch (49.2218ms)
+✔ Lịch OWNER qua HTTP chỉ đọc đúng cơ sở và trả lỗi an toàn (1079.9358ms)
+▶ Lịch điều hành dùng dữ liệu thật, phạm vi cơ sở và quy tắc khả dụng chung
+  ✔ Hai OWNER chỉ thấy cơ sở trong DB, bỏ qua owner/facility tùy ý do query gửi (19.2366ms)
+  ✔ Trục giờ là hợp giờ của các sân, có khoảng gián đoạn, giữ inactive và không cố định 06–22 (5.6386ms)
+  ✔ HOLD còn hạn, hết hạn, đúng hạn và BOOKED theo makeSlots; giá hiện tại không lấy tiền đơn (10.0501ms)
+  ✔ Ô quá giờ và đúng thời điểm bắt đầu không còn AVAILABLE (5.2583ms)
+  ✔ Ngày mặc định dùng UTC+7 qua năm mới; luôn trả 7 ngày từ hôm nay, cho chọn xa hơn (9.8474ms)
+  ✔ Ngày trống, sai định dạng, không tồn tại, quá khứ, sai kiểu hoặc lặp đều bị 400 (21.0532ms)
+  ✔ CUSTOMER/chưa duyệt/thiếu tài khoản/chưa cấp cơ sở bị 403; DB thu hồi quyền có hiệu lực ngay (35.1678ms)
+  ✔ Cơ sở được cấp chưa có sân trả mảng rỗng thật, vẫn có ngày và bộ chọn 7 ngày (3.7503ms)
+  ✔ Một truy vấn Court và một truy vấn SlotLock cho toàn bộ lịch (4.7465ms)
+  ✔ Lỗi DB ở bất kỳ bước đọc nào được truyền lên, không thành lịch rỗng (8.1351ms)
+  ✔ Đọc lịch không đổi Booking/SlotLock/Payment/Request, giá hoặc quyền (25.1193ms)
+✔ Lịch điều hành dùng dữ liệu thật, phạm vi cơ sở và quy tắc khả dụng chung (442.5565ms)
+▶ OWNER sửa thông tin đúng cơ sở qua HTTP, kiểm tra quyền và dữ liệu trên MongoDB cục bộ
+  ✔ Khách chưa đăng nhập phải vào login; CUSTOMER, OWNER chưa duyệt/bị từ chối và ADMIN không sửa được (189.281ms)
+  ✔ Form cơ sở thật giữ đúng action, method, ba trường cho phép và CSRF; không gửi quyền/chủ cơ sở ẩn (26.5861ms)
+  ✔ OWNER khác không đọc hoặc ghi cơ sở, mã sai 400, mã không tồn tại 404; tài khoản chưa cấp cơ sở 403 (94.3061ms)
+  ✔ CSRF thiếu, sai hoặc thuộc phiên khác đều không ghi MongoDB (47.1158ms)
+  ✔ Cập nhật hợp lệ trim tên/địa chỉ và chuẩn hóa SĐT +84, khoảng trắng, chấm, gạch ngang (24.7718ms)
+  ✔ SĐT mới vẫn cho khách vãng lai xem lịch và giữ ô, không đổi sân, tài khoản hoặc đơn đã có (95.8032ms)
+  ✔ Chỉ nhận name/address/phone; body không thể đổi chủ, ID, quyền hoặc cơ sở khác (13.1133ms)
+  ✔ Tên và địa chỉ ở đúng biên 1/150 và 1/500 ký tự được chấp nhận (23.1944ms)
+  ✔ Trống/thiếu, quá dài, sai SĐT hoặc nhiều giá trị cùng input trả 400 và không đổi bản ghi (164.0937ms)
+  ✔ Lỗi giữ cả ba giá trị nhập và escape HTML; tên/địa chỉ nguy hiểm không trở thành mã thực thi (24.6499ms)
+  ✔ Quyền được đọc lại mỗi request; session cũ không sửa sau khi bị thu hồi vai trò hoặc duyệt (32.6948ms)
+  ✔ Chuyển cơ sở sang chủ khác vô hiệu quyền session cũ, không tạo mới khi save; các trang sẵn có vẫn hoạt động (71.8898ms)
+✔ OWNER sửa thông tin đúng cơ sở qua HTTP, kiểm tra quyền và dữ liệu trên MongoDB cục bộ (1213.8947ms)
+ℹ tests 156
+ℹ suites 0
+ℹ pass 156
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16026.7543

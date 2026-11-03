@@ -1,0 +1,1066 @@
+{
+  "issue": 36,
+  "targetSHA": "590388158f8f3982259dde43f311e7604f74437f",
+  "executedAtUTC": "2026-10-24T12:50:03.591Z",
+  "browser": "ChatGPT in-app browser; build/version unavailable from tool",
+  "timeZone": "Asia/Ho_Chi_Minh",
+  "viewports": [
+    {
+      "width": 1366,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "privacy": "Only synthetic UI text, filter values, widths and focus metadata; no hidden inputs, cookies, CSRF or authentication data.",
+  "captures": [
+    {
+      "file": "thuong-desktop-1366.jpg",
+      "atUTC": "2026-10-24T12:46:52.300Z",
+      "alerts": [],
+      "cards": [
+        {
+          "clientWidth": 377,
+          "executableHeadingChildren": 0,
+          "heading": "QA B01 — Trống 09–18",
+          "width": 377
+        },
+        {
+          "clientWidth": 377,
+          "executableHeadingChildren": 0,
+          "heading": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_",
+          "width": 377
+        }
+      ],
+      "document": {
+        "clientWidth": 1351,
+        "width": 1351
+      },
+      "empty": null,
+      "fields": [
+        {
+          "id": "filter-facility",
+          "value": "6adca8713ddc5e01c14dca1a"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "14:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "15:00"
+        }
+      ],
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      }
+    },
+    {
+      "file": "thuong-mobile-390.jpg",
+      "atUTC": "2026-10-24T12:46:52.433Z",
+      "alerts": [],
+      "cards": [
+        {
+          "clientWidth": 333,
+          "executableHeadingChildren": 0,
+          "heading": "QA B01 — Trống 09–18",
+          "width": 333
+        },
+        {
+          "clientWidth": 333,
+          "executableHeadingChildren": 0,
+          "heading": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_",
+          "width": 333
+        }
+      ],
+      "document": {
+        "clientWidth": 375,
+        "width": 375
+      },
+      "empty": null,
+      "fields": [
+        {
+          "id": "filter-facility",
+          "value": "6adca8713ddc5e01c14dca1a"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "14:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "15:00"
+        }
+      ],
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "file": "the-ten-dai-mobile-390.jpg",
+      "atUTC": "2026-10-24T12:47:04.753Z",
+      "alerts": [],
+      "cards": [
+        {
+          "clientWidth": 333,
+          "executableHeadingChildren": 0,
+          "heading": "QA B01 — Trống 09–18",
+          "width": 333
+        },
+        {
+          "clientWidth": 333,
+          "executableHeadingChildren": 0,
+          "heading": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_",
+          "width": 333
+        }
+      ],
+      "document": {
+        "clientWidth": 375,
+        "width": 375
+      },
+      "empty": null,
+      "fields": [
+        {
+          "id": "filter-facility",
+          "value": "6adca8713ddc5e01c14dca1a"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "14:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "15:00"
+        }
+      ],
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "file": "rong-mobile-390.jpg",
+      "atUTC": "2026-10-24T12:47:43.323Z",
+      "alerts": [],
+      "cards": [],
+      "document": {
+        "clientWidth": 375,
+        "width": 375
+      },
+      "empty": "Không tìm được sân phù hợp bộ lọc.",
+      "fields": [
+        {
+          "id": "filter-facility",
+          "value": "6adca8713ddc5e01c14dca1a"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "19:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "20:00"
+        }
+      ],
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "file": "rong-desktop-1366.jpg",
+      "atUTC": "2026-10-24T12:47:21.560Z",
+      "alerts": [],
+      "cards": [],
+      "document": {
+        "clientWidth": 1351,
+        "width": 1351
+      },
+      "empty": "Không tìm được sân phù hợp bộ lọc.",
+      "fields": [
+        {
+          "id": "filter-facility",
+          "value": "6adca8713ddc5e01c14dca1a"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "19:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "20:00"
+        }
+      ],
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      }
+    },
+    {
+      "file": "loi-mobile-390.jpg",
+      "atUTC": "2026-10-24T12:47:43.481Z",
+      "alerts": [
+        "Giờ kết thúc phải sau giờ bắt đầu.",
+        "Giờ kết thúc phải sau giờ bắt đầu."
+      ],
+      "cards": [],
+      "document": {
+        "clientWidth": 375,
+        "width": 375
+      },
+      "empty": "Không tìm được sân phù hợp bộ lọc.",
+      "fields": [
+        {
+          "id": "filter-facility",
+          "value": "6adca8713ddc5e01c14dca1a"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "14:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "13:00"
+        }
+      ],
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "file": "loi-thong-bao-mobile-390.jpg",
+      "atUTC": "2026-10-24T12:47:43.821Z",
+      "alerts": [
+        "Giờ kết thúc phải sau giờ bắt đầu.",
+        "Giờ kết thúc phải sau giờ bắt đầu."
+      ],
+      "cards": [],
+      "document": {
+        "clientWidth": 375,
+        "width": 375
+      },
+      "empty": "Không tìm được sân phù hợp bộ lọc.",
+      "fields": [
+        {
+          "id": "filter-facility",
+          "value": "6adca8713ddc5e01c14dca1a"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "14:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "13:00"
+        }
+      ],
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "file": "loi-desktop-1366.jpg",
+      "atUTC": "2026-10-24T12:47:43.937Z",
+      "alerts": [
+        "Giờ kết thúc phải sau giờ bắt đầu.",
+        "Giờ kết thúc phải sau giờ bắt đầu."
+      ],
+      "cards": [],
+      "document": {
+        "clientWidth": 1351,
+        "width": 1351
+      },
+      "empty": "Không tìm được sân phù hợp bộ lọc.",
+      "fields": [
+        {
+          "id": "filter-facility",
+          "value": "6adca8713ddc5e01c14dca1a"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "14:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "13:00"
+        }
+      ],
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      }
+    },
+    {
+      "file": "focus-desktop-1366.jpg",
+      "atUTC": "2026-10-24T12:49:00.764Z",
+      "alerts": [],
+      "cards": [
+        {
+          "clientWidth": 377,
+          "executableHeadingChildren": 0,
+          "heading": "QA B01 — Trống 09–18",
+          "width": 377
+        },
+        {
+          "clientWidth": 377,
+          "executableHeadingChildren": 0,
+          "heading": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_",
+          "width": 377
+        }
+      ],
+      "document": {
+        "clientWidth": 1351,
+        "width": 1351
+      },
+      "empty": null,
+      "fields": [
+        {
+          "id": "filter-facility",
+          "value": "6adca8713ddc5e01c14dca1a"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "14:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "15:00"
+        }
+      ],
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      }
+    },
+    {
+      "file": "focus-mobile-390.jpg",
+      "atUTC": "2026-10-24T12:49:01.658Z",
+      "alerts": [],
+      "cards": [
+        {
+          "clientWidth": 333,
+          "executableHeadingChildren": 0,
+          "heading": "QA B01 — Trống 09–18",
+          "width": 333
+        },
+        {
+          "clientWidth": 333,
+          "executableHeadingChildren": 0,
+          "heading": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_",
+          "width": 333
+        }
+      ],
+      "document": {
+        "clientWidth": 375,
+        "width": 375
+      },
+      "empty": null,
+      "fields": [
+        {
+          "id": "filter-facility",
+          "value": "6adca8713ddc5e01c14dca1a"
+        },
+        {
+          "id": "filter-date",
+          "value": "2026-10-27"
+        },
+        {
+          "id": "filter-startTime",
+          "value": "14:00"
+        },
+        {
+          "id": "filter-endTime",
+          "value": "15:00"
+        }
+      ],
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  ],
+  "detail": [
+    {
+      "file": "chi-tiet-mobile-390.jpg",
+      "atUTC": "2026-10-24T12:47:04.932Z",
+      "checked": 0,
+      "date": "2026-10-27",
+      "document": {
+        "clientWidth": 375,
+        "width": 375
+      },
+      "executableHeadingChildren": 0,
+      "text": [
+        {
+          "class": "booking-court-title",
+          "clientWidth": 335,
+          "overflowWrap": "anywhere",
+          "text": "QA B01 — Trống 09–18",
+          "width": 335
+        },
+        {
+          "class": "booking-court-location",
+          "clientWidth": 335,
+          "overflowWrap": "anywhere",
+          "text": "Cơ sở B kiểm thử tên dài — Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu CHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGAT · Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài",
+          "width": 335
+        }
+      ],
+      "url": "/courts/6adca8713ddc5e01c14dca26?date=2026-10-27",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "file": "chi-tiet-desktop-1366.jpg",
+      "atUTC": "2026-10-24T12:47:04.976Z",
+      "checked": 0,
+      "date": "2026-10-27",
+      "document": {
+        "clientWidth": 1351,
+        "width": 1351
+      },
+      "executableHeadingChildren": 0,
+      "text": [
+        {
+          "class": "booking-court-title",
+          "clientWidth": 1100,
+          "overflowWrap": "anywhere",
+          "text": "QA B01 — Trống 09–18",
+          "width": 1100
+        },
+        {
+          "class": "booking-court-location",
+          "clientWidth": 1100,
+          "overflowWrap": "anywhere",
+          "text": "Cơ sở B kiểm thử tên dài — Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu CHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGAT · Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài",
+          "width": 1100
+        }
+      ],
+      "url": "/courts/6adca8713ddc5e01c14dca26?date=2026-10-27",
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      }
+    },
+    {
+      "file": "chi-tiet-ten-san-dai-mobile-390.jpg",
+      "atUTC": "2026-10-24T12:47:21.172Z",
+      "checked": 0,
+      "date": "2026-10-27",
+      "document": {
+        "clientWidth": 375,
+        "width": 375
+      },
+      "executableHeadingChildren": 0,
+      "text": [
+        {
+          "class": "booking-court-title",
+          "clientWidth": 335,
+          "overflowWrap": "anywhere",
+          "text": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_",
+          "width": 335
+        },
+        {
+          "class": "booking-court-location",
+          "clientWidth": 335,
+          "overflowWrap": "anywhere",
+          "text": "Cơ sở B kiểm thử tên dài — Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu CHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGAT · Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài",
+          "width": 335
+        }
+      ],
+      "url": "/courts/6adca8713ddc5e01c14dca27?date=2026-10-27",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "kind": "reload-mobile",
+      "atUTC": "2026-10-24T12:47:21.260Z",
+      "checked": 0,
+      "date": "2026-10-27",
+      "document": {
+        "clientWidth": 375,
+        "width": 375
+      },
+      "executableHeadingChildren": 0,
+      "text": [
+        {
+          "class": "booking-court-title",
+          "clientWidth": 335,
+          "overflowWrap": "anywhere",
+          "text": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_",
+          "width": 335
+        },
+        {
+          "class": "booking-court-location",
+          "clientWidth": 335,
+          "overflowWrap": "anywhere",
+          "text": "Cơ sở B kiểm thử tên dài — Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu Khu thể thao luyện tập và thi đấu CHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGATCHUOIKHONgNGAT · Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài Địa chỉ thử chuỗi dài",
+          "width": 335
+        }
+      ],
+      "url": "/courts/6adca8713ddc5e01c14dca27?date=2026-10-27",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  ],
+  "keyboard": [
+    {
+      "viewport": 1366,
+      "trace": [
+        {
+          "from": "filter-facility",
+          "id": "filter-date",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-date",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-date",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-date",
+          "outline": "rgb(23, 63, 53) none 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-startTime",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-startTime",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-startTime",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-startTime",
+          "outline": "rgb(23, 63, 53) none 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-endTime",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-endTime",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-endTime",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-endTime",
+          "outline": "rgb(23, 63, 53) none 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "BUTTON",
+          "text": "Tìm sân"
+        }
+      ],
+      "afterSubmit": {
+        "alerts": [],
+        "cards": [
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA B01 — Trống 09–18",
+            "width": 377
+          },
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_",
+            "width": 377
+          }
+        ],
+        "document": {
+          "clientWidth": 1351,
+          "width": 1351
+        },
+        "empty": null,
+        "fields": [
+          {
+            "id": "filter-facility",
+            "value": "6adca8713ddc5e01c14dca1a"
+          },
+          {
+            "id": "filter-date",
+            "value": "2026-10-27"
+          },
+          {
+            "id": "filter-startTime",
+            "value": "14:00"
+          },
+          {
+            "id": "filter-endTime",
+            "value": "15:00"
+          }
+        ],
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "resetFocus": {
+        "id": "",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "tag": "A",
+        "text": "Xóa bộ lọc"
+      },
+      "afterReset": {
+        "alerts": [],
+        "cards": [
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA A01 — Trống",
+            "width": 377
+          },
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA A02 — HOLD 14:30",
+            "width": 377
+          },
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA A03 — BOOKED 14:00",
+            "width": 377
+          },
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA A04 — HOLD hết hạn",
+            "width": 377
+          },
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA A05 — Hết ô cả ngày",
+            "width": 377
+          },
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA A06 — Chỉ mở 14–15",
+            "width": 377
+          },
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA A07 — Mở từ 15 giờ",
+            "width": 377
+          },
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA A08 — BOOKED ở 15:00",
+            "width": 377
+          },
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA A10 — Chỉ mở 00:00–00:30",
+            "width": 377
+          },
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA B01 — Trống 09–18",
+            "width": 377
+          },
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_",
+            "width": 377
+          },
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA C01 — Chưa cấp chủ",
+            "width": 377
+          },
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA D01 — Chủ chờ duyệt",
+            "width": 377
+          },
+          {
+            "clientWidth": 377,
+            "executableHeadingChildren": 0,
+            "heading": "QA E01 — Thiếu liên hệ hợp lệ",
+            "width": 377
+          }
+        ],
+        "document": {
+          "clientWidth": 1351,
+          "width": 1351
+        },
+        "empty": null,
+        "fields": [
+          {
+            "id": "filter-facility",
+            "value": ""
+          },
+          {
+            "id": "filter-date",
+            "value": ""
+          },
+          {
+            "id": "filter-startTime",
+            "value": ""
+          },
+          {
+            "id": "filter-endTime",
+            "value": ""
+          }
+        ],
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      }
+    },
+    {
+      "viewport": 390,
+      "trace": [
+        {
+          "from": "filter-facility",
+          "id": "filter-date",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-date",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-date",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-date",
+          "outline": "rgb(23, 63, 53) none 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-startTime",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-startTime",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-startTime",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-startTime",
+          "outline": "rgb(23, 63, 53) none 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-endTime",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-endTime",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-endTime",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "filter-endTime",
+          "outline": "rgb(23, 63, 53) none 2.66667px",
+          "tag": "INPUT",
+          "text": ""
+        },
+        {
+          "id": "",
+          "outline": "rgb(139, 157, 75) solid 2.66667px",
+          "tag": "BUTTON",
+          "text": "Tìm sân"
+        }
+      ],
+      "afterSubmit": {
+        "alerts": [],
+        "cards": [
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA B01 — Trống 09–18",
+            "width": 333
+          },
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_",
+            "width": 333
+          }
+        ],
+        "document": {
+          "clientWidth": 375,
+          "width": 375
+        },
+        "empty": null,
+        "fields": [
+          {
+            "id": "filter-facility",
+            "value": "6adca8713ddc5e01c14dca1a"
+          },
+          {
+            "id": "filter-date",
+            "value": "2026-10-27"
+          },
+          {
+            "id": "filter-startTime",
+            "value": "14:00"
+          },
+          {
+            "id": "filter-endTime",
+            "value": "15:00"
+          }
+        ],
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "resetFocus": {
+        "id": "",
+        "outline": "rgb(139, 157, 75) solid 2.66667px",
+        "tag": "A",
+        "text": "Xóa bộ lọc"
+      },
+      "afterReset": {
+        "alerts": [],
+        "cards": [
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA A01 — Trống",
+            "width": 333
+          },
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA A02 — HOLD 14:30",
+            "width": 333
+          },
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA A03 — BOOKED 14:00",
+            "width": 333
+          },
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA A04 — HOLD hết hạn",
+            "width": 333
+          },
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA A05 — Hết ô cả ngày",
+            "width": 333
+          },
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA A06 — Chỉ mở 14–15",
+            "width": 333
+          },
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA A07 — Mở từ 15 giờ",
+            "width": 333
+          },
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA A08 — BOOKED ở 15:00",
+            "width": 333
+          },
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA A10 — Chỉ mở 00:00–00:30",
+            "width": 333
+          },
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA B01 — Trống 09–18",
+            "width": 333
+          },
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA B02 — Tên sân dài <em>QA</em> & SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_NGAT_SAN_KHONG_",
+            "width": 333
+          },
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA C01 — Chưa cấp chủ",
+            "width": 333
+          },
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA D01 — Chủ chờ duyệt",
+            "width": 333
+          },
+          {
+            "clientWidth": 333,
+            "executableHeadingChildren": 0,
+            "heading": "QA E01 — Thiếu liên hệ hợp lệ",
+            "width": 333
+          }
+        ],
+        "document": {
+          "clientWidth": 375,
+          "width": 375
+        },
+        "empty": null,
+        "fields": [
+          {
+            "id": "filter-facility",
+            "value": ""
+          },
+          {
+            "id": "filter-date",
+            "value": ""
+          },
+          {
+            "id": "filter-startTime",
+            "value": ""
+          },
+          {
+            "id": "filter-endTime",
+            "value": ""
+          }
+        ],
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      }
+    }
+  ],
+  "consoleErrors": [],
+  "summary": {
+    "originalCasesRetested": 10,
+    "originalCasesPassed": 10,
+    "bug01": "PASS RETEST after #54",
+    "observations": [
+      "OBS-01: invalid query also displays empty-results block",
+      "OBS-02: two identical role=alert messages for one invalid query"
+    ]
+  }
+}

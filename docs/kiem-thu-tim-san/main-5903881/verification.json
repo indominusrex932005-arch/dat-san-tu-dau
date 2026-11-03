@@ -1,0 +1,35 @@
+{
+  "targetSHA": "590388158f8f3982259dde43f311e7604f74437f",
+  "nodeVersion": "v24.15.0",
+  "check": {
+    "status": "PASS",
+    "command": "npm run check",
+    "lint": "PASS",
+    "ejsTemplates": 17
+  },
+  "test": {
+    "status": "PASS",
+    "command": "npm test",
+    "total": 111,
+    "passed": 111,
+    "failed": 0,
+    "skipped": 0
+  },
+  "http": {
+    "total": 41,
+    "passed": 41,
+    "failed": 0
+  },
+  "browser": {
+    "originalCasesRetested": 10,
+    "originalCasesPassed": 10,
+    "bug01": "PASS RETEST after #54",
+    "observations": [
+      "OBS-01: invalid query also displays empty-results block",
+      "OBS-02: two identical role=alert messages for one invalid query"
+    ]
+  },
+  "screenshots": 13,
+  "sameLongStringsAsHistoricalFixture": true,
+  "note": "Lint/EJS and automated tests supplement, rather than replace, the separate HTTP/DB and browser evidence."
+}

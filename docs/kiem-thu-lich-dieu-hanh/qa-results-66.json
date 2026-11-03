@@ -1,0 +1,77 @@
+{
+  "issue": 66,
+  "targetSHA": null,
+  "executedAtUTC": "2026-10-25T08:05:48.447Z",
+  "timezone": "Asia/Ho_Chi_Minh",
+  "runtime": {
+    "node": "v24.15.0",
+    "mongo": "8.3.11",
+    "replicaSet": "rs0",
+    "port": 27029,
+    "database": "qa_calendar_66_1792915547390"
+  },
+  "summary": {
+    "total": 7,
+    "reportedHttpPassed": 7,
+    "browserAcceptance": "NOT_RUN",
+    "issueAcceptance": "INCOMPLETE"
+  },
+  "cases": [
+    {
+      "id": "TC-01",
+      "title": "Phân quyền và phạm vi cơ sở của Chủ sân",
+      "expected": "Khách chuyển login (302); Customer/Pending/Unassigned bị 403; Owner A chỉ thấy cơ sở A; Owner B chỉ thấy B; Query chèn facilityId/owner bị bỏ qua.",
+      "actual": "Anon: 303 -> /login; Cust: 403; Pending: 403; Unassigned: 403; Owner A: 200 (thấy A1, A2; không thấy B); Injection ignored: true; Owner B: 200 (chỉ thấy B).",
+      "status": "REPORTED_HTTP_PASS_UNVERIFIED_SOURCE"
+    },
+    {
+      "id": "TC-02",
+      "title": "Trục giờ theo cấu hình sân, ô ngoài giờ và nhãn Tạm ngừng",
+      "expected": "Trục giờ là hợp của các sân (gồm cả sáng 06:00 và tối 21:30); ô ngoài giờ UNAVAILABLE; sân inactive có nhãn \"Tạm ngừng\"; không có trạng thái \"Bảo trì\".",
+      "actual": "HTTP 200; Có ô sáng (06:00): true; Có ô tối (21:30): true; Nhãn \"Tạm ngừng\": true; Nhãn \"Không phục vụ\": true; Không bảo trì: true.",
+      "status": "REPORTED_HTTP_PASS_UNVERIFIED_SOURCE"
+    },
+    {
+      "id": "TC-03",
+      "title": "Tạo đơn thật: Trống → Đang giữ (HOLD) → Đã đặt (CONFIRMED)",
+      "expected": "Ban đầu Trống (AVAILABLE); Tạo đơn HOLD chuyển thành Đang giữ (LOCKED); Thanh toán mô phỏng chuyển thành Đã đặt (BOOKED).",
+      "actual": "Tạo HOLD: 303 (/bookings/6addb85b5565c25153b91a34/checkout?token=[REDACTED]); Lịch phản ánh Đang giữ: true; Thanh toán: 303; Lịch phản ánh Đã đặt: true.",
+      "status": "REPORTED_HTTP_PASS_UNVERIFIED_SOURCE"
+    },
+    {
+      "id": "TC-04",
+      "title": "HOLD hết hạn mở lại ô tương lai, bảo toàn ô đã xác nhận",
+      "expected": "HOLD hết hạn được xem như AVAILABLE khi xem lịch; ô đã xác nhận trước đó giữ nguyên BOOKED.",
+      "actual": "HTTP 200; Đơn đã đặt trước đó vẫn giữ nguyên: true.",
+      "status": "REPORTED_HTTP_PASS_UNVERIFIED_SOURCE"
+    },
+    {
+      "id": "TC-05",
+      "title": "Mặc định ngày hôm nay giờ VN, 7 nút chọn ngày và xử lý lỗi ngày",
+      "expected": "Mặc định ngày VN (HTTP 200); có đủ 7 ngày lựa chọn; ngày quá khứ, sai format, không tồn tại, lặp lại đều trả HTTP 400 rõ ràng.",
+      "actual": "Mặc định hôm nay (2026-10-25): true; Đủ 7 ngày: true; Quá khứ: 400; Sai format: 400; Không tồn tại: 400; Lặp: 400.",
+      "status": "REPORTED_HTTP_PASS_UNVERIFIED_SOURCE"
+    },
+    {
+      "id": "TC-06",
+      "title": "XSS Escape an toàn, vùng cuộn trợ năng và trạng thái cơ sở chưa có sân",
+      "expected": "Escape an toàn payload HTML/script; có container cuộn ngang riêng owner-calendar-scroll; hỗ trợ phím/aria; cơ sở chưa có sân render 200 thông báo rỗng.",
+      "actual": "Không có script thô: true; Script được escape: true; Vùng cuộn riêng: true; Trạng thái rỗng: 200 (\"true\").",
+      "status": "PARTIAL_HTML_ONLY"
+    },
+    {
+      "id": "TC-07",
+      "title": "Xác nhận GET lịch hoàn toàn Read-only, không đổi dữ liệu",
+      "expected": "Số lượng bản ghi và SHA-256 hash của Booking, SlotLock, Payment, BookingRequest giữ nguyên 100% trước và sau nhiều lượt GET (kể cả GET lỗi).",
+      "actual": "Counts match: true (Bookings: 2, SlotLocks: 2, Payments: 1); Hashes match: true.",
+      "status": "REPORTED_HTTP_PASS_UNVERIFIED_SOURCE"
+    }
+  ],
+  "reportedTargetSHA": "3d76e104764834ffba04910ebf11fdf335804aa1",
+  "sourceVerification": {
+    "status": "UNVERIFIED_HISTORICAL_RUN",
+    "existingCandidateSHA": "3d76e102bdc88a94778c889e1ad9ff5f328b9b50",
+    "note": "Reported SHA does not exist. Git confirms the candidate commit, but no independent execution record proves the historical run used it."
+  },
+  "method": "HTTP TestBrowser and HTML inspection only; no browser layout, scrolling or keyboard execution evidence."
+}

@@ -1,0 +1,347 @@
+{
+  "date": "2026-10-27",
+  "timezone": "Asia/Bangkok",
+  "browser": "Google Chrome",
+  "browserInstalledVersion": "156.0.8078.48",
+  "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+  "method": "Windows Computer Use; native DevTools Responsive; original1707x1019window screenshots including viewport toolbar; no cropping/edits",
+  "fixtures": "Local disposableMongoDBreplica; actual createApp/controller/service/EJS; normal, empty, long OWNERS",
+  "shots": [
+    {
+      "file": "normal-1366-table-left.jpg",
+      "scenario": "normal",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUTC": "2026-10-26T22:17:20.367Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "After CSS fix: actual four statuses, inactive row/mixed hours; Sân / giờ corner visible.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "normal-1366-table-right.jpg",
+      "scenario": "normal",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUTC": "2026-10-26T22:17:28.064Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Horizontal wheel reaches21:00–23:30; corner Sân/giờ and court names stay fixed after specificity fix; no body horizontal shift.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "keyboard-1366-back-focus.jpg",
+      "scenario": "keyboard",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUTC": "2026-10-26T22:17:40.094Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Shift+Tab reaches Về quản lý cơ sở footer link with visible focus.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "keyboard-1366-enter-back.jpg",
+      "scenario": "keyboard",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUTC": "2026-10-26T22:17:47.849Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Enter on focused calendar footer link opens real /owner dashboard for same facility.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "keyboard-1366-enter-get.jpg",
+      "scenario": "keyboard",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUTC": "2026-10-26T22:18:42.703Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Enter in native date input submits real GET /owner/calendar?date=2026-10-27; rendered heading/selection preserve date.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "normal-1366-top.jpg",
+      "scenario": "normal",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUTC": "2026-10-26T22:18:49.927Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "FinalCSS: correct facility/date, seven GET links, no page-width overflow observed.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "normal-390-top.jpg",
+      "scenario": "normal",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUTC": "2026-10-26T22:19:06.666Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Normal mobile header/navigation/facility wrap inside390px viewport.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "normal-390-controls.jpg",
+      "scenario": "normal",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUTC": "2026-10-26T22:19:14.598Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Date form full-width, seven day links in two-column mobile layout, four-state legend readable.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "normal-390-table-left.jpg",
+      "scenario": "normal",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUTC": "2026-10-26T22:19:22.127Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Table scroll is confined to card; inactive badge/mixed hours; court names wrap at128px.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "keyboard-390-day-focus.jpg",
+      "scenario": "keyboard",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUTC": "2026-10-26T22:19:33.293Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Shift+Tab reaches final day link with visible outline, correct keyboard order.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "keyboard-390-table-focus.jpg",
+      "scenario": "keyboard",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUTC": "2026-10-26T22:19:40.255Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Tab reaches scrollable table, clear focus ring on390px.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "keyboard-390-arrow-right.jpg",
+      "scenario": "keyboard",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUTC": "2026-10-26T22:19:46.860Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "ArrowRight scrolls time columns; sticky Sân/giờ and court column unchanged, page bounds stable.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "normal-390-table-scroll.jpg",
+      "scenario": "normal",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUTC": "2026-10-26T22:20:14.363Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "ArrowRight moves only table time columns while firstcolumn/corner/body stay fixed.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "keyboard-390-enter-date.jpg",
+      "scenario": "keyboard",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUTC": "2026-10-26T22:20:28.485Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Enter on Tab-focused final day link navigates by GET to2026-11-02; input retains correct date.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "empty-390-top.jpg",
+      "scenario": "empty",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUTC": "2026-10-26T22:21:05.840Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Actual empty facility with0courts shown, correct OWNER facility, mobile header wraps.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "empty-390-state.jpg",
+      "scenario": "empty",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUTC": "2026-10-26T22:21:14.033Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Cơ sở chưa có sân message, no fake table, return link visible; all within mobile page.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "empty-1366-state.jpg",
+      "scenario": "empty",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUTC": "2026-10-26T22:21:32.140Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Empty-state card clearly explains no courts; no table fabricated; navigation/footer readable.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "empty-1366-top.jpg",
+      "scenario": "empty",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUTC": "2026-10-26T22:21:39.474Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Correct empty facility and0court count, date/navigation remain available.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "long-1366-top.jpg",
+      "scenario": "long",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUTC": "2026-10-26T22:22:16.059Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Actual150character facility and500character address wrap; literal HTMLpayload remains readable text.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "long-1366-table.jpg",
+      "scenario": "long",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUTC": "2026-10-26T22:22:24.772Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "150char court name and literalemtag wrap within sticky firstcolumn; inactive row readable; no page overflow.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "long-1366-scroll.jpg",
+      "scenario": "long",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUTC": "2026-10-26T22:22:33.748Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Long firstcolumn and corner stayfixed while reaching late hours; no text covers adjacent content.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "long-390-table.jpg",
+      "scenario": "long",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUTC": "2026-10-26T22:23:09.479Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "150charcourt wraps entirely within128pxstickycolumn, inactive row remains readable; table has own horizontal viewport.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "long-390-top.jpg",
+      "scenario": "long",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUTC": "2026-10-26T22:23:26.087Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Long facilityname wraps within mobile card; escaped emtag shows literally, no overflow.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "long-390-facility.jpg",
+      "scenario": "long",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUTC": "2026-10-26T22:23:52.924Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "Entire150charname +500charaddress fit within card by wrapping; literalimgpayload visible, nextform begins below with no overlap.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "keyboard-1366-day-focus.jpg",
+      "scenario": "keyboard",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUTC": "2026-10-26T22:24:37.646Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "After finalCSS: ShiftTab focuses finalday link, visibleoutline; longcourtdata.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "keyboard-1366-table-focus.jpg",
+      "scenario": "keyboard",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUTC": "2026-10-26T22:24:45.651Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "FinalCSS Tab focuses table region with visible outline on desktop.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "keyboard-1366-arrow-left.jpg",
+      "scenario": "keyboard",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUTC": "2026-10-26T22:24:52.441Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "ArrowLeft moves timecolumns inside focused table; corner and names fixed.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    },
+    {
+      "file": "keyboard-1366-arrow-right.jpg",
+      "scenario": "keyboard",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUTC": "2026-10-26T22:25:01.562Z",
+      "testedSHA": "e3aea06119c7cddadf6ec3d357d71a390986e04f",
+      "notes": "FinalCSS ArrowRight returns columns to latehours; fixed corner remains Sân/giờ.",
+      "method": "Original Chrome window screenshot; responsive viewport dimensions visible in toolbar; no image edits"
+    }
+  ]
+}

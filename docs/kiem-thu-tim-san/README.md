@@ -1,5 +1,9 @@
 # Bằng chứng kiểm thử tìm sân — #36
 
+**Mới nhất:** [Tái kiểm thử main `5903881` sau #54](main-5903881/README.md), ngày 24/10/2026: **41/41 HTTP/DB PASS, 10/10 ca UI gốc PASS; BUG-01 PASS RETEST**. Có 13 ảnh, JSON/fixture mới, kết quả 111/111 test và số đo 390px/1366px. OBS-01/02 về thông báo lỗi vẫn còn và được ghi rõ trong báo cáo mới.
+
+## Bằng chứng lịch sử trên SHA 30ee256
+
 Đọc [báo cáo và bảng từng ca](../KIEM_THU_TIM_SAN.md). Chạy ngày **24/10/2026**, ứng dụng thật trên SHA `30ee256133ac87417481ccf52407281af9e385e7` (`feat/ui-courts-filter`, có backend #34 và UI #35). Đây không phải kết quả trên main sau merge tương lai.
 
 | Trạng thái | Desktop 1366×900 | Mobile 390×844 |

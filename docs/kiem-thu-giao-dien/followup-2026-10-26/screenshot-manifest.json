@@ -1,0 +1,29 @@
+{
+  "appSourceSHA": "f8c1cfb900ab4ba4cd568e520dce46d9e2dbf0b7",
+  "images": [
+    {
+      "file": "customer-created-login.jpg",
+      "width": 1265,
+      "height": 712,
+      "format": "JPEG",
+      "bytes": 49288,
+      "sha256": "fbf7c85b24ca5be402b927934201d9cc12abe6ac92a0091379748cc663e7f905"
+    },
+    {
+      "file": "owner-created-pending-mobile.jpg",
+      "width": 375,
+      "height": 811,
+      "format": "JPEG",
+      "bytes": 39640,
+      "sha256": "5014933728bb9160c6f9b132c4b5ac13b906e8010da9f6ded0f5439f05da1593"
+    },
+    {
+      "file": "owner-created-pending.jpg",
+      "width": 1265,
+      "height": 712,
+      "format": "JPEG",
+      "bytes": 57197,
+      "sha256": "52817f26b99ed26c9d407789e41aada92b7ae662fa016faff92e9591a242c0b0"
+    }
+  ]
+}
