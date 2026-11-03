@@ -1,0 +1,813 @@
+{
+  "issue": 75,
+  "pr": 73,
+  "date": "2026-11-03",
+  "browser": {
+    "name": "Codex in-app browser via CUA",
+    "engineVersion": "Unavailable from supported browser API"
+  },
+  "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 1366,
+      "height": 900
+    }
+  ],
+  "captureNotes": "Original browser JPEG captures. Full-page document content widths may be 375/1351 because of the 15px vertical scrollbar; CSS viewport remains 390/1366. No image resizing or retouching.",
+  "scope": "Seven states at both viewports plus keyboard Tab, Enter to detail and real Back at both viewports. No physical-device or cross-browser claim.",
+  "cases": [
+    {
+      "id": "one-390",
+      "scenario": "one",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T06:56:22.855Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a6f&date=2026-11-07&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 1,
+      "actual": {
+        "active": {
+          "id": "",
+          "tag": "BODY",
+          "text": "Đến danh sách sân\n  \n    \n  Sân Thể Thao\n  \n    Trang chủCơ sởĐặt sân\n    \n      Đăng nhậpĐăng ký kháchDành cho chủ sân\n    \n  \n\n\n    \n      \n      \n        \n          Sân Thể Thao / Đặt sân\n          Danh sách sân\n          Chọn nhiều ô 30"
+        },
+        "cards": [
+          {
+            "clientWidth": 300,
+            "facility": "Cơ sở một phương án UI75",
+            "href": "/courts/6ae984533fc6cafa9c626a70?date=2026-11-07",
+            "infoHeights": [
+              41.1875,
+              41.1875,
+              41.1875
+            ],
+            "information": "NGÀY\n7/11/2026\nKHUNG GIỜ\n16:00 – 17:00\nTHỜI LƯỢNG\n60 phút",
+            "name": "Sân phục vụ16–18",
+            "reason": "Cùng cơ sở, sớm hơn 60 phút",
+            "scrollWidth": 300,
+            "total": "100.000 ₫",
+            "width": 301.3333435058594
+          }
+        ],
+        "documentWidth": 375,
+        "error": null,
+        "filters": {
+          "date": "2026-11-07",
+          "endTime": "18:00",
+          "facilityId": "6ae984533fc6cafa9c626a6f",
+          "startTime": "17:00"
+        },
+        "message": "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:",
+        "primaryCount": 0,
+        "suggestionSection": true,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "one-390.jpg",
+      "sha256": "538b096f6acfdbdd4868744013e6927336177ca6eb693a1c03c3ef1db3785705",
+      "notes": "After fix mobile date/time/duration items have natural height instead of80px."
+    },
+    {
+      "id": "three-390",
+      "scenario": "three",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T06:57:40.729Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a76&date=2026-11-07&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 3,
+      "actual": {
+        "active": {
+          "id": "",
+          "tag": "BODY",
+          "text": "Đến danh sách sân\n  \n    \n  Sân Thể Thao\n  \n    Trang chủCơ sởĐặt sân\n    \n      Đăng nhậpĐăng ký kháchDành cho chủ sân\n    \n  \n\n\n    \n      \n      \n        \n          Sân Thể Thao / Đặt sân\n          Danh sách sân\n          Chọn nhiều ô 30"
+        },
+        "cards": [
+          {
+            "clientWidth": 300,
+            "facility": "Cơ sở dài <em>UI75</em> & CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUO",
+            "href": "/courts/6ae984533fc6cafa9c626a77?date=2026-11-07",
+            "infoHeights": [
+              41.1875,
+              41.1875,
+              41.1875
+            ],
+            "information": "NGÀY\n7/11/2026\nKHUNG GIỜ\n16:00 – 17:00\nTHỜI LƯỢNG\n60 phút",
+            "name": "Sân dài <em>UI75</em> & TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔ",
+            "reason": "Cùng cơ sở, sớm hơn 60 phút",
+            "scrollWidth": 300,
+            "total": "100.000 ₫",
+            "width": 301.3333435058594
+          },
+          {
+            "clientWidth": 300,
+            "facility": "Cơ sở dài <em>UI75</em> & CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUO",
+            "href": "/courts/6ae984533fc6cafa9c626a77?date=2026-11-07",
+            "infoHeights": [
+              41.1875,
+              41.1875,
+              41.1875
+            ],
+            "information": "NGÀY\n7/11/2026\nKHUNG GIỜ\n18:00 – 19:00\nTHỜI LƯỢNG\n60 phút",
+            "name": "Sân dài <em>UI75</em> & TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔ",
+            "reason": "Cùng cơ sở, muộn hơn 60 phút",
+            "scrollWidth": 300,
+            "total": "150.000 ₫",
+            "width": 301.3333435058594
+          },
+          {
+            "clientWidth": 300,
+            "facility": "Cơ sở dài <em>UI75</em> & CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUO",
+            "href": "/courts/6ae984533fc6cafa9c626a77?date=2026-11-07",
+            "infoHeights": [
+              41.1875,
+              41.1875,
+              41.1875
+            ],
+            "information": "NGÀY\n7/11/2026\nKHUNG GIỜ\n18:30 – 19:30\nTHỜI LƯỢNG\n60 phút",
+            "name": "Sân dài <em>UI75</em> & TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔ",
+            "reason": "Cùng cơ sở, muộn hơn 90 phút",
+            "scrollWidth": 300,
+            "total": "150.000 ₫",
+            "width": 301.3333435058594
+          }
+        ],
+        "documentWidth": 375,
+        "error": null,
+        "filters": {
+          "date": "2026-11-07",
+          "endTime": "18:00",
+          "facilityId": "6ae984533fc6cafa9c626a76",
+          "startTime": "17:00"
+        },
+        "message": "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:",
+        "primaryCount": 0,
+        "suggestionSection": true,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "three-390.jpg",
+      "sha256": "ca187c5253914ad63e38ce939fc952e6045f3e657f7954d61e84432302ca47b8",
+      "notes": "Long150character court/facility names remain literal escapedtext; server prices100000,150000,150000 and reasons early60/late60/late90."
+    },
+    {
+      "id": "peak-390",
+      "scenario": "peak",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T06:58:22.434Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a7d&date=2026-11-07&startTime=17%3A30&endTime=18%3A30",
+      "expectedCards": 1,
+      "actual": {
+        "cards": [
+          {
+            "clientWidth": 300,
+            "facility": "Cơ sở qua mốc cao điểm UI75",
+            "href": "/courts/6ae984533fc6cafa9c626a7e?date=2026-11-07",
+            "infoHeights": [
+              41.1875,
+              41.1875,
+              41.1875
+            ],
+            "information": "NGÀY\n7/11/2026\nKHUNG GIỜ\n16:30 – 17:30\nTHỜI LƯỢNG\n60 phút",
+            "name": "Sân gợi ý16:30–17:30 UI75",
+            "reason": "Cùng cơ sở, sớm hơn 60 phút",
+            "scrollWidth": 300,
+            "total": "125.000 ₫",
+            "width": 301.3333435058594
+          }
+        ],
+        "documentWidth": 375,
+        "error": null,
+        "filters": {
+          "date": "2026-11-07",
+          "endTime": "18:30",
+          "facilityId": "6ae984533fc6cafa9c626a7d",
+          "startTime": "17:30"
+        },
+        "message": "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:",
+        "primaryCount": 0,
+        "suggestionSection": true,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "peak-390.jpg",
+      "sha256": "397f5d9ca0228e6d535eb46e0e63ddd7bbdd64744d9e418847d2b37fc8c17a87",
+      "notes": "16:30–17:00 base50000 +17:00–17:30 peak75000 =125000,60minutes; reason earlier60minutes."
+    },
+    {
+      "id": "zero-390",
+      "scenario": "zero",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T06:58:44.773Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984523fc6cafa9c626a68&date=2026-11-07&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 0,
+      "actual": {
+        "cards": [],
+        "documentWidth": 375,
+        "error": null,
+        "filters": {
+          "date": "2026-11-07",
+          "endTime": "18:00",
+          "facilityId": "6ae984523fc6cafa9c626a68",
+          "startTime": "17:00"
+        },
+        "message": "Không tìm thấy phương án thay thế phù hợp cùng thời lượng trong ngày. Bạn vui lòng đổi ngày hoặc chọn khoảng giờ khác.",
+        "primaryCount": 0,
+        "suggestionSection": true,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "zero-390.jpg",
+      "sha256": "071e13433b930a6b14e950e5264f41399936bf1650e2a43650f77d6ca211ad97",
+      "notes": "No alternative exists: server message invites changing day/time; no fabricated cards."
+    },
+    {
+      "id": "invalid-390",
+      "scenario": "invalid",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T06:59:03.120Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a76&date=2026-11-07&startTime=18%3A00&endTime=17%3A00",
+      "expectedCards": 0,
+      "actual": {
+        "cards": [],
+        "documentWidth": 375,
+        "error": "Giờ kết thúc phải sau giờ bắt đầu.",
+        "filters": {
+          "date": "2026-11-07",
+          "endTime": "17:00",
+          "facilityId": "6ae984533fc6cafa9c626a76",
+          "startTime": "18:00"
+        },
+        "message": null,
+        "primaryCount": 0,
+        "suggestionSection": false,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "invalid-390.jpg",
+      "sha256": "0e74648930b84a8be5716ff7738f5772c16367ab2d55252ea8aec134a3fe3e8d",
+      "notes": "Reversed times show backend validation error and preserve all filters; suggestions absent."
+    },
+    {
+      "id": "missing-date-390",
+      "scenario": "missingDate",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T06:59:23.802Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a76&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 0,
+      "actual": {
+        "cards": [],
+        "documentWidth": 375,
+        "error": "Vui lòng chọn ngày khi tìm theo khoảng giờ.",
+        "filters": {
+          "date": "",
+          "endTime": "18:00",
+          "facilityId": "6ae984533fc6cafa9c626a76",
+          "startTime": "17:00"
+        },
+        "message": null,
+        "primaryCount": 0,
+        "suggestionSection": false,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "missing-date-390.jpg",
+      "sha256": "cc06ebaf43d04d66321f7433130077a8b45d5addb58ae8ff40a04fb867b14400",
+      "notes": "With both times but no date, backend asks for date; retains facility/times and renders no suggestions."
+    },
+    {
+      "id": "primary-390",
+      "scenario": "primary",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T06:59:41.533Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a76&date=2026-11-08&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 0,
+      "actual": {
+        "cards": [],
+        "documentWidth": 375,
+        "error": null,
+        "filters": {
+          "date": "2026-11-08",
+          "endTime": "18:00",
+          "facilityId": "6ae984533fc6cafa9c626a76",
+          "startTime": "17:00"
+        },
+        "message": null,
+        "primaryCount": 1,
+        "suggestionSection": false,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "primary-390.jpg",
+      "sha256": "6b19ef6300e80df2051da131c37a4a8d1127aed3cf955b898d1fd122250b4268",
+      "notes": "Actual primary match on08Nov: existing court card including500charaddress remains readable, no alternative section."
+    },
+    {
+      "id": "focus-390",
+      "scenario": "keyboard",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T07:00:47.320Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a7d&date=2026-11-07&startTime=17%3A30&endTime=18%3A30",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "expected": "Tab moves from reset link to suggestion Xem lịch with visible focus.",
+      "actual": {
+        "href": "/courts/6ae984533fc6cafa9c626a7e?date=2026-11-07",
+        "outline": "solid",
+        "outlineWidth": "2.66667px",
+        "tag": "A",
+        "text": "Xem lịch\n                →"
+      },
+      "status": "PASS",
+      "evidence": "focus-390.jpg",
+      "sha256": "2de40af243ab125d3d9b706c9d6063c9675ecf51ab904e24c7afd62e008ee8d9"
+    },
+    {
+      "id": "detail-390",
+      "scenario": "enter",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T07:01:25.505Z",
+      "url": "http://127.0.0.1:61469/courts/6ae984533fc6cafa9c626a7e?date=2026-11-07",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "expected": "Enter opens exact court/date, no slots preselected and hold disabled.",
+      "actual": {
+        "checkboxCount": 4,
+        "checked": 0,
+        "date": "2026-11-07",
+        "documentWidth": 375,
+        "heading": "Sân gợi ý16:30–17:30 UI75",
+        "holdDisabled": true
+      },
+      "status": "PASS",
+      "evidence": "detail-390.jpg",
+      "sha256": "b302d2993af37b715cfc15bd06fabf0228f22bf401ec3b6aaaeecd014040d7d8"
+    },
+    {
+      "id": "back-390",
+      "scenario": "peak",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T07:01:48.812Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a7d&date=2026-11-07&startTime=17%3A30&endTime=18%3A30",
+      "expectedCards": 1,
+      "actual": {
+        "cards": [
+          {
+            "clientWidth": 300,
+            "facility": "Cơ sở qua mốc cao điểm UI75",
+            "href": "/courts/6ae984533fc6cafa9c626a7e?date=2026-11-07",
+            "infoHeights": [
+              41.1875,
+              41.1875,
+              41.1875
+            ],
+            "information": "NGÀY\n7/11/2026\nKHUNG GIỜ\n16:30 – 17:30\nTHỜI LƯỢNG\n60 phút",
+            "name": "Sân gợi ý16:30–17:30 UI75",
+            "reason": "Cùng cơ sở, sớm hơn 60 phút",
+            "scrollWidth": 300,
+            "total": "125.000 ₫",
+            "width": 301.3333435058594
+          }
+        ],
+        "documentWidth": 375,
+        "error": null,
+        "filters": {
+          "date": "2026-11-07",
+          "endTime": "18:30",
+          "facilityId": "6ae984533fc6cafa9c626a7d",
+          "startTime": "17:30"
+        },
+        "message": "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:",
+        "primaryCount": 0,
+        "suggestionSection": true,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "back-390.jpg",
+      "sha256": "397f5d9ca0228e6d535eb46e0e63ddd7bbdd64744d9e418847d2b37fc8c17a87",
+      "notes": "BrowserBack restores same facility/date/start17:30/end18:30, same125000proposal; no hidden selection."
+    },
+    {
+      "id": "peak-1366",
+      "scenario": "peak",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T07:02:10.603Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a7d&date=2026-11-07&startTime=17%3A30&endTime=18%3A30",
+      "expectedCards": 1,
+      "actual": {
+        "cards": [
+          {
+            "clientWidth": 361,
+            "facility": "Cơ sở qua mốc cao điểm UI75",
+            "href": "/courts/6ae984533fc6cafa9c626a7e?date=2026-11-07",
+            "infoHeights": [
+              41.1875,
+              41.1875,
+              41.1875
+            ],
+            "information": "NGÀY\n7/11/2026\nKHUNG GIỜ\n16:30 – 17:30\nTHỜI LƯỢNG\n60 phút",
+            "name": "Sân gợi ý16:30–17:30 UI75",
+            "reason": "Cùng cơ sở, sớm hơn 60 phút",
+            "scrollWidth": 361,
+            "total": "125.000 ₫",
+            "width": 362.21875
+          }
+        ],
+        "documentWidth": 1351,
+        "error": null,
+        "filters": {
+          "date": "2026-11-07",
+          "endTime": "18:30",
+          "facilityId": "6ae984533fc6cafa9c626a7d",
+          "startTime": "17:30"
+        },
+        "message": "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:",
+        "primaryCount": 0,
+        "suggestionSection": true,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "peak-1366.jpg",
+      "sha256": "69f9ce8b87b118c102008ea7123226c5104ccd59471ed5ecda37f41ed315ebe9",
+      "notes": "Desktop card preserves server total125000 for16:30–17:30 across17:00peak boundary; no page overflow."
+    },
+    {
+      "id": "three-1366",
+      "scenario": "three",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T07:02:37.359Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a76&date=2026-11-07&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 3,
+      "actual": {
+        "cards": [
+          {
+            "clientWidth": 361,
+            "facility": "Cơ sở dài <em>UI75</em> & CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUO",
+            "href": "/courts/6ae984533fc6cafa9c626a77?date=2026-11-07",
+            "infoHeights": [
+              41.1875,
+              41.1875,
+              41.1875
+            ],
+            "information": "NGÀY\n7/11/2026\nKHUNG GIỜ\n16:00 – 17:00\nTHỜI LƯỢNG\n60 phút",
+            "name": "Sân dài <em>UI75</em> & TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔ",
+            "reason": "Cùng cơ sở, sớm hơn 60 phút",
+            "scrollWidth": 361,
+            "total": "100.000 ₫",
+            "width": 362.21875
+          },
+          {
+            "clientWidth": 361,
+            "facility": "Cơ sở dài <em>UI75</em> & CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUO",
+            "href": "/courts/6ae984533fc6cafa9c626a77?date=2026-11-07",
+            "infoHeights": [
+              41.1875,
+              41.1875,
+              41.1875
+            ],
+            "information": "NGÀY\n7/11/2026\nKHUNG GIỜ\n18:00 – 19:00\nTHỜI LƯỢNG\n60 phút",
+            "name": "Sân dài <em>UI75</em> & TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔ",
+            "reason": "Cùng cơ sở, muộn hơn 60 phút",
+            "scrollWidth": 361,
+            "total": "150.000 ₫",
+            "width": 362.21875
+          },
+          {
+            "clientWidth": 361,
+            "facility": "Cơ sở dài <em>UI75</em> & CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUO",
+            "href": "/courts/6ae984533fc6cafa9c626a77?date=2026-11-07",
+            "infoHeights": [
+              41.1875,
+              41.1875,
+              41.1875
+            ],
+            "information": "NGÀY\n7/11/2026\nKHUNG GIỜ\n18:30 – 19:30\nTHỜI LƯỢNG\n60 phút",
+            "name": "Sân dài <em>UI75</em> & TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔ",
+            "reason": "Cùng cơ sở, muộn hơn 90 phút",
+            "scrollWidth": 361,
+            "total": "150.000 ₫",
+            "width": 362.21875
+          }
+        ],
+        "documentWidth": 1351,
+        "error": null,
+        "filters": {
+          "date": "2026-11-07",
+          "endTime": "18:00",
+          "facilityId": "6ae984533fc6cafa9c626a76",
+          "startTime": "17:00"
+        },
+        "message": "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:",
+        "primaryCount": 0,
+        "suggestionSection": true,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "three-1366.jpg",
+      "sha256": "7bdd519f358f759ed0ee312b8cd45671384bbe01a21d0538c994976ee0ae801a",
+      "notes": "Three equal desktop columns; long names/facilities wrap, correct100000/150000/150000 totals and60minute durations."
+    },
+    {
+      "id": "one-1366",
+      "scenario": "one",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T07:03:11.439Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a6f&date=2026-11-07&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 1,
+      "actual": {
+        "cards": [
+          {
+            "clientWidth": 361,
+            "facility": "Cơ sở một phương án UI75",
+            "href": "/courts/6ae984533fc6cafa9c626a70?date=2026-11-07",
+            "infoHeights": [
+              41.1875,
+              41.1875,
+              41.1875
+            ],
+            "information": "NGÀY\n7/11/2026\nKHUNG GIỜ\n16:00 – 17:00\nTHỜI LƯỢNG\n60 phút",
+            "name": "Sân phục vụ16–18",
+            "reason": "Cùng cơ sở, sớm hơn 60 phút",
+            "scrollWidth": 361,
+            "total": "100.000 ₫",
+            "width": 362.21875
+          }
+        ],
+        "documentWidth": 1351,
+        "error": null,
+        "filters": {
+          "date": "2026-11-07",
+          "endTime": "18:00",
+          "facilityId": "6ae984533fc6cafa9c626a6f",
+          "startTime": "17:00"
+        },
+        "message": "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:",
+        "primaryCount": 0,
+        "suggestionSection": true,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "one-1366.jpg",
+      "sha256": "d6dcf327c6ebf963ba5a670d58dfa070fcdf9d4d01e408fa2cfa8473d5757e73",
+      "notes": "Exactly one server alternative, information in compact desktop row, total100000."
+    },
+    {
+      "id": "zero-1366",
+      "scenario": "zero",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T07:03:33.997Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984523fc6cafa9c626a68&date=2026-11-07&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 0,
+      "actual": {
+        "cards": [],
+        "documentWidth": 1351,
+        "error": null,
+        "filters": {
+          "date": "2026-11-07",
+          "endTime": "18:00",
+          "facilityId": "6ae984523fc6cafa9c626a68",
+          "startTime": "17:00"
+        },
+        "message": "Không tìm thấy phương án thay thế phù hợp cùng thời lượng trong ngày. Bạn vui lòng đổi ngày hoặc chọn khoảng giờ khác.",
+        "primaryCount": 0,
+        "suggestionSection": true,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "zero-1366.jpg",
+      "sha256": "63b227979383772aff11153008d247228d87a55003abe0397055941a0b90d2c0",
+      "notes": "No alternatives: visible backend message, no cards; filters retained."
+    },
+    {
+      "id": "invalid-1366",
+      "scenario": "invalid",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T07:03:53.299Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a76&date=2026-11-07&startTime=18%3A00&endTime=17%3A00",
+      "expectedCards": 0,
+      "actual": {
+        "cards": [],
+        "documentWidth": 1351,
+        "error": "Giờ kết thúc phải sau giờ bắt đầu.",
+        "filters": {
+          "date": "2026-11-07",
+          "endTime": "17:00",
+          "facilityId": "6ae984533fc6cafa9c626a76",
+          "startTime": "18:00"
+        },
+        "message": null,
+        "primaryCount": 0,
+        "suggestionSection": false,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "invalid-1366.jpg",
+      "sha256": "a7e0f201ea90e1ac45b2a566cb1f9582a6ef63ffeb0b5acd863f1121c34a656e",
+      "notes": "Invalid reversed times: one backend error, original filters kept, no suggestions."
+    },
+    {
+      "id": "missing-date-1366",
+      "scenario": "missingDate",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T07:04:09.134Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a76&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 0,
+      "actual": {
+        "cards": [],
+        "documentWidth": 1351,
+        "error": "Vui lòng chọn ngày khi tìm theo khoảng giờ.",
+        "filters": {
+          "date": "",
+          "endTime": "18:00",
+          "facilityId": "6ae984533fc6cafa9c626a76",
+          "startTime": "17:00"
+        },
+        "message": null,
+        "primaryCount": 0,
+        "suggestionSection": false,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "missing-date-1366.jpg",
+      "sha256": "5f551dab20cecc6d2a79f052f08d373cfd0cdf74f7d0129eae16ee309c497f14",
+      "notes": "Missingdate preserves facility/times and displays backend error; no alternative section."
+    },
+    {
+      "id": "primary-1366",
+      "scenario": "primary",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T07:04:37.560Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a76&date=2026-11-08&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 0,
+      "actual": {
+        "cards": [],
+        "documentWidth": 1351,
+        "error": null,
+        "filters": {
+          "date": "2026-11-08",
+          "endTime": "18:00",
+          "facilityId": "6ae984533fc6cafa9c626a76",
+          "startTime": "17:00"
+        },
+        "message": null,
+        "primaryCount": 1,
+        "suggestionSection": false,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "primary-1366.jpg",
+      "sha256": "4484317ddaf70038d692984cfd94c947e9db841163c7eeaf7b788220c4954753",
+      "notes": "Existing primary card contains long facility/address, fits page; alternative section absent."
+    },
+    {
+      "id": "focus-1366",
+      "scenario": "keyboard-focus",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T07:08:19.244Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a7d&date=2026-11-07&startTime=17%3A30&endTime=18%3A30",
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      },
+      "expected": {
+        "target": "Xem lịch sân",
+        "outline": "visible"
+      },
+      "actual": {
+        "href": "/courts/6ae984533fc6cafa9c626a7e?date=2026-11-07",
+        "label": "Xem lịch sân Sân gợi ý16:30–17:30 UI75 ngày 7/11/2026",
+        "outline": "solid",
+        "outlineWidth": "2.66667px",
+        "tag": "A"
+      },
+      "status": "PASS",
+      "evidence": "focus-1366.jpg",
+      "sha256": "faf3f5565e3d9de381baa77f7c61d9f11125a836f13b67f5cfc029ddb65e14c2"
+    },
+    {
+      "id": "detail-1366",
+      "scenario": "keyboard-enter",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T07:08:29.695Z",
+      "url": "http://127.0.0.1:61469/courts/6ae984533fc6cafa9c626a7e?date=2026-11-07",
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      },
+      "expected": {
+        "courtId": "6ae984533fc6cafa9c626a7e",
+        "date": "2026-11-07",
+        "checked": 0,
+        "holdDisabled": true
+      },
+      "actual": {
+        "url": "http://127.0.0.1:61469/courts/6ae984533fc6cafa9c626a7e?date=2026-11-07",
+        "checkboxCount": 4,
+        "checked": 0,
+        "date": "2026-11-07",
+        "documentWidth": 1351,
+        "heading": "Sân gợi ý16:30–17:30 UI75",
+        "holdDisabled": true
+      },
+      "status": "PASS",
+      "evidence": "detail-1366.jpg",
+      "sha256": "4ede7b2ef214f400592585081711cbe5f2abd57fd463a753000494524d667d5b"
+    },
+    {
+      "id": "back-1366",
+      "scenario": "peak",
+      "testedSHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+      "capturedAtUTC": "2026-11-03T07:08:42.734Z",
+      "url": "http://127.0.0.1:61469/courts?facilityId=6ae984533fc6cafa9c626a7d&date=2026-11-07&startTime=17%3A30&endTime=18%3A30",
+      "expectedCards": 1,
+      "actual": {
+        "cards": [
+          {
+            "clientWidth": 361,
+            "facility": "Cơ sở qua mốc cao điểm UI75",
+            "href": "/courts/6ae984533fc6cafa9c626a7e?date=2026-11-07",
+            "infoHeights": [
+              41.1875,
+              41.1875,
+              41.1875
+            ],
+            "information": "NGÀY\n7/11/2026\nKHUNG GIỜ\n16:30 – 17:30\nTHỜI LƯỢNG\n60 phút",
+            "name": "Sân gợi ý16:30–17:30 UI75",
+            "reason": "Cùng cơ sở, sớm hơn 60 phút",
+            "scrollWidth": 361,
+            "total": "125.000 ₫",
+            "width": 362.21875
+          }
+        ],
+        "documentWidth": 1351,
+        "error": null,
+        "filters": {
+          "date": "2026-11-07",
+          "endTime": "18:30",
+          "facilityId": "6ae984533fc6cafa9c626a7d",
+          "startTime": "17:30"
+        },
+        "message": "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:",
+        "primaryCount": 0,
+        "suggestionSection": true,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "back-1366.jpg",
+      "sha256": "69f9ce8b87b118c102008ea7123226c5104ccd59471ed5ecda37f41ed315ebe9",
+      "notes": "Back thật từ chi tiết sân; giữ facilityId, ngày 07/11/2026 và bộ lọc 17:30–18:30."
+    }
+  ]
+}

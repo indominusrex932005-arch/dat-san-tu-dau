@@ -1,0 +1,80 @@
+{
+  "issue": 75,
+  "pr": 73,
+  "cleanedAtUTC": "2026-11-03T07:10:20.289Z",
+  "applicationStartSHA": "4b5c02d7c025ec29bff30bece3f9a629e312b7d5",
+  "finalUISHA": "e353727dbcaa4985a155bd5f0974915284db620b",
+  "ownFixtureDatabaseDropped": true,
+  "guardedScope": "Exactlocalhost27060URI, qaSuggestionsUi75replica, booking_test_namepattern andprivateqa_marker verified before dropping only own fixtureDB.",
+  "otherDatabaseNamesUnchanged": true,
+  "remainingTestDatabaseCount": 0,
+  "businessReadOnlyAcrossAllGETs": {
+    "unchanged": true,
+    "before": {
+      "User": {
+        "count": 4,
+        "sha256": "9a62896a2d0a685ccf6933eae98302cc29c502b6d25aa39e3a01cd32aeb988aa"
+      },
+      "Facility": {
+        "count": 4,
+        "sha256": "f64d55b7d35dc93d12f41588dbf747b68d47abdfba42ca9573da738ce6564f01"
+      },
+      "Court": {
+        "count": 4,
+        "sha256": "a3abfaf53cadb800864d03b189d3a44c22bacc9a97f0bf417e2613664a5e8867"
+      },
+      "Booking": {
+        "count": 4,
+        "sha256": "d1f428d09c3a398677f1f2aa40ade5d6c7aba38abf8f5a7d0833148aa885b0db"
+      },
+      "SlotLock": {
+        "count": 8,
+        "sha256": "f562426d897700a62d9baf568fdea48890871c7b01f7cd943de5ad2fa6619f10"
+      },
+      "Payment": {
+        "count": 4,
+        "sha256": "9e1446292d8ee3eda2e2523699e9241863600dbb008af7c931036b4c8056ef11"
+      },
+      "BookingRequest": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    },
+    "after": {
+      "User": {
+        "count": 4,
+        "sha256": "9a62896a2d0a685ccf6933eae98302cc29c502b6d25aa39e3a01cd32aeb988aa"
+      },
+      "Facility": {
+        "count": 4,
+        "sha256": "f64d55b7d35dc93d12f41588dbf747b68d47abdfba42ca9573da738ce6564f01"
+      },
+      "Court": {
+        "count": 4,
+        "sha256": "a3abfaf53cadb800864d03b189d3a44c22bacc9a97f0bf417e2613664a5e8867"
+      },
+      "Booking": {
+        "count": 4,
+        "sha256": "d1f428d09c3a398677f1f2aa40ade5d6c7aba38abf8f5a7d0833148aa885b0db"
+      },
+      "SlotLock": {
+        "count": 8,
+        "sha256": "f562426d897700a62d9baf568fdea48890871c7b01f7cd943de5ad2fa6619f10"
+      },
+      "Payment": {
+        "count": 4,
+        "sha256": "9e1446292d8ee3eda2e2523699e9241863600dbb008af7c931036b4c8056ef11"
+      },
+      "BookingRequest": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    },
+    "sessionsExcluded": true
+  },
+  "replicaShutdownRequested": true,
+  "ownAppStopped": true,
+  "ownMongoStopped": true,
+  "runtimeRemoved": true,
+  "runtimePathAndReparsePointsValidated": true
+}
