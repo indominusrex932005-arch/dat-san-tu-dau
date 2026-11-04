@@ -1,0 +1,245 @@
+{
+  "issue": 76,
+  "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+  "format": "Original browser JPEG",
+  "images": [
+    {
+      "id": "normal-390",
+      "name": "normal-390.jpg",
+      "sha256": "235f3b7ccc7fcffbd3982fb1c19ec18c118c8fd8abe2c9f2f3dc2262f2448425",
+      "bytes": 85648,
+      "width": 374,
+      "height": 2164,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:40:43.150Z"
+    },
+    {
+      "id": "normal-1366",
+      "name": "normal-1366.jpg",
+      "sha256": "85c20fafa8e80694b8070de288842e13e5f3c0380bc1b2044226de9a47dd91e5",
+      "bytes": 124258,
+      "width": 1350,
+      "height": 1490,
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:40:44.407Z"
+    },
+    {
+      "id": "table-focus-1366",
+      "name": "table-focus-1366.jpg",
+      "sha256": "1a8f5aba3ae2b8b0281efdf1055dd5ca53d66c80ed028325d0521ef1a7d65cca",
+      "bytes": 90972,
+      "width": 1366,
+      "height": 900,
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:40:59.386Z"
+    },
+    {
+      "id": "table-right-1366",
+      "name": "table-right-1366.jpg",
+      "sha256": "07e7fca70246a9dd582f34aed026481d5e9ace240b5bec307be70db8cc14c158",
+      "bytes": 91749,
+      "width": 1366,
+      "height": 900,
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:40:59.561Z"
+    },
+    {
+      "id": "table-left-1366",
+      "name": "table-left-1366.jpg",
+      "sha256": "034b641b7d6e2fd32dc7434da89ee62974f1f873fb1a4688fdad7c2343ee79f5",
+      "bytes": 91654,
+      "width": 1366,
+      "height": 900,
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:41:11.423Z"
+    },
+    {
+      "id": "table-focus-390",
+      "name": "table-focus-390.jpg",
+      "sha256": "d67c06006195109885d80744acdd509083fef6ef6bb581c8943616f1e33294c9",
+      "bytes": 34311,
+      "width": 375,
+      "height": 812,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:41:11.602Z"
+    },
+    {
+      "id": "table-right-390",
+      "name": "table-right-390.jpg",
+      "sha256": "e2f8f7cff3c5b59e12f88601941de438e7c09d6193038fcdf4d0e1eb6e0668d0",
+      "bytes": 36538,
+      "width": 375,
+      "height": 812,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:41:11.766Z"
+    },
+    {
+      "id": "date-focus-390",
+      "name": "date-focus-390.jpg",
+      "sha256": "1d77b006928fe3e999a1761c87ccde512c9a3506bf6d9c12fd5d1f754ede777b",
+      "bytes": 32368,
+      "width": 375,
+      "height": 812,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:41:32.265Z"
+    },
+    {
+      "id": "date-submit-390",
+      "name": "date-submit-390.jpg",
+      "sha256": "0aeb6d157aaf7832af14f4714145c2ec5fbab3181c9f781dd1bd6e62c898e734",
+      "bytes": 85560,
+      "width": 374,
+      "height": 2164,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:41:33.613Z"
+    },
+    {
+      "id": "date-focus-1366",
+      "name": "date-focus-1366.jpg",
+      "sha256": "0cdbf12f10932f62f6586896c4082ccb738a67e51a3f592ee606292215688367",
+      "bytes": 75361,
+      "width": 1351,
+      "height": 890,
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:41:33.845Z"
+    },
+    {
+      "id": "date-submit-1366",
+      "name": "date-submit-1366.jpg",
+      "sha256": "c421f16f1beb7b00a321e31836c54d14c55d08f744639ee6ce2b2e582137fc76",
+      "bytes": 122949,
+      "width": 1350,
+      "height": 1490,
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:41:47.065Z"
+    },
+    {
+      "id": "long-1366",
+      "name": "long-1366.jpg",
+      "sha256": "9e53e5fe9bbd746a813a9c0ea10c4fe7dacee2fbf7452e9da5819ad46e2ef77a",
+      "bytes": 185734,
+      "width": 1350,
+      "height": 1747,
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:42:07.724Z"
+    },
+    {
+      "id": "long-table-1366",
+      "name": "long-table-1366.jpg",
+      "sha256": "78b513e1b677229f2521a4856685921aa5630eb16f3217a8f947ef6c196d92bd",
+      "bytes": 90611,
+      "width": 1366,
+      "height": 900,
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:42:07.889Z"
+    },
+    {
+      "id": "long-table-390",
+      "name": "long-table-390.jpg",
+      "sha256": "59c7e90dfc89374e0761490156c536a18f885a56eafe25d9a0cd844c05eb9e2f",
+      "bytes": 43810,
+      "width": 390,
+      "height": 844,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:42:23.452Z"
+    },
+    {
+      "id": "empty-390",
+      "name": "empty-390.jpg",
+      "sha256": "85aa6f34d6b0576e3b1049c8a69de45dac3530b11f89e8e35fede4b7b1bf9ae0",
+      "bytes": 76366,
+      "width": 374,
+      "height": 1952,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:46:14.654Z"
+    },
+    {
+      "id": "empty-1366",
+      "name": "empty-1366.jpg",
+      "sha256": "7735c7f9ba489f81d96f4f8b8aed697c0b3028f3b0107d55dd029b2b144e8847",
+      "bytes": 92693,
+      "width": 1350,
+      "height": 1378,
+      "viewport": {
+        "height": 900,
+        "width": 1366
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:46:15.803Z"
+    },
+    {
+      "id": "long-390",
+      "name": "long-390.jpg",
+      "sha256": "01653d0fddf83417f80c00c131ae730a26f69067c0041d543d7f7d1894311824",
+      "bytes": 146487,
+      "width": 374,
+      "height": 2820,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+      "capturedAtUTC": "2026-11-03T12:46:48.775Z"
+    }
+  ]
+}

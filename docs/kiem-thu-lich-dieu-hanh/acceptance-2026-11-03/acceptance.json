@@ -1,0 +1,58 @@
+{
+  "issue": 76,
+  "pullRequest": 71,
+  "date": "2026-11-03",
+  "timezone": "Asia/Bangkok",
+  "status": "Fresh local QA passed; awaiting team-lead review and merge",
+  "source": {
+    "branch": "docs/kiem-thu-lich-dieu-hanh",
+    "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+    "mainSHA": "36e75cdf33dc7cf7bd568ed3ae938698af47bca1",
+    "historicalExecutionSHA": "bb8057999970e9d063cf107699164971a2ea15cc",
+    "applicationMatchesMain": true,
+    "note": "Fresh execution on testedSHA; source matches main including backend #68 and UI #69. New commits contain only QA documentation, JSON, logs and screenshots. Historical executions retain their original dates and SHAs."
+  },
+  "fixture": {
+    "kind": "Synthetic disposable local MongoDB replica set with real Express app, controller, service, EJS and MongoStore",
+    "replica": "qaOwnerCalendar76",
+    "databasePort": 27061,
+    "applicationPort": 61470,
+    "nodeVersion": "24.15.0",
+    "mongoDBVersion": "8.3.11",
+    "users": 7,
+    "facilities": 4,
+    "courts": 9,
+    "courtDistribution": { "ownerA": 4, "ownerB": 2, "longNames": 3, "emptyFacility": 0 },
+    "todayVN": "2026-11-03",
+    "businessDate": "2026-11-06",
+    "futureDate": "2026-11-23",
+    "longTextLengths": { "facility": 150, "court": 150, "address": 500 },
+    "sharedAtlasUsed": false
+  },
+  "caseGroups": [
+    { "id": "TC-01", "status": "PASS", "coverage": "Guest303/login; CUSTOMER, pending and unassigned OWNER403; OWNER A/B see only their own4/2courts; owner/facility query cannot switch scope", "evidence": "http-results.json" },
+    { "id": "TC-02", "status": "PASS", "coverage": "Union of configured half-hour columns; outside-hours and inactive cells UNAVAILABLE with text labels", "evidence": "http-results.json" },
+    { "id": "TC-03", "status": "PASS", "coverage": "Real POST hold and DEMO payment: AVAILABLE to LOCKED to BOOKED; CONFIRMED,2locks,1DEMO payment", "evidence": "http-results.json" },
+    { "id": "TC-04", "status": "PASS", "coverage": "Real POST HOLD shortened only in QA DB to now+1.5seconds; waited1850ms; future slot reopens, live HOLD/CONFIRMED preserved. Today00:00 UNAVAILABLE and actual POST400 with no business mutation", "evidence": "http-results.json" },
+    { "id": "TC-05", "status": "PASS", "coverage": "Vietnam default date; exactly03-09Nov navigation;23Nov accepted; six invalid/empty/repeated/past query cases400. Browser Enter submits07Nov mobile and23Nov desktop", "evidence": "http-results.json; browser-results.json" },
+    { "id": "TC-06", "status": "PASS", "coverage": "Normal, empty and long names at390x844/1366x900; actual Tab/Enter, focus, separate table ArrowRight; desktop ArrowLeft returns to0", "evidence": "browser-results.json; screenshot-manifest.json" },
+    { "id": "TC-07", "status": "PASS", "coverage": "Counts and SHA256 for all7businesscollections before/after HTTP and browser; sessions excluded", "evidence": "http-results.json; browser-db-before.json; browser-db-after.json" }
+  ],
+  "validation": {
+    "check": "PASS: ESLint and19EJS templates",
+    "fullSuite": { "passed": 149, "failed": 0, "skipped": 0, "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d" },
+    "independentHTTP": { "passed": 12, "failed": 0, "note": "Three stateful setup/POST cases plus nine subsequent read/validation cases" },
+    "browser": { "passed": 17, "failed": 0, "originalJPEGs": 17, "name": "Codex in-app browser via CUA", "engineVersion": "Unavailable from supported browser API" },
+    "report": "validation-summary.json",
+    "finalCI": "See PR #71 description for run URL and status after pushing the evidence-only commit"
+  },
+  "cleanupReport": "cleanup-summary.json",
+  "privacyReport": "privacy-review.json",
+  "limits": [
+    "Expiry uses a1.5second fixture deadline and1850ms real wait, not10minutes elapsed. No system clock or application source changed.",
+    "GET snapshots start after fixture POST/deadline preparation. Browser session login/logout are separate from business collections. Unrelated booking-history routes that perform expiry cleanup are outside the measured calendar GET sequence.",
+    "DB500 and revoked-session branches were rerun in the repository suite; DB failures are injected via mocked model methods, not claimed as a real replica outage or browser test.",
+    "Desktop browser viewport resize is not physical-device, cross-browser, full-tab-order or screen-reader certification.",
+    "Independent agent review does not establish independent human QA approval. Team-lead review and merge remain pending; Refs #76, no auto-merge."
+  ]
+}

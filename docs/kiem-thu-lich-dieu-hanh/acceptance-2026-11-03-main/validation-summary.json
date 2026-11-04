@@ -1,0 +1,82 @@
+{
+  "issue": 76,
+  "relatedPR": 71,
+  "date": "2026-11-03",
+  "timezone": "Asia/Bangkok",
+  "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+  "mainSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+  "environment": {
+    "node": "24.15.0",
+    "mongoDB": "8.3.11",
+    "replica": "qaOwnerCalendar76",
+    "port": 27061,
+    "app": "http://127.0.0.1:61470",
+    "data": "Synthetic local7users/4facilities/9courts; no.env/Atlas."
+  },
+  "check": {
+    "status": "PASS",
+    "templates": 19,
+    "log": "check.log",
+    "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47"
+  },
+  "test": {
+    "status": "PASS",
+    "passed": 156,
+    "failed": 0,
+    "skipped": 0,
+    "log": "test.log",
+    "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47"
+  },
+  "testAttempts": [
+    {
+      "attempt": 1,
+      "scope": "Full npm test",
+      "status": "FAIL",
+      "passed": 151,
+      "failed": 1,
+      "total": 152,
+      "log": "test-initial-failed.log",
+      "detail": "migration.test.js exited at file level without diagnostic details; no application source was changed."
+    },
+    {
+      "attempt": 2,
+      "scope": "Isolated migration diagnostic on the same local replica",
+      "status": "PASS",
+      "passed": 5,
+      "failed": 0,
+      "total": 5,
+      "log": "migration-diagnostic.log",
+      "detail": "DOTENV_CONFIG_PATH explicitly targets a nonexistent path in the ignored QA directory."
+    },
+    {
+      "attempt": 3,
+      "scope": "Full npm test with the same source and local replica",
+      "status": "PASS",
+      "passed": 156,
+      "failed": 0,
+      "total": 156,
+      "log": "test.log",
+      "detail": "DOTENV_CONFIG_PATH explicitly targets a nonexistent path in the ignored QA directory. Initial file-level exit was not reproduced; its cause is undetermined."
+    }
+  ],
+  "independentHTTP": {
+    "status": "PASS",
+    "total": 12,
+    "passed": 12,
+    "failed": 0,
+    "report": "http-results.json",
+    "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47"
+  },
+  "suiteEvidence": {
+    "calendarServiceFile": "tests/owner-calendar.test.js",
+    "calendarHTTPFile": "tests/owner-calendar-http.test.js",
+    "coveredInFullSuite": [
+      "GETbody/queryscope",
+      "RevokedOWNERstatus/roleandfacilitytransferstalesession",
+      "UT C+7yearboundarywithcontrolledserviceclock",
+      "DBreadfailurepropagation/HTTP500genericresponse"
+    ],
+    "limitation": "DBfailureautomatedcasesmockmodelmethodsinthetestprocess,notmanualreplicafailure. Serviceclockboundaryiscontrolledunit/serviceclock. These are notbrowserobservations."
+  },
+  "browserCoverage": "Separate browser-results.json from root; check/test/HTTP do not prove geometry or keyboard."
+}

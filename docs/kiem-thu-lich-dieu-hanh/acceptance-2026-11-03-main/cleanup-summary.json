@@ -1,0 +1,17 @@
+{
+  "issue": 76,
+  "relatedPR": 71,
+  "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+  "cleanedAtUTC": "2026-11-03T12:48:22.868Z",
+  "ownFixtureDatabaseDropped": true,
+  "guardedScope": "Exactlocalhost27061URI, qaOwnerCalendar76replica, booking_test_namepatternandprivateQAmarkerverifiedbefore droppingonlyownfixtureDB.",
+  "otherDatabaseNamesUnchanged": true,
+  "remainingTestDatabaseCount": 0,
+  "businessReadOnlyAcrossAllGETs": true,
+  "finalSnapshot": "final-db-readonly.json",
+  "replicaShutdownRequested": true,
+  "ownAppPIDStoppedVerified": true,
+  "ownMongoPIDStoppedVerified": true,
+  "ownRuntimeRemoved": true,
+  "filesystemGuard": "Resolved exact runtime path inside the own ignored review folder; review root and all runtime descendants checked for reparse points before native PowerShell removal."
+}
