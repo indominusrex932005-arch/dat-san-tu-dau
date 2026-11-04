@@ -1,0 +1,24 @@
+{
+  "issue": 76,
+  "relatedPR": 71,
+  "reviewedAtUTC": "2026-11-03T12:48:50.200Z",
+  "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+  "status": "PASS",
+  "photosScanned": 17,
+  "textArtifactsScanned": 12,
+  "checks": {
+    "knownSyntheticPasswordAbsent": true,
+    "privateQAMarkerAbsent": true,
+    "privateBookingIDsAbsent": true,
+    "privateReceiptOrCheckoutTokenURLAbsent": true,
+    "sessionCookieAbsent": true,
+    "rawCSRFFormValueAbsent": true,
+    "screenshotFileHashesAndByteCountsMatchManifest": true,
+    "screenshotJPEGDimensionsMatchManifest": true,
+    "screenshotViewportsRecordedAs390Or1366": true,
+    "publicLogAndReportReferencesExist": true,
+    "sevenBusinessCollectionsBeforeAfterMatch": true
+  },
+  "screenshotScope": "Root observed OWNER A/long/empty calendar pages and native keyboard navigation only; fixture records are synthetic. No CUSTOMER booking-history route or browser booking POST was used.",
+  "limitation": "Known private strings and token/cookie/CSRF patterns are checked in artifact bytes, not by OCR. Image page scope comes from root visual observations."
+}

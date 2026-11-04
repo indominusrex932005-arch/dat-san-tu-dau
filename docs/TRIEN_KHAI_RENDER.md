@@ -1,131 +1,162 @@
 # Triển khai bản demo lên Render — #82
 
-Refs #82. **Bản chuẩn bị ngày 04/11/2026, chưa triển khai, chưa có URL HTTPS hoặc kết quả kiểm thử online.** Source đối chiếu: `5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47`. Sau khi các phần nền merge, phải ghi lại SHA `main` thực sự đưa lên Render và cập nhật tài liệu theo hợp đồng mới.
+Refs #82. **Cập nhật ngày 05/11/2026; giữ PR Draft. Chưa được bàn giao URL HTTPS, release SHA hoặc bằng chứng triển khai online.** Đây là hướng dẫn đã cập nhật, không phải xác nhận đã tạo service/DB hay hoàn thành #82.
+
+Nguồn đã đối chiếu: main `180a3c586f86276778f9f5492e998f64688016a0` đã có #80/PR #92; [PR #95 / #81](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/95) tại `b605408499c3f1b55e8708766c74ca422677338d` đã ghép nền đó nhưng **chưa merge**. Hai SHA này là nguồn đọc, **không phải SHA release đang chạy**. Hợp đồng mode/health tham chiếu [tài liệu ở đúng SHA #95](https://github.com/indominusrex932005-arch/dat-san-tu-dau/blob/b605408499c3f1b55e8708766c74ca422677338d/docs/CHE_DO_THANH_TOAN.md); PR hướng dẫn không nhập code #95 vào main.
 
 ## 1. Điều kiện mở triển khai
 
-| Điều kiện | Trạng thái tại lúc chuẩn bị |
+| Điều kiện | Trạng thái hiện có |
 | --- | --- |
-| #80: giới hạn POST và xác minh proxy/HTTPS | Chưa merge; phần đang làm ở PR #92 |
-| #81: production + public-demo, hợp đồng env và health endpoint | Chưa merge; main hiện chưa có hợp đồng này |
-| Quyền Render/GitHub và Atlas demo của nhóm trưởng | Chưa xác minh/cấp cho lượt deploy này |
-| Service, vùng, gói, auto-deploy và DB demo đã chọn | Chưa chọn/chưa tạo |
-| URL HTTPS, login/session, checkout/phiếu online | Chưa chạy |
+| Limiter và resolver proxy của #80/#92 | Đã có trên main `180a3c5`; vẫn phải xác minh proxy thật của service |
+| Production public-demo, mode và `/health` của #81/#95 | Hợp đồng đã rõ; PR #95 `b605408` còn chờ review/merge |
+| Quyền Render/GitHub, Atlas demo và executor bootstrap bảo mật | Chưa được xác minh/bàn giao cho lần deploy này |
+| Service, vùng, gói, số instance, auto-deploy và DB demo | Chưa được chọn/xác minh |
+| URL HTTPS, release SHA, deploy ID, kết quả thử từ thiết bị khác | Chưa bàn giao / chưa chạy |
 
-Chỉ tiếp tục bước tạo service khi #80/#81 đã review/merge và nhóm trưởng bàn giao quyền phù hợp. Main hiện tại từ chối `NODE_ENV=production` cùng `DEMO_MODE=true` tại `app.js`; service thanh toán cũng chặn mô phỏng ở production. Hợp đồng public-demo phải đến từ #81. Không dùng `NODE_ENV=development` online hoặc đổi `DEMO_PAID` thành `PAID` để vượt điều kiện này.
+Chỉ deploy release main được duyệt sau khi #95 merge và đối chiếu lại SHA/config cuối. Main hiện có limiter nhưng chưa có hợp đồng public-demo của #95; không dùng `NODE_ENV=development` online để vượt điều kiện. Local test 181/181 và [CI #95](https://github.com/indominusrex932005-arch/dat-san-tu-dau/actions/runs/41927058743) ở source `b605408` là bằng chứng code/DB thử, **không phải kết quả HTTPS Render**.
 
-## 2. Thiết lập Render cần bàn giao
+## 2. Tạo Web Service và chọn phiên bản
 
-Chọn **New → Web Service**, kết nối đúng repo qua Git provider. Express/EJS có server nên cần Web Service. Các trường cấu hình theo [hướng dẫn Express](https://render.com/docs/deploy-node-express-app) và [Web Services](https://render.com/docs/web-services):
+Trên Render chọn **New → Web Service**, nối đúng Git provider/repo. Express/EJS cần server Node. Các trường dưới đây là cấu hình dự kiến, chưa phải service đã tạo: [Express deploy](https://render.com/docs/deploy-node-express-app), [Web Services](https://render.com/docs/web-services).
 
-| Trường | Giá trị chuẩn bị; cần xác nhận trước deploy |
+| Trường | Giá trị cần dùng/xác nhận |
 | --- | --- |
-| Repository | `indominusrex932005-arch/dat-san-tu-dau` |
-| Branch | `main`, sau merge #80/#81; ghi SHA được duyệt |
-| Root Directory | Gốc repo, nơi có `package.json` và `server.js`; không nhập đường dẫn Windows trên máy cá nhân |
-| Language / Runtime | Node |
-| Node version | Chốt một bản `24.x.y` đã kiểm thử bằng `NODE_VERSION`; ghi patch thực tế từ build log |
-| Build Command | `npm ci` |
-| Start Command | `npm start` |
-| `PORT` | Để host cấp; server phải đọc `process.env.PORT` và nhận kết nối từ bên ngoài container |
-| Region | Đề xuất Singapore để gần người dùng Việt Nam; **chưa chọn** |
-| Compute / instance | Đề xuất Free, một instance nếu hạn mức phù hợp; **chưa chọn** |
-| Auto-Deploy | Đề xuất Off trong lượt đầu; deploy thủ công SHA đã được duyệt |
-| Health Check Path | **Chờ đường dẫn thật được #81 bàn giao**, kiểm tra phản hồi trước khi cấu hình |
+| Repository / Branch | `indominusrex932005-arch/dat-san-tu-dau`, `main` sau merge #95; đối chiếu release SHA đầy đủ |
+| Root Directory / Runtime | Gốc repo có `package.json`, `server.js`; Node, không nhập đường dẫn Windows |
+| Node version | `.node-version` của #95 đặt `24`; ghi patch thực tế từ build log |
+| Build / Start | `npm ci` / `npm start` |
+| Host / Port | Server bind `0.0.0.0`, đọc `PORT` Render cấp; không hardcode 3000 trên hosting |
+| Region | Singapore là đề xuất để nhóm trưởng chọn; **chưa chọn** |
+| Compute / instance | Free, một instance là đề xuất nếu phù hợp hạn mức; **chưa chọn** |
+| Auto-Deploy | Đề xuất Off ở lượt đầu và deploy thủ công SHA được duyệt; **chưa cấu hình** |
+| Health Check Path | `/health` sau tích hợp #95; xác minh GET 200 trước nghiệm thu |
 
-Render ưu tiên `NODE_VERSION` hơn file phiên bản/package engines; không dựa vào default thay đổi theo thời điểm tạo service. Xem [Node version](https://render.com/docs/node-version). Singapore là một [vùng được hỗ trợ](https://render.com/docs/regions); đây là đề xuất, chưa phải thiết lập đã thực hiện.
+Không cần `NODE_VERSION` nếu dùng `.node-version`; biến này có ưu tiên cao hơn file nên phải xóa hoặc đối chiếu mọi override cũ. Không dựa vào default theo ngày tạo service. [Node version](https://render.com/docs/node-version).
 
-Free có thể ngủ sau 15 phút không có traffic, đánh thức khoảng một phút, và có thể restart. Free không có shell/one-off jobs hoặc persistent disk; dữ liệu cần lưu trong Atlas. Kiểm tra hạn mức trong workspace trước khi chọn. Gói trả phí, disk hoặc outbound IP riêng phải được nhóm trưởng chốt trước. Xem [giới hạn Free](https://render.com/docs/free).
+Free có thể ngủ sau 15 phút idle, đánh thức khoảng một phút và có thể restart; không có Shell, one-off jobs hoặc persistent disk. Chỉ dùng cho demo theo lựa chọn được duyệt, lưu bền vững trong Atlas. Kiểm tra usage/giới hạn workspace; gói trả phí hoặc outbound IP riêng cần nhóm trưởng chốt trước, không tự nâng cấp. [Giới hạn Free](https://render.com/docs/free).
 
-## 3. Environment và secrets
+## 3. Cấu hình môi trường, proxy và limiter
 
-Nhập bí mật trực tiếp vào **Environment** của service hoặc cơ chế quản lý secret được nhóm trưởng cấp. Không đưa giá trị thật vào PR/issue, ảnh, log, shell history hoặc Git. Bảng dưới chỉ là placeholder, không phải cấu hình dùng được ngay:
+Nhập `MONGODB_URI` và `SESSION_SECRET` trực tiếp trong Environment/secret store của host hoặc executor bảo mật được cấp. Không đưa giá trị thật vào Git, issue/PR, ảnh, log, tham số dòng lệnh hay shell history. Bảng này chỉ chứa placeholder:
 
-| Biến | Giá trị mẫu / nguồn |
+| Biến | Hợp đồng sau #95 |
 | --- | --- |
 | `NODE_ENV` | `production` |
-| `NODE_VERSION` | `<APPROVED_24_X_Y>` |
-| `MONGODB_URI` | `mongodb+srv://<DEMO_DB_USER>:<URL_ENCODED_PASSWORD>@<DEMO_CLUSTER>/` |
-| `DB_NAME` | `<DEDICATED_DEMO_DB_NAME>`; luôn khai báo rõ, không dùng fallback DB development |
-| `SESSION_SECRET` | `<PRIVATE_RANDOM_VALUE_AT_LEAST_32_CHARACTERS>`; dùng ổn định qua restart/deploy |
-| Mode public-demo | **Chờ tên biến và giá trị chính thức của #81**; chưa tự đặt cờ mới |
-| Rate limit / proxy | Lấy đúng tên biến, ngưỡng và hợp đồng proxy sau merge #80/#81 |
+| `PAYMENT_MODE` | Mặc định `off`; chọn tường minh `demo` cho lượt public-demo được duyệt. `live` hiện từ chối startup |
+| `DEMO_DATA_ONLY` | Production/demo bắt buộc `true`; nếu khai báo chỉ nhận chuỗi `true` hoặc `false` |
+| `DB_NAME` | `<DEDICATED_DEMO_DB_NAME>`, khai báo tường minh, không rỗng/không chỉ khoảng trắng |
+| `MONGODB_URI` | `mongodb+srv://<DEMO_DB_USER>:<URL_ENCODED_PASSWORD>@<DEMO_CLUSTER>/`; giá trị thật nhập riêng |
+| `SESSION_SECRET` | `<PRIVATE_RANDOM_VALUE_AT_LEAST_32_CHARACTERS>`; giữ ổn định qua restart/deploy |
+| `TRUST_PROXY_IPS` | Danh sách IP/CIDR proxy **đã xác minh**, cách nhau bằng dấu phẩy; trống nghĩa không tin header chuyển tiếp |
 
-`DEMO_MODE` là cờ cũ trong source được đọc, không phải cấu hình production public-demo đã được duyệt. Sau #81, đối chiếu lại app locals, server, service và nhãn checkout/phiếu bằng cùng một hợp đồng. Không cấu hình thanh toán live hoặc thông tin ngân hàng thật trong lượt demo này.
+**Xóa hẳn key `DEMO_MODE` khỏi Environment và mọi nguồn cấu hình cũ; `DEMO_MODE=false` vẫn bị từ chối.** Production/demo cần đồng thời `DEMO_DATA_ONLY=true` và `DB_NAME` tường minh. Cam kết env không kiểm tra nội dung DB: chỉ DB/tài khoản/dữ liệu tổng hợp cô lập, không Atlas chung, tên/SĐT hoặc dữ liệu khách thật. Không cấu hình tài khoản ngân hàng, KYC, merchant hoặc thanh toán live trong lần demo này. Mode off chặn mô phỏng INITIAL/EXTRA mới nhưng giữ nhãn `DEMO_PAID` cũ và nghiệp vụ hủy/hoàn thủ công theo quyền.
 
-## 4. Atlas demo riêng, backup và khởi tạo
+Giữ resolver IP/CIDR của #92/#95, không đổi thành hop 1, tin mọi IP hoặc lấy loopback `127.0.0.1/32` của fixture local làm cấu hình Render. Operator phải xác minh các hop và việc proxy xử lý `X-Forwarded-For`/`X-Forwarded-Proto`/`X-Forwarded-Host`, kể cả đường truy cập nội bộ/trực tiếp. Nếu chưa xác minh được, để trống theo mặc định an toàn và chưa mở demo: cookie Secure sau proxy có thể không được cấp, mọi người có thể chung quota IP proxy. **CIDR outbound dùng cho Atlas ở mục 4 không phải danh sách inbound proxy để điền `TRUST_PROXY_IPS`.** [Hợp đồng limiter/proxy ở main đã đọc](https://github.com/indominusrex932005-arch/dat-san-tu-dau/blob/180a3c586f86276778f9f5492e998f64688016a0/docs/GIOI_HAN_YEU_CAU.md), [Express behind proxies](https://expressjs.com/en/guide/behind-proxies/).
 
-1. Nhóm trưởng tạo/cấp **project và cluster demo riêng**, DB/tài khoản/dữ liệu tổng hợp riêng; xác minh cluster hỗ trợ replica set/transaction. Ghi project/cluster/DB được chọn trong biên bản nội bộ. Không lấy URI hoặc dữ liệu Atlas chung làm đường tắt.
-2. Cấp database user chỉ với quyền đọc/ghi, collection/index cần thiết trên DB demo; quyền vận hành backup/migration tách riêng nếu cần. Giới hạn truy cập đúng cluster. Tài khoản Atlas quản trị và database user là hai loại khác nhau: [Database users](https://www.mongodb.com/docs/atlas/security-add-mongodb-users/).
-3. Lấy CIDR hiện tại ở **service Render → Connect → Outbound**, thêm đúng các dải cần thiết vào Atlas IP access list. Chỉ thêm IP máy vận hành khi cần rồi thu hồi sau công việc. CIDR Render được dùng chung trong vùng, nên vẫn phải xác thực DB user; không mặc định mở `0.0.0.0/0`. Xem [Render outbound IPs](https://render.com/docs/outbound-ip-addresses) và [Atlas IP access list](https://www.mongodb.com/docs/atlas/security/ip-access-list/).
-4. Trước mọi thao tác ghi, đối chiếu lại project/cluster/`DB_NAME`, dừng nhận ghi và sao lưu DB demo nếu đã có dữ liệu. Atlas Free không có Cloud Backup; dùng `mongodump`/`mongorestore` theo [hướng dẫn backup Atlas](https://www.mongodb.com/docs/atlas/backup-restore-cluster/). Lưu backup ngoài repo/ảnh/log, xác minh restore vào DB thử riêng trước khi coi backup hợp lệ.
+Đủ **10 biến limiter** trong mẫu #95, có thể bỏ để dùng default; không tự hạ ngưỡng trên service dùng chung để thử 429:
 
-Ví dụ backup chỉ chứa placeholder; người vận hành được cấp quyền chuẩn bị file cấu hình riêng và bảo vệ quyền đọc của file đó:
+```dotenv
+RATE_LIMIT_LOGIN_WINDOW_SECONDS=900
+RATE_LIMIT_LOGIN_IP_MAX=60
+RATE_LIMIT_LOGIN_ACCOUNT_IP_MAX=8
+RATE_LIMIT_REGISTER_WINDOW_SECONDS=900
+RATE_LIMIT_REGISTER_IP_MAX=12
+RATE_LIMIT_REGISTER_OWNER_WINDOW_SECONDS=900
+RATE_LIMIT_REGISTER_OWNER_IP_MAX=12
+RATE_LIMIT_BOOKINGS_WINDOW_SECONDS=600
+RATE_LIMIT_BOOKINGS_IP_MAX=60
+RATE_LIMIT_BOOKINGS_ACTOR_MAX=12
+```
+
+Chỉ POST `/login`, `/register`, `/register/owner`, `/bookings` có limiter sau session/auth/CSRF, trước controller. Login dùng IP và email+IP; bookings dùng IP và user/session. POST đến controller vẫn tính quota dù validation sai; CSRF 403 và 429 không trừ quota. 429 có `Retry-After`, không ghi nghiệp vụ. `*_WINDOW_SECONDS`: số nguyên 1–86400; `*_MAX`: 1–100000. Bộ đếm RAM riêng từng instance/reset khi restart, chưa phải quota chia sẻ nhiều instance. Ca 429 chỉ chạy trên service/khung thử cô lập, ngân sách nhỏ và policy đã được duyệt trong #83.
+
+## 4. Atlas demo riêng, backup và bootstrap
+
+1. Nhóm trưởng cấp project/cluster, DB, user và dữ liệu demo riêng; xác minh replica set/transaction và đích thực tế trước mọi lệnh/startup. Không sao chép dữ liệu khách hoặc URI Atlas chung.
+2. Database user chỉ có quyền cần thiết trên DB demo; quyền backup/migration tách nếu cần. Database user khác tài khoản quản trị Atlas. [Database users](https://www.mongodb.com/docs/atlas/security-add-mongodb-users/).
+3. Lấy dải CIDR của **service → Connect → Outbound** rồi cấu hình Atlas IP access list. Chỉ thêm IP máy vận hành trong thời gian cần; không mặc định `0.0.0.0/0`. Outbound có thể dùng chung trong vùng, vẫn cần xác thực DB user. [Render outbound IPs](https://render.com/docs/outbound-ip-addresses), [Atlas IP access list](https://www.mongodb.com/docs/atlas/security/ip-access-list/).
+4. Dừng writer, backup DB nếu đã có dữ liệu; lưu riêng ngoài repo và xác minh restore vào DB thử khác. Atlas Free không có Cloud Backup; chọn phương án dump/restore phù hợp gói thực tế. [Backup Atlas](https://www.mongodb.com/docs/atlas/backup-restore-cluster/).
+
+Ví dụ backup không chứa bí mật: operator chuẩn bị config riêng, giới hạn quyền đọc và giữ ngoài repo/history. `--config` tránh đưa URI/password vào tham số lệnh. [mongodump](https://www.mongodb.com/docs/database-tools/mongodump/#--config).
 
 ```text
 mongodump --config="<PRIVATE_DUMP_CONFIG_PATH>" --db="<DEMO_DB_NAME>" --archive="<PRIVATE_BACKUP_PATH>" --gzip
 ```
 
-`--config` giúp giữ URI/password ngoài tham số dòng lệnh; đây là cách được [MongoDB Database Tools](https://www.mongodb.com/docs/database-tools/mongodump/#--config) hỗ trợ. Không commit file cấu hình hoặc tệp backup.
+`npm start` **không phải kiểm tra DB chỉ đọc**: sau guard cấu hình, server vẫn kiểm tra tương thích/replica set, chờ `Model.init()` và dọn HOLD bằng `expireHolds()`. Cần xác minh đích/backup/kế hoạch ghi trước startup. Không tự tạo index hoặc migrate Atlas chung.
 
-**`npm start` không phải kiểm tra DB chỉ đọc.** `server.js` kiểm tra tương thích rồi gọi `Model.init()` và `expireHolds()` trước khi mở cổng; có thể tạo index/dọn HOLD. Xác minh đích, backup và kế hoạch ghi trước khi chạy startup, kể cả khi dự kiến startup sẽ bị chặn do mode.
-
-Các lệnh sau chạy ở gốc repo trên **executor bảo mật đã được nhóm trưởng cấp**, với env demo được inject riêng. Free Render không có shell; nếu chưa có executor phù hợp thì dừng bootstrap, không thêm route nâng quyền công khai hoặc đưa migration/seed vào build/start:
+Chạy các lệnh dưới tại gốc repo trên **executor bảo mật được cấp**, env demo được inject riêng. Free không có Shell; chưa có executor phù hợp thì dừng bootstrap. Không thêm route nâng ADMIN, đưa seed/migration vào build/start hoặc tự chọn gói trả phí để có Shell.
 
 ```powershell
 npm ci
 npm run migrate
 ```
 
-`migrate` mặc định dry-run, đọc và báo kế hoạch. Với DB mới phải xác nhận không có dữ liệu v1 cần chuyển; không chạy `--apply` khi không có migration cần làm. Với DB v1 phải review lỗi, số bản ghi, index dự kiến đổi và backup. Chỉ khi kế hoạch cần migration, đúng đích, đã dừng ghi và được duyệt mới chạy:
+Lệnh migrate mặc định dry-run. DB mới: xác nhận không có dữ liệu v1 cần chuyển, không apply vô cớ. DB v1: review lỗi/số bản ghi/index dự kiến, backup và dừng writer; chỉ apply khi đúng đích/kế hoạch đã được duyệt, rồi dry-run lại:
 
 ```powershell
 npm run migrate -- --apply
 npm run migrate
 ```
 
-Apply có ghi dữ liệu và thay index; dry-run sau đó xác minh không còn việc/lỗi cần xử lý. Khi DB đã sẵn sàng, có thể nạp dữ liệu tổng hợp bằng:
+Khi cấu trúc DB đã sẵn sàng, nạp dữ liệu tổng hợp nếu cần:
 
 ```powershell
 npm run seed
 ```
 
-Seed hiện thêm cơ sở/sân mẫu, không tạo tài khoản và không xóa dữ liệu. Cơ sở mẫu ban đầu chưa có owner và số điện thoại rỗng; cần cấp OWNER đã duyệt và số liên hệ hợp lệ trước khi thử đặt sân. Không chạy các lệnh này vào Atlas dùng chung.
-
-Để cấp ADMIN, đăng ký một **tài khoản CUSTOMER demo riêng** qua `/register`, dừng app/ghi khi vận hành, rồi dùng phương thức có sẵn trên cùng DB demo:
+Seed chỉ thêm cơ sở/sân mẫu, không tạo tài khoản hoặc xóa DB. Cơ sở mẫu chưa có owner/SĐT liên hệ hợp lệ chưa nhận đơn. Đăng ký CUSTOMER demo riêng tại `/register`, dừng app/writer khi vận hành rồi cấp ADMIN bằng phương thức hiện có trên đúng DB demo:
 
 ```powershell
 npm run admin:grant -- --email "<REGISTERED_DEMO_ADMIN_EMAIL>"
 ```
 
-Đăng xuất/đăng nhập lại, mở `/admin`, duyệt OWNER thử và cấp cơ sở/số liên hệ. ADMIN không được tạo bằng form công khai. Quy trình và ý nghĩa lệnh nằm trong [hướng dẫn tích hợp](HUONG_DAN_TICH_HOP.md).
+Đăng nhập lại vào `/admin`, duyệt OWNER thử và cấp cơ sở/SĐT; OWNER cấu hình sân/giờ/giá. ADMIN không đăng ký qua form công khai. [Hướng dẫn tích hợp](HUONG_DAN_TICH_HOP.md).
 
-## 5. Deploy và kiểm tra HTTPS thực tế
+## 5. Deploy và smoke test online
 
-Sau khi đủ điều kiện, chọn service/branch/env/SHA đã duyệt và deploy thủ công. Theo dõi Build/Deploy/Runtime logs, giữ phần lỗi đã lọc; không chia sẻ URI, cookie, CSRF hoặc query token của checkout/phiếu. Render cấp TLS và chuyển HTTP sang HTTPS theo [tài liệu TLS](https://render.com/docs/tls).
+Sau khi đủ điều kiện, deploy thủ công release SHA được duyệt; đối chiếu repo/branch/commit trong Render và theo dõi Build/Deploy/Runtime logs. Chỉ giữ log đã lọc, không URI/cookie/CSRF/link guest. Render cấp TLS; phải thử HTTPS thực từ thiết bị/mạng khác, không coi native HTTP localhost gắn header HTTPS là bằng chứng online. [TLS](https://render.com/docs/tls).
 
-Health endpoint do #81 bàn giao phải trả trạng thái sẵn sàng phù hợp, không có secret/dữ liệu người dùng. Cấu hình đúng path thật và xác minh lần đầu; Render dùng HTTP health check để kiểm tra instance và có thể restart khi không đáp ứng. Xem [Health Checks](https://render.com/docs/health-checks). Không dùng một trang đăng nhập/404 làm bằng chứng DB khỏe.
+Health path sau #95 là **`/health`**: GET trả `200 {"status":"ok"}` khi DB sẵn sàng hoặc `503 {"status":"unavailable"}`; HEAD cùng status, không body. Endpoint đặt trước session/auth/CSRF, không tạo session/cookie; DB ping giới hạn driver 2 giây, các probe đồng thời dùng chung ping đang chạy, không lộ URI/tên DB/user. Không dùng `/login` hoặc 404 làm bằng chứng DB khỏe. [Health Checks](https://render.com/docs/health-checks).
 
-| Thử nghiệm cần ghi SHA, thời gian và bằng chứng đã lọc | Trạng thái hiện tại |
+Cookie production phải Secure/HttpOnly/SameSite=Lax; phiên nằm trong MongoStore, CSRF/auth và limiter vẫn hoạt động sau proxy thực. Lưu kết quả với release SHA/thời gian/browser/thiết bị; chỉ chụp nội dung đã loại thanh địa chỉ/query/token, không xuất HAR/cookie jar. PDF tắt header/footer URL trước lưu, kiểm tra metadata và nhãn demo; không lưu bản thô có token rồi mới che.
+
+| Ca online cần bằng chứng của đúng release | Thực tế / trạng thái hiện tại |
 | --- | --- |
-| URL `https://<SERVICE>.onrender.com` mở được từ thiết bị/mạng khác | Chưa chạy |
-| Health, DB demo đúng đích, startup/migration/index checks thành công | Chưa chạy |
-| Login → refresh → chuyển trang vẫn giữ phiên; logout thu hồi phiên; cookie Secure/HttpOnly/SameSite và CSRF đúng sau proxy HTTPS | Chưa chạy |
-| Giữ sân → checkout → thanh toán mô phỏng → phiếu đều có nhãn demo; không gọi ngân hàng thật | Chưa chạy |
-| Request thường/vượt giới hạn theo #80, key proxy không tin header giả | Chưa chạy |
-| Restart/deploy lại: session trong MongoStore, secret ổn định; HOLD hết hạn/CONFIRMED và lock đúng | Chưa chạy |
-| Cold start theo gói đã chọn: đo thời gian mở từ mạng khác, ghi lỗi hoặc gián đoạn thật | Chưa chạy |
+| HTTPS từ thiết bị/mạng khác; home/cơ sở/sân và CSS tải được | Chưa chạy; chưa có URL bàn giao |
+| Health GET/HEAD, đúng DB demo, startup/index checks | Chưa chạy |
+| Login → refresh/navigation giữ phiên, cookie và CSRF qua proxy; logout thu hồi session/cookie cũ | Chưa chạy |
+| Hai mạng khách có nhận diện IP độc lập; header giả không đổi quyền HTTPS/IP quota | Chưa chạy; proxy service chưa được xác minh |
+| POST thường/403 CSRF/429 với ngân sách được duyệt, Retry-After và không ghi nghiệp vụ khi bị chặn | Chưa chạy |
+| Giữ nhiều ô → checkout → mô phỏng → receipt/PDF có nhãn; replay không nhân Payment, không `PAID` thật | Chưa chạy |
+| Restart trước hạn: giữ deadline cũ, session còn hợp lệ; sau hạn: không hồi sinh HOLD | Chưa chạy; cần cửa sổ operator |
+| CONFIRMED/DEMO_PAID và lock/Payment còn nguyên sau restart; kiểm tra số lượng bằng xác nhận DB chỉ đọc | Chưa chạy |
+| Cold start đúng gói: ghi idle/wake/độ trễ thật; không dùng ping/cron để giả nghiệm thu ngủ | Chưa chạy; gói service chưa chốt |
 
-Không thay kết quả online bằng lint, CI hoặc HTTP localhost. Xem [phần thanh toán còn dở](THANH_TOAN_CON_DANG_DO.md) khi mô tả bản demo.
+Tách restart thủ công **trước hạn** khỏi cold start Free sau idle 15 phút: mọi HOLD tối đa 10 phút từ trước lần ngủ đó phải hết hạn, không kỳ vọng còn giữ chỗ. CONFIRMED/Payment bền vững và session chưa quá TTL phải còn; UI không đủ chứng minh số bản ghi, cần operator xác nhận chỉ đọc đã lọc. Không dùng CI/local làm PASS cho bảng này.
 
-## 6. Log, cập nhật và rollback
+## 6. Cập nhật và rollback
 
-Khi cập nhật, ghi SHA đang chạy/SHA mới, chạy `npm run check` và `npm test` trên replica thử cục bộ; review schema/migration trước khi merge. Deploy thủ công sau khi duyệt; chỉ cân nhắc **After CI Checks Pass** khi smoke test ổn và nhóm trưởng chốt. Auto-deploy cần kết nối Git provider; đối chiếu cả bước test thật trong CI trước khi cho rollout. Xem [Deploys](https://render.com/docs/deploys).
+Trước cập nhật, ghi SHA đang chạy/SHA mới, chạy `npm run check` và `npm test` trên DB replica thử; review thay đổi schema/migration/mode và khả năng rollback. Auto-deploy chỉ bật theo lựa chọn nhóm trưởng sau smoke test, không coi CI xanh là đã kiểm tra hosting. [Deploys](https://render.com/docs/deploys).
 
-Nếu cần rollback, tạm dừng rollout, chọn một deploy thành công còn tương thích DB và hợp đồng public-demo của #81 tại **Deploys → Rollback**; ghi SHA/build và kiểm tra lại env/health/login/checkout. Render tái dùng một số cấu hình của deploy đích, gồm env; đối chiếu `DB_NAME`, chế độ và secret bằng giao diện riêng để bảo đảm vẫn đúng DB demo. Rollback Dashboard tắt auto-deploy; rollback API không tự tắt. Build được giữ có giới hạn; việc quay code không hoàn tác dữ liệu/schema MongoDB. Chỉ restore DB theo backup/kế hoạch riêng được duyệt, không tự chạy migration ngược. Xem [Rollbacks](https://render.com/docs/rollbacks).
+Nếu lỗi, dừng rollout và chọn deploy thành công còn tương thích DB/config tại **Deploys → Rollback**. Ghi SHA/deploy ID, đối chiếu lại mode, DB_NAME, proxy và secret bằng giao diện riêng rồi thử health/login/checkout. Render dùng lại một số config của deploy đích, gồm env; không quay về bản legacy thiếu hợp đồng public-demo bằng cách đổi cờ tùy tiện. Rollback Dashboard tắt auto-deploy; API không tự tắt, build artifact có giới hạn lưu. **Rollback code không hoàn tác MongoDB/schema/Payment**; restore DB chỉ theo backup/kế hoạch được duyệt, không tự migration ngược. [Rollbacks](https://render.com/docs/rollbacks).
 
-## 7. Bàn giao cho #83
+## 7. Bàn giao #82 → #83
 
-Người deploy điền sau khi chạy thực tế: URL HTTPS; SHA live; Render service/vùng/plan/số instance; Node patch; auto-deploy đã chọn; health path; mã nhận diện DB demo không chứa URI; thời điểm backup/migration/admin bootstrap; kết quả từng ca ở bảng trên; thời gian cold-start/restart; ảnh đã lọc nhãn demo và lỗi còn mở. Không điền secret hoặc link phiếu chứa token.
+Chỉ điền bằng chứng từ lần deploy thật, không chép source SHA hoặc URL mẫu thành release live:
 
-Hiện chưa có service/DB được xác minh, chưa có URL online và chưa có các kết quả nghiệm thu này. Chuyển bộ bằng chứng thực tế sang #83 khi đã triển khai; deploy xanh riêng lẻ chưa chứng minh toàn luồng đạt. Giữ `Refs #82` cho tới khi đủ điều kiện hoàn thành và được nhóm trưởng review.
+| Metadata / kết quả cần bàn giao | Hiện trạng |
+| --- | --- |
+| URL origin HTTPS công khai, không query/fragment | **Chưa bàn giao** |
+| Release SHA đầy đủ 40 ký tự, đối chiếu GitHub commit và Render deploy | **Chưa bàn giao** |
+| Render deploy ID, ngày/giờ + múi giờ, người thực hiện | **Chưa bàn giao** |
+| Source repo/origin/branch đã xác minh cho deploy; dự kiến repo nêu ở mục 2 | **Chưa bàn giao xác nhận của lần deploy** |
+| Service ID, region, compute plan, số instance, Node patch, auto-deploy | **Chưa bàn giao / chưa chốt** |
+| Health path `/health`, kết quả GET/HEAD và logs startup đã lọc | Path theo hợp đồng #95; **kết quả online chưa chạy** |
+| Alias DB demo, replica set/transaction, proxy/hạn mức thực tế; không URI/secret/IP riêng tư trong PR | **Chưa bàn giao** |
+| Backup/restore thử, migration/seed/ADMIN đã thực hiện trên đúng DB | **Chưa chạy / chưa có xác nhận** |
+| Browser/OS, viewport 390px/1366px, thiết bị vật lý/mạng khác, ảnh/PDF an toàn | **Chưa chạy / chưa có bằng chứng** |
+| Kết quả từng ca, restart/cold start, lỗi và ca hoãn/người quyết định | **Chưa chạy / chưa có bằng chứng** |
+
+Chuyển bộ metadata và bằng chứng thực sang [#83 / PR #96](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/96), cập nhật cùng URL/release SHA và giữ rõ ca đã/chưa chạy. **#82 chưa đủ bằng chứng hoàn thành; PR #94/#96 giữ Draft**, chờ nhóm trưởng review. Không đóng issue hoặc công bố online chỉ vì đã có hướng dẫn, deploy xanh hay CI đạt.

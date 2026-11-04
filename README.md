@@ -71,6 +71,7 @@ npm test
 - [Cách chạy, chuyển dữ liệu và luồng từng file](docs/HUONG_DAN_TICH_HOP.md)
 - [QR/thanh toán thật còn dở](docs/THANH_TOAN_CON_DANG_DO.md)
 - [Hợp đồng dữ liệu/route](docs/HOP_DONG_TICH_HOP.md)
-- [Chuẩn bị triển khai Render và bàn giao demo](docs/TRIEN_KHAI_RENDER.md)
+- [Chuẩn bị triển khai Render và bàn giao demo — Draft, theo cấu hình đích #95](docs/TRIEN_KHAI_RENDER.md)
+- [Hạn mức gửi form và cấu hình proxy](docs/GIOI_HAN_YEU_CAU.md)
 
 Không commit `.env`, mật khẩu, connection string có thông tin đăng nhập hoặc `node_modules`.
