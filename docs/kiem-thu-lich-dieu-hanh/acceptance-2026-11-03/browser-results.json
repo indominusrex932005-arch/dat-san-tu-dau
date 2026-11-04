@@ -1,0 +1,2188 @@
+{
+  "issue": 76,
+  "pullRequest": 71,
+  "date": "2026-11-03",
+  "timezone": "Asia/Bangkok",
+  "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+  "mainSHA": "36e75cdf33dc7cf7bd568ed3ae938698af47bca1",
+  "browser": {
+    "name": "Codex in-app browser via CUA",
+    "engineVersion": "Unavailable from supported browser API"
+  },
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 1366,
+      "height": 900
+    }
+  ],
+  "summary": {
+    "total": 17,
+    "passed": 17,
+    "failed": 0,
+    "screenshots": 17
+  },
+  "captureNotes": "Original JPEG captures; viewport widths390/1366. Captured content width may be375/1351 or390/1366 due15px vertical scrollbar. No image resize/retouch. DOM scroll offsets are measured before capture and may be intermediate during native smooth arrow scrolling.",
+  "keyboardSequence": "For each viewport: fill date input, four Tab presses through native date segments/picker to Xem lịch, Enter submits real GET. Tab from last seven-day link to region, ArrowRight scrolls only region; desktop ArrowLeft returns to0 after settling.",
+  "limits": [
+    "Synthetic local OWNER fixtures only; no real-user credentials. No booking/payment POST in browser; login/logout POST only.",
+    "No physical-device/cross-browser/full-tab-order/screen-reader certification.",
+    "HTTP/DB claims are separate; browser acceptance does not infer mutation safety without database snapshots."
+  ],
+  "cases": [
+    {
+      "id": "normal-390",
+      "scenario": "normal",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:24:42.347Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-06",
+      "expected": {
+        "rows": 4,
+        "date": "2026-11-06"
+      },
+      "actual": {
+        "addressLength": 55,
+        "date": "2026-11-06",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 375,
+        "documentWidth": 375,
+        "empty": null,
+        "facility": "Cơ sở QA76 A",
+        "focus": {
+          "id": "",
+          "label": null,
+          "outline": "none",
+          "outlineWidth": "2.66667px",
+          "role": null,
+          "tag": "BODY",
+          "text": null
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": {
+          "clientHeight": 421,
+          "scrollHeight": 421,
+          "scrollLeft": 0,
+          "scrollTop": 0,
+          "scrollWidth": 2712,
+          "width": 304,
+          "x": 34.66666793823242
+        },
+        "rows": [
+          {
+            "courtId": "6ae98beaaafb13b776f30c52",
+            "inactive": false,
+            "name": "A0 — Sân đầu ngày00:00–00:30",
+            "statuses": {
+              "AVAILABLE": 1,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 18
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c53",
+            "inactive": false,
+            "name": "A1 — Sân sáng05:00–08:00",
+            "statuses": {
+              "AVAILABLE": 3,
+              "BOOKED": 2,
+              "LOCKED": 1,
+              "UNAVAILABLE": 13
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c54",
+            "inactive": false,
+            "name": "A2 — Sân tối17:00–22:00",
+            "statuses": {
+              "AVAILABLE": 10,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 9
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c55",
+            "inactive": true,
+            "name": "A3 — Tạm ngừng08:00–09:00",
+            "statuses": {
+              "AVAILABLE": 0,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 19
+            }
+          }
+        ],
+        "sticky": {
+          "position": "sticky",
+          "x": 35.333335876464844
+        },
+        "tableWidth": 2712,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "normal-390.jpg",
+      "sha256": "235f3b7ccc7fcffbd3982fb1c19ec18c118c8fd8abe2c9f2f3dc2262f2448425",
+      "notes": "OWNER A qua login thật; BOOKED05:30/06:00, HOLD06:30 còn hạn ở thời điểm chụp; không POST trong browser."
+    },
+    {
+      "id": "normal-1366",
+      "scenario": "normal",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:24:55.176Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-06",
+      "expected": {
+        "rows": 4,
+        "date": "2026-11-06"
+      },
+      "actual": {
+        "addressLength": 55,
+        "date": "2026-11-06",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 1351,
+        "documentWidth": 1351,
+        "empty": null,
+        "facility": "Cơ sở QA76 A",
+        "focus": {
+          "id": "",
+          "label": null,
+          "outline": "none",
+          "outlineWidth": "2.66667px",
+          "role": null,
+          "tag": "BODY",
+          "text": null
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": {
+          "clientHeight": 357,
+          "scrollHeight": 357,
+          "scrollLeft": 0,
+          "scrollTop": 0,
+          "scrollWidth": 2784,
+          "width": 1133,
+          "x": 108
+        },
+        "rows": [
+          {
+            "courtId": "6ae98beaaafb13b776f30c52",
+            "inactive": false,
+            "name": "A0 — Sân đầu ngày00:00–00:30",
+            "statuses": {
+              "AVAILABLE": 1,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 18
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c53",
+            "inactive": false,
+            "name": "A1 — Sân sáng05:00–08:00",
+            "statuses": {
+              "AVAILABLE": 3,
+              "BOOKED": 2,
+              "LOCKED": 1,
+              "UNAVAILABLE": 13
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c54",
+            "inactive": false,
+            "name": "A2 — Sân tối17:00–22:00",
+            "statuses": {
+              "AVAILABLE": 10,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 9
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c55",
+            "inactive": true,
+            "name": "A3 — Tạm ngừng08:00–09:00",
+            "statuses": {
+              "AVAILABLE": 0,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 19
+            }
+          }
+        ],
+        "sticky": {
+          "position": "sticky",
+          "x": 108.66667175292967
+        },
+        "tableWidth": 2784,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "normal-1366.jpg",
+      "sha256": "85c20fafa8e80694b8070de288842e13e5f3c0380bc1b2044226de9a47dd91e5",
+      "notes": "Cùng lịch normal, BOOKED và HOLD vẫn còn hạn ở thời điểm chụp."
+    },
+    {
+      "id": "table-focus-1366",
+      "scenario": "table-focus",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:24:55.350Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-06",
+      "expected": {
+        "rows": 4,
+        "date": "2026-11-06",
+        "focusRole": "region"
+      },
+      "actual": {
+        "addressLength": 55,
+        "date": "2026-11-06",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 1366,
+        "documentWidth": 1366,
+        "empty": null,
+        "facility": "Cơ sở QA76 A",
+        "focus": {
+          "id": "",
+          "label": "Lịch các sân, cuộn ngang để xem thêm giờ",
+          "outline": "solid",
+          "outlineWidth": "2.66667px",
+          "role": "region",
+          "tag": "DIV",
+          "text": "Lịch sân tại Cơ sở QA76 A, ngày 6/11/2026, theo giờ Việt Nam\n              \n                Sân / gi"
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": {
+          "clientHeight": 357,
+          "scrollHeight": 357,
+          "scrollLeft": 0,
+          "scrollTop": 0,
+          "scrollWidth": 2784,
+          "width": 1133,
+          "x": 115.66667175292967
+        },
+        "rows": [
+          {
+            "courtId": "6ae98beaaafb13b776f30c52",
+            "inactive": false,
+            "name": "A0 — Sân đầu ngày00:00–00:30",
+            "statuses": {
+              "AVAILABLE": 1,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 18
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c53",
+            "inactive": false,
+            "name": "A1 — Sân sáng05:00–08:00",
+            "statuses": {
+              "AVAILABLE": 3,
+              "BOOKED": 2,
+              "LOCKED": 1,
+              "UNAVAILABLE": 13
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c54",
+            "inactive": false,
+            "name": "A2 — Sân tối17:00–22:00",
+            "statuses": {
+              "AVAILABLE": 10,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 9
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c55",
+            "inactive": true,
+            "name": "A3 — Tạm ngừng08:00–09:00",
+            "statuses": {
+              "AVAILABLE": 0,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 19
+            }
+          }
+        ],
+        "sticky": {
+          "position": "sticky",
+          "x": 116.33333587646484
+        },
+        "tableWidth": 2784,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "table-focus-1366.jpg",
+      "sha256": "1a8f5aba3ae2b8b0281efdf1055dd5ca53d66c80ed028325d0521ef1a7d65cca",
+      "notes": "Tab thật từ liên kết ngày cuối vào vùng cuộn bảng."
+    },
+    {
+      "id": "table-right-1366",
+      "scenario": "table-right",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:25:14.695Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-06",
+      "expected": {
+        "rows": 4,
+        "date": "2026-11-06",
+        "focusRole": "region",
+        "scrolled": true
+      },
+      "actual": {
+        "addressLength": 55,
+        "date": "2026-11-06",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 1366,
+        "documentWidth": 1366,
+        "empty": null,
+        "facility": "Cơ sở QA76 A",
+        "focus": {
+          "id": "",
+          "label": "Lịch các sân, cuộn ngang để xem thêm giờ",
+          "outline": "solid",
+          "outlineWidth": "2.66667px",
+          "role": "region",
+          "tag": "DIV",
+          "text": "Lịch sân tại Cơ sở QA76 A, ngày 6/11/2026, theo giờ Việt Nam\n              \n                Sân / gi"
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": {
+          "clientHeight": 357,
+          "scrollHeight": 357,
+          "scrollLeft": 34,
+          "scrollTop": 0,
+          "scrollWidth": 2784,
+          "width": 1133,
+          "x": 115.66667175292967
+        },
+        "rows": [
+          {
+            "courtId": "6ae98beaaafb13b776f30c52",
+            "inactive": false,
+            "name": "A0 — Sân đầu ngày00:00–00:30",
+            "statuses": {
+              "AVAILABLE": 1,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 18
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c53",
+            "inactive": false,
+            "name": "A1 — Sân sáng05:00–08:00",
+            "statuses": {
+              "AVAILABLE": 3,
+              "BOOKED": 2,
+              "LOCKED": 1,
+              "UNAVAILABLE": 13
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c54",
+            "inactive": false,
+            "name": "A2 — Sân tối17:00–22:00",
+            "statuses": {
+              "AVAILABLE": 10,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 9
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c55",
+            "inactive": true,
+            "name": "A3 — Tạm ngừng08:00–09:00",
+            "statuses": {
+              "AVAILABLE": 0,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 19
+            }
+          }
+        ],
+        "sticky": {
+          "position": "sticky",
+          "x": 116.33333587646484
+        },
+        "tableWidth": 2784,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "table-right-1366.jpg",
+      "sha256": "556dd79c2a6b8f93b425f7d44a7cb9f80b15ec5c8b2c0edc3c733c09b643fd97",
+      "notes": "Phím ArrowRight cuộn riêng bảng; document.scrollLeft=0, cột tên sân sticky."
+    },
+    {
+      "id": "table-left-1366",
+      "scenario": "table-left",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:25:45.244Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-06",
+      "expected": {
+        "rows": 4,
+        "date": "2026-11-06",
+        "focusRole": "region",
+        "scrollLeft": 0
+      },
+      "actual": {
+        "addressLength": 55,
+        "date": "2026-11-06",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 1366,
+        "documentWidth": 1366,
+        "empty": null,
+        "facility": "Cơ sở QA76 A",
+        "focus": {
+          "id": "",
+          "label": "Lịch các sân, cuộn ngang để xem thêm giờ",
+          "outline": "solid",
+          "outlineWidth": "2.66667px",
+          "role": "region",
+          "tag": "DIV",
+          "text": "Lịch sân tại Cơ sở QA76 A, ngày 6/11/2026, theo giờ Việt Nam\n              \n                Sân / gi"
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": {
+          "clientHeight": 357,
+          "scrollHeight": 357,
+          "scrollLeft": 0,
+          "scrollTop": 0,
+          "scrollWidth": 2784,
+          "width": 1133,
+          "x": 115.66667175292967
+        },
+        "rows": [
+          {
+            "courtId": "6ae98beaaafb13b776f30c52",
+            "inactive": false,
+            "name": "A0 — Sân đầu ngày00:00–00:30",
+            "statuses": {
+              "AVAILABLE": 1,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 18
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c53",
+            "inactive": false,
+            "name": "A1 — Sân sáng05:00–08:00",
+            "statuses": {
+              "AVAILABLE": 3,
+              "BOOKED": 2,
+              "LOCKED": 1,
+              "UNAVAILABLE": 13
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c54",
+            "inactive": false,
+            "name": "A2 — Sân tối17:00–22:00",
+            "statuses": {
+              "AVAILABLE": 10,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 9
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c55",
+            "inactive": true,
+            "name": "A3 — Tạm ngừng08:00–09:00",
+            "statuses": {
+              "AVAILABLE": 0,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 19
+            }
+          }
+        ],
+        "sticky": {
+          "position": "sticky",
+          "x": 116.33333587646484
+        },
+        "tableWidth": 2784,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "table-left-1366.jpg",
+      "sha256": "034b641b7d6e2fd32dc7434da89ee62974f1f873fb1a4688fdad7c2343ee79f5",
+      "notes": "ArrowLeft quay về scrollLeft=0 sau khi chuyển động cuộn kết thúc; không cuộn ngang toàn trang."
+    },
+    {
+      "id": "table-focus-390",
+      "scenario": "table-focus",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:25:45.420Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-06",
+      "expected": {
+        "rows": 4,
+        "date": "2026-11-06",
+        "focusRole": "region"
+      },
+      "actual": {
+        "addressLength": 55,
+        "date": "2026-11-06",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 375,
+        "documentWidth": 375,
+        "empty": null,
+        "facility": "Cơ sở QA76 A",
+        "focus": {
+          "id": "",
+          "label": "Lịch các sân, cuộn ngang để xem thêm giờ",
+          "outline": "solid",
+          "outlineWidth": "2.66667px",
+          "role": "region",
+          "tag": "DIV",
+          "text": "Lịch sân tại Cơ sở QA76 A, ngày 6/11/2026, theo giờ Việt Nam\n              \n                Sân / gi"
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": {
+          "clientHeight": 421,
+          "scrollHeight": 421,
+          "scrollLeft": 0,
+          "scrollTop": 0,
+          "scrollWidth": 2712,
+          "width": 304,
+          "x": 34.66666793823242
+        },
+        "rows": [
+          {
+            "courtId": "6ae98beaaafb13b776f30c52",
+            "inactive": false,
+            "name": "A0 — Sân đầu ngày00:00–00:30",
+            "statuses": {
+              "AVAILABLE": 1,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 18
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c53",
+            "inactive": false,
+            "name": "A1 — Sân sáng05:00–08:00",
+            "statuses": {
+              "AVAILABLE": 3,
+              "BOOKED": 2,
+              "LOCKED": 1,
+              "UNAVAILABLE": 13
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c54",
+            "inactive": false,
+            "name": "A2 — Sân tối17:00–22:00",
+            "statuses": {
+              "AVAILABLE": 10,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 9
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c55",
+            "inactive": true,
+            "name": "A3 — Tạm ngừng08:00–09:00",
+            "statuses": {
+              "AVAILABLE": 0,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 19
+            }
+          }
+        ],
+        "sticky": {
+          "position": "sticky",
+          "x": 35.333335876464844
+        },
+        "tableWidth": 2712,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "table-focus-390.jpg",
+      "sha256": "d67c06006195109885d80744acdd509083fef6ef6bb581c8943616f1e33294c9",
+      "notes": "Tab từ ngày cuối vào bảng, viền focus hiển thị."
+    },
+    {
+      "id": "table-right-390",
+      "scenario": "table-right",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:25:45.578Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-06",
+      "expected": {
+        "rows": 4,
+        "date": "2026-11-06",
+        "focusRole": "region",
+        "scrolled": true
+      },
+      "actual": {
+        "addressLength": 55,
+        "date": "2026-11-06",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 375,
+        "documentWidth": 375,
+        "empty": null,
+        "facility": "Cơ sở QA76 A",
+        "focus": {
+          "id": "",
+          "label": "Lịch các sân, cuộn ngang để xem thêm giờ",
+          "outline": "solid",
+          "outlineWidth": "2.66667px",
+          "role": "region",
+          "tag": "DIV",
+          "text": "Lịch sân tại Cơ sở QA76 A, ngày 6/11/2026, theo giờ Việt Nam\n              \n                Sân / gi"
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": {
+          "clientHeight": 421,
+          "scrollHeight": 421,
+          "scrollLeft": 32.66666793823242,
+          "scrollTop": 0,
+          "scrollWidth": 2712,
+          "width": 304,
+          "x": 34.66666793823242
+        },
+        "rows": [
+          {
+            "courtId": "6ae98beaaafb13b776f30c52",
+            "inactive": false,
+            "name": "A0 — Sân đầu ngày00:00–00:30",
+            "statuses": {
+              "AVAILABLE": 1,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 18
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c53",
+            "inactive": false,
+            "name": "A1 — Sân sáng05:00–08:00",
+            "statuses": {
+              "AVAILABLE": 3,
+              "BOOKED": 2,
+              "LOCKED": 1,
+              "UNAVAILABLE": 13
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c54",
+            "inactive": false,
+            "name": "A2 — Sân tối17:00–22:00",
+            "statuses": {
+              "AVAILABLE": 10,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 9
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c55",
+            "inactive": true,
+            "name": "A3 — Tạm ngừng08:00–09:00",
+            "statuses": {
+              "AVAILABLE": 0,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 19
+            }
+          }
+        ],
+        "sticky": {
+          "position": "sticky",
+          "x": 35.333335876464844
+        },
+        "tableWidth": 2712,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "table-right-390.jpg",
+      "sha256": "f63fef7ae5428a81247e1ee16d570aa5d55d8ce9af8e137a35a0273b15486ca8",
+      "notes": "ArrowRight chỉ cuộn vùng bảng, tên sân sticky."
+    },
+    {
+      "id": "date-focus-390",
+      "scenario": "date-focus",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:26:53.709Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-06",
+      "expected": {
+        "rows": 4,
+        "date": "2026-11-07",
+        "focusTag": "BUTTON"
+      },
+      "actual": {
+        "addressLength": 55,
+        "date": "2026-11-07",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 375,
+        "documentWidth": 375,
+        "empty": null,
+        "facility": "Cơ sở QA76 A",
+        "focus": {
+          "id": "",
+          "label": null,
+          "outline": "solid",
+          "outlineWidth": "2.66667px",
+          "role": null,
+          "tag": "BUTTON",
+          "text": "Xem lịch"
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": {
+          "clientHeight": 421,
+          "scrollHeight": 421,
+          "scrollLeft": 40,
+          "scrollTop": 0,
+          "scrollWidth": 2712,
+          "width": 304,
+          "x": 34.66666793823242
+        },
+        "rows": [
+          {
+            "courtId": "6ae98beaaafb13b776f30c52",
+            "inactive": false,
+            "name": "A0 — Sân đầu ngày00:00–00:30",
+            "statuses": {
+              "AVAILABLE": 1,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 18
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c53",
+            "inactive": false,
+            "name": "A1 — Sân sáng05:00–08:00",
+            "statuses": {
+              "AVAILABLE": 3,
+              "BOOKED": 2,
+              "LOCKED": 1,
+              "UNAVAILABLE": 13
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c54",
+            "inactive": false,
+            "name": "A2 — Sân tối17:00–22:00",
+            "statuses": {
+              "AVAILABLE": 10,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 9
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c55",
+            "inactive": true,
+            "name": "A3 — Tạm ngừng08:00–09:00",
+            "statuses": {
+              "AVAILABLE": 0,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 19
+            }
+          }
+        ],
+        "sticky": {
+          "position": "sticky",
+          "x": 35.333335876464844
+        },
+        "tableWidth": 2712,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "date-focus-390.jpg",
+      "sha256": "1d77b006928fe3e999a1761c87ccde512c9a3506bf6d9c12fd5d1f754ede777b",
+      "notes": "Điền07/11 rồi bốn Tab qua các segment native tới nút Xem lịch; URL vẫn06/11 trước submit."
+    },
+    {
+      "id": "date-submit-390",
+      "scenario": "date-submit",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:26:55.099Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-07",
+      "expected": {
+        "rows": 4,
+        "date": "2026-11-07"
+      },
+      "actual": {
+        "addressLength": 55,
+        "date": "2026-11-07",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 375,
+        "documentWidth": 375,
+        "empty": null,
+        "facility": "Cơ sở QA76 A",
+        "focus": {
+          "id": "",
+          "label": null,
+          "outline": "none",
+          "outlineWidth": "2.66667px",
+          "role": null,
+          "tag": "BODY",
+          "text": null
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": {
+          "clientHeight": 421,
+          "scrollHeight": 421,
+          "scrollLeft": 0,
+          "scrollTop": 0,
+          "scrollWidth": 2712,
+          "width": 304,
+          "x": 34.66666793823242
+        },
+        "rows": [
+          {
+            "courtId": "6ae98beaaafb13b776f30c52",
+            "inactive": false,
+            "name": "A0 — Sân đầu ngày00:00–00:30",
+            "statuses": {
+              "AVAILABLE": 1,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 18
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c53",
+            "inactive": false,
+            "name": "A1 — Sân sáng05:00–08:00",
+            "statuses": {
+              "AVAILABLE": 6,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 13
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c54",
+            "inactive": false,
+            "name": "A2 — Sân tối17:00–22:00",
+            "statuses": {
+              "AVAILABLE": 10,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 9
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c55",
+            "inactive": true,
+            "name": "A3 — Tạm ngừng08:00–09:00",
+            "statuses": {
+              "AVAILABLE": 0,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 19
+            }
+          }
+        ],
+        "sticky": {
+          "position": "sticky",
+          "x": 35.333335876464844
+        },
+        "tableWidth": 2712,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "date-submit-390.jpg",
+      "sha256": "0aeb6d157aaf7832af14f4714145c2ec5fbab3181c9f781dd1bd6e62c898e734",
+      "notes": "Enter thực gửi form GET: URL/input/tiêu đề chuyển07/11, không tạo đơn."
+    },
+    {
+      "id": "date-focus-1366",
+      "scenario": "date-focus",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:26:55.345Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-07",
+      "expected": {
+        "rows": 4,
+        "date": "2026-11-23",
+        "focusTag": "BUTTON"
+      },
+      "actual": {
+        "addressLength": 55,
+        "date": "2026-11-23",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 1351,
+        "documentWidth": 1351,
+        "empty": null,
+        "facility": "Cơ sở QA76 A",
+        "focus": {
+          "id": "",
+          "label": null,
+          "outline": "solid",
+          "outlineWidth": "2.66667px",
+          "role": null,
+          "tag": "BUTTON",
+          "text": "Xem lịch"
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": {
+          "clientHeight": 357,
+          "scrollHeight": 357,
+          "scrollLeft": 0,
+          "scrollTop": 0,
+          "scrollWidth": 2784,
+          "width": 1133,
+          "x": 108
+        },
+        "rows": [
+          {
+            "courtId": "6ae98beaaafb13b776f30c52",
+            "inactive": false,
+            "name": "A0 — Sân đầu ngày00:00–00:30",
+            "statuses": {
+              "AVAILABLE": 1,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 18
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c53",
+            "inactive": false,
+            "name": "A1 — Sân sáng05:00–08:00",
+            "statuses": {
+              "AVAILABLE": 6,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 13
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c54",
+            "inactive": false,
+            "name": "A2 — Sân tối17:00–22:00",
+            "statuses": {
+              "AVAILABLE": 10,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 9
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c55",
+            "inactive": true,
+            "name": "A3 — Tạm ngừng08:00–09:00",
+            "statuses": {
+              "AVAILABLE": 0,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 19
+            }
+          }
+        ],
+        "sticky": {
+          "position": "sticky",
+          "x": 108.66667175292967
+        },
+        "tableWidth": 2784,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "date-focus-1366.jpg",
+      "sha256": "0cdbf12f10932f62f6586896c4082ccb738a67e51a3f592ee606292215688367",
+      "notes": "Điền23/11 (ngoài bảy ngày) rồi bốn Tab tới nút Xem lịch."
+    },
+    {
+      "id": "date-submit-1366",
+      "scenario": "date-submit",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:27:10.204Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-23",
+      "expected": {
+        "rows": 4,
+        "date": "2026-11-23"
+      },
+      "actual": {
+        "addressLength": 55,
+        "date": "2026-11-23",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 1351,
+        "documentWidth": 1351,
+        "empty": null,
+        "facility": "Cơ sở QA76 A",
+        "focus": {
+          "id": "",
+          "label": null,
+          "outline": "none",
+          "outlineWidth": "2.66667px",
+          "role": null,
+          "tag": "BODY",
+          "text": null
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": {
+          "clientHeight": 357,
+          "scrollHeight": 357,
+          "scrollLeft": 0,
+          "scrollTop": 0,
+          "scrollWidth": 2784,
+          "width": 1133,
+          "x": 108
+        },
+        "rows": [
+          {
+            "courtId": "6ae98beaaafb13b776f30c52",
+            "inactive": false,
+            "name": "A0 — Sân đầu ngày00:00–00:30",
+            "statuses": {
+              "AVAILABLE": 1,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 18
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c53",
+            "inactive": false,
+            "name": "A1 — Sân sáng05:00–08:00",
+            "statuses": {
+              "AVAILABLE": 6,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 13
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c54",
+            "inactive": false,
+            "name": "A2 — Sân tối17:00–22:00",
+            "statuses": {
+              "AVAILABLE": 10,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 9
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c55",
+            "inactive": true,
+            "name": "A3 — Tạm ngừng08:00–09:00",
+            "statuses": {
+              "AVAILABLE": 0,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 19
+            }
+          }
+        ],
+        "sticky": {
+          "position": "sticky",
+          "x": 108.66667175292967
+        },
+        "tableWidth": 2784,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "date-submit-1366.jpg",
+      "sha256": "c421f16f1beb7b00a321e31836c54d14c55d08f744639ee6ce2b2e582137fc76",
+      "notes": "Enter gửi GET ngày23/11 ngoài bảy liên kết03–09/11; input/tiêu đề/URL đúng, không link nào aria-current."
+    },
+    {
+      "id": "long-1366",
+      "scenario": "long",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:27:34.378Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-06",
+      "expected": {
+        "rows": 3,
+        "date": "2026-11-06"
+      },
+      "actual": {
+        "addressLength": 500,
+        "date": "2026-11-06",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 1351,
+        "documentWidth": 1351,
+        "empty": null,
+        "facility": "Cơ sở dài <em>QA76</em> & CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUO",
+        "focus": {
+          "id": "",
+          "label": null,
+          "outline": "none",
+          "outlineWidth": "2.66667px",
+          "role": null,
+          "tag": "BODY",
+          "text": null
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": {
+          "clientHeight": 472,
+          "scrollHeight": 472,
+          "scrollLeft": 0,
+          "scrollTop": 0,
+          "scrollWidth": 2648,
+          "width": 1133,
+          "x": 108
+        },
+        "rows": [
+          {
+            "courtId": "6ae98beaaafb13b776f30c58",
+            "inactive": false,
+            "name": "Sân dài <em>QA76</em> & TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔ",
+            "statuses": {
+              "AVAILABLE": 6,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 12
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c59",
+            "inactive": false,
+            "name": "Tên dài — Sân tối17:00–22:00",
+            "statuses": {
+              "AVAILABLE": 10,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 8
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c5a",
+            "inactive": true,
+            "name": "Tên dài — Tạm ngừng08:00–09:00",
+            "statuses": {
+              "AVAILABLE": 0,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 18
+            }
+          }
+        ],
+        "sticky": {
+          "position": "sticky",
+          "x": 108.66667175292967
+        },
+        "tableWidth": 2648,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "long-1366.jpg",
+      "sha256": "9e53e5fe9bbd746a813a9c0ea10c4fe7dacee2fbf7452e9da5819ad46e2ef77a",
+      "notes": "Tên cơ sở/sân150 ký tự và địa chỉ500 ký tự tổng hợp có chuỗi giống HTML; escape, không tràn toàn trang."
+    },
+    {
+      "id": "long-table-1366",
+      "scenario": "long-table",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:27:34.551Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-06",
+      "expected": {
+        "rows": 3,
+        "date": "2026-11-06",
+        "focusRole": "region"
+      },
+      "actual": {
+        "addressLength": 500,
+        "date": "2026-11-06",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 1366,
+        "documentWidth": 1366,
+        "empty": null,
+        "facility": "Cơ sở dài <em>QA76</em> & CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUO",
+        "focus": {
+          "id": "",
+          "label": "Lịch các sân, cuộn ngang để xem thêm giờ",
+          "outline": "solid",
+          "outlineWidth": "2.66667px",
+          "role": "region",
+          "tag": "DIV",
+          "text": "Lịch sân tại Cơ sở dài <em>QA76</em> & CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_C"
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": {
+          "clientHeight": 472,
+          "scrollHeight": 472,
+          "scrollLeft": 0,
+          "scrollTop": 0,
+          "scrollWidth": 2648,
+          "width": 1133,
+          "x": 115.66667175292967
+        },
+        "rows": [
+          {
+            "courtId": "6ae98beaaafb13b776f30c58",
+            "inactive": false,
+            "name": "Sân dài <em>QA76</em> & TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔ",
+            "statuses": {
+              "AVAILABLE": 6,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 12
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c59",
+            "inactive": false,
+            "name": "Tên dài — Sân tối17:00–22:00",
+            "statuses": {
+              "AVAILABLE": 10,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 8
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c5a",
+            "inactive": true,
+            "name": "Tên dài — Tạm ngừng08:00–09:00",
+            "statuses": {
+              "AVAILABLE": 0,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 18
+            }
+          }
+        ],
+        "sticky": {
+          "position": "sticky",
+          "x": 116.33333587646484
+        },
+        "tableWidth": 2648,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "long-table-1366.jpg",
+      "sha256": "78b513e1b677229f2521a4856685921aa5630eb16f3217a8f947ef6c196d92bd",
+      "notes": "Bảng tên dài, focus vùng cuộn; tên sân wrap trong cột sticky."
+    },
+    {
+      "id": "long-table-390",
+      "scenario": "long-table",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:27:57.270Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-06",
+      "expected": {
+        "rows": 3,
+        "date": "2026-11-06",
+        "focusRole": "region"
+      },
+      "actual": {
+        "addressLength": 500,
+        "date": "2026-11-06",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 390,
+        "documentWidth": 390,
+        "empty": null,
+        "facility": "Cơ sở dài <em>QA76</em> & CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUO",
+        "focus": {
+          "id": "",
+          "label": "Lịch các sân, cuộn ngang để xem thêm giờ",
+          "outline": "solid",
+          "outlineWidth": "2.66667px",
+          "role": "region",
+          "tag": "DIV",
+          "text": "Lịch sân tại Cơ sở dài <em>QA76</em> & CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_C"
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": {
+          "clientHeight": 573,
+          "scrollHeight": 582,
+          "scrollLeft": 0,
+          "scrollTop": 0,
+          "scrollWidth": 2576,
+          "width": 319,
+          "x": 34.66666793823242
+        },
+        "rows": [
+          {
+            "courtId": "6ae98beaaafb13b776f30c58",
+            "inactive": false,
+            "name": "Sân dài <em>QA76</em> & TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔ",
+            "statuses": {
+              "AVAILABLE": 6,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 12
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c59",
+            "inactive": false,
+            "name": "Tên dài — Sân tối17:00–22:00",
+            "statuses": {
+              "AVAILABLE": 10,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 8
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c5a",
+            "inactive": true,
+            "name": "Tên dài — Tạm ngừng08:00–09:00",
+            "statuses": {
+              "AVAILABLE": 0,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 18
+            }
+          }
+        ],
+        "sticky": {
+          "position": "sticky",
+          "x": 35.333335876464844
+        },
+        "tableWidth": 2576,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "long-table-390.jpg",
+      "sha256": "dadaad7f6a13889086e6160b3236c3d7646c002246eb372f79c0b877628f411d",
+      "notes": "Bảng tên dài qua Tab, cột tên sticky; ghi rõ chiều cao vùng cuộn."
+    },
+    {
+      "id": "empty-1366",
+      "scenario": "empty",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:30:08.493Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-06",
+      "expected": {
+        "rows": 0,
+        "date": "2026-11-06",
+        "empty": true
+      },
+      "actual": {
+        "addressLength": 55,
+        "date": "2026-11-06",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 1366,
+        "documentWidth": 1366,
+        "empty": "Cơ sở chưa có sân. Lịch điều hành sẽ hiển thị khi cơ sở có sân được cấu hình. Về quản lý cơ sở →",
+        "facility": "Cơ sở QA76 EMPTY",
+        "focus": {
+          "id": "",
+          "label": null,
+          "outline": "none",
+          "outlineWidth": "2.66667px",
+          "role": null,
+          "tag": "BODY",
+          "text": null
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": null,
+        "rows": [],
+        "sticky": null,
+        "viewport": {
+          "height": 900,
+          "width": 1366
+        }
+      },
+      "status": "PASS",
+      "evidence": "empty-1366.jpg",
+      "sha256": "292d75bd0785780030c1251f8d2320d44bbf5887010d0bf304b3344c4c14f2e7",
+      "notes": "Ảnh và record cuối, cơ sở chưa có sân trên desktop."
+    },
+    {
+      "id": "empty-390",
+      "scenario": "empty",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:30:09.617Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-06",
+      "expected": {
+        "rows": 0,
+        "date": "2026-11-06",
+        "empty": true
+      },
+      "actual": {
+        "addressLength": 55,
+        "date": "2026-11-06",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 375,
+        "documentWidth": 375,
+        "empty": "Cơ sở chưa có sân. Lịch điều hành sẽ hiển thị khi cơ sở có sân được cấu hình. Về quản lý cơ sở →",
+        "facility": "Cơ sở QA76 EMPTY",
+        "focus": {
+          "id": "",
+          "label": null,
+          "outline": "none",
+          "outlineWidth": "2.66667px",
+          "role": null,
+          "tag": "BODY",
+          "text": null
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": null,
+        "rows": [],
+        "sticky": null,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "empty-390.jpg",
+      "sha256": "85aa6f34d6b0576e3b1049c8a69de45dac3530b11f89e8e35fede4b7b1bf9ae0",
+      "notes": "Ảnh và record cuối, cơ sở chưa có sân trên mobile."
+    },
+    {
+      "id": "long-390",
+      "scenario": "long",
+      "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+      "capturedAtUTC": "2026-11-03T07:30:28.604Z",
+      "url": "http://127.0.0.1:61470/owner/calendar?date=2026-11-06",
+      "expected": {
+        "rows": 3,
+        "date": "2026-11-06"
+      },
+      "actual": {
+        "addressLength": 500,
+        "date": "2026-11-06",
+        "dayLinks": [
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-03",
+            "text": "Thứ 3, 03/11 Hôm nay"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-04",
+            "text": "Thứ 4, 04/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-05",
+            "text": "Thứ 5, 05/11 Xem lịch"
+          },
+          {
+            "current": "date",
+            "href": "/owner/calendar?date=2026-11-06",
+            "text": "Thứ 6, 06/11 Đang xem"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-07",
+            "text": "Thứ 7, 07/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-08",
+            "text": "CN, 08/11 Xem lịch"
+          },
+          {
+            "current": null,
+            "href": "/owner/calendar?date=2026-11-09",
+            "text": "Thứ 2, 09/11 Xem lịch"
+          }
+        ],
+        "documentClientWidth": 375,
+        "documentWidth": 375,
+        "empty": null,
+        "facility": "Cơ sở dài <em>QA76</em> & CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUOIKHONGNGAT_CHUO",
+        "focus": {
+          "id": "",
+          "label": null,
+          "outline": "none",
+          "outlineWidth": "2.66667px",
+          "role": null,
+          "tag": "BODY",
+          "text": null
+        },
+        "minDate": "2026-11-03",
+        "pageScrollX": 0,
+        "region": {
+          "clientHeight": 557,
+          "scrollHeight": 582,
+          "scrollLeft": 0,
+          "scrollTop": 0,
+          "scrollWidth": 2576,
+          "width": 289,
+          "x": 34.66666793823242
+        },
+        "rows": [
+          {
+            "courtId": "6ae98beaaafb13b776f30c58",
+            "inactive": false,
+            "name": "Sân dài <em>QA76</em> & TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔNGNGẮT_TÊNSÂNDÀIKHÔ",
+            "statuses": {
+              "AVAILABLE": 6,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 12
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c59",
+            "inactive": false,
+            "name": "Tên dài — Sân tối17:00–22:00",
+            "statuses": {
+              "AVAILABLE": 10,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 8
+            }
+          },
+          {
+            "courtId": "6ae98beaaafb13b776f30c5a",
+            "inactive": true,
+            "name": "Tên dài — Tạm ngừng08:00–09:00",
+            "statuses": {
+              "AVAILABLE": 0,
+              "BOOKED": 0,
+              "LOCKED": 0,
+              "UNAVAILABLE": 18
+            }
+          }
+        ],
+        "sticky": {
+          "position": "sticky",
+          "x": 35.333335876464844
+        },
+        "tableWidth": 2576,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "status": "PASS",
+      "evidence": "long-390.jpg",
+      "sha256": "eed86e38932625b9dd58feb2c370aad7de4aac7c9653629f1f555b450e0bebc6",
+      "notes": "Ảnh/record cuối từ GET mới, focus BODY; tên150/địa chỉ500 ký tự tổng hợp."
+    }
+  ]
+}
