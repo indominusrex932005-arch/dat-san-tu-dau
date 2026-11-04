@@ -12,8 +12,11 @@ import Payment from './models/Payment.js';
 import BookingRequest from './models/BookingRequest.js';
 import { assertDatabaseCompatibility } from './services/database-compatibility.js';
 import { expireHolds } from './services/booking.service.js';
+import { getPaymentConfig } from './config/payment-mode.js';
 
 try {
+  // Fail before connecting, initializing indexes or cleaning up any booking.
+  getPaymentConfig();
   if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
     throw new Error('SESSION_SECRET phải có ít nhất 32 ký tự.');
   }
@@ -32,7 +35,7 @@ try {
   });
   store.on('error', error => console.error('Lỗi session:', error.name));
   const app = createApp(store);
-  const server = app.listen(port, () => console.log(`Server đang chạy tại http://localhost:${port}`));
+  const server = app.listen(port, '0.0.0.0', () => console.log(`Server đang lắng nghe trên cổng ${port}.`));
   const expirationTimer = setInterval(() => {
     expireHolds().catch(error => console.error('Không thể dọn chỗ hết hạn:', error.name));
   }, 30000);
@@ -50,7 +53,7 @@ try {
     });
   }
 } catch (error) {
-  console.error('Không thể khởi động:', ['MIGRATION_REQUIRED', 'REPLICA_SET_REQUIRED'].includes(error.code) ? error.message : error.name);
+  console.error('Không thể khởi động:', ['MIGRATION_REQUIRED', 'REPLICA_SET_REQUIRED', 'INVALID_PAYMENT_CONFIG'].includes(error.code) ? error.message : error.name);
   await mongoose.disconnect();
   process.exitCode = 1;
 }

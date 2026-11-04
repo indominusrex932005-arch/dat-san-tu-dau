@@ -1,5 +1,9 @@
 # Hướng dẫn bản tích hợp và luồng MVC
 
+## Cấu hình chế độ thanh toán
+
+Server dùng `PAYMENT_MODE=off|demo|live`, mặc định off; `live` hiện từ chối khởi động. Xóa key cũ `DEMO_MODE` khỏi môi trường, kể cả false. Để chạy production demo, cần `PAYMENT_MODE=demo`, `DEMO_DATA_ONLY=true` và `DB_NAME` tường minh. Chỉ dùng DB/tài khoản/dữ liệu tổng hợp cô lập, không dữ liệu thật/Atlas chung; cờ dữ liệu là cam kết vận hành, không tự kiểm tra DB. Xem [hợp đồng đầy đủ](CHE_DO_THANH_TOAN.md), gồm health và ranh giới proxy khi tích hợp #80.
+
 ## Chuyển từ bản cũ
 
 Giữ `.env`, `.git` và dữ liệu. Cài bằng `npm ci`; cần Atlas hoặc MongoDB replica set để giữ nhiều ô trong transaction. Không thêm thư mục src.
@@ -26,6 +30,7 @@ Hồ sơ chủ sân mới chỉ kiểm tra định dạng, chưa OTP hoặc xác
 |---|---|
 | server.js | Kết nối DB, kiểm tra cấu trúc/replica set, chờ index, tạo MongoStore rồi gọi app và mở cổng |
 | app.js | EJS/static/body/session → người dùng/CSRF → routes → xử lý lỗi |
+| config/payment-mode.js | Một hợp đồng mode cho startup, app locals và service; client không được chọn mode |
 | middlewares/auth.middleware.js | Tìm user từ session; requireAuth/requireOwner/requireAdmin kiểm tra quyền |
 | middlewares/csrf.middleware.js | Tạo token form và kiểm tra mọi POST |
 | controllers/auth.controller.js | Đăng ký khách/chủ sân chờ duyệt, băm mật khẩu, login/session/logout |
@@ -49,12 +54,14 @@ POST /bookings → app đọc body/session → CSRF
 → route → controller → service kiểm tra khách/sân/ngày/ô/giá
 → transaction Booking HOLD + tất cả SlotLock
 → checkout đếm tới hạn thực tế: tối đa 10 phút, trước khi ô đầu tiên bắt đầu
-→ POST demo-payment khi DEMO_MODE=true
+→ POST demo-payment khi PAYMENT_MODE=demo và đủ điều kiện môi trường/dữ liệu
 → kiểm tra quyền, hạn và đủ lock → CONFIRMED/DEMO_PAID
 → phiếu từ Booking thật, ghi mô phỏng → In / Lưu PDF
 ```
 
 Khách có tài khoản gắn Booking.user. Khách vãng lai có hash token xem riêng. Mã đơn/SĐT không cấp quyền quản lý; token vãng lai không cho tự hủy/đổi.
+
+Mode off chặn phát sinh `INITIAL_DEMO`/`EXTRA_DEMO` mới, không xóa nhãn `DEMO_PAID` của đơn/phiếu đã lưu hoặc tự chuyển tiền khi hủy/ghi nhận hoàn thủ công. Service kiểm tra mode cùng quyền/CSRF/transaction hiện có, không dựa vào việc nút có xuất hiện trên browser hay không.
 
 Giá được lưu từng ô lúc đặt; đổi bảng giá không thay đơn cũ. Các ô rời nhau không làm giữ ô nằm giữa. Giữ đủ mọi ô hoặc không giữ ô nào. Hết hạn không được thanh toán để lấy lại sân.
 
