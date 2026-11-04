@@ -1,0 +1,41 @@
+TAP version 13
+# Subtest: Chuyển dữ liệu v1 có dry-run, giữ đơn/tiền/giờ và chạy lại an toàn
+    # Subtest: Dry-run không sửa document hoặc index
+    ok 1 - Dry-run không sửa document hoặc index
+      ---
+      duration_ms: 16.9917
+      type: 'test'
+      ...
+    # Subtest: Apply chia một giờ thành hai ô, giữ ID/tổng tiền và chưa tự ghi nhận đã trả
+    ok 2 - Apply chia một giờ thành hai ô, giữ ID/tổng tiền và chưa tự ghi nhận đã trả
+      ---
+      duration_ms: 29.5228
+      type: 'test'
+      ...
+    # Subtest: Chạy apply lần hai không tạo thêm đơn hoặc lock
+    ok 3 - Chạy apply lần hai không tạo thêm đơn hoặc lock
+      ---
+      duration_ms: 10.0724
+      type: 'test'
+      ...
+    # Subtest: Hai đơn mới không có startHour không đụng index null cũ; giờ đã đặt cũ vẫn bị giữ
+    ok 4 - Hai đơn mới không có startHour không đụng index null cũ; giờ đã đặt cũ vẫn bị giữ
+      ---
+      duration_ms: 77.6623
+      type: 'test'
+      ...
+    1..4
+ok 1 - Chuyển dữ liệu v1 có dry-run, giữ đơn/tiền/giờ và chạy lại an toàn
+  ---
+  duration_ms: 508.6447
+  type: 'test'
+  ...
+1..1
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1053.3515

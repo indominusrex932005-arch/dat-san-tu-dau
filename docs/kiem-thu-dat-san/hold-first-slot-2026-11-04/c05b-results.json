@@ -1,0 +1,501 @@
+{
+  "issue": 78,
+  "case": "C05b",
+  "sourceSha": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+  "priorQaMergeSha": "982c15a44f5af591dbfc5dbe4d487842a184dc7f",
+  "startedAtUtc": "2026-11-04T09:19:38.995Z",
+  "timezone": "Asia/Ho_Chi_Minh",
+  "node": "v24.15.0",
+  "clock": "Real host, server and browser clocks; no clock/deadline edits",
+  "browserSteps": {
+    "control": {
+      "hold": {
+        "startedAtUtc": "2026-11-04T09:19:44.917Z",
+        "observedAtUtc": "2026-11-04T09:19:45.023Z",
+        "post": 303,
+        "get": 200,
+        "path": "/bookings/6aeaf8b099f7a14b7213fd10/checkout"
+      },
+      "demo": {
+        "startedAtUtc": "2026-11-04T09:19:45.023Z",
+        "observedAtUtc": "2026-11-04T09:19:45.109Z",
+        "post": 303,
+        "get": 200,
+        "path": "/bookings/6aeaf8b099f7a14b7213fd10/receipt"
+      }
+    },
+    "targetHold": {
+      "startedAtUtc": "2026-11-04T09:27:10.399Z",
+      "observedAtUtc": "2026-11-04T09:27:10.493Z",
+      "post": 303,
+      "get": 200,
+      "path": "/bookings/6aeafa6e99f7a14b7213fd13/checkout",
+      "createdAtUtc": "2026-11-04T09:27:10.448Z",
+      "tenMinuteDeadlineUtc": "2026-11-04T09:37:10.448Z",
+      "deadlineUtc": "2026-11-04T09:30:00.000Z",
+      "durationMs": 169552,
+      "clock": {
+        "deadline": "2026-11-04T09:30:00.000Z",
+        "serverNow": "2026-11-04T09:27:10.484Z",
+        "displayed": "02:50 còn lại",
+        "elapsedSinceResponseMs": 111.09999999962747
+      },
+      "displayedSeconds": 170,
+      "expectedSeconds": 170
+    },
+    "calendarBefore": {
+      "observedAtUtc": "2026-11-04T09:27:10.717Z",
+      "status": 200,
+      "slots": [
+        {
+          "time": "16:30",
+          "enabled": false,
+          "className": "booking-slot locked",
+          "label": "Đang giữ chỗ"
+        },
+        {
+          "time": "17:00",
+          "enabled": false,
+          "className": "booking-slot booked",
+          "label": "Đã đặt"
+        },
+        {
+          "time": "17:30",
+          "enabled": false,
+          "className": "booking-slot locked",
+          "label": "Đang giữ chỗ"
+        }
+      ]
+    },
+    "countdownExpired": {
+      "observedAtUtc": "2026-11-04T09:30:00.562Z",
+      "text": "Đã tới hạn giữ chỗ. Tải lại để cập nhật trạng thái đơn.",
+      "paymentButtonDisabled": true,
+      "pageReloaded": false
+    },
+    "checkoutReload": {
+      "sentAtUtc": "2026-11-04T09:30:00.743Z",
+      "observedAtUtc": "2026-11-04T09:30:00.815Z",
+      "status": 410,
+      "label": "Đã hết hạn",
+      "paymentButtonCount": 0
+    },
+    "calendarAfter": {
+      "observedAtUtc": "2026-11-04T09:30:00.997Z",
+      "status": 200,
+      "slots": [
+        {
+          "time": "16:30",
+          "enabled": false,
+          "className": "booking-slot unavailable",
+          "label": "Không phục vụ"
+        },
+        {
+          "time": "17:00",
+          "enabled": false,
+          "className": "booking-slot booked",
+          "label": "Đã đặt"
+        },
+        {
+          "time": "17:30",
+          "enabled": true,
+          "className": "booking-slot available",
+          "label": "75.000 ₫"
+        }
+      ],
+      "selectedFutureSlotInUi": true
+    }
+  },
+  "httpProbes": {
+    "latePayment": {
+      "method": "POST",
+      "path": "/bookings/6aeafa6e99f7a14b7213fd13/demo-payment",
+      "sentAtUtc": "2026-11-04T09:30:00.567Z",
+      "observedAtUtc": "2026-11-04T09:30:00.595Z",
+      "status": 410,
+      "reason": "Đã hết hạn giữ sân",
+      "methodOfExecution": "HTTP via authenticated browser session; no UI click"
+    },
+    "pastSlot": {
+      "method": "POST",
+      "path": "/bookings",
+      "sentAtUtc": "2026-11-04T09:30:01.243Z",
+      "observedAtUtc": "2026-11-04T09:30:01.286Z",
+      "status": 400,
+      "reason": "Ô không thuộc giờ phục vụ hoặc đã qua"
+    }
+  },
+  "snapshots": {
+    "initial": {
+      "target": {
+        "booking": {
+          "_id": "6aeafa6e99f7a14b7213fd13",
+          "date": "2026-11-04",
+          "slots": [
+            {
+              "startAt": "2026-11-04T09:30:00.000Z",
+              "endAt": "2026-11-04T10:00:00.000Z",
+              "priceVND": 50000
+            },
+            {
+              "startAt": "2026-11-04T10:30:00.000Z",
+              "endAt": "2026-11-04T11:00:00.000Z",
+              "priceVND": 75000
+            }
+          ],
+          "totalPrice": 125000,
+          "status": "HOLD",
+          "paymentStatus": "UNPAID",
+          "holdExpiresAt": "2026-11-04T09:30:00.000Z",
+          "createdAt": "2026-11-04T09:27:10.448Z",
+          "updatedAt": "2026-11-04T09:27:10.448Z"
+        },
+        "locks": [
+          {
+            "_id": "6aeafa6e99f7a14b7213fd15",
+            "court": "6aeaf8b0aadba39f379157d7",
+            "slotStart": "2026-11-04T09:30:00.000Z",
+            "expiresAt": "2026-11-04T09:30:00.000Z",
+            "createdAt": "2026-11-04T09:27:10.450Z",
+            "updatedAt": "2026-11-04T09:27:10.450Z"
+          },
+          {
+            "_id": "6aeafa6e99f7a14b7213fd16",
+            "court": "6aeaf8b0aadba39f379157d7",
+            "slotStart": "2026-11-04T10:30:00.000Z",
+            "expiresAt": "2026-11-04T09:30:00.000Z",
+            "createdAt": "2026-11-04T09:27:10.450Z",
+            "updatedAt": "2026-11-04T09:27:10.450Z"
+          }
+        ],
+        "payments": []
+      },
+      "control": {
+        "booking": {
+          "_id": "6aeaf8b099f7a14b7213fd10",
+          "date": "2026-11-04",
+          "slots": [
+            {
+              "startAt": "2026-11-04T10:00:00.000Z",
+              "endAt": "2026-11-04T10:30:00.000Z",
+              "priceVND": 75000
+            }
+          ],
+          "totalPrice": 75000,
+          "status": "CONFIRMED",
+          "paymentStatus": "DEMO_PAID",
+          "createdAt": "2026-11-04T09:19:44.980Z",
+          "updatedAt": "2026-11-04T09:19:45.090Z"
+        },
+        "locks": [
+          {
+            "_id": "6aeaf8b099f7a14b7213fd12",
+            "court": "6aeaf8b0aadba39f379157d7",
+            "slotStart": "2026-11-04T10:00:00.000Z",
+            "expiresAt": null,
+            "createdAt": "2026-11-04T09:19:44.984Z",
+            "updatedAt": "2026-11-04T09:19:45.086Z"
+          }
+        ],
+        "payments": [
+          {
+            "_id": "6aeaf8b12afc34149b22f196",
+            "type": "INITIAL_DEMO",
+            "amountVND": 75000,
+            "createdAt": "2026-11-04T09:19:45.092Z",
+            "method": "DEMO",
+            "updatedAt": "2026-11-04T09:19:45.092Z"
+          }
+        ]
+      }
+    },
+    "justBefore": {
+      "observedAtUtc": "2026-11-04T09:29:56.012Z",
+      "target": {
+        "booking": {
+          "_id": "6aeafa6e99f7a14b7213fd13",
+          "date": "2026-11-04",
+          "slots": [
+            {
+              "startAt": "2026-11-04T09:30:00.000Z",
+              "endAt": "2026-11-04T10:00:00.000Z",
+              "priceVND": 50000
+            },
+            {
+              "startAt": "2026-11-04T10:30:00.000Z",
+              "endAt": "2026-11-04T11:00:00.000Z",
+              "priceVND": 75000
+            }
+          ],
+          "totalPrice": 125000,
+          "status": "HOLD",
+          "paymentStatus": "UNPAID",
+          "holdExpiresAt": "2026-11-04T09:30:00.000Z",
+          "createdAt": "2026-11-04T09:27:10.448Z",
+          "updatedAt": "2026-11-04T09:27:10.448Z"
+        },
+        "locks": [
+          {
+            "_id": "6aeafa6e99f7a14b7213fd15",
+            "court": "6aeaf8b0aadba39f379157d7",
+            "slotStart": "2026-11-04T09:30:00.000Z",
+            "expiresAt": "2026-11-04T09:30:00.000Z",
+            "createdAt": "2026-11-04T09:27:10.450Z",
+            "updatedAt": "2026-11-04T09:27:10.450Z"
+          },
+          {
+            "_id": "6aeafa6e99f7a14b7213fd16",
+            "court": "6aeaf8b0aadba39f379157d7",
+            "slotStart": "2026-11-04T10:30:00.000Z",
+            "expiresAt": "2026-11-04T09:30:00.000Z",
+            "createdAt": "2026-11-04T09:27:10.450Z",
+            "updatedAt": "2026-11-04T09:27:10.450Z"
+          }
+        ],
+        "payments": []
+      },
+      "control": {
+        "booking": {
+          "_id": "6aeaf8b099f7a14b7213fd10",
+          "date": "2026-11-04",
+          "slots": [
+            {
+              "startAt": "2026-11-04T10:00:00.000Z",
+              "endAt": "2026-11-04T10:30:00.000Z",
+              "priceVND": 75000
+            }
+          ],
+          "totalPrice": 75000,
+          "status": "CONFIRMED",
+          "paymentStatus": "DEMO_PAID",
+          "createdAt": "2026-11-04T09:19:44.980Z",
+          "updatedAt": "2026-11-04T09:19:45.090Z"
+        },
+        "locks": [
+          {
+            "_id": "6aeaf8b099f7a14b7213fd12",
+            "court": "6aeaf8b0aadba39f379157d7",
+            "slotStart": "2026-11-04T10:00:00.000Z",
+            "expiresAt": null,
+            "createdAt": "2026-11-04T09:19:44.984Z",
+            "updatedAt": "2026-11-04T09:19:45.086Z"
+          }
+        ],
+        "payments": [
+          {
+            "_id": "6aeaf8b12afc34149b22f196",
+            "type": "INITIAL_DEMO",
+            "amountVND": 75000,
+            "createdAt": "2026-11-04T09:19:45.092Z",
+            "method": "DEMO",
+            "updatedAt": "2026-11-04T09:19:45.092Z"
+          }
+        ]
+      }
+    },
+    "after": {
+      "observedAtUtc": "2026-11-04T09:30:01.286Z",
+      "target": {
+        "booking": {
+          "_id": "6aeafa6e99f7a14b7213fd13",
+          "date": "2026-11-04",
+          "slots": [
+            {
+              "startAt": "2026-11-04T09:30:00.000Z",
+              "endAt": "2026-11-04T10:00:00.000Z",
+              "priceVND": 50000
+            },
+            {
+              "startAt": "2026-11-04T10:30:00.000Z",
+              "endAt": "2026-11-04T11:00:00.000Z",
+              "priceVND": 75000
+            }
+          ],
+          "totalPrice": 125000,
+          "status": "EXPIRED",
+          "paymentStatus": "UNPAID",
+          "holdExpiresAt": "2026-11-04T09:30:00.000Z",
+          "createdAt": "2026-11-04T09:27:10.448Z",
+          "updatedAt": "2026-11-04T09:30:00.582Z"
+        },
+        "locks": [],
+        "payments": []
+      },
+      "control": {
+        "booking": {
+          "_id": "6aeaf8b099f7a14b7213fd10",
+          "date": "2026-11-04",
+          "slots": [
+            {
+              "startAt": "2026-11-04T10:00:00.000Z",
+              "endAt": "2026-11-04T10:30:00.000Z",
+              "priceVND": 75000
+            }
+          ],
+          "totalPrice": 75000,
+          "status": "CONFIRMED",
+          "paymentStatus": "DEMO_PAID",
+          "createdAt": "2026-11-04T09:19:44.980Z",
+          "updatedAt": "2026-11-04T09:19:45.090Z"
+        },
+        "locks": [
+          {
+            "_id": "6aeaf8b099f7a14b7213fd12",
+            "court": "6aeaf8b0aadba39f379157d7",
+            "slotStart": "2026-11-04T10:00:00.000Z",
+            "expiresAt": null,
+            "createdAt": "2026-11-04T09:19:44.984Z",
+            "updatedAt": "2026-11-04T09:19:45.086Z"
+          }
+        ],
+        "payments": [
+          {
+            "_id": "6aeaf8b12afc34149b22f196",
+            "type": "INITIAL_DEMO",
+            "amountVND": 75000,
+            "createdAt": "2026-11-04T09:19:45.092Z",
+            "method": "DEMO",
+            "updatedAt": "2026-11-04T09:19:45.092Z"
+          }
+        ]
+      },
+      "courtLocks": 1,
+      "courtBookings": 2,
+      "controlUnchanged": true
+    }
+  },
+  "images": [
+    {
+      "file": "hold-before-1366.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUtc": "2026-11-04T09:27:10.900Z",
+      "sha256": "f3e8431a05c07b6b3c1fb7fe1e9177b828f3ae5979cdedf7e68a6e62e60c228a",
+      "phoneMasked": true
+    },
+    {
+      "file": "hold-before-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUtc": "2026-11-04T09:27:10.981Z",
+      "sha256": "7516df619355d9bb4dc5e06441a514fdf58f32b79933b515a96c3dcd0d2ca91b",
+      "phoneMasked": true
+    },
+    {
+      "file": "countdown-expired-1366.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUtc": "2026-11-04T09:30:00.673Z",
+      "sha256": "723c1b28d01d8dec19efcef5a50a61aa98b9362e769be349e83d2fee70cb6c12",
+      "phoneMasked": true
+    },
+    {
+      "file": "countdown-expired-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUtc": "2026-11-04T09:30:00.736Z",
+      "sha256": "70055466f2bb992b26caec5b8873f0afc0f4fe4c0391db96af97366eaafc94b5",
+      "phoneMasked": true
+    },
+    {
+      "file": "checkout-expired-1366.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUtc": "2026-11-04T09:30:00.880Z",
+      "sha256": "26b854d7f03224f0e091e1bbdb725608ce20776d007ccdd962a39b003fe3e348",
+      "phoneMasked": true
+    },
+    {
+      "file": "checkout-expired-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUtc": "2026-11-04T09:30:00.945Z",
+      "sha256": "7d38928d12936b2f5bc377bee9a92bf75871fc73be2053df652956c4d1ff3c32",
+      "phoneMasked": true
+    },
+    {
+      "file": "calendar-reopened-1366.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "capturedAtUtc": "2026-11-04T09:30:01.162Z",
+      "sha256": "1b28db11a4a03c526cc685d68a06d67a5691edab21886f703c41d6f83827d46d",
+      "phoneMasked": false
+    },
+    {
+      "file": "calendar-reopened-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAtUtc": "2026-11-04T09:30:01.231Z",
+      "sha256": "d1b555a1ca1fa94ed0e2f00be87bfbb789d5479d5125c3a84a44b21862b14e3c",
+      "phoneMasked": false
+    }
+  ],
+  "mongo": {
+    "version": "8.3.11",
+    "replicaSet": "qa78",
+    "primary": true,
+    "host": "127.0.0.1"
+  },
+  "input": {
+    "courtId": "6aeaf8b0aadba39f379157d7",
+    "date": "2026-11-04",
+    "targetTimes": [
+      "16:30",
+      "17:30"
+    ],
+    "controlTime": "17:00",
+    "firstSlotStartsAtUtc": "2026-11-04T09:30:00.000Z",
+    "pricesVND": [
+      50000,
+      75000
+    ],
+    "hours": [
+      "15:30",
+      "19:00"
+    ],
+    "peak": [
+      "17:00",
+      "18:30"
+    ]
+  },
+  "browser": {
+    "product": "Google Chrome headless via Playwright",
+    "version": "156.0.8078.80",
+    "viewportMethod": "Resize the same browser execution for evidence at 1366×900 and 390×844"
+  },
+  "check": {
+    "exitCode": 0,
+    "compiledEjs": 19
+  },
+  "test": {
+    "exitCode": 0,
+    "tests": 156,
+    "pass": 156,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "pass": true,
+  "cleanup": {
+    "qaDatabaseDropped": true,
+    "appStopped": true,
+    "automatedTestDatabasesRemaining": 0
+  },
+  "finishedAtUtc": "2026-11-04T09:30:26.328Z"
+}
