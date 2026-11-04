@@ -13,8 +13,10 @@ import { csrfProtection } from './middlewares/csrf.middleware.js';
 import { createPostRateLimits } from './middlewares/post-rate-limit.js';
 import { trustedProxyAddresses } from './config/trust-proxy.js';
 import { formatMoney, formatDate } from './utils/booking-time.js';
+import { createPaymentService } from './services/payment.service.js';
+import { createPaymentRoutes } from './routes/payment.routes.js';
 
-export default function createApp(sessionStore) {
+export default function createApp(sessionStore, { paymentService = createPaymentService() } = {}) {
   if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
     throw new Error('Hãy thêm SESSION_SECRET dài ít nhất 32 ký tự vào .env.');
   }
@@ -69,6 +71,7 @@ export default function createApp(sessionStore) {
   }));
   app.use(attachCurrentUser);
   app.use(csrfProtection);
+  app.use('/', createPaymentRoutes(paymentService));
   app.use('/', homeRoutes);
   app.use('/facilities', facilityRoutes);
   app.use('/', createAuthRoutes(limits));
