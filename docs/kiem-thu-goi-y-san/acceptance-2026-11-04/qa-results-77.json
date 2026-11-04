@@ -1,0 +1,1172 @@
+{
+  "issue": 77,
+  "sourceSha": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+  "integratedUiSha": "23b6cdc2950facb92ef870e75da8c2074321fa4a",
+  "runStartedAt": "2026-11-03T17:53:01.140Z",
+  "node": "v24.15.0",
+  "http": [
+    {
+      "name": "RANK-PRICE-ID-LIMIT-BOOKED-INACTIVE",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+      "expected": {
+        "status": 200,
+        "main": 0,
+        "suggestionSection": 1,
+        "cards": 3
+      },
+      "result": {
+        "status": 200,
+        "main": 0,
+        "suggestionSection": 1,
+        "message": [
+          "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:"
+        ],
+        "cards": [
+          {
+            "courtId": "000000000000000000000002",
+            "date": "2026-11-06",
+            "start": "16:30",
+            "end": "17:30",
+            "minutes": 60,
+            "priceVND": 125000,
+            "link": "/courts/000000000000000000000002?date=2026-11-06"
+          },
+          {
+            "courtId": "000000000000000000000003",
+            "date": "2026-11-06",
+            "start": "16:30",
+            "end": "17:30",
+            "minutes": 60,
+            "priceVND": 125000,
+            "link": "/courts/000000000000000000000003?date=2026-11-06"
+          },
+          {
+            "courtId": "000000000000000000000001",
+            "date": "2026-11-06",
+            "start": "16:30",
+            "end": "17:30",
+            "minutes": 60,
+            "priceVND": 140000,
+            "link": "/courts/000000000000000000000001?date=2026-11-06"
+          }
+        ],
+        "fixtureComparison": {
+          "requestedStart": "17:00",
+          "includedOffsetMinutes": 30,
+          "excludedCheaperFarther": {
+            "courtId": "000000000000000000000004",
+            "bestStart": "15:30",
+            "offsetMinutes": 90,
+            "priceVND": 20000
+          },
+          "bookedSlotExcluded": "17:30",
+          "inactiveCourtWouldMatchRequestedTime": true,
+          "peakPriceCalculationVND": [
+            50000,
+            75000
+          ]
+        }
+      },
+      "pass": true
+    },
+    {
+      "name": "EXPIRED-LOCK-ONE",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda7&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+      "expected": {
+        "status": 200,
+        "main": 0,
+        "suggestionSection": 1,
+        "cards": 1
+      },
+      "result": {
+        "status": 200,
+        "main": 0,
+        "suggestionSection": 1,
+        "message": [
+          "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:"
+        ],
+        "cards": [
+          {
+            "courtId": "000000000000000000000006",
+            "date": "2026-11-06",
+            "start": "16:30",
+            "end": "17:30",
+            "minutes": 60,
+            "priceVND": 125000,
+            "link": "/courts/000000000000000000000006?date=2026-11-06"
+          }
+        ],
+        "expiredLockStillInDb": 1
+      },
+      "pass": true
+    },
+    {
+      "name": "ACTIVE-HOLD-ZERO",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda7&date=2026-11-07&startTime=17%3A00&endTime=18%3A00",
+      "expected": {
+        "status": 200,
+        "main": 0,
+        "suggestionSection": 1,
+        "cards": 0
+      },
+      "result": {
+        "status": 200,
+        "main": 0,
+        "suggestionSection": 1,
+        "message": [
+          "Không tìm thấy phương án thay thế phù hợp cùng thời lượng trong ngày. Bạn vui lòng đổi ngày hoặc chọn khoảng giờ khác."
+        ],
+        "cards": [],
+        "activeHoldCount": 1
+      },
+      "pass": true
+    },
+    {
+      "name": "SAME-DAY-FACILITY-90-MIN",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A00&endTime=18%3A30",
+      "expected": {
+        "status": 200,
+        "main": 0,
+        "cards": 3
+      },
+      "result": {
+        "status": 200,
+        "main": 0,
+        "suggestionSection": 1,
+        "message": [
+          "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:"
+        ],
+        "cards": [
+          {
+            "courtId": "000000000000000000000002",
+            "date": "2026-11-06",
+            "start": "16:00",
+            "end": "17:30",
+            "minutes": 90,
+            "priceVND": 175000,
+            "link": "/courts/000000000000000000000002?date=2026-11-06"
+          },
+          {
+            "courtId": "000000000000000000000003",
+            "date": "2026-11-06",
+            "start": "16:00",
+            "end": "17:30",
+            "minutes": 90,
+            "priceVND": 175000,
+            "link": "/courts/000000000000000000000003?date=2026-11-06"
+          },
+          {
+            "courtId": "000000000000000000000001",
+            "date": "2026-11-06",
+            "start": "16:00",
+            "end": "17:30",
+            "minutes": 90,
+            "priceVND": 205000,
+            "link": "/courts/000000000000000000000001?date=2026-11-06"
+          }
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "ABSOLUTE-OFFSET-START-TIE",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda9&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+      "expected": {
+        "status": 200,
+        "main": 0,
+        "cards": 3
+      },
+      "result": {
+        "status": 200,
+        "main": 0,
+        "suggestionSection": 1,
+        "message": [
+          "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:"
+        ],
+        "cards": [
+          {
+            "courtId": "000000000000000000000007",
+            "date": "2026-11-06",
+            "start": "16:00",
+            "end": "17:00",
+            "minutes": 60,
+            "priceVND": 100000,
+            "link": "/courts/000000000000000000000007?date=2026-11-06"
+          },
+          {
+            "courtId": "000000000000000000000007",
+            "date": "2026-11-06",
+            "start": "18:00",
+            "end": "19:00",
+            "minutes": 60,
+            "priceVND": 100000,
+            "link": "/courts/000000000000000000000007?date=2026-11-06"
+          },
+          {
+            "courtId": "000000000000000000000007",
+            "date": "2026-11-06",
+            "start": "15:30",
+            "end": "16:30",
+            "minutes": 60,
+            "priceVND": 100000,
+            "link": "/courts/000000000000000000000007?date=2026-11-06"
+          }
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "PENDING-OWNER",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bdad&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+      "expected": {
+        "status": 200,
+        "main": 0,
+        "suggestionSection": 1,
+        "cards": 0
+      },
+      "result": {
+        "status": 200,
+        "main": 0,
+        "suggestionSection": 1,
+        "message": [
+          "Không tìm thấy phương án thay thế phù hợp cùng thời lượng trong ngày. Bạn vui lòng đổi ngày hoặc chọn khoảng giờ khác."
+        ],
+        "cards": []
+      },
+      "pass": true
+    },
+    {
+      "name": "MISSING-PHONE",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bdaf&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+      "expected": {
+        "status": 200,
+        "main": 0,
+        "suggestionSection": 1,
+        "cards": 0
+      },
+      "result": {
+        "status": 200,
+        "main": 0,
+        "suggestionSection": 1,
+        "message": [
+          "Không tìm thấy phương án thay thế phù hợp cùng thời lượng trong ngày. Bạn vui lòng đổi ngày hoặc chọn khoảng giờ khác."
+        ],
+        "cards": []
+      },
+      "pass": true
+    },
+    {
+      "name": "PAST-SLOTS",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bdab&date=2026-11-04&startTime=00%3A30&endTime=01%3A00",
+      "expected": {
+        "status": 200,
+        "main": 0,
+        "cards": 3
+      },
+      "result": {
+        "status": 200,
+        "main": 0,
+        "suggestionSection": 1,
+        "message": [
+          "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:"
+        ],
+        "cards": [
+          {
+            "courtId": "000000000000000000000008",
+            "date": "2026-11-04",
+            "start": "01:00",
+            "end": "01:30",
+            "minutes": 30,
+            "priceVND": 50000,
+            "link": "/courts/000000000000000000000008?date=2026-11-04"
+          },
+          {
+            "courtId": "000000000000000000000008",
+            "date": "2026-11-04",
+            "start": "01:30",
+            "end": "02:00",
+            "minutes": 30,
+            "priceVND": 50000,
+            "link": "/courts/000000000000000000000008?date=2026-11-04"
+          },
+          {
+            "courtId": "000000000000000000000008",
+            "date": "2026-11-04",
+            "start": "02:00",
+            "end": "02:30",
+            "minutes": 30,
+            "priceVND": 50000,
+            "link": "/courts/000000000000000000000008?date=2026-11-04"
+          }
+        ],
+        "serverTimeFloorUtc": "2026-11-03T17:53:07.714Z"
+      },
+      "pass": true
+    },
+    {
+      "name": "MAIN-RESULT-DIFFERENT-DAY",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-07&startTime=17%3A00&endTime=18%3A00",
+      "expected": {
+        "status": 200,
+        "main": 3,
+        "suggestionSection": 0,
+        "cards": 0
+      },
+      "result": {
+        "status": 200,
+        "main": 3,
+        "suggestionSection": 0,
+        "message": [],
+        "cards": []
+      },
+      "pass": true
+    },
+    {
+      "name": "DATE-ONLY",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06",
+      "expected": {
+        "status": 200,
+        "main": 4,
+        "suggestionSection": 0,
+        "cards": 0
+      },
+      "result": {
+        "status": 200,
+        "main": 4,
+        "suggestionSection": 0,
+        "message": [],
+        "cards": []
+      },
+      "pass": true
+    },
+    {
+      "name": "INVALID-HOUR",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A30&endTime=17%3A00",
+      "expected": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "cards": 0
+      },
+      "result": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "message": [],
+        "cards": [],
+        "validationMessage": "Giờ kết thúc phải sau giờ bắt đầu.",
+        "validationMessageOccurrences": 1
+      },
+      "pass": true
+    },
+    {
+      "name": "INVALID-MINUTES",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A15&endTime=18%3A00",
+      "expected": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "cards": 0
+      },
+      "result": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "message": [],
+        "cards": [],
+        "validationMessage": "Giờ phải có dạng HH:00 hoặc HH:30.",
+        "validationMessageOccurrences": 1
+      },
+      "pass": true
+    },
+    {
+      "name": "MISSING-DATE",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=&startTime=17%3A00&endTime=18%3A00",
+      "expected": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "cards": 0
+      },
+      "result": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "message": [],
+        "cards": [],
+        "validationMessage": "Vui lòng chọn ngày khi tìm theo khoảng giờ.",
+        "validationMessageOccurrences": 1
+      },
+      "pass": true
+    },
+    {
+      "name": "MISSING-END",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A00&endTime=",
+      "expected": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "cards": 0
+      },
+      "result": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "message": [],
+        "cards": [],
+        "validationMessage": "Vui lòng chọn đầy đủ cả giờ bắt đầu và giờ kết thúc.",
+        "validationMessageOccurrences": 1
+      },
+      "pass": true
+    },
+    {
+      "name": "DUPLICATE-DATE",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A00&endTime=18%3A00&date=2026-11-07",
+      "expected": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "cards": 0
+      },
+      "result": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "message": [],
+        "cards": [],
+        "validationMessage": "Tham số tìm kiếm không được lặp lại.",
+        "validationMessageOccurrences": 1
+      },
+      "pass": true
+    },
+    {
+      "name": "DUPLICATE-FACILITY",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A00&endTime=18%3A00&facilityId=6aea1f822a2931c00c81bda7",
+      "expected": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "cards": 0
+      },
+      "result": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "message": [],
+        "cards": [],
+        "validationMessage": "Tham số tìm kiếm không được lặp lại.",
+        "validationMessageOccurrences": 1
+      },
+      "pass": true
+    },
+    {
+      "name": "DUPLICATE-START",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A00&endTime=18%3A00&startTime=16%3A30",
+      "expected": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "cards": 0
+      },
+      "result": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "message": [],
+        "cards": [],
+        "validationMessage": "Tham số tìm kiếm không được lặp lại.",
+        "validationMessageOccurrences": 1
+      },
+      "pass": true
+    },
+    {
+      "name": "DUPLICATE-END",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A00&endTime=18%3A00&endTime=18%3A30",
+      "expected": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "cards": 0
+      },
+      "result": {
+        "status": 400,
+        "main": 0,
+        "suggestionSection": 0,
+        "message": [],
+        "cards": [],
+        "validationMessage": "Tham số tìm kiếm không được lặp lại.",
+        "validationMessageOccurrences": 1
+      },
+      "pass": true
+    }
+  ],
+  "browser": [
+    {
+      "name": "CARDS-0",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda7&date=2026-11-07&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 0,
+      "actualCards": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "clientWidth": 390,
+        "scrollWidth": 390
+      },
+      "images": [
+        "cards-0-390.png"
+      ],
+      "pass": true
+    },
+    {
+      "name": "CARDS-1",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda7&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 1,
+      "actualCards": 1,
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "clientWidth": 390,
+        "scrollWidth": 390
+      },
+      "images": [
+        "cards-1-390.png"
+      ],
+      "pass": true
+    },
+    {
+      "name": "CARDS-3",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 3,
+      "actualCards": 3,
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "clientWidth": 390,
+        "scrollWidth": 390
+      },
+      "images": [
+        "cards-3-390.png",
+        "cards-3-section-390.png"
+      ],
+      "pass": true
+    },
+    {
+      "name": "TAB-ENTER-BACK",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+      "tabs": 25,
+      "focus": {
+        "visible": true,
+        "outline": "solid",
+        "width": "3px",
+        "shadow": "none"
+      },
+      "detail": {
+        "status": 200,
+        "method": "GET",
+        "url": "/courts/000000000000000000000002?date=2026-11-06",
+        "checked": 0,
+        "submitDisabled": true
+      },
+      "back": {
+        "url": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+        "restored": {
+          "facilityId": "6aea1f822a2931c00c81bda5",
+          "date": "2026-11-06",
+          "startTime": "17:00",
+          "endTime": "18:00"
+        },
+        "cards": 3
+      },
+      "images": [
+        "tab-390.png",
+        "enter-390.png",
+        "back-390.png"
+      ],
+      "pass": true
+    },
+    {
+      "name": "CARDS-0",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda7&date=2026-11-07&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 0,
+      "actualCards": 0,
+      "viewport": {
+        "width": 1366,
+        "height": 900,
+        "clientWidth": 1366,
+        "scrollWidth": 1366
+      },
+      "images": [
+        "cards-0-1366.png"
+      ],
+      "pass": true
+    },
+    {
+      "name": "CARDS-1",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda7&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 1,
+      "actualCards": 1,
+      "viewport": {
+        "width": 1366,
+        "height": 900,
+        "clientWidth": 1366,
+        "scrollWidth": 1366
+      },
+      "images": [
+        "cards-1-1366.png"
+      ],
+      "pass": true
+    },
+    {
+      "name": "CARDS-3",
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+      "expectedCards": 3,
+      "actualCards": 3,
+      "viewport": {
+        "width": 1366,
+        "height": 900,
+        "clientWidth": 1366,
+        "scrollWidth": 1366
+      },
+      "images": [
+        "cards-3-1366.png"
+      ],
+      "pass": true
+    },
+    {
+      "name": "TAB-ENTER-BACK",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "input": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+      "tabs": 25,
+      "focus": {
+        "visible": true,
+        "outline": "solid",
+        "width": "3px",
+        "shadow": "none"
+      },
+      "detail": {
+        "status": 200,
+        "method": "GET",
+        "url": "/courts/000000000000000000000002?date=2026-11-06",
+        "checked": 0,
+        "submitDisabled": true
+      },
+      "back": {
+        "url": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+        "restored": {
+          "facilityId": "6aea1f822a2931c00c81bda5",
+          "date": "2026-11-06",
+          "startTime": "17:00",
+          "endTime": "18:00"
+        },
+        "cards": 3
+      },
+      "images": [
+        "tab-1366.png",
+        "enter-1366.png",
+        "back-1366.png"
+      ],
+      "pass": true
+    }
+  ],
+  "snapshots": {
+    "beforeGet": {
+      "bookingrequests": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "bookings": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "courts": {
+        "count": 10,
+        "sha256": "00993e4fd83ae0f9c819b8da498f30b592ab1d3232806e2934eadbd4f9bbb673"
+      },
+      "facilities": {
+        "count": 6,
+        "sha256": "e53d2f922d51ddc47b9ab73e5c99f23e6ad69fb71b37e7bbb000532a807dcc7b"
+      },
+      "payments": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "slotlocks": {
+        "count": 8,
+        "sha256": "fe2fcf6072cbc46b29ad0a0ac9a173e39869cbb141e87ed83a7e3603c6689bfd"
+      },
+      "users": {
+        "count": 6,
+        "sha256": "41303c81af8354b3726d4937de32d5f06aafb19abea80176a15eaebc9947922a"
+      }
+    },
+    "afterGet": {
+      "bookingrequests": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "bookings": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "courts": {
+        "count": 10,
+        "sha256": "00993e4fd83ae0f9c819b8da498f30b592ab1d3232806e2934eadbd4f9bbb673"
+      },
+      "facilities": {
+        "count": 6,
+        "sha256": "e53d2f922d51ddc47b9ab73e5c99f23e6ad69fb71b37e7bbb000532a807dcc7b"
+      },
+      "payments": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "slotlocks": {
+        "count": 8,
+        "sha256": "fe2fcf6072cbc46b29ad0a0ac9a173e39869cbb141e87ed83a7e3603c6689bfd"
+      },
+      "users": {
+        "count": 6,
+        "sha256": "41303c81af8354b3726d4937de32d5f06aafb19abea80176a15eaebc9947922a"
+      }
+    },
+    "getUnchanged": true,
+    "excluded": [
+      "sessions"
+    ],
+    "race": {
+      "beforeB": {
+        "bookingrequests": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "bookings": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "courts": {
+          "count": 10,
+          "sha256": "00993e4fd83ae0f9c819b8da498f30b592ab1d3232806e2934eadbd4f9bbb673"
+        },
+        "facilities": {
+          "count": 6,
+          "sha256": "e53d2f922d51ddc47b9ab73e5c99f23e6ad69fb71b37e7bbb000532a807dcc7b"
+        },
+        "payments": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "slotlocks": {
+          "count": 8,
+          "sha256": "fe2fcf6072cbc46b29ad0a0ac9a173e39869cbb141e87ed83a7e3603c6689bfd"
+        },
+        "users": {
+          "count": 6,
+          "sha256": "41303c81af8354b3726d4937de32d5f06aafb19abea80176a15eaebc9947922a"
+        }
+      },
+      "afterB": {
+        "bookingrequests": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "bookings": {
+          "count": 1,
+          "sha256": "c679e7b06c34f9dcd1a002dc33ba8391942d04fc28f091ac435f3ec1678d1b00"
+        },
+        "courts": {
+          "count": 10,
+          "sha256": "00993e4fd83ae0f9c819b8da498f30b592ab1d3232806e2934eadbd4f9bbb673"
+        },
+        "facilities": {
+          "count": 6,
+          "sha256": "e53d2f922d51ddc47b9ab73e5c99f23e6ad69fb71b37e7bbb000532a807dcc7b"
+        },
+        "payments": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "slotlocks": {
+          "count": 9,
+          "sha256": "ef7626a2828e80486fc92da066b90809f14833ca6f379718b452b4c7e70ddb2a"
+        },
+        "users": {
+          "count": 6,
+          "sha256": "41303c81af8354b3726d4937de32d5f06aafb19abea80176a15eaebc9947922a"
+        }
+      },
+      "afterA": {
+        "bookingrequests": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "bookings": {
+          "count": 1,
+          "sha256": "c679e7b06c34f9dcd1a002dc33ba8391942d04fc28f091ac435f3ec1678d1b00"
+        },
+        "courts": {
+          "count": 10,
+          "sha256": "00993e4fd83ae0f9c819b8da498f30b592ab1d3232806e2934eadbd4f9bbb673"
+        },
+        "facilities": {
+          "count": 6,
+          "sha256": "e53d2f922d51ddc47b9ab73e5c99f23e6ad69fb71b37e7bbb000532a807dcc7b"
+        },
+        "payments": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "slotlocks": {
+          "count": 9,
+          "sha256": "ef7626a2828e80486fc92da066b90809f14833ca6f379718b452b4c7e70ddb2a"
+        },
+        "users": {
+          "count": 6,
+          "sha256": "41303c81af8354b3726d4937de32d5f06aafb19abea80176a15eaebc9947922a"
+        }
+      },
+      "afterAEqualsAfterB": true
+    }
+  },
+  "mongo": {
+    "version": "8.3.11",
+    "replicaSet": "qa77",
+    "primary": true
+  },
+  "check": {
+    "exitCode": 0,
+    "compiledEjs": "19"
+  },
+  "fixtures": {
+    "timezone": "Asia/Saigon",
+    "today": "2026-11-04",
+    "date": "2026-11-06",
+    "secondDate": "2026-11-07",
+    "facilities": [
+      {
+        "id": "6aea1f822a2931c00c81bda5",
+        "name": "Cơ sở xếp hạng QA",
+        "hasPhone": true,
+        "ownerApproved": true
+      },
+      {
+        "id": "6aea1f822a2931c00c81bda7",
+        "name": "Cơ sở một phương án QA",
+        "hasPhone": true,
+        "ownerApproved": true
+      },
+      {
+        "id": "6aea1f822a2931c00c81bda9",
+        "name": "Cơ sở đồng hạng QA",
+        "hasPhone": true,
+        "ownerApproved": true
+      },
+      {
+        "id": "6aea1f822a2931c00c81bdab",
+        "name": "Cơ sở kiểm tra giờ qua QA",
+        "hasPhone": true,
+        "ownerApproved": true
+      },
+      {
+        "id": "6aea1f822a2931c00c81bdad",
+        "name": "Cơ sở chờ duyệt QA",
+        "hasPhone": true,
+        "ownerApproved": false
+      },
+      {
+        "id": "6aea1f822a2931c00c81bdaf",
+        "name": "Cơ sở thiếu số QA",
+        "hasPhone": false,
+        "ownerApproved": true
+      }
+    ],
+    "courts": [
+      {
+        "id": "000000000000000000000001",
+        "facilityId": "6aea1f822a2931c00c81bda5",
+        "name": "A Sân giá cao",
+        "active": true,
+        "hours": [
+          "14:00",
+          "21:00"
+        ],
+        "peak": [
+          "17:00",
+          "20:00"
+        ],
+        "basePriceVND": 65000,
+        "peakPriceVND": 75000
+      },
+      {
+        "id": "000000000000000000000002",
+        "facilityId": "6aea1f822a2931c00c81bda5",
+        "name": "Z Sân giá thấp",
+        "active": true,
+        "hours": [
+          "14:00",
+          "21:00"
+        ],
+        "peak": [
+          "17:00",
+          "20:00"
+        ],
+        "basePriceVND": 50000,
+        "peakPriceVND": 75000
+      },
+      {
+        "id": "000000000000000000000003",
+        "facilityId": "6aea1f822a2931c00c81bda5",
+        "name": "B Sân đồng giá",
+        "active": true,
+        "hours": [
+          "14:00",
+          "21:00"
+        ],
+        "peak": [
+          "17:00",
+          "20:00"
+        ],
+        "basePriceVND": 50000,
+        "peakPriceVND": 75000
+      },
+      {
+        "id": "000000000000000000000004",
+        "facilityId": "6aea1f822a2931c00c81bda5",
+        "name": "C Sân rẻ hơn nhưng xa giờ tìm",
+        "active": true,
+        "hours": [
+          "14:00",
+          "16:30"
+        ],
+        "peak": [
+          "14:00",
+          "16:30"
+        ],
+        "basePriceVND": 10000,
+        "peakPriceVND": 10000
+      },
+      {
+        "id": "000000000000000000000005",
+        "facilityId": "6aea1f822a2931c00c81bda5",
+        "name": "D Sân ngừng hoạt động",
+        "active": false,
+        "hours": [
+          "14:00",
+          "21:00"
+        ],
+        "peak": [
+          "17:00",
+          "20:00"
+        ],
+        "basePriceVND": 50000,
+        "peakPriceVND": 75000
+      },
+      {
+        "id": "000000000000000000000006",
+        "facilityId": "6aea1f822a2931c00c81bda7",
+        "name": "Sân một phương án",
+        "active": true,
+        "hours": [
+          "16:30",
+          "18:00"
+        ],
+        "peak": [
+          "17:00",
+          "18:00"
+        ],
+        "basePriceVND": 50000,
+        "peakPriceVND": 75000
+      },
+      {
+        "id": "000000000000000000000007",
+        "facilityId": "6aea1f822a2931c00c81bda9",
+        "name": "Sân đồng giá trước và sau",
+        "active": true,
+        "hours": [
+          "14:00",
+          "21:00"
+        ],
+        "peak": [
+          "17:00",
+          "20:00"
+        ],
+        "basePriceVND": 50000,
+        "peakPriceVND": 50000
+      },
+      {
+        "id": "000000000000000000000008",
+        "facilityId": "6aea1f822a2931c00c81bdab",
+        "name": "Sân giờ qua",
+        "active": true,
+        "hours": [
+          "00:00",
+          "23:30"
+        ],
+        "peak": [
+          "17:00",
+          "20:00"
+        ],
+        "basePriceVND": 50000,
+        "peakPriceVND": 75000
+      },
+      {
+        "id": "000000000000000000000009",
+        "facilityId": "6aea1f822a2931c00c81bdad",
+        "name": "Sân chủ chưa duyệt",
+        "active": true,
+        "hours": [
+          "14:00",
+          "21:00"
+        ],
+        "peak": [
+          "17:00",
+          "20:00"
+        ],
+        "basePriceVND": 50000,
+        "peakPriceVND": 75000
+      },
+      {
+        "id": "00000000000000000000000a",
+        "facilityId": "6aea1f822a2931c00c81bdaf",
+        "name": "Sân cơ sở thiếu SĐT",
+        "active": true,
+        "hours": [
+          "14:00",
+          "21:00"
+        ],
+        "peak": [
+          "17:00",
+          "20:00"
+        ],
+        "basePriceVND": 50000,
+        "peakPriceVND": 75000
+      }
+    ],
+    "locks": [
+      {
+        "courtId": "000000000000000000000001",
+        "date": "2026-11-06",
+        "time": "17:30",
+        "expiresAt": null,
+        "kind": "BOOKED"
+      },
+      {
+        "courtId": "000000000000000000000002",
+        "date": "2026-11-06",
+        "time": "17:30",
+        "expiresAt": null,
+        "kind": "BOOKED"
+      },
+      {
+        "courtId": "000000000000000000000003",
+        "date": "2026-11-06",
+        "time": "17:30",
+        "expiresAt": null,
+        "kind": "BOOKED"
+      },
+      {
+        "courtId": "000000000000000000000006",
+        "date": "2026-11-06",
+        "time": "17:30",
+        "expiresAt": null,
+        "kind": "BOOKED"
+      },
+      {
+        "courtId": "000000000000000000000006",
+        "date": "2026-11-06",
+        "time": "16:30",
+        "expiresAt": "2026-11-03T17:52:06.457Z",
+        "kind": "EXPIRED"
+      },
+      {
+        "courtId": "000000000000000000000006",
+        "date": "2026-11-07",
+        "time": "17:00",
+        "expiresAt": "2026-11-03T18:53:06.457Z",
+        "kind": "HOLD"
+      },
+      {
+        "courtId": "000000000000000000000007",
+        "date": "2026-11-06",
+        "time": "17:00",
+        "expiresAt": null,
+        "kind": "BOOKED"
+      },
+      {
+        "courtId": "000000000000000000000007",
+        "date": "2026-11-06",
+        "time": "17:30",
+        "expiresAt": null,
+        "kind": "BOOKED"
+      }
+    ]
+  },
+  "browserEngine": {
+    "product": "Google Chrome (headless via Playwright)",
+    "version": "156.0.8078.80"
+  },
+  "race": {
+    "input": {
+      "search": "/courts?facilityId=6aea1f822a2931c00c81bda5&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+      "detail": "/courts/000000000000000000000002?date=2026-11-06",
+      "aTimes": [
+        "16:30",
+        "17:00"
+      ],
+      "bTimes": [
+        "17:00"
+      ]
+    },
+    "independentBrowserContexts": true,
+    "distinctSessionCookies": true,
+    "b": {
+      "post": 303,
+      "checkout": 200,
+      "bookingId": "6aea1f882a2931c00c81bdca",
+      "bookingStatus": "HOLD"
+    },
+    "a": {
+      "post": 409,
+      "contentLocation": "/courts/000000000000000000000002?date=2026-11-06",
+      "alert": "Chưa giữ được sân. Ô 17:00 đã được giữ hoặc đặt. Hãy chọn ô khác. Lịch và giá bên dưới đã được cập nhật. Kiểm tra lại các ô còn chọn và thông tin liên hệ trước khi gửi lại. Các ô sau đã được bỏ khỏi lựa chọn: 17:00–17:30: đang được người khác giữ chỗ.",
+      "recovered": [
+        "16:30"
+      ],
+      "disabled": [
+        "17:00"
+      ],
+      "bookings": 0
+    },
+    "targetLocks": [
+      {
+        "slotStartUtc": "2026-11-06T10:00:00.000Z",
+        "bookingId": "6aea1f882a2931c00c81bdca",
+        "expiresAtUtc": "2026-11-03T18:03:12.628Z"
+      }
+    ],
+    "freeUnheldTime": "16:30",
+    "images": [
+      "race-a-before.png",
+      "race-a-409.png"
+    ],
+    "pass": true
+  },
+  "test": {
+    "exitCode": 0,
+    "tests": 156,
+    "pass": 156,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "pass": true,
+  "cleanup": {
+    "testDatabasesRemaining": 0
+  }
+}

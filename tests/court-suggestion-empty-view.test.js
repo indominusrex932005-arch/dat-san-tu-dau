@@ -11,5 +11,7 @@ test('Trang danh sách hiển thị thông báo hết phương án khi gợi ý 
     filterError: null, suggestions: [], suggestionMessage: message
   });
   assert.ok(html.includes(message));
+  assert.match(html, /Không tìm được sân phù hợp bộ lọc\./);
+  assert.doesNotMatch(html, /role="alert"|Chưa có sân đang hoạt động/);
   assert.ok(!html.includes('class="court-suggestion-card"'));
 });

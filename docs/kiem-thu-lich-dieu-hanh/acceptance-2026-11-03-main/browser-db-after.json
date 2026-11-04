@@ -1,0 +1,39 @@
+{
+  "issue": 76,
+  "relatedPR": 71,
+  "testedSHA": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+  "capturedAtUTC": "2026-11-03T12:48:22.764Z",
+  "phase": "After all HTTP and browser calendar GETs; before cleanup.",
+  "sessionsExcluded": true,
+  "unchanged": true,
+  "collections": {
+    "User": {
+      "count": 7,
+      "sha256": "94e558b9afdc7665c9af263fbe73508ee613cfc05cf41168afef39189cfc9d2a"
+    },
+    "Facility": {
+      "count": 4,
+      "sha256": "e66e8109264f1a8274a5e65eb7584c465c372d9be3bdafe57246a73eed26523e"
+    },
+    "Court": {
+      "count": 9,
+      "sha256": "f668538dfc332e42adcb484419966e6aacaf47908741aaf6b89a03176a977c3b"
+    },
+    "Booking": {
+      "count": 3,
+      "sha256": "bd1f6a20012b171127729dadb89bc55017cb021efb693f8926c95088315d88e0"
+    },
+    "SlotLock": {
+      "count": 4,
+      "sha256": "dc975a87c8f21cdde759c9c937cb2ddf433480e6bdeed330c34b4c094b6671fb"
+    },
+    "Payment": {
+      "count": 1,
+      "sha256": "8d49392189b21a3521507f644cddf9ee68dac13104f50eb22b4e336ca05003f3"
+    },
+    "BookingRequest": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  }
+}

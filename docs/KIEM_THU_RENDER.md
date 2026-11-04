@@ -1,25 +1,28 @@
 # Kiểm thử Render sau triển khai — #83
 
-**Trạng thái ngày 04/11/2026: CHUẨN BỊ; toàn bộ ca online CHƯA CHẠY.** Chưa có URL HTTPS, release SHA hoặc xác nhận DB demo được bàn giao. Báo cáo này là kế hoạch và biểu mẫu ghi kết quả; không phải bằng chứng website đã hoạt động online.
+**Trạng thái ngày 05/11/2026: CHUẨN BỊ, GIỮ DRAFT; toàn bộ ca online CHƯA CHẠY.** Chưa có URL HTTPS, release SHA hoặc xác nhận DB demo được bàn giao. Báo cáo này là kế hoạch và biểu mẫu ghi kết quả; không phải bằng chứng website đã hoạt động online.
 
 ## Mốc nguồn và điều kiện bắt đầu
 
 | Mục | Thông tin hiện có / phần còn thiếu |
 | --- | --- |
-| Mã nguồn đã đọc | Main `5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47`; **khác release SHA chưa biết** |
-| Giới hạn POST dự kiến | [PR #92 / #80](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/92), nguồn đọc `5a5cf91dc817e1597cd8ba7673c48431e3f6ded9`; đang mở, chưa merge |
-| Production/mode/health dự kiến | [PR #95 / #81](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/95), nguồn đọc `2aa7942cb0132230336d7b57a1eea22cff1ef6ef`; đang mở, chưa merge |
-| Triển khai | [#82](https://github.com/indominusrex932005-arch/dat-san-tu-dau/issues/82), [PR #94](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/94) còn Draft; chưa có URL/bình luận bàn giao hoặc deployment được ghi nhận tại thời điểm chuẩn bị |
-| URL HTTPS / release SHA thực tế | **CHƯA ĐƯỢC CẤP / CHƯA BIẾT**; operator phải đối chiếu SHA trong lần deploy với code tích hợp trước khi chạy |
+| Mã nguồn đã đọc | Main `180a3c586f86276778f9f5492e998f64688016a0`; **SHA nguồn này không phải release SHA online chưa được bàn giao** |
+| Giới hạn POST/proxy đã tích hợp | [PR #92 / #80](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/92) **đã merge**, có trong main `180a3c5`; chưa phải bằng chứng cấu hình hoặc kết quả trên Render |
+| Production/mode/health dự kiến | [PR #95 / #81](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/95), nguồn cuối đã đọc `b605408499c3f1b55e8708766c74ca422677338d`; **chưa merge** tại lúc soạn. Cần tích hợp trước khi triển khai public-demo |
+| Kiểm chứng local/CI hỗ trợ | Nguồn #95 `b605408`: 181 tests local đạt; [CI run 41927058743](https://github.com/indominusrex932005-arch/dat-san-tu-dau/actions/runs/41927058743) đạt. **Không tính vào kết quả online, không dùng làm release SHA hoặc bằng chứng TLS/proxy Render** |
+| Triển khai | [#82](https://github.com/indominusrex932005-arch/dat-san-tu-dau/issues/82), [PR #94](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/94) còn Draft; chưa nhận URL HTTPS, Render deploy ID hoặc bản bàn giao deployment thực tế trong task này |
+| URL HTTPS origin thực tế | **CHƯA BÀN GIAO / CHƯA BIẾT**; chỉ ghi origin được phép công khai, không query/token |
+| RELEASE_SHA / Render deploy ID | **CHƯA BÀN GIAO / CHƯA BIẾT**; operator lấy SHA và deploy ID từ lần deploy Render đang phục vụ URL, đối chiếu code tích hợp. Không thay bằng SHA của tài liệu, main nguồn hoặc `b605408` |
+| Thời điểm deploy / môi trường service | **CHƯA BÀN GIAO / CHƯA BIẾT**; cần ngày/giờ/múi giờ, service alias, gói/số instance, mode và proxy thực tế đã được xác minh |
 | DB và dữ liệu | **CHƯA XÁC NHẬN** project/cluster/DB riêng, replica set, tài khoản và dữ liệu tổng hợp; không dùng Atlas chung/dữ liệu thật |
-| Phiên bản trình duyệt, OS, thiết bị | **CHƯA CHẠY**; ghi tên + phiên bản thực tế khi thực hiện, không suy từ trình duyệt đã dùng ở báo cáo local |
+| Phiên bản trình duyệt, OS, thiết bị | **CHƯA BÀN GIAO / CHƯA BIẾT**; ghi tên + phiên bản thực tế khi thực hiện, không suy từ trình duyệt đã dùng ở báo cáo local |
 | Viewport / thiết bị thật | Dự kiến `390 × 844` và `1366 × 900` CSS px; kích thước thực tế, DPR, zoom và thiết bị thật **chưa được ghi nhận** |
 | Người thử / người vận hành / cửa sổ thao tác | **CHƯA PHÂN CÔNG**; cần operator cho restart, đọc DB và ca 429 có cấu hình riêng |
 | Kết quả online hiện có | **0 ca đã chạy; 0 PASS; 0 FAIL; chưa có ảnh/PDF/log online**. Chưa phát hiện lỗi không đồng nghĩa không có lỗi |
 
-Chỉ bắt đầu khi #82 bàn giao URL HTTPS truy cập được từ thiết bị khác, SHA tích hợp chứa các thay đổi cần thiết của #92/#95, tài khoản thử và xác nhận dữ liệu demo. Đọc lại hợp đồng trên **release đó** nếu khác các nguồn trên. Không chạy production-demo trực tiếp từ main `5c3e72d`: main này còn cờ cũ và chưa có `/health` hoặc limiter của các PR đang chờ. Không tự ghép cờ cũ để vượt điều kiện triển khai.
+Chỉ bắt đầu khi #82 bàn giao URL HTTPS truy cập được từ thiết bị khác, **RELEASE_SHA và Render deploy ID của deployment thực tế**, tài khoản thử và xác nhận dữ liệu demo cô lập. Main `180a3c5` đã có limiter/proxy của #92 nhưng chưa tích hợp hợp đồng production-demo/health của #95; cần release chứa cả hai trước khi chạy kế hoạch này. Đọc lại code/hợp đồng trên **release đó** nếu khác nguồn đã đối chiếu. Không dùng SHA tài liệu hoặc nhánh PR thay cho SHA lấy từ Render, không tự ghép cờ cũ để vượt điều kiện triển khai.
 
-Hợp đồng dự kiến sau #95: server dùng duy nhất `PAYMENT_MODE`, mặc định `off`; `demo` cho mô phỏng có nhãn; `live` còn dành cho #84 và bị từ chối startup. Production demo cần `DEMO_DATA_ONLY=true`, `DB_NAME` tường minh và **xóa hoàn toàn** key cũ `DEMO_MODE`, kể cả giá trị false. Cờ dữ liệu chỉ là cam kết operator, không tự kiểm tra nội dung DB. Không ghi secret hoặc connection string vào báo cáo. Khi tích hợp #92 phải giữ resolver IP/CIDR `TRUST_PROXY_IPS` đã kiểm thử, cấu hình proxy thực tế; không thay trở lại hop 1 của nền #95.
+Hợp đồng dự kiến sau #95: server dùng duy nhất `PAYMENT_MODE`, mặc định `off`; `demo` cho mô phỏng có nhãn; `live` còn dành cho #84 và bị từ chối startup. Production demo cần `DEMO_DATA_ONLY=true`, `DB_NAME` tường minh và **xóa hoàn toàn** key cũ `DEMO_MODE`, kể cả giá trị false. Cờ dữ liệu chỉ là cam kết operator, không tự kiểm tra nội dung DB. Không ghi secret hoặc connection string vào báo cáo. Nguồn #95 `b605408` đã giữ resolver `TRUST_PROXY_IPS` của main: chỉ tin IP/CIDR proxy đã được operator xác minh; mặc định trống là không tin forwarded header. Không dùng `trust proxy = 1`, giá trị `true`, trust-all hoặc fallback theo số hop để bỏ qua yêu cầu xác minh proxy.
 
 ## Chuẩn bị dữ liệu và cách ghi kết quả
 
@@ -40,7 +43,7 @@ S06 (đổi mode trên host) và P06 (gián đoạn DB có kiểm soát) là ca 
 
 | ID | Bước thực hiện | Mong đợi | Thực tế | Trạng thái | Bằng chứng dự kiến |
 | --- | --- | --- | --- | --- | --- |
-| R01 | Operator đối chiếu release SHA/DB/mode; mở URL HTTPS từ desktop và thiết bị vật lý khác; đi qua `/`, `/facilities`, `/courts` bằng menu. | Đúng release/DB demo; HTTPS hợp lệ, CSS tải được; `/courts` dùng navigation chung có nhãn public-demo theo #95. Điều hướng hoạt động, không có lỗi trang hoặc secret hiển thị; không mặc định header riêng của trang chủ/cơ sở đã có banner này. | Chưa có URL/release để mở. | CHƯA CHẠY | `E-R01`: bàn giao đã lọc + ảnh hai viewport và thiết bị thật. |
+| R01 | Operator đối chiếu release SHA/DB/mode và bằng chứng #82 đã mở URL HTTPS từ máy khác; trên máy thử kiểm tra ở viewport 390px và 1366px, đi qua `/`, `/facilities`, `/courts` bằng menu. | Đúng release/DB demo; HTTPS hợp lệ, CSS tải được; `/courts` dùng navigation chung có nhãn public-demo theo #95. Điều hướng hoạt động, không có lỗi trang hoặc secret hiển thị; không mặc định header riêng của trang chủ/cơ sở đã có banner này. | Chưa có URL/release để mở. | CHƯA CHẠY | `E-R01`: bàn giao #82 đã lọc có xác nhận mở URL từ máy khác + ảnh viewport 390px/1366px; ảnh thiết bị thật chỉ bổ sung nếu có thử thêm. |
 | R02 | Mở `/courts`, thử lọc cơ sở/ngày/khoảng giờ hợp lệ, không kết quả, ngày quá khứ/sai và lặp tham số ngày; mở chi tiết từ kết quả. | Dữ liệu đúng cơ sở/ngày; lọc chỉ dùng GET, không tạo đơn; trạng thái rỗng/lỗi rõ, dữ liệu dài không tràn. Ngày sai bị từ chối theo hợp đồng release, không hiện như lịch trống hợp lệ. | Chưa thực hiện online. | CHƯA CHẠY | `E-R02`: thường/rỗng/lỗi 390 và 1366; xác nhận ghi DB nếu cần. |
 | A01 | `/register`: gửi `fullName,email,phone,password,confirmPassword`; thử email sai, mật khẩu không khớp, email thử trùng rồi đăng ký CUSTOMER mới hợp lệ; đăng nhập. | Lỗi 400/409 theo trường hợp; giữ trường được phép và không điền lại password; hợp lệ 303 `/login`, tài khoản CUSTOMER, đăng nhập về `/courts`. | Chưa thực hiện online. | CHƯA CHẠY | `E-A01`: form thường/lỗi, redirect đã lọc, vai trò bằng alias. |
 | A02 | `/register/owner`: thêm `phone,requestedFacilityName,requestedFacilityAddress`; thử thiếu/sai SĐT rồi đăng ký hợp lệ; đăng nhập và mở `/owner/courts/new`. | OWNER-PENDING thấy trạng thái chờ tại `/owner`; chưa tạo/sửa sân hoặc tự nhận APPROVED; thông tin lỗi hiển thị rõ. | Chưa thực hiện online. | CHƯA CHẠY | `E-A02`: trạng thái chờ/lỗi/403 hai viewport. |
@@ -60,7 +63,7 @@ S06 (đổi mode trên host) và P06 (gián đoạn DB có kiểm soát) là ca 
 | B05 | Gần mốc bắt đầu, giữ bộ ô có ô đầu bắt đầu sau dưới 10 phút; chờ qua giờ ô đầu rồi thử POST cũ; phiên B đặt một ô tương lai vừa được giải phóng. | Hạn bằng `min(createdAt+10 phút, ô đầu bắt đầu)`. Ô đã bắt đầu UNAVAILABLE, các ô tương lai được mở lại; A không chiếm lại ô của B. Kiểm thử qua biên thời gian thật, không tuyên bố đã bắn đúng 1 ms bằng browser. | Chưa thực hiện online; biên đúng từng mili giây chưa được đo. | CHƯA CHẠY | `E-B05`: UTC/giờ Việt Nam trước/sau, hai phiên, xác nhận DB. |
 | B06 | HOLD hợp lệ: POST `/bookings/:id/demo-payment` bằng form thật; mở receipt; gửi lại cùng thao tác trong cửa sổ thử được phép, reload và mở checkout. | CONFIRMED/DEMO_PAID, phiếu ghi MÔ PHỎNG/QR không thu tiền; checkout chuyển receipt. Chỉ một `INITIAL_DEMO`, lock đã xác nhận không hết hạn; bấm lại không thu/ghi lần hai. | Chưa thực hiện online. | CHƯA CHẠY | `E-B06`: checkout/phiếu/nhãn, xác nhận Payment/locks chỉ đọc. |
 | B07 | Đăng xuất, GUEST-A đặt với `guestName,guestPhone`; giữ link checkout/receipt riêng trong phiên thử; mở lượt không token hoặc token sai từ phiên B. | Vãng lai đặt được, form/phiếu có nhãn demo; chỉ link riêng hợp lệ cho xem. Thiếu/sai token 403; mã đơn/SĐT không cấp quyền, không có quyền tự hủy/đổi. | Chưa thực hiện online. | CHƯA CHẠY | `E-B07`: vùng nội dung thường/lỗi, không lưu query/token. |
-| B08 | Trên phiếu hợp lệ, chọn “In / Lưu PDF”; kiểm tra preview desktop/mobile và thiết bị thật, tắt header/footer browser trước khi lưu bản thử an toàn. | Phiếu đủ cơ sở/sân/ngày/ô/tổng/nhãn mô phỏng, bố cục đọc được và không cắt mất dòng; không có URL/token, secret hoặc metadata nhạy cảm. Không coi ảnh preview là đã lưu PDF. | Chưa thực hiện online; chưa tạo PDF online. | CHƯA CHẠY | `E-B08`: preview đã an toàn và PDF tổng hợp đã kiểm tra; số trang/browser/thiết bị thực tế. |
+| B08 | Trên phiếu hợp lệ, chọn “In / Lưu PDF”; kiểm tra preview và lưu PDF ở viewport 390px/1366px, tắt header/footer browser trước khi lưu bản thử an toàn. Nếu có điện thoại thật thì thử bổ sung và ghi rõ thiết bị. | Phiếu đủ cơ sở/sân/ngày/ô/tổng/nhãn mô phỏng, bố cục đọc được và không cắt mất dòng; không có URL/token, secret hoặc metadata nhạy cảm. Không coi ảnh preview là đã lưu PDF. | Chưa thực hiện online; chưa tạo PDF online. | CHƯA CHẠY | `E-B08`: preview 390px/1366px đã an toàn và PDF tổng hợp đã kiểm tra; số trang/browser thực tế; bằng chứng điện thoại thật chỉ bổ sung nếu có thử thêm. |
 
 ### Đổi, hủy và hoàn thủ công
 
@@ -78,20 +81,22 @@ S06 (đổi mode trên host) và P06 (gián đoạn DB có kiểm soát) là ca 
 | S01 | `/login` sai thông tin thử cố định rồi đúng; kiểm tra cookie qua HTTPS, reload; POST `/logout`, sau đó truy cập lại trang bảo vệ/Back + reload. | Sai 400/401, giữ email/không password; đúng 303 theo vai trò. Cookie `dat_san_sid` Secure/HttpOnly/SameSite=Lax; session được đổi lúc login, logout hủy session, không còn xem trang bảo vệ bằng session cũ. | Chưa thực hiện online. | CHƯA CHẠY | `E-S01`: lỗi/navigation; chỉ ghi boolean thuộc tính cookie và kết quả, không chụp giá trị. |
 | S02 | Trên form thử, bỏ/sửa `_csrf` rồi gửi một POST không hợp lệ; mở lại form để gửi token hiện tại. Không xuất DOM/body ra file. | CSRF sai/thiếu 403 trước ghi nghiệp vụ và trước limiter #92; form mới hoạt động. Không đổi quyền/giá/Booking/Payment khi bị chặn. | Chưa thực hiện online. | CHƯA CHẠY | `E-S02`: thông báo 403 + xác nhận không ghi DB; không chứa token. |
 | S03 | Thử guest/CUSTOMER/OWNER-PENDING/OWNER-B truy cập các route ADMIN, sân/cơ sở/đơn FAC-A; CUSTOMER-B mở đơn CUSTOMER-A; thử body thêm owner/facility/role. | Guest chuyển login ở route cần tài khoản; sai vai trò bị 403. OWNER hợp lệ sửa sân/cơ sở không thuộc mình bị 404; xem đơn trái quyền bị 403. Server không nâng quyền từ body; owner đúng và ADMIN chỉ thực hiện quyền đã cấp. | Chưa thực hiện online. | CHƯA CHẠY | `E-S03`: ma trận alias/route/status và DB FAC-B không đổi. |
-| S04 | Sau khi #92 đã tích hợp và operator duyệt ngân sách bên dưới, kiểm tra riêng quota login theo account+IP, booking theo actor và các quota IP của bốn endpoint. Dừng ngay lần 429 đầu mỗi tiêu chí. | 429 kèm `Retry-After` số giây dương, `Cache-Control:no-store`, trang lỗi đọc được; không ghi nghiệp vụ. Sau cửa sổ mới nhận lại request; không suy quota IP đạt chỉ từ việc actor bị chặn. | Chưa thực hiện; chưa có host/cấu hình/ngân sách được duyệt. | CHƯA CHẠY | `E-S04`: chính sách thực tế đã lọc, số lần/status/header an toàn, ảnh429 390/1366, xác nhận DB. |
+| S04 | Đối chiếu limiter #92 đã có trên release thực tế và operator duyệt ngân sách bên dưới, kiểm tra riêng quota login theo account+IP, booking theo actor và các quota IP của bốn endpoint. Dừng ngay lần 429 đầu mỗi tiêu chí. | 429 kèm `Retry-After` số giây dương, `Cache-Control:no-store`, trang lỗi đọc được; không ghi nghiệp vụ. Sau cửa sổ mới nhận lại request; không suy quota IP đạt chỉ từ việc actor bị chặn. | Chưa thực hiện; chưa có host/cấu hình/ngân sách được duyệt. | CHƯA CHẠY | `E-S04`: chính sách thực tế đã lọc, số lần/status/header an toàn, ảnh429 390/1366, xác nhận DB. |
 | S05 | Operator đối chiếu proxy thực; từ hai phiên/thiết bị thử độc lập kiểm tra nhận diện client và một request thử header giả trong phạm vi đã duyệt. | Không gom mọi người vào IP proxy, không cho client tùy ý đổi IP limiter/HTTPS bằng header không tin cậy. Kết quả inconclusive nếu không quan sát được đường proxy thật. | Chưa thực hiện; cấu hình proxy chưa bàn giao. | CHƯA CHẠY | `E-S05`: xác nhận resolver và kết quả đã ẩn IP/header riêng tư. |
 | S06 | Trong cửa sổ operator riêng, chuyển mode `off`, restart đúng SHA/DB, thử POST INITIAL/EXTRA mô phỏng bằng form/lượt thử hợp lệ; mở lại phiếu DEMO_PAID cũ và nghiệp vụ hủy/hoàn; sau đó phục hồi demo. | Off chặn cả hai mô phỏng mới phía server, không chỉ ẩn nút. Phiếu cũ vẫn nhãn mô phỏng; hủy/ghi hoàn thủ công giữ quyền hiện có. Client không bật lại demo; `live` chưa được dùng. | Chưa thực hiện; chưa có cửa sổ đổi cấu hình. | CHƯA CHẠY | `E-S06`: mode không secret, trước/sau, hai POST bị chặn và xác nhận DB. |
 
-Nguồn chính sách **chưa phải cấu hình online**: PR #92 áp dụng limiter sau CSRF cho POST `/login`, `/register`, `/register/owner`, `/bookings`; không áp mặc định cho GET hoặc mọi POST khác.
+Nguồn chính sách **chưa phải cấu hình online**: main `180a3c5` đã tích hợp #92, nguồn #95 `b605408` giữ limiter sau CSRF cho POST `/login`, `/register`, `/register/owner`, `/bookings`; không áp mặc định cho GET hoặc mọi POST khác.
 
-| Endpoint | Mặc định trong nguồn #92 | Chốt trước ca S04 |
-| --- | --- | --- |
-| `/login` | 900 giây; IP 60, account+IP 8 | Giá trị thực tế và cách tách lượt actor/IP |
-| `/register` | 900 giây; IP 12 | Cửa sổ riêng, request dữ liệu lỗi không tạo tài khoản |
-| `/register/owner` | 900 giây; IP 12 | Cửa sổ riêng, request dữ liệu lỗi không tạo tài khoản |
-| `/bookings` | 600 giây; IP 60, actor 12 (user hoặc session) | Dữ liệu lỗi có CSRF hợp lệ, không tạo HOLD |
+Đối chiếu đúng **10 tên biến** sau với `.env.example` nguồn #95/main; đây là giá trị mặc định trong code, chưa xác nhận được env đang chạy online. Không thay đổi cấu hình production trong task tài liệu này.
 
-Không chạy vòng lặp, dò mật khẩu, tải lớn hoặc cố chạm quota IP 60 trên service có người khác dùng. Ưu tiên **service QA cô lập** và operator phê duyệt chính sách tạm nhỏ: cửa sổ 60 giây, IP max 2; login account+IP max 1, booking actor max 1 qua các biến `RATE_LIMIT_*` thực sự có trong release. Đối chiếu tên biến với nguồn #92 trước đặt; không tự chỉnh môi trường đang dùng chung. Ngân sách tối đa **22 POST** cho toàn nhóm S04: 4 lượt cho hai tầng actor (2 mỗi tầng), 12 lượt cho bốn tầng IP (3 mỗi tầng), cộng 6 lượt xác minh sau khi từng cửa sổ đã hết hạn. Không gửi thêm ngoài ngân sách. Mỗi khối dừng ở lần 429 đầu; lượt xác minh chỉ gửi sau khi cửa sổ đó đã qua, dùng dữ liệu lỗi để mong đợi 400/401 thay vì 429 và không tạo bản ghi nghiệp vụ. Các cửa sổ không lẫn lượt khác. Login dùng một mật khẩu sai cố định của tài khoản tổng hợp; không thử nhiều mật khẩu. Mỗi tiêu chí IP dùng actor khác để không bị quota actor chặn trước. POST lỗi controller 400/401 có CSRF hợp lệ vẫn được tính; CSRF 403 không tính quota.
+| Endpoint | Biến cấu hình đúng tên | Mặc định trong nguồn đã đọc | Chốt trước ca S04 |
+| --- | --- | --- | --- |
+| `/login` | `RATE_LIMIT_LOGIN_WINDOW_SECONDS`, `RATE_LIMIT_LOGIN_IP_MAX`, `RATE_LIMIT_LOGIN_ACCOUNT_IP_MAX` | 900 giây; IP 60, account+IP 8 | Giá trị thực tế và cách tách lượt actor/IP |
+| `/register` | `RATE_LIMIT_REGISTER_WINDOW_SECONDS`, `RATE_LIMIT_REGISTER_IP_MAX` | 900 giây; IP 12 | Cửa sổ riêng, request dữ liệu lỗi không tạo tài khoản |
+| `/register/owner` | `RATE_LIMIT_REGISTER_OWNER_WINDOW_SECONDS`, `RATE_LIMIT_REGISTER_OWNER_IP_MAX` | 900 giây; IP 12 | Cửa sổ riêng, request dữ liệu lỗi không tạo tài khoản |
+| `/bookings` | `RATE_LIMIT_BOOKINGS_WINDOW_SECONDS`, `RATE_LIMIT_BOOKINGS_IP_MAX`, `RATE_LIMIT_BOOKINGS_ACTOR_MAX` | 600 giây; IP 60, actor 12 (user hoặc session) | Dữ liệu lỗi có CSRF hợp lệ, không tạo HOLD |
+
+Không chạy vòng lặp, dò mật khẩu, tải lớn hoặc cố chạm quota IP 60 trên service có người khác dùng. Ưu tiên **service QA cô lập** và operator phê duyệt chính sách tạm nhỏ: cửa sổ 60 giây, IP max 2; login account+IP max 1, booking actor max 1 qua các biến `RATE_LIMIT_*` thực sự có trong release. Đối chiếu 10 tên biến ở bảng trên với release thực tế trước đặt; không tự chỉnh môi trường đang dùng chung. Ngân sách tối đa **22 POST** cho toàn nhóm S04: 4 lượt cho hai tầng actor (2 mỗi tầng), 12 lượt cho bốn tầng IP (3 mỗi tầng), cộng 6 lượt xác minh sau khi từng cửa sổ đã hết hạn. Không gửi thêm ngoài ngân sách. Mỗi khối dừng ở lần 429 đầu; lượt xác minh chỉ gửi sau khi cửa sổ đó đã qua, dùng dữ liệu lỗi để mong đợi 400/401 thay vì 429 và không tạo bản ghi nghiệp vụ. Các cửa sổ không lẫn lượt khác. Login dùng một mật khẩu sai cố định của tài khoản tổng hợp; không thử nhiều mật khẩu. Mỗi tiêu chí IP dùng actor khác để không bị quota actor chặn trước. POST lỗi controller 400/401 có CSRF hợp lệ vẫn được tính; CSRF 403 không tính quota.
 
 Limiter giữ bộ đếm trong RAM từng instance, reset khi restart. Ghi số instance, lần restart, giờ bắt đầu/reset và traffic khác; nếu đổi instance/có traffic ngoài hoặc chưa được phép chỉnh policy thì đánh dấu **CHƯA CHẠY / KHÔNG KẾT LUẬN**, không nới ngân sách. Sau ca thử operator phục hồi cấu hình dự kiến dùng, restart có kiểm soát và kiểm tra lại; không công bố kết quả policy tạm như đã thử đủ default production.
 
@@ -99,7 +104,7 @@ Limiter giữ bộ đếm trong RAM từng instance, reset khi restart. Ghi số
 
 | ID | Bước thực hiện | Mong đợi | Thực tế | Trạng thái | Bằng chứng dự kiến |
 | --- | --- | --- | --- | --- | --- |
-| P01 | Sau merge #95, gọi GET và HEAD `/health` khi sẵn sàng, không login; operator đối chiếu session trước/sau bằng tổng số đã lọc. | GET 200 `{"status":"ok"}`, HEAD cùng status không body; không Set-Cookie/tạo session, không lộ DB/URI/user. DB ping giới hạn 2 giây và dùng chung lần ping đang chạy theo hợp đồng #95. | Chưa thực hiện; endpoint chưa có trong main nguồn báo cáo. | CHƯA CHẠY | `E-P01`: status/body công khai và xác nhận session chỉ đọc. |
+| P01 | Sau merge #95, gọi GET và HEAD `/health` khi sẵn sàng, không login; operator đối chiếu session trước/sau bằng tổng số đã lọc. | GET 200 `{"status":"ok"}`, HEAD cùng status không body; không Set-Cookie/tạo session, không lộ DB/URI/user. DB ping giới hạn 2 giây và dùng chung lần ping đang chạy theo hợp đồng #95. | Chưa thực hiện online; endpoint /health còn chờ #95 được tích hợp và bàn giao release. | CHƯA CHẠY | `E-P01`: status/body công khai và xác nhận session chỉ đọc. |
 | P02 | Operator hẹn cửa sổ restart thủ công **trước hạn**; CUSTOMER-A tạo HOLD mới còn đủ thời gian, ghi deadline và trạng thái login; restart cùng release/DB, không đổi SESSION_SECRET; mở lại khi vẫn trước deadline. | Session MongoStore tiếp tục hợp lệ, hạn HOLD giữ mốc cũ, không cộng thêm 10 phút. Còn hạn/đủ lock mới được xác nhận; gián đoạn kéo qua hạn phải đánh giá như P03, không PASS P02. | Chưa thực hiện; chưa có quyền/cửa sổ restart. | CHƯA CHẠY | `E-P02`: operator timeline trước/sau, deadline, session boolean và DB đã lọc. |
 | P03 | Với HOLD khác, để deadline qua rồi operator restart; mở lại checkout và POST form cũ; đối chiếu ô tương lai từ phiên B. | Startup dọn HOLD theo hạn thật; đơn EXPIRED, không hồi sinh, không Payment mới. Ô tương lai mở lại, ô đã bắt đầu không thể đặt; đơn xác nhận khác không bị ảnh hưởng. | Chưa thực hiện online. | CHƯA CHẠY | `E-P03`: thời gian restart/hạn, 410, lịch và DB sau restart. |
 | P04 | Có đơn CONFIRMED/DEMO_PAID, operator restart cùng SHA/DB/secret; mở phiếu và gửi lại thao tác mô phỏng trong phạm vi thử. | Đơn/phiếu/nhãn và lock xác nhận còn nguyên; không biến thành EXPIRED, không giải phóng ô, không nhân đôi `INITIAL_DEMO` hoặc lịch sử Payment. | Chưa thực hiện online. | CHƯA CHẠY | `E-P04`: phiếu/lịch trước/sau, xác nhận Payment/SlotLock chỉ đọc. |
@@ -120,13 +125,44 @@ Chỉ sau khi có dữ liệu thật của lần thử mới tạo thư mục b�
 
 | Bằng chứng dự kiến | Nội dung cần có | Hiện trạng |
 | --- | --- | --- |
-| `docs/kiem-thu-render/<release-sha>/manifest.json` | URL origin HTTPS được phép công khai; release SHA; ngày/giờ; browser/OS/viewport/DPR/zoom; thiết bị vật lý/mạng; alias fixture; map từng `E-ID` tới file an toàn | CHƯA TẠO |
+| `docs/kiem-thu-render/<release-sha>/manifest.json` | URL origin HTTPS được phép công khai; RELEASE_SHA lấy từ Render và Render deploy ID; ngày/giờ/múi giờ; browser/OS/viewport/DPR/zoom; thiết bị vật lý nếu có/mạng thực tế; alias fixture; map từng `E-ID` tới file an toàn | CHƯA TẠO |
 | `docs/kiem-thu-render/<release-sha>/<case-id>-390-normal.png` và `...-error.png` | Nội dung thường/lỗi của từng ca UI, không thanh địa chỉ/query/secret | CHƯA CHỤP |
 | `docs/kiem-thu-render/<release-sha>/<case-id>-1366-normal.png` và `...-error.png` | Cùng trạng thái desktop; thêm ảnh focus/cuộn bảng cho O03 | CHƯA CHỤP |
-| `docs/kiem-thu-render/<release-sha>/physical-device.md` | Thiết bị thực/model/OS/browser/mạng và ID ảnh của R01/B07/B08/S01; không coi emulation là thiết bị thật | CHƯA TẠO |
+| `docs/kiem-thu-render/<release-sha>/physical-device.md` | Chỉ tạo nếu có lượt thử bổ sung trên thiết bị thật: model/OS/browser/mạng và ID ảnh R01/B07/B08/S01; không coi emulation là thiết bị thật, không thay bằng chứng máy khác của #82 | CHƯA TẠO; TÙY CHỌN KHI CÓ THỬ THÊM |
 | `docs/kiem-thu-render/<release-sha>/http-summary.json` | Case ID, giờ, route **không query**, method, status và header cho phép; không body request/cookie/token/IP thật | CHƯA TẠO |
-| `docs/kiem-thu-render/<release-sha>/operator-confirmation.md` | Xác nhận SHA/DB demo/backup, timeline restart/idle, các tổng dữ liệu trước/sau chỉ đọc, policy limiter thực tế và giới hạn quan sát | CHƯA ĐƯỢC XÁC NHẬN |
+| `docs/kiem-thu-render/<release-sha>/operator-confirmation.md` | Xác nhận deployment ID/RELEASE_SHA/DB demo tổng hợp cô lập/backup, timeline restart/idle, các tổng dữ liệu trước/sau chỉ đọc, policy limiter thực tế và giới hạn quan sát | CHƯA ĐƯỢC XÁC NHẬN |
 | `docs/kiem-thu-render/<release-sha>/receipt-demo.pdf` | PDF phiếu tổng hợp đã kiểm tra nhãn, số trang, nội dung/metadata không token/URL riêng | CHƯA TẠO |
+
+## Biểu mẫu sẵn điền cho một lần chạy thực tế
+
+**Hiện chưa có lần chạy online nào.** Các ô sau đều là phần chờ bàn giao, không phải log thực thi. Sau khi operator xác nhận đủ điều kiện, gán RUN-ID thật và ghi riêng cho mỗi deployment; nếu release hoặc deploy ID thay đổi giữa lượt thì tách lượt mới.
+
+| Trường bắt buộc | Hiện trạng / cách điền khi đã có dữ liệu thật |
+| --- | --- |
+| RUN-ID / người thử / người vận hành | **CHƯA BÀN GIAO**; ghi người chịu trách nhiệm, ngày/giờ bắt đầu–kết thúc và múi giờ |
+| Origin HTTPS | **CHƯA BÀN GIAO / CHƯA BIẾT**; origin công khai không query; đối chiếu xác nhận HTTPS truy cập từ máy khác trong bàn giao #82 |
+| RELEASE_SHA / Render deploy ID | **CHƯA BÀN GIAO / CHƯA BIẾT**; lấy từ deployment Render thực tế, kèm tham chiếu bàn giao đã lọc, không sao chép SHA nguồn tài liệu |
+| Service / gói / số instance / thời điểm deploy | **CHƯA BÀN GIAO / CHƯA BIẾT**; ghi alias và thời điểm thực tế, phân biệt redeploy/restart/idle wake |
+| Mode / proxy / limiter thực tế | **CHƯA BÀN GIAO**; xác nhận PAYMENT_MODE, điều kiện demo, proxy IP/CIDR đã kiểm chứng và policy từng route; không ghi secret/IP riêng tư |
+| DB/fixture tổng hợp cô lập | **CHƯA BÀN GIAO**; operator xác nhận DB riêng, alias tài khoản/cơ sở/sân/ngày D và quyền quan sát; không đưa URI/tên đăng nhập/giấy tờ vào báo cáo |
+| Browser / OS / thiết bị | **CHƯA BÀN GIAO / CHƯA BIẾT**; ghi tên + phiên bản, thiết bị vật lý hay emulation, mạng thử được phép |
+| Viewport / DPR / zoom | **CHƯA GHI NHẬN**; ghi kích thước thực tế tại 390px và 1366px, không suy từ kích thước ảnh |
+| Case/biến thể / expected / actual / status | **CHƯA CHẠY**; giữ ID trong 32 ca, ghi từng biến thể, HTTP đã lọc và quan sát thật; chỉ PASS khi đủ bằng chứng |
+| Bằng chứng / xác nhận DB / giới hạn | **CHƯA CÓ**; map E-ID tới file an toàn hoặc xác nhận operator; ghi phần không thể quan sát, hoãn và người quyết định |
+| Tổng kết lượt | **0 ca đã chạy, 0 PASS, 0 FAIL**; chỉ cập nhật theo actual của cùng RELEASE_SHA/deploy ID |
+
+Biểu mẫu dòng ghi ca, chưa phải kết quả:
+
+```text
+RUN-ID: CHƯA CẤP; Case ID/biến thể: CHƯA CHẠY
+Origin HTTPS; RELEASE_SHA từ Render; Render deploy ID: CHƯA BÀN GIAO
+Ngày/giờ/múi giờ; browser/OS; viewport/DPR/zoom; thiết bị: CHƯA GHI NHẬN
+Alias dữ liệu/session; tiền điều kiện; bước đã thực hiện: CHƯA CHẠY
+Mong đợi: tham chiếu đúng ca/biến thể trong bảng
+Thực tế + mã HTTP/header cho phép: CHƯA CHẠY
+Trạng thái: CHƯA CHẠY; E-ID/file/xác nhận operator: CHƯA CÓ
+Giới hạn / lý do hoãn / người xác nhận / ngày hẹn: CHƯA BÀN GIAO
+```
 
 ## Ghi lỗi và bàn giao
 
@@ -135,7 +171,7 @@ Chỉ sau khi có dữ liệu thật của lần thử mới tạo thư mục b�
 ```text
 BUG-RENDER-<số> — <tóm tắt>
 Trạng thái: CHƯA TÁI HIỆN / ĐÃ TÁI HIỆN / CHỜ RETEST / ĐÃ SỬA
-Case ID; URL origin công khai (không query); release SHA; thời gian + múi giờ:
+RUN-ID; Case ID/biến thể; URL origin công khai (không query); RELEASE_SHA từ Render; Render deploy ID; thời gian + múi giờ:
 Browser/OS; viewport/DPR/zoom; thiết bị vật lý hay emulation:
 Tiền điều kiện và alias dữ liệu/session:
 Bước tái hiện tối thiểu:
@@ -143,9 +179,12 @@ Mong đợi:
 Thực tế + mã HTTP đã lọc:
 Bằng chứng E-ID/file đã kiểm tra riêng tư:
 Ảnh hưởng, mức độ và giới hạn quan sát:
-Người nhận sửa; PR/SHA sửa; kết quả retest:
+Người nhận sửa / mức ưu tiên / hạn xử lý: CHƯA PHÂN CÔNG
+PR và SHA nguồn sửa (không thay RELEASE_SHA của lần thử):
+Retest: RUN-ID mới; RELEASE_SHA + Render deploy ID thực tế; ngày/browser/OS/viewport; E-ID; actual; PASS/FAIL/CHƯA CHẠY:
+Lỗi còn mở / giới hạn / người chấp nhận hoặc quyết định hoãn:
 ```
 
 Chỉ cập nhật kết luận sau khi điền kết quả thật cho từng ca/biến thể. Ca chưa chạy phải ghi lý do/người quyết định hoãn và ảnh hưởng; lỗi chưa sửa phải có người nhận và kế hoạch retest. `npm run check`, `npm test`, CI hoặc báo cáo local là điều kiện hỗ trợ riêng, **không tính PASS online**. Không dùng ảnh cũ khác SHA để kết luận về release này.
 
-Hiện báo cáo còn chờ #82/PR #94 bàn giao, #92/#95 tích hợp và bằng chứng của toàn bộ ca trên. [Issue #83](https://github.com/indominusrex932005-arch/dat-san-tu-dau/issues/83) cần nhóm trưởng review kết quả thực tế trước khi nghiệm thu; tài liệu chuẩn bị này không tự đóng issue và không xác nhận website đã sẵn sàng dùng thật.
+Hiện báo cáo còn chờ #82/PR #94 bàn giao URL/deployment thật, #95 tích hợp và bằng chứng của toàn bộ ca trên; #92 đã merge main. PR kế hoạch kiểm thử tiếp tục **Draft**, chưa được coi là nghiệm thu online. [Issue #83](https://github.com/indominusrex932005-arch/dat-san-tu-dau/issues/83) cần nhóm trưởng review kết quả thực tế trước khi nghiệm thu; tài liệu chuẩn bị này không tự đóng issue và không xác nhận website đã sẵn sàng dùng thật.

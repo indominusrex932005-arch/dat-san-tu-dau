@@ -1,0 +1,17 @@
+{
+  "issue": 76,
+  "pr": 71,
+  "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+  "cleanedAtUTC": "2026-11-03T12:27:08.808Z",
+  "ownFixtureDatabaseDropped": true,
+  "guardedScope": "Exactlocalhost27061URI, qaOwnerCalendar76replica, booking_test_namepatternandprivateQAmarkerverifiedbefore droppingonlyownfixtureDB.",
+  "otherDatabaseNamesUnchanged": true,
+  "remainingTestDatabaseCount": 0,
+  "businessReadOnlyAcrossAllGETs": true,
+  "finalSnapshot": "final-db-readonly.json",
+  "replicaShutdownRequested": true,
+  "ownAppStopped": true,
+  "ownMongoStopped": true,
+  "runtimeRemoved": true,
+  "runtimePathAndReparsePointsValidated": true
+}
