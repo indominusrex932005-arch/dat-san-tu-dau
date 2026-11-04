@@ -12,14 +12,14 @@ import BookingRequest from '../../models/BookingRequest.js';
 
 export { mongoose, User, Facility, Court, Booking, SlotLock, Payment, BookingRequest };
 
-export async function createTestEnvironment({ nodeEnv = 'test', paymentMode = 'demo' } = {}) {
+export async function createTestEnvironment({ nodeEnv = 'test', paymentMode = 'demo', trustProxyIPs = '' } = {}) {
   const uri = process.env.TEST_MONGODB_URI || 'mongodb://127.0.0.1:27029/?replicaSet=rs0&directConnection=true';
   // The integration suite must never fall back to a developer's Atlas database.
   if (!/^mongodb:\/\/(?:127\.0\.0\.1|localhost):\d+(?:\/|\?|$)/.test(uri)) {
     throw new Error('TEST_MONGODB_URI must point to a local disposable MongoDB replica set.');
   }
   const dbName = `booking_test_${Date.now()}_${process.pid}`;
-  const envKeys = ['NODE_ENV', 'PAYMENT_MODE', 'DEMO_MODE', 'DEMO_DATA_ONLY', 'DB_NAME', 'SESSION_SECRET'];
+  const envKeys = ['NODE_ENV', 'PAYMENT_MODE', 'DEMO_MODE', 'DEMO_DATA_ONLY', 'DB_NAME', 'SESSION_SECRET', 'TRUST_PROXY_IPS'];
   const originalEnv = Object.fromEntries(envKeys.map(key => [key, process.env[key]]));
   process.env.NODE_ENV = nodeEnv;
   if (paymentMode === null) delete process.env.PAYMENT_MODE;
@@ -28,6 +28,7 @@ export async function createTestEnvironment({ nodeEnv = 'test', paymentMode = 'd
   process.env.DEMO_DATA_ONLY = nodeEnv === 'production' && paymentMode === 'demo' ? 'true' : 'false';
   process.env.DB_NAME = dbName;
   process.env.SESSION_SECRET = 'local-integration-tests-only-secret-2026-0123456789';
+  process.env.TRUST_PROXY_IPS = trustProxyIPs;
   await mongoose.connect(uri, { dbName, serverSelectionTimeoutMS: 10000 });
   const hello = await mongoose.connection.db.admin().command({ hello: 1 });
   if (!hello.setName) {

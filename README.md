@@ -18,7 +18,9 @@ Giữ `.env` riêng đang dùng; nếu chưa có, copy từ `.env.example` rồi
 
 ### Chuẩn bị production / Render
 
-Build `npm ci`, start `npm start`, Node 24 qua `.node-version`, Web Service; server đọc `PORT` do host cấp và bind `0.0.0.0`. Không cần `NODE_VERSION` trên host trừ khi chủ động ghi đè bản Node. `GET /health` và `HEAD /health` kiểm tra sẵn sàng DB trước session/auth, trả 200 hoặc 503 và không chứa secret. Cookie production vẫn Secure/HttpOnly/SameSite=Lax và session lưu MongoStore. Cấu hình proxy/giới hạn POST phải được đối chiếu tiếp khi tích hợp #80; xem [hợp đồng và phần proxy](docs/CHE_DO_THANH_TOAN.md).
+Build `npm ci`, start `npm start`, Node 24 qua `.node-version`, Web Service; server đọc `PORT` do host cấp và bind `0.0.0.0`. Không cần `NODE_VERSION` trên host trừ khi chủ động ghi đè bản Node. `GET /health` và `HEAD /health` kiểm tra sẵn sàng DB trước session/auth, trả 200 hoặc 503 và không chứa secret. Cookie production vẫn Secure/HttpOnly/SameSite=Lax và session lưu MongoStore.
+
+Giữ các biến `RATE_LIMIT_*` trong `.env.example` để cấu hình giới hạn gửi form. `TRUST_PROXY_IPS` chỉ nhận danh sách IP/CIDR proxy đã được xác minh; để trống thì không tin các header chuyển tiếp. Cookie Secure qua proxy chỉ được cấp khi kết nối đến từ proxy tin cậy và báo HTTPS. Không đổi sang `trust proxy = 1` hoặc tin mọi IP để bỏ qua việc xác minh. Xem [hạn mức và proxy](docs/GIOI_HAN_YEU_CAU.md) và [hợp đồng chế độ thanh toán](docs/CHE_DO_THANH_TOAN.md); triển khai Render vẫn cần thử HTTPS/header/IP trên hạ tầng thực tế.
 
 Đây là chuẩn bị code #81, **chưa có URL online hoặc kết quả nghiệm thu hosting**. Hướng dẫn #82 đang ở [PR #94](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/94); chỉ triển khai sau khi các phần nền được review/merge và quyền hosting/DB demo được bàn giao.
 
@@ -80,5 +82,6 @@ npm test
 - [QR/thanh toán thật còn dở](docs/THANH_TOAN_CON_DANG_DO.md)
 - [Hợp đồng dữ liệu/route](docs/HOP_DONG_TICH_HOP.md)
 - [Chế độ thanh toán và production public-demo](docs/CHE_DO_THANH_TOAN.md)
+- [Hạn mức gửi form và cấu hình proxy](docs/GIOI_HAN_YEU_CAU.md)
 
 Không commit `.env`, mật khẩu, connection string có thông tin đăng nhập hoặc `node_modules`.

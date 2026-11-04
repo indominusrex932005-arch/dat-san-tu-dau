@@ -52,7 +52,9 @@ Giữ Node **24**, MVC ở gốc repo; build `npm ci`, start `npm start`. Chọn
 
 Startup vẫn kiểm tra tương thích DB/replica set, chờ index và dọn HOLD theo luật hiện có. Đây không phải lệnh chỉ đọc: phải xác minh đúng DB demo và kế hoạch backup/migration trước khi mở server. Không tự migrate hoặc tạo index trên Atlas dùng chung. Lệnh migration mặc định dry-run, apply riêng theo [hướng dẫn tích hợp](HUONG_DAN_TICH_HOP.md).
 
-Phiên dùng **MongoStore**, cookie `Secure` ở production, `HttpOnly`, `SameSite=Lax`, cùng CSRF/auth hiện có. Nhánh #81 dựa trên main `5c3e72d` giữ `trust proxy = 1` ở production; đây chưa phải kết luận cấu hình proxy/limiter cuối cùng cho Render. Khi tích hợp #80/PR #92, phải giữ resolver địa chỉ IP/CIDR đã được kiểm thử và cấu hình đúng proxy thật; không ghi đè resolver đó trở lại số hop 1 khi merge. `TRUST_PROXY_IPS` thuộc phần #80, chưa phải biến được code #81 sử dụng nên không có trong `.env.example` của nhánh này.
+Phiên dùng **MongoStore**, cookie `Secure` ở production, `HttpOnly`, `SameSite=Lax`, cùng CSRF/auth hiện có. Nhánh #81 đã cập nhật nền main `180a3c5` sau #80/PR #92 và giữ resolver địa chỉ IP/CIDR `TRUST_PROXY_IPS` cùng các router có limiter. `.env.example` có cả cấu hình mode, proxy và `RATE_LIMIT_*`; không đưa biến cũ `DEMO_MODE` trở lại khi ghép cấu hình.
+
+`TRUST_PROXY_IPS` trống nghĩa là không tin header chuyển tiếp; cookie Secure qua proxy chỉ được cấp khi địa chỉ kết nối nằm trong danh sách đã xác minh và header báo HTTPS. Không thay resolver bằng số hop 1 hoặc tin mọi IP để làm test chạy qua. Fixture production cục bộ khai báo riêng proxy `127.0.0.1/32`, cùng helper lưu/khôi phục env; việc này là mô phỏng proxy bằng HTTP localhost, không phải bằng chứng HTTPS trên Render. Xem [hạn mức và cấu hình proxy](GIOI_HAN_YEU_CAU.md).
 
 Express yêu cầu cách trust proxy khớp đường đi của request; số hop có rủi ro nếu tồn tại đường ngắn hơn dự kiến. Trước #82 phải kiểm tra HTTPS/cookie và key IP của limiter qua proxy, kể cả header giả. Xem [Express behind proxies](https://expressjs.com/en/guide/behind-proxies/) và [ví dụ xác thực của Render](https://render.com/articles/how-to-implement-authentication-and-authorization). Không coi một ví dụ hop 1 là bằng chứng đã kiểm thử toàn bộ hạ tầng.
 
@@ -61,6 +63,12 @@ Express yêu cầu cách trust proxy khớp đường đi của request; số ho
 `GET /health` và `HEAD /health` là endpoint công khai, đặt trước session/auth/CSRF để không tạo session cho health probe. Khi DB sẵn sàng, GET trả HTTP `200` với `{"status":"ok"}`; khi không sẵn sàng, trả HTTP `503` với `{"status":"unavailable"}`. HEAD dùng cùng status và không có response body. DB ping có timeout driver 2 giây; các probe đồng thời dùng chung lần ping đang chạy. Phản hồi không có URI, tên DB, secret hoặc dữ liệu người dùng. Render hỗ trợ HTTP health path để xét readiness và restart instance; xem [Health Checks](https://render.com/docs/health-checks).
 
 Trước bàn giao #82 cần ghi SHA đã thử, chạy check/test trên DB thử riêng và đối chiếu tối thiểu: production/demo hợp lệ; off chặn POST mô phỏng ban đầu và thu thêm; client không đổi mode; cấu hình sai/live/legacy bị từ chối; session/CSRF/cookie HTTPS còn hoạt động; health không tạo session hoặc lộ thông tin. Nhãn `DEMO_PAID` trên dữ liệu cũ phải còn đúng khi đổi sang off. Kết quả local/CI không thay thử HTTPS/thiết bị khác trên hosting.
+
+## Kiểm tra tích hợp #92/#95 ngày 05/11/2026
+
+Đã ghép main `180a3c586f86276778f9f5492e998f64688016a0`, giữ resolver `TRUST_PROXY_IPS` và limiter. `npm run check` đạt 19 EJS; toàn bộ `npm test` đạt **181/181**, không fail/skipped, trên MongoDB replica thử riêng `qaProd95` tại `127.0.0.1:27064`. Các fixture tự tạo/dọn DB; không tải `.env` riêng hoặc dùng Atlas.
+
+[Ca tích hợp production/demo/limiter](../tests/production-demo-rate-limit.test.js) chạy cùng một session MongoStore: cookie Secure/HttpOnly/SameSite=Lax, login đổi session/CSRF, POST thiếu CSRF không tiêu quota, giữ nhiều ô đúng giá, 429 không ghi Booking/SlotLock/Payment, thanh toán demo/replay vẫn đúng sau khi quota giữ sân hết, logout hủy session và cookie cũ không dùng lại được. [Kiểm tra startup](../tests/payment-mode.test.js) giữ các ca cố tình khai báo `DEMO_MODE=true`/`false` và chứng minh đều bị từ chối trước kết nối DB. Đây là kiểm tra proxy mô phỏng HTTP cục bộ; nghiệm thu HTTPS trên Render vẫn thuộc #82/#83. SHA commit cuối và CI ghi riêng trong PR #95.
 
 ## Ranh giới dành cho #84
 

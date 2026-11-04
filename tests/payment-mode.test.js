@@ -43,7 +43,7 @@ test('Chế độ live chưa triển khai, cờ cũ và giá trị cấu hình s
   }
 });
 
-test('Server từ chối mode chưa hỗ trợ trước khi kết nối DB hay tải .env riêng', { timeout: 15000 }, async () => {
+test('Server từ chối live và mọi giá trị cờ legacy trước khi kết nối DB hay tải .env riêng', { timeout: 30000 }, async t => {
   const cwd = fileURLToPath(new URL('..', import.meta.url));
   const baseEnv = {
     ...process.env,
@@ -53,10 +53,21 @@ test('Server từ chối mode chưa hỗ trợ trước khi kết nối DB hay t
     DEMO_DATA_ONLY: 'true', PAYMENT_MODE: 'live'
   };
   delete baseEnv.DEMO_MODE;
-  await assert.rejects(runFile(process.execPath, ['server.js'], { cwd, env: baseEnv, timeout: 8000 }), error => {
-    assert.equal(error.code, 1);
-    assert.match(error.stderr, /PAYMENT_MODE=live chưa được triển khai/);
-    assert.doesNotMatch(error.stderr, /MongoServerSelectionError|ECONNREFUSED|mongodb:\/\//);
-    return true;
-  });
+  for (const scenario of [
+    { name: 'live chưa hỗ trợ', env: baseEnv, message: /PAYMENT_MODE=live chưa được triển khai/ },
+    ...['false', 'true'].map(value => ({
+      name: `DEMO_MODE=${value} vẫn là cấu hình legacy`,
+      env: { ...baseEnv, PAYMENT_MODE: 'demo', DEMO_MODE: value },
+      message: /Bỏ biến DEMO_MODE cũ/
+    }))
+  ]) {
+    await t.test(scenario.name, async () => {
+      await assert.rejects(runFile(process.execPath, ['server.js'], { cwd, env: scenario.env, timeout: 8000 }), error => {
+        assert.equal(error.code, 1);
+        assert.match(error.stderr, scenario.message);
+        assert.doesNotMatch(error.stderr, /MongoServerSelectionError|ECONNREFUSED|mongodb:\/\//);
+        return true;
+      });
+    });
+  }
 });

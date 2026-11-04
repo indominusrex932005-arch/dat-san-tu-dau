@@ -21,7 +21,7 @@ const businessModels = [User, Facility, Court, Booking, SlotLock, Payment, Booki
 const businessCounts = () => Promise.all(businessModels.map(model => model.countDocuments()));
 
 test('Production public-demo: MongoStore, Secure cookie, CSRF và chế độ server trên HTTP qua proxy mô phỏng', { timeout: 60000 }, async t => {
-  const environment = await createTestEnvironment({ nodeEnv: 'production', paymentMode: 'demo' });
+  const environment = await createTestEnvironment({ nodeEnv: 'production', paymentMode: 'demo', trustProxyIPs: '127.0.0.1/32' });
   t.after(() => environment.close());
 
   await t.test('Health ping DB thật trả trạng thái tối thiểu, không tạo session hay ghi nghiệp vụ', async () => {
@@ -182,7 +182,7 @@ test('Production public-demo: MongoStore, Secure cookie, CSRF và chế độ se
 
 test('Production khởi động không có PAYMENT_MODE mặc định off; session/CSRF vẫn dùng được', { timeout: 30000 }, async t => {
   // A null helper option deliberately leaves PAYMENT_MODE absent before createApp runs.
-  const environment = await createTestEnvironment({ nodeEnv: 'production', paymentMode: null });
+  const environment = await createTestEnvironment({ nodeEnv: 'production', paymentMode: null, trustProxyIPs: '127.0.0.1/32' });
   t.after(() => environment.close());
   assert.equal(Object.hasOwn(process.env, 'PAYMENT_MODE'), false);
   const owner = await User.create({

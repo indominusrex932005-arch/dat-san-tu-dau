@@ -2,7 +2,7 @@
 
 ## Cấu hình chế độ thanh toán
 
-Server dùng `PAYMENT_MODE=off|demo|live`, mặc định off; `live` hiện từ chối khởi động. Xóa key cũ `DEMO_MODE` khỏi môi trường, kể cả false. Để chạy production demo, cần `PAYMENT_MODE=demo`, `DEMO_DATA_ONLY=true` và `DB_NAME` tường minh. Chỉ dùng DB/tài khoản/dữ liệu tổng hợp cô lập, không dữ liệu thật/Atlas chung; cờ dữ liệu là cam kết vận hành, không tự kiểm tra DB. Xem [hợp đồng đầy đủ](CHE_DO_THANH_TOAN.md), gồm health và ranh giới proxy khi tích hợp #80.
+Server dùng `PAYMENT_MODE=off|demo|live`, mặc định off; `live` hiện từ chối khởi động. Xóa key cũ `DEMO_MODE` khỏi môi trường, kể cả false. Để chạy production demo, cần `PAYMENT_MODE=demo`, `DEMO_DATA_ONLY=true` và `DB_NAME` tường minh. Chỉ dùng DB/tài khoản/dữ liệu tổng hợp cô lập, không dữ liệu thật/Atlas chung; cờ dữ liệu là cam kết vận hành, không tự kiểm tra DB. Giữ các biến `RATE_LIMIT_*` và `TRUST_PROXY_IPS` của #80 đã tích hợp, khai báo proxy tin cậy theo hạ tầng thực tế. Xem [hợp đồng đầy đủ](CHE_DO_THANH_TOAN.md), gồm health và cấu hình proxy.
 
 ## Chuyển từ bản cũ
 

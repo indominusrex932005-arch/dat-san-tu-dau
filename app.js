@@ -3,13 +3,15 @@ import session from 'express-session';
 import { fileURLToPath } from 'node:url';
 import homeRoutes from './routes/home.routes.js';
 import facilityRoutes from './routes/facility.routes.js';
-import authRoutes from './routes/auth.routes.js';
+import createAuthRoutes from './routes/auth.routes.js';
 import courtRoutes from './routes/court.routes.js';
-import bookingRoutes from './routes/booking.routes.js';
+import createBookingRoutes from './routes/booking.routes.js';
 import ownerRoutes from './routes/owner.routes.js';
 import adminRoutes from './routes/admin.routes.js';
 import { attachCurrentUser } from './middlewares/auth.middleware.js';
 import { csrfProtection } from './middlewares/csrf.middleware.js';
+import { createPostRateLimits } from './middlewares/post-rate-limit.js';
+import { trustedProxyAddresses } from './config/trust-proxy.js';
 import { formatMoney, formatDate } from './utils/booking-time.js';
 import { getPaymentConfig } from './config/payment-mode.js';
 import { health } from './controllers/health.controller.js';
@@ -41,7 +43,8 @@ export default function createApp(sessionStore) {
     Object.defineProperty(app.locals, name, { enumerable: true, get: () => getPaymentConfig()[key] });
   }
   app.disable('x-powered-by');
-  if (process.env.NODE_ENV === 'production') app.set('trust proxy', 1);
+  app.set('trust proxy', trustedProxyAddresses(process.env.TRUST_PROXY_IPS));
+  const limits = createPostRateLimits();
 
   app.use((req, res, next) => {
     res.locals.currentUser = null;
@@ -72,9 +75,9 @@ export default function createApp(sessionStore) {
   app.use(csrfProtection);
   app.use('/', homeRoutes);
   app.use('/facilities', facilityRoutes);
-  app.use('/', authRoutes);
+  app.use('/', createAuthRoutes(limits));
   app.use('/courts', courtRoutes);
-  app.use('/', bookingRoutes);
+  app.use('/', createBookingRoutes(limits.bookings));
   app.use('/owner', ownerRoutes);
   app.use('/admin', adminRoutes);
 
