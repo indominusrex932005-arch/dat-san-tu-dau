@@ -1,12 +1,13 @@
 # Giới hạn đăng nhập, đăng ký và giữ sân (#80)
 
-Middleware chạy sau session, nhận diện người dùng và CSRF, trước controller. Chỉ bốn POST dưới đây dùng hạn mức. Mỗi lượt được chuyển đến controller tính một lần, kể cả khi validation hoặc mật khẩu thất bại. Lượt bị CSRF chặn hoặc trả 429 không trừ hạn mức, cũng không kéo dài cửa sổ. Khi bị giới hạn, trang báo thời gian thử lại và trả header `Retry-After` theo giây.
+Middleware chạy sau session, nhận diện người dùng và CSRF, trước controller. Các POST dưới đây dùng hạn mức. Mỗi lượt được chuyển đến controller tính một lần, kể cả khi validation hoặc mật khẩu thất bại. Lượt bị CSRF chặn hoặc trả 429 không trừ hạn mức, cũng không kéo dài cửa sổ. Khi bị giới hạn, trang báo thời gian thử lại và trả header `Retry-After` theo giây.
 
 | POST | Cửa sổ mặc định | Khóa và hạn mức mặc định |
 | --- | --- | --- |
 | `/login` | 900 giây | 60 lượt/IP và 8 lượt cho cặp email chuẩn hóa + IP |
 | `/register` | 900 giây | 12 lượt/IP |
 | `/register/owner` | 900 giây | 12 lượt/IP, bộ đếm riêng với đăng ký khách |
+| `/owner/:kind/:id/images` | 60 giây | 30 lượt/IP và 10 lượt/chủ sân, sau kiểm tra quyền; tối đa hai upload đồng thời |
 | `/bookings` | 600 giây | 60 lượt/IP và 12 lượt cho mỗi tài khoản đã xác thực hoặc phiên khách vãng lai |
 
 Các giới hạn đều cấu hình được qua biến `RATE_LIMIT_*` trong [.env.example](../.env.example). Biến `*_WINDOW_SECONDS` nhận số nguyên từ 1 đến 86400. Biến `*_MAX` nhận số nguyên từ 1 đến 100000. Bỏ biến để dùng mặc định. Cấu hình sai làm app từ chối khởi động.
@@ -22,3 +23,5 @@ Mặc định `TRUST_PROXY_IPS` trống, Express lấy IP từ kết nối trự
 Render mô tả lưu lượng công khai đi qua Cloudflare và load balancer. Hướng dẫn của Render lưu ý phía khách có thể kiểm soát phần đầu chuỗi `X-Forwarded-For`. Đường mạng riêng tới web service cũng có thể tồn tại tùy cấu hình. Limiter dùng `req.ip` theo danh sách tin cậy và không lấy thẳng phần tử đầu chuỗi hay `CF-Connecting-IP`. Nếu chưa xác minh được các hop, để danh sách trống. Khi chạy sau proxy với cấu hình này, khách có thể dùng chung hạn mức theo IP proxy. [Render về IP phía khách](https://render.com/articles/host-pocketbase-on-render#making-pocketbase-see-the-real-client-ip) · [Mạng riêng trên Render](https://render.com/docs/private-network)
 
 Đã kiểm thử cục bộ mô hình proxy tin cậy và kết nối trực tiếp. Cookie production vẫn có `Secure`, `HttpOnly`, `SameSite=Lax` khi Express nhận diện HTTPS từ proxy tin cậy. Header HTTPS giả từ kết nối chưa được tin cậy không khiến app phát cookie phiên. Trên Render thực tế, #81 cần xác minh chuỗi proxy và cookie/CSRF qua HTTPS trước khi mở demo. Dùng hai mạng khách khác nhau để xác nhận IP độc lập, rồi đổi header giả từ cùng một mạng để kiểm tra hạn mức không đổi.
+
+Với upload ảnh, lượt được phép bắt đầu nhận file tính một lần, kể cả file sau đó sai hoặc vượt giới hạn. Khi hai slot xử lý ảnh đang bận, server trả 429 trước khi trừ quota IP/chủ sân. CSRF và quyền được kiểm tra trước parser.

@@ -15,16 +15,20 @@
     "check": "npm run lint && node scripts/check-views.js",
     "seed": "node scripts/tao-du-lieu-demo.js",
     "migrate": "node scripts/chuyen-du-lieu-v2.js",
-    "admin:grant": "node scripts/cap-quyen-admin.js"
+    "admin:grant": "node scripts/cap-quyen-admin.js",
+    "images:cleanup": "node scripts/don-anh.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.11.0",
     "connect-mongo": "^6.0.0",
     "dotenv": "^18.0.8",
     "ejs": "^7.0.2",
     "express": "^5.3.0",
     "express-session": "^1.19.0",
-    "mongoose": "^9.11.2"
+    "mongoose": "^9.11.2",
+    "multer": "^2.5.0",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

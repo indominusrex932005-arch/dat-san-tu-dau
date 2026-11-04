@@ -6,6 +6,8 @@
   <title>Danh sách cơ sở</title>
   <link rel="stylesheet" href="/assets/css/app.css">
   <link rel="stylesheet" href="/assets/css/facilities.css">
+  <link rel="stylesheet" href="/assets/css/media.css">
+  <script src="/assets/js/media.js" defer></script>
 </head>
 <body class="facilities-page">
   <a class="facilities-skip-link" href="#noi-dung">Đến nội dung chính</a>
@@ -66,12 +68,13 @@
             <p class="facilities-eyebrow">Hẹn bạn ở buổi chơi tiếp theo</p>
             <h2>Chưa có cơ sở nào.</h2>
             <p class="facilities-empty-description">Thông tin cơ sở sẽ xuất hiện tại đây khi được cập nhật vào hệ thống. Bạn có thể ghé lại sau để khám phá các địa điểm thể thao.</p>
-            <a class="facilities-home-button" href="/">Trở về trang chủ <span aria-hidden="true">↗</span></a>
+            <a class="facilities-home-button" href="/">Trở về trang chủ <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
         <% } else { %>
           <div class="facilities-grid">
             <% for (const facility of facilities) { %>
               <article class="facility-card">
+                <%- include('partials/media-cover', { entity: facility }) %>
                 <div class="facilities-card-heading">
                   <span class="facilities-card-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none">
@@ -94,6 +97,7 @@
                     </div>
                   <% } %>
                 </dl>
+                <a class="media-card-link" href="/courts?facilityId=<%= facility._id %>">Khám phá sân <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
               </article>
             <% } %>
           </div>
