@@ -19,7 +19,7 @@ import { getPaymentConfig } from './config/payment-mode.js';
 import { health } from './controllers/health.controller.js';
 import { createPaymentWebhookRoutes } from './routes/payment-webhook.routes.js';
 
-export default function createApp(sessionStore, { paymentService = createPaymentService({ getPaymentConfig }), paymentWebhookHandler } = {}) {
+export default function createApp(sessionStore, { paymentService = createPaymentService({ getPaymentConfig }), paymentWebhookHandler, paymentCheckoutEnabled = false } = {}) {
   if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
     throw new Error('Hãy thêm SESSION_SECRET dài ít nhất 32 ký tự vào .env.');
   }
@@ -45,6 +45,10 @@ export default function createApp(sessionStore, { paymentService = createPayment
   for (const [name, key] of [['paymentMode', 'mode'], ['demoMode', 'demoMode'], ['publicDemo', 'publicDemo']]) {
     Object.defineProperty(app.locals, name, { enumerable: true, get: () => getPaymentConfig()[key] });
   }
+  if (paymentCheckoutEnabled && !app.locals.demoMode) {
+    throw new Error('Giao diện payment intent hiện cần môi trường demo thử nghiệm.');
+  }
+  app.locals.providerCheckoutEnabled = paymentCheckoutEnabled;
   app.disable('x-powered-by');
   app.set('trust proxy', trustedProxyAddresses(process.env.TRUST_PROXY_IPS));
   const limits = createPostRateLimits();
@@ -77,7 +81,7 @@ export default function createApp(sessionStore, { paymentService = createPayment
   }));
   app.use(attachCurrentUser);
   app.use(csrfProtection);
-  app.use('/', createPaymentRoutes(paymentService));
+  app.use('/', createPaymentRoutes(paymentService, { checkoutEnabled: paymentCheckoutEnabled }));
   app.use('/', homeRoutes);
   app.use('/facilities', facilityRoutes);
   app.use('/', createAuthRoutes(limits));
