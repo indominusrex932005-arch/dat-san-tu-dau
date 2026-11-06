@@ -2,19 +2,19 @@
 
 Refs #82. **Cập nhật ngày 05/11/2026; giữ PR Draft. Chưa được bàn giao URL HTTPS, release SHA hoặc bằng chứng triển khai online.** Đây là hướng dẫn đã cập nhật, không phải xác nhận đã tạo service/DB hay hoàn thành #82.
 
-Nguồn đã đối chiếu: main `180a3c586f86276778f9f5492e998f64688016a0` đã có #80/PR #92; [PR #95 / #81](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/95) tại `b605408499c3f1b55e8708766c74ca422677338d` đã ghép nền đó nhưng **chưa merge**. Hai SHA này là nguồn đọc, **không phải SHA release đang chạy**. Hợp đồng mode/health tham chiếu [tài liệu ở đúng SHA #95](https://github.com/indominusrex932005-arch/dat-san-tu-dau/blob/b605408499c3f1b55e8708766c74ca422677338d/docs/CHE_DO_THANH_TOAN.md); PR hướng dẫn không nhập code #95 vào main.
+Cập nhật nguồn ngày **06/11/2026**: main `e8133a77e28b352ca0286afd6b8613e7fb799e3c` đã có #95 (mode/health) và #98 qua #102 (payment intent core). Đây là SHA nguồn đã đọc, **không phải release SHA đang chạy**. Hợp đồng [chế độ thanh toán](CHE_DO_THANH_TOAN.md) đã có trên main. Mặc định chưa có adapter/người nhận được cấu hình; core payment intent không chứng minh QR hoặc ngân hàng hoạt động. #99–#101 còn được sửa/kiểm tra trên nhánh tích hợp; không coi chúng là một phần của release main này.
 
 ## 1. Điều kiện mở triển khai
 
 | Điều kiện | Trạng thái hiện có |
 | --- | --- |
-| Limiter và resolver proxy của #80/#92 | Đã có trên main `180a3c5`; vẫn phải xác minh proxy thật của service |
-| Production public-demo, mode và `/health` của #81/#95 | Hợp đồng đã rõ; PR #95 `b605408` còn chờ review/merge |
+| Limiter và resolver proxy của #80/#92 | Đã có trên main `e8133a7`; vẫn phải xác minh proxy thật của service |
+| Production public-demo, mode và `/health` của #81/#95 | Đã merge #95; vẫn cần cấu hình và xác minh môi trường deploy thực |
 | Quyền Render/GitHub, Atlas demo và executor bootstrap bảo mật | Chưa được xác minh/bàn giao cho lần deploy này |
 | Service, vùng, gói, số instance, auto-deploy và DB demo | Chưa được chọn/xác minh |
 | URL HTTPS, release SHA, deploy ID, kết quả thử từ thiết bị khác | Chưa bàn giao / chưa chạy |
 
-Chỉ deploy release main được duyệt sau khi #95 merge và đối chiếu lại SHA/config cuối. Main hiện có limiter nhưng chưa có hợp đồng public-demo của #95; không dùng `NODE_ENV=development` online để vượt điều kiện. Local test 181/181 và [CI #95](https://github.com/indominusrex932005-arch/dat-san-tu-dau/actions/runs/41927058743) ở source `b605408` là bằng chứng code/DB thử, **không phải kết quả HTTPS Render**.
+Chỉ deploy release main được duyệt và đối chiếu lại SHA/config cuối. Main đã có limiter và hợp đồng public-demo của #95; không dùng `NODE_ENV=development` online để vượt điều kiện. Local test 181/181 và [CI #95](https://github.com/indominusrex932005-arch/dat-san-tu-dau/actions/runs/41927058743) ở source `b605408` là bằng chứng code/DB thử, **không phải kết quả HTTPS Render**.
 
 ## 2. Tạo Web Service và chọn phiên bản
 
