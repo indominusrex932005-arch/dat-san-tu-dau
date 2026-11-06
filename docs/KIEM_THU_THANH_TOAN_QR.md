@@ -4,7 +4,7 @@ Ngày cập nhật 07/11/2026. Trạng thái **MOCK cục bộ**. Điểm bàn g
 
 ## Kiểm tra lại trên bản tích hợp ngày 07/11
 
-`main` hiện ở `ba0d0b352aa8ab7c7e9397f22e2a5e6bac60c94f`, đã có hợp đồng mode #81 và intent #85. Các PR #99, #100, #101 đã merge vào `feat/tich-hop-thanh-toan` ở `931bf9e98605c73a8b7fbaba5053312008efa631`. Bản đó dùng `recordAndReconcileProviderReceipt` để đưa biên nhận `REVIEW` sang sổ đối soát và phục hồi thao tác nếu callback được gửi lại. [Nhánh tích hợp đã thử](https://github.com/indominusrex932005-arch/dat-san-tu-dau/tree/931bf9e98605c73a8b7fbaba5053312008efa631)
+Các PR #99, #100, #101 đã merge vào `feat/tich-hop-thanh-toan` ở `931bf9e98605c73a8b7fbaba5053312008efa631`. Bản đó dùng `recordAndReconcileProviderReceipt` để đưa biên nhận `REVIEW` sang sổ đối soát và phục hồi thao tác nếu callback được gửi lại. Cuối lần đối chiếu, PR #103 đã đưa bản tích hợp lên `main` tại `fed8ff07d6848a658a18d10a61cbf51eb8a59475`. So với SHA tích hợp đã thử, `main` chỉ thêm hoặc sửa bốn file tài liệu. [SHA tích hợp đã thử](https://github.com/indominusrex932005-arch/dat-san-tu-dau/tree/931bf9e98605c73a8b7fbaba5053312008efa631) · [PR #103](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/103)
 
 Kiểm thử với Node 24.15.0, Chrome 156.0.8078.80, MongoDB 8.3.11 replica set riêng và provider `mock_qa89`. Bootstrap kiểm thử sử dụng `PAYMENT_MODE=demo`, mock adapter và handler của ứng dụng. Origin HTTP loopback và kết quả được ghi trong [JSON bản tích hợp](kiem-thu-thanh-toan/qa-89-followup/integration-results.json). `npm run check` đạt và `npm test` đạt **261/261**.
 
