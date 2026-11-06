@@ -6,7 +6,9 @@ Theo lựa chọn của nhóm trưởng, ngân hàng/QR thật sẽ được th�
 
 ![QR minh họa — không thể thanh toán](../public/images/qr-minh-hoa.svg)
 
-Hình này không chứa tài khoản ngân hàng hoặc payload VietQR. `DEMO_MODE=true` chỉ dùng trên máy phát triển. Server từ chối bật demo khi `NODE_ENV=production`.
+Hình này không chứa tài khoản ngân hàng hoặc payload VietQR. `PAYMENT_MODE=demo` cho phép mô phỏng khi cấu hình hợp lệ. Production demo yêu cầu thêm `DEMO_DATA_ONLY=true` và `DB_NAME` tường minh, với DB/tài khoản/dữ liệu tổng hợp cô lập. Cờ này là cam kết người vận hành, không tự kiểm tra DB; không dùng tên/SĐT/dữ liệu khách thật hoặc Atlas chung. Xóa hoàn toàn biến cũ `DEMO_MODE`, kể cả false. Xem [hợp đồng chế độ thanh toán](CHE_DO_THANH_TOAN.md).
+
+Mode mặc định `off` chặn thanh toán mô phỏng mới, gồm khoản thu thêm `EXTRA_DEMO`; các đơn/phiếu đã có `DEMO_PAID` vẫn giữ nhãn mô phỏng. `live` hiện từ chối khởi động; chưa có xác minh ngân hàng thật hoặc URL hosting được nghiệm thu trong phần chuẩn bị #81.
 
 ```mermaid
 flowchart LR
@@ -19,7 +21,7 @@ flowchart LR
     G --> H[EXPIRED - giải phóng ô]
 ```
 
-Nút mô phỏng vẫn kiểm tra CSRF, quyền xem đơn, hạn giữ và đủ ô thuộc đơn. Bấm lại không tạo hai giao dịch ban đầu. Không hồi sinh đơn hết hạn để chiếm ô đã có người khác đặt.
+Nút mô phỏng vẫn kiểm tra mode phía server, CSRF, quyền xem đơn, hạn giữ và đủ ô thuộc đơn. Client không được đổi mode qua form/query. Bấm lại không tạo hai giao dịch ban đầu. Không hồi sinh đơn hết hạn để chiếm ô đã có người khác đặt.
 
 Hạn giữ áp dụng từ issue #37 ngày 24/10/2026 là mốc sớm hơn giữa 10 phút từ lúc tạo đơn và giờ bắt đầu của ô đầu tiên, theo UTC của máy chủ. Từ đúng mốc này, HOLD không được xác nhận thanh toán; không được kéo dài tới hết 10 phút khi sân đã bắt đầu. Quy tắc dọn HOLD không giải phóng đơn CONFIRMED.
 
@@ -32,6 +34,8 @@ Hạn giữ áp dụng từ issue #37 ngày 24/10/2026 là mốc sớm hơn gi�
 5. Lưu mã giao dịch ngoài và chặn ghi nhận lặp; cập nhật tiền/đơn/lock trong transaction.
 6. Chỉ phát phiếu thật sau khi xác minh trạng thái hợp lệ; giữ tách `DEMO_PAID` với `PAID`.
 7. Kiểm thử webhook lặp, sai chữ ký/tiền, xác nhận đồng thời với hết hạn và khởi động lại server.
+
+Phần live #84 phải mở rộng cùng `config/payment-mode.js` và hợp đồng `PAYMENT_MODE`, không tạo cờ thanh toán thứ hai. Không biến `DEMO_PAID` đã lưu thành `PAID`; chỉ mở live sau khi có nguồn xác minh và kiểm thử tương ứng.
 
 ## Hủy/đổi/hoàn
 

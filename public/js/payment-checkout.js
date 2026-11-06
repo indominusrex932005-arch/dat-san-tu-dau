@@ -22,6 +22,7 @@ if (paymentPanel) {
   let stopped = false;
   let createAttempted = false;
   let canCreate = false;
+  let needsRecovery = false;
   let failures = 0;
 
   function clearPaymentLinks() {
@@ -71,6 +72,8 @@ if (paymentPanel) {
   }
 
   function render(data) {
+    needsRecovery = false;
+    checkButton.textContent = 'Kiểm tra thanh toán';
     if (data.booking?.id !== bookingId || data.booking.currency !== 'VND') throw new Error('Unexpected booking status');
     const receipt = receiptUrl(data);
     if (receipt) {
@@ -124,6 +127,8 @@ if (paymentPanel) {
         EXPIRED: 'Yêu cầu thanh toán đã hết hạn.'
       };
       status.textContent = messages[intent.status] || messages.UNKNOWN;
+      needsRecovery = ['CREATING', 'UNKNOWN'].includes(intent.status) && remainingSeconds() > 0;
+      if (needsRecovery) checkButton.textContent = 'Tra cứu yêu cầu cũ';
       if (intent.status === 'PENDING' && remainingSeconds() > 0) {
         if (typeof data.qrImage === 'string' && data.qrImage.startsWith('data:image/png;base64,')) {
           qr.src = data.qrImage;
@@ -171,6 +176,7 @@ if (paymentPanel) {
   }
 
   function unavailable() {
+    needsRecovery = false;
     failures = Math.min(failures + 1, 3);
     canCreate = false;
     clearPaymentLinks();
@@ -195,16 +201,15 @@ if (paymentPanel) {
     }
   }
 
-  form.addEventListener('submit', async event => {
-    event.preventDefault();
-    if (busy || createButton.disabled) return;
+  async function submitIntent() {
+    if (busy || stopped || remainingSeconds() <= 0) return;
     const restoreFocus = document.activeElement === createButton;
     createAttempted = true;
     busy = true;
     canCreate = false;
     clearTimeout(pollTimer);
     updateButtons();
-    status.textContent = 'Đang gửi yêu cầu thanh toán thử…';
+    status.textContent = needsRecovery ? 'Đang tra cứu yêu cầu thanh toán cũ…' : 'Đang gửi yêu cầu thanh toán thử…';
     try {
       await request(form.action, { method: 'POST', body: new URLSearchParams(new FormData(form)) });
     } catch { unavailable(); }
@@ -214,8 +219,12 @@ if (paymentPanel) {
     }
     await refresh();
     if (restoreFocus && !stopped) checkButton.focus();
+  }
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    if (!createButton.disabled) submitIntent();
   });
-  checkButton.addEventListener('click', refresh);
+  checkButton.addEventListener('click', () => needsRecovery ? submitIntent() : refresh());
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) clearTimeout(pollTimer);
     else if (!stopped) refresh();

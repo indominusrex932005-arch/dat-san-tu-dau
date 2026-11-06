@@ -1,18 +1,18 @@
 # UI checkout theo payment intent — Draft #87
 
-Nhánh `feat/qr-checkout-ui-87` được phát triển trên hợp đồng của #85 tại `a98294a1456946320cbc3556ed4e7dbe22c6f10f`, đã chứa main `180a3c586f86276778f9f5492e998f64688016a0`. Phần tích hợp provider và xác nhận webhook ở #86 còn chờ. Bản này chuẩn bị UI theo DTO hiện có và kiểm thử cục bộ với adapter mock. Các tiêu chí nghiệm thu Sandbox của #87 còn chờ. [PR #98 của #85](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/98) · [Issue #87](https://github.com/indominusrex932005-arch/dat-san-tu-dau/issues/87)
+Nhánh `feat/qr-checkout-ui-87` được phát triển trên hợp đồng của #85 tại `a98294a1456946320cbc3556ed4e7dbe22c6f10f`, đã chứa main `180a3c586f86276778f9f5492e998f64688016a0`. Nhánh đã cập nhật nền #95/#98 và lõi webhook thử #99. Phần tích hợp provider thực còn chờ. Bản này chuẩn bị UI theo DTO hiện có và kiểm thử cục bộ với adapter mock. Các tiêu chí nghiệm thu Sandbox của #87 còn chờ. [PR #98 của #85](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/98) · [Issue #87](https://github.com/indominusrex932005-arch/dat-san-tu-dau/issues/87)
 
 ## Hành vi giao diện
 
 Checkout hiển thị người nhận, tổng giá snapshot, mã đối soát và ảnh QR được tạo cục bộ từ `qrPayload` đã được server kiểm tra. Nếu chỉ có `checkoutUrl`, khách có thể mở trang thanh toán bằng liên kết HTTPS được server cho phép. Liên kết ngoài dùng `noreferrer` và không thêm guest token. Phần UI thử có nhãn Sandbox. Luồng mô phỏng nội bộ vẫn có nút riêng và phiếu ghi `DEMO_PAID`.
 
-Nút **Tạo yêu cầu thanh toán thử** gửi đúng một POST có CSRF theo thao tác của khách. Sau khi gửi, focus chuyển tới **Kiểm tra thanh toán**. Mở trang, tải lại, Back, polling và nút kiểm tra chỉ gửi GET. Client đọc JSON trả về từ server, dùng `textContent` cho nội dung động, ẩn QR/link khi trạng thái không rõ, provider lỗi, mất quyền hoặc tới hạn. Nếu đã chuyển tiền nhưng hết hạn/chưa có kết quả, UI hướng dẫn liên hệ cơ sở.
+Nút **Tạo yêu cầu thanh toán thử** gửi đúng một POST có CSRF theo thao tác của khách. Sau khi gửi, focus chuyển tới **Kiểm tra thanh toán**. Mở trang, tải lại, Back và polling chỉ gửi GET. Khi intent ở CREATING/UNKNOWN, nút **Tra cứu yêu cầu cũ** gửi POST có CSRF để backend lookup cùng intent/mã đã lưu; không tạo yêu cầu thu tiền thứ hai. Với trạng thái khác, nút kiểm tra chỉ gửi GET. Client đọc JSON trả về từ server, dùng `textContent` cho nội dung động, ẩn QR/link khi trạng thái không rõ, provider lỗi, mất quyền hoặc tới hạn. Nếu đã chuyển tiền nhưng hết hạn/chưa có kết quả, UI hướng dẫn liên hệ cơ sở.
 
 Polling mặc định 5 giây, lùi tối đa 30 giây khi đọc lỗi, dừng khi trang bị ẩn hoặc đơn kết thúc. Mỗi lần chỉ có một request, có timeout 8 giây. Đồng hồ dùng `serverNow`, `holdUntil` và thời gian đơn điệu trong browser. UI chỉ chuyển tới đường dẫn phiếu cùng origin và đúng booking khi GET trả Booking `CONFIRMED` kèm `PAID` hoặc `DEMO_PAID`.
 
 ## Bật bản dự thảo trong bootstrap thử
 
-`createApp(store, { paymentService, paymentCheckoutEnabled: true })` mở UI thử và GET trạng thái mới. Cần inject service và recipient đã xác minh trong môi trường demo. Mặc định `paymentCheckoutEnabled=false`, checkout đang chạy tiếp tục dùng giao diện mô phỏng hiện có. Bootstrap từ chối bật UI dự thảo khi demo chưa được cho phép. Hợp nhất resolver mode của #81 và bàn giao provider của #85/#86 trước khi nối bootstrap triển khai.
+`createApp(store, { paymentService, paymentCheckoutEnabled: true })` mở UI thử và GET trạng thái mới. Cần inject service và recipient đã xác minh trong môi trường demo. Mặc định `paymentCheckoutEnabled=false`, checkout đang chạy tiếp tục dùng giao diện mô phỏng hiện có. Bootstrap từ chối bật UI dự thảo khi demo chưa được cho phép. Nền đã hợp nhất resolver PAYMENT_MODE của #81/#95 và webhook thử #86. Bootstrap vẫn tắt mặc định; provider/merchant Sandbox thực còn chờ bàn giao.
 
 | Route | Vai trò |
 | --- | --- |

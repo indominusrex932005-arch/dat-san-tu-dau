@@ -9,6 +9,7 @@
   <% const facility = booking.facility || booking.court?.facility; const accessToken = typeof token === 'string' ? token : ''; const query = accessToken ? '?token=' + encodeURIComponent(accessToken) : ''; %>
   <main>
     <p class="booking-eyebrow">GIỮ CHỖ / THANH TOÁN</p><h1>Kiểm tra đơn <%= booking.publicCode || booking._id %></h1>
+    <% if (demoMode) { %><p class="booking-notice">BẢN DEMO — Chỉ dùng dữ liệu và tài khoản thử. Thanh toán được mô phỏng, không chuyển hoặc nhận tiền thật.</p><% } %>
     <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
     <div class="booking-layout">
       <section class="demo-card">

@@ -12,6 +12,7 @@ test('Checkout dự thảo đọc đúng quyền, QR và trạng thái máy ch�
   let createCalls = 0;
   let lookupCalls = 0;
   let createStatus = 'PENDING';
+  let recover = false;
   const service = createPaymentService({
     adapter: {
       provider: 'ui_fixture', environment: 'sandbox', checkoutOrigins: ['https://sandbox.example.invalid'],
@@ -22,7 +23,14 @@ test('Checkout dự thảo đọc đúng quyền, QR và trạng thái máy ch�
           qrPayload: 'UI-TEST-ONLY-' + request.bookingId,
           checkoutUrl: 'https://sandbox.example.invalid/pay/' + request.bookingId };
       },
-      lookupIntent: async () => { lookupCalls++; return { status: 'UNKNOWN' }; }
+      lookupIntent: async request => {
+        lookupCalls++;
+        return recover ? {
+          status: 'PENDING', amountVND: request.amountVND, currency: 'VND',
+          reconciliationCode: request.reconciliationCode, providerPaymentId: 'fixture-' + request.bookingId,
+          qrPayload: 'UI-TEST-ONLY-' + request.bookingId
+        } : { status: 'UNKNOWN' };
+      }
     },
     resolveRecipient: async () => ({
       verified: true, merchantId: 'fixture-merchant', bindingId: 'fixture-binding',
@@ -153,6 +161,31 @@ test('Checkout dự thảo đọc đúng quyền, QR và trạng thái máy ch�
     assert.match(receipt.html, /In \/ Lưu PDF/);
   });
 
+  await t.test('Tra cứu UNKNOWN qua POST có CSRF lấy lại QR cũ; GET không gọi provider', async () => {
+    const unknown = await hold();
+    const beforeCreate = createCalls;
+    const beforeLookup = lookupCalls;
+    createStatus = 'UNKNOWN';
+    try {
+      assert.equal((await create(unknown)).status, 202);
+      const original = await Payment.findOne({ booking: unknown.id, type: 'INITIAL_INTENT' }).lean();
+      await Payment.updateOne({ _id: original._id }, { $set: { nextCheckAt: new Date(0) } });
+      assert.equal(state(await read(unknown)).intent.status, 'UNKNOWN');
+      assert.equal(lookupCalls, beforeLookup);
+      recover = true;
+      assert.equal((await unknown.client.post(`/bookings/${unknown.id}/payment-intents`, { token: unknown.token }, { csrf: false })).status, 403);
+      assert.equal((await create(unknown)).status, 200);
+      const recovered = state(await read(unknown));
+      assert.equal(recovered.intent.status, 'PENDING');
+      assert.match(recovered.qrImage, /^data:image\/png;base64,/);
+      assert.equal(recovered.intent.id, String(original._id));
+      assert.equal(recovered.intent.reconciliationCode, original.reconciliationCode);
+      assert.equal(createCalls, beforeCreate + 1);
+      assert.equal(lookupCalls, beforeLookup + 1);
+      assert.equal(await Payment.countDocuments({ booking: unknown.id, type: 'INITIAL_INTENT' }), 1);
+    } finally { createStatus = 'PENDING'; recover = false; }
+  });
+
   await t.test('Bootstrap mặc định tiếp tục checkout mô phỏng và ẩn route thử nghiệm', async () => {
     const server = createApp(new session.MemoryStore()).listen(0, '127.0.0.1');
     await once(server, 'listening');
@@ -171,9 +204,12 @@ test('Checkout dự thảo đọc đúng quyền, QR và trạng thái máy ch�
 });
 
 test('UI dự thảo chỉ được bật bằng cấu hình server trong môi trường demo', t => {
-  const settings = { DEMO_MODE: 'false', SESSION_SECRET: 'local-ui-bootstrap-only-secret-2026-123456789' };
+  const settings = { PAYMENT_MODE: 'off', DEMO_MODE: undefined, SESSION_SECRET: 'local-ui-bootstrap-only-secret-2026-123456789' };
   const previous = Object.fromEntries(Object.keys(settings).map(name => [name, process.env[name]]));
-  Object.assign(process.env, settings);
+  for (const [name, value] of Object.entries(settings)) {
+    if (value === undefined) delete process.env[name];
+    else process.env[name] = value;
+  }
   t.after(() => {
     for (const [name, value] of Object.entries(previous)) {
       if (value === undefined) delete process.env[name];
