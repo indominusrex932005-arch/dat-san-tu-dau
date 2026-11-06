@@ -2,9 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, feat/tich-hop-thanh-toan]
   push:
-    branches: [main]
+    branches: [main, feat/tich-hop-thanh-toan]
 
 permissions:
   contents: read
