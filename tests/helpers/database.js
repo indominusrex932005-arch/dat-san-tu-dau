@@ -12,7 +12,9 @@ import BookingRequest from '../../models/BookingRequest.js';
 
 export { mongoose, User, Facility, Court, Booking, SlotLock, Payment, BookingRequest };
 
-export async function createTestEnvironment({ nodeEnv = 'test', paymentMode = 'demo', trustProxyIPs = '' } = {}) {
+export async function createTestEnvironment({
+  nodeEnv = 'test', paymentMode = 'demo', trustProxyIPs = '', appOptions = {}
+} = {}) {
   const uri = process.env.TEST_MONGODB_URI || 'mongodb://127.0.0.1:27029/?replicaSet=rs0&directConnection=true';
   // The integration suite must never fall back to a developer's Atlas database.
   if (!/^mongodb:\/\/(?:127\.0\.0\.1|localhost):\d+(?:\/|\?|$)/.test(uri)) {
@@ -37,7 +39,7 @@ export async function createTestEnvironment({ nodeEnv = 'test', paymentMode = 'd
   }
   await Promise.all([User, Facility, Court, Booking, SlotLock, Payment, BookingRequest].map(model => model.init()));
   const store = MongoStore.create({ client: mongoose.connection.getClient(), dbName, collectionName: 'sessions' });
-  let server = createApp(store).listen(0, '127.0.0.1');
+  let server = createApp(store, appOptions).listen(0, '127.0.0.1');
   await once(server, 'listening');
   const base = `http://127.0.0.1:${server.address().port}`;
   return {
