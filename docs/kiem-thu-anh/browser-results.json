@@ -1,0 +1,58 @@
+{
+  "storage": "server-side local test adapter; Cloudinary calls not exercised",
+  "results": [
+    {
+      "case": "home-4-facilities",
+      "width": 1366,
+      "pass": true
+    },
+    {
+      "case": "home-4-facilities",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "case": "owner-upload-preview-saved",
+      "width": 1366,
+      "pass": true
+    },
+    {
+      "case": "owner-upload-preview-saved",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "case": "uploaded-facility-cover-on-home",
+      "pass": true
+    },
+    {
+      "case": "court-gallery-open-and-escape",
+      "pass": true
+    }
+  ],
+  "reviewDate": "2026-11-05",
+  "branch": "feat/anh-co-so-va-san",
+  "baseCommit": "180a3c586f86276778f9f5492e998f64688016a0",
+  "images": [
+    {
+      "file": "home-1366.png",
+      "sha256": "984d9f8067d2321e2a71c676d9f4bb2510a03b60e497f19d673780b555a36a8e",
+      "description": "Dữ liệu tổng hợp; storage adapter local, chưa gọi Cloudinary thật"
+    },
+    {
+      "file": "home-390.png",
+      "sha256": "b6d8f5d79c02384b5a38fe312541f903c0aa7f18d4ab31460348bb82f7dacd92",
+      "description": "Dữ liệu tổng hợp; storage adapter local, chưa gọi Cloudinary thật"
+    },
+    {
+      "file": "owner-photo-1366.png",
+      "sha256": "abc4fdc874e8549d89663e42815af7bc0b64db428ccd645e9b2bea0cc367a4f9",
+      "description": "Dữ liệu tổng hợp; storage adapter local, chưa gọi Cloudinary thật"
+    },
+    {
+      "file": "owner-photo-390.png",
+      "sha256": "93d4738f224b4655a715000740719ff7414386217a618945a1562d9133880e9e",
+      "description": "Dữ liệu tổng hợp; storage adapter local, chưa gọi Cloudinary thật"
+    }
+  ]
+}

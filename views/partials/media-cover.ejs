@@ -1,0 +1,5 @@
+<% const visual = entity.displayImage || (typeof coverImage === 'function' ? coverImage(entity) : { url: '/assets/images/court-1.svg', illustration: true }); %>
+<figure class="media-cover">
+  <img src="<%= visual.url %>" alt="<%= visual.illustration ? 'Minh họa không gian sân thể thao' : 'Ảnh ' + entity.name %>" width="800" height="500" loading="lazy" decoding="async" data-media-fallback>
+  <figcaption class="media-illustration" <%- visual.illustration ? '' : 'hidden' %>>Ảnh minh họa</figcaption>
+</figure>

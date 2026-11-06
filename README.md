@@ -44,6 +44,8 @@ npm start
 
 Seed thêm cơ sở/sân mẫu, không tạo tài khoản hoặc xóa dữ liệu. Mở http://localhost:3000.
 
+Seed hiện bổ sung ba cơ sở mẫu Hải Châu, Thanh Khê, Sơn Trà bên cạnh cơ sở ban đầu. Trang chủ có ảnh đại diện và đường dẫn đến sân của từng cơ sở. OWNER quản lý ảnh trong form sửa cơ sở/sân; xem [cấu hình Cloudinary và hướng dẫn ảnh](docs/HINH_ANH_CO_SO_VA_SAN.md). Chưa cấu hình kho ảnh vẫn xem và đặt sân được với hình minh họa.
+
 ## Cấp ADMIN và chủ sân
 
 1. Đăng ký một tài khoản khách riêng cho nhóm trưởng tại `/register`.

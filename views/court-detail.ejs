@@ -4,6 +4,8 @@
   <title><%= title %> | Sân Thể Thao</title>
   <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/booking.css">
   <script src="/assets/js/booking.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/media.css">
+  <script src="/assets/js/media.js" defer></script>
 </head><body class="demo-page"><div class="demo-shell">
   <%- include('partials/navigation') %>
   <%
@@ -29,6 +31,7 @@
       </ul><% } %>
     </div><% } %>
     <% if (!receivingBookings) { %><p class="booking-notice">Cơ sở đang chờ cấp chủ sân hoặc cập nhật số điện thoại, nên chưa nhận đơn mới.</p><% } %>
+    <%- include('partials/court-gallery', { court }) %>
     <form action="/courts/<%= court._id %>" method="GET" class="booking-date-form">
       <label for="date">Ngày chơi</label><input type="date" id="date" name="date" value="<%= date %>" required>
       <button type="submit" class="demo-button demo-button-secondary">Xem lịch</button>

@@ -8,7 +8,7 @@ export function csrfProtection(req, res, next) {
 
   if (req.method !== 'POST') return next();
 
-  const submitted = req.body?._csrf;
+  const submitted = req.get('X-CSRF-Token') || req.body?._csrf;
   const expected = req.session.csrfToken;
   const valid = typeof submitted === 'string'
     && /^[a-f0-9]{64}$/.test(submitted)

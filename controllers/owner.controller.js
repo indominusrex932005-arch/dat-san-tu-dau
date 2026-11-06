@@ -174,17 +174,19 @@ export async function showEditCourtForm(req, res) {
 
 async function saveCourt(req, res, editing) {
   let facility;
+  let existingCourt;
   try {
     if (editing && !mongoose.isObjectIdOrHexString(req.params.id)) fail(400, 'Mã sân không hợp lệ.');
     facility = await ownFacility(req.currentUser);
-    if (editing && !await Court.exists({ _id: req.params.id, facility: facility._id })) {
+    if (editing) existingCourt = await Court.findOne({ _id: req.params.id, facility: facility._id }).lean();
+    if (editing && !existingCourt) {
       fail(404, 'Không tìm thấy sân thuộc cơ sở của bạn.');
     }
     const { values, error } = courtInput(req.body);
     if (error) {
       return res.status(400).render('owner-court-form', {
         title: editing ? 'Sửa sân và bảng giá' : 'Thêm sân',
-        court: { ...values, ...(editing ? { _id: req.params.id } : {}) }, facility, errorMessage: error
+        court: { ...existingCourt, ...values, ...(editing ? { _id: req.params.id } : {}) }, facility, errorMessage: error
       });
     }
     if (editing) {
@@ -202,7 +204,7 @@ async function saveCourt(req, res, editing) {
       const { values } = courtInput(req.body);
       return res.status(409).render('owner-court-form', {
         title: editing ? 'Sửa sân và bảng giá' : 'Thêm sân',
-        court: { ...values, ...(editing ? { _id: req.params.id } : {}) }, facility,
+        court: { ...existingCourt, ...values, ...(editing ? { _id: req.params.id } : {}) }, facility,
         errorMessage: 'Tên sân đã tồn tại trong cơ sở của bạn.'
       });
     }
