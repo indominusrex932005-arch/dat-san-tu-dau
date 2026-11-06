@@ -2,13 +2,13 @@
 
 Ngày đối chiếu nguồn: **05/11/2026**. Trạng thái: **ĐỀ XUẤT, CHỜ NHÓM TRƯỞNG/THẦY CHỐT**. Chưa chọn nhà cung cấp hoặc tài khoản nhận tiền; chưa mở merchant, nhận secret, gọi API tạo giao dịch hay chuyển tiền thật. Tài liệu này chưa đủ để đóng [#84](https://github.com/indominusrex932005-arch/dat-san-tu-dau/issues/84).
 
-Nguồn code đã đọc: main `5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47`. Hợp đồng mode tham chiếu [PR #95 / #81](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/95), SHA `2aa7942cb0132230336d7b57a1eea22cff1ef6ef`, đang chờ tích hợp tại lúc soạn. Nhánh thiết kế chỉ thêm tài liệu, không đưa code live vào ứng dụng.
+Cập nhật trạng thái code ngày **06/11/2026**: main `e8133a77e28b352ca0286afd6b8613e7fb799e3c` đã có #95 và payment intent core #98/#102. Cấu hình dùng [PAYMENT_MODE](CHE_DO_THANH_TOAN.md), không dùng DEMO_MODE. Core có create/lookup qua adapter inject, nhưng app mặc định chưa gắn provider/merchant. Webhook, UI và đối soát #99–#101 còn ở nhánh tích hợp, chỉ được kiểm thử mock/DB cục bộ; chưa phải provider Sandbox hoặc thanh toán thật. Nguồn so sánh sản phẩm phía dưới vẫn là ngày 05/11/2026; cần xác minh điều kiện với nhà cung cấp trước khi chốt. Nhánh thiết kế không đưa code live vào ứng dụng.
 
 ## 1. Phần đã có và phần chưa có
 
 | Đã có trong code main | Chưa có; mọi thiết kế bên dưới là đề xuất |
 | --- | --- |
-| Booking lưu giá từng ô 30 phút và tổng nguyên đồng; giữ tất cả ô bằng transaction | PaymentIntent, webhook/IPN, truy vấn nhà cung cấp và đối soát giao dịch thật |
+| Booking lưu giá từng ô 30 phút và tổng nguyên đồng; giữ tất cả ô bằng transaction; có INITIAL_INTENT core qua adapter inject | Adapter provider thực, webhook/IPN và đối soát giao dịch thật |
 | Hạn HOLD là mốc sớm hơn giữa tạo đơn +10 phút và giờ ô đầu; SlotLock có unique sân/giờ | Merchant/tài khoản ngân hàng đã liên kết, ledger tiền nhận/phân bổ/hoàn, outbox và worker phục hồi |
 | Mô phỏng ghi `INITIAL_DEMO`/`EXTRA_DEMO`, phương thức `DEMO`, Booking `DEMO_PAID` | Writer live hợp lệ cho `PAID`; enum `PAID` có sẵn không chứng minh đã nhận tiền |
 | Hủy/đổi theo quyền; OWNER ghi nhận hoàn thủ công | Thu thêm live có bằng chứng và chống hoàn vượt số tiền thực nhận |

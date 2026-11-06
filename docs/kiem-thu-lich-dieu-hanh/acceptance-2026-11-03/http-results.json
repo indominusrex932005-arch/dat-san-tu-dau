@@ -1,0 +1,384 @@
+{
+  "issue": 76,
+  "pr": 71,
+  "testedSHA": "507ad768ed1b25b6c680544601f7e02e1c4a5e0d",
+  "mainSHA": "36e75cdf33dc7cf7bd568ed3ae938698af47bca1",
+  "executedAtUTC": "2026-11-03T07:25:49.299Z",
+  "timezone": "Asia/Bangkok",
+  "source": "Real Express app/controller/service/EJS, MongoStore, localMongoDBreplica qaOwnerCalendar76; nofake routes.",
+  "fixture": {
+    "users": 7,
+    "facilities": 4,
+    "courts": 9,
+    "normalCourts": 4,
+    "otherOwnerCourts": 2,
+    "longCourts": 3,
+    "emptyCourts": 0,
+    "date": "2026-11-06",
+    "today": "2026-11-03",
+    "laterDate": "2026-11-23",
+    "expiryMethod": "RealPOSTcreatesHOLD;onlyQAfixture07:00deadline shortened tonow+1.5s, actualwaitpastdeadline. NoOSclock/sourcechange; no claimofwaiting10minutes."
+  },
+  "summary": {
+    "total": 12,
+    "passed": 12,
+    "failed": 0
+  },
+  "cases": [
+    {
+      "id": "HTTP-TRANSITION",
+      "steps": [
+        "GET trống05:30; POST giữ05:30/06:00; GET; POSTdemo-payment; GETlịch."
+      ],
+      "expected": "AVAILABLE→LOCKED→BOOKED,2locks+1DEMO payment.",
+      "actual": {
+        "initial": "AVAILABLE",
+        "afterHold": "LOCKED",
+        "afterDemo": "BOOKED",
+        "holdHTTP": 303,
+        "demoHTTP": 303,
+        "bookingStatus": "CONFIRMED",
+        "paymentStatus": "DEMO_PAID",
+        "confirmedLocks": 2,
+        "payments": 1
+      },
+      "status": "PASS",
+      "executedAtUTC": "2026-11-03T07:23:23.370Z"
+    },
+    {
+      "id": "HTTP-STARTED-POST",
+      "steps": [
+        "GET hôm nay00:00 đã bắt đầu; gửi POST giữ thật cho cùng ô."
+      ],
+      "expected": "ÔUNAVAILABLE;POST400,không thêm Booking/SlotLock/Payment hoặc đổi dữ liệu nghiệp vụ.",
+      "actual": {
+        "serverObservedAtUTC": "2026-11-03T07:23:23.457Z",
+        "date": "2026-11-03",
+        "slot": "00:00",
+        "calendarStatus": "UNAVAILABLE",
+        "postHTTP": 400,
+        "businessUnchanged": true
+      },
+      "status": "PASS",
+      "executedAtUTC": "2026-11-03T07:23:23.457Z"
+    },
+    {
+      "id": "HTTP-LIVE-EXPIRED-HOLD",
+      "steps": [
+        "POST HOLD06:30; POSTHOLD07:00; chỉDBQA đổi deadline07:00 thànhnow+1.5s; chờ thật qua hạn; GETlại."
+      ],
+      "expected": "07:00LOCKED→AVAILABLE;live06:30LOCKED;confirmed05:30BOOKED;GETkhông dọn Booking/lock.",
+      "actual": {
+        "date": "2026-11-06",
+        "shortDeadlineUTC": "2026-11-03T07:23:24.999Z",
+        "waitedMs": 1850,
+        "initial": "LOCKED",
+        "afterDeadline": "AVAILABLE",
+        "liveStatus": "LOCKED",
+        "liveHoldExpiresAtUTC": "2026-11-03T07:33:23.460Z",
+        "confirmedStatus": "BOOKED",
+        "expiredFixtureBookingStillHOLD": true,
+        "expiredFixtureLockStillPresent": true,
+        "businessSnapshotUnchangedAfterWaitingGET": true,
+        "limitation": "Chỉ rút deadline riêng fixtureDB+chờ thật;không thay đồng hồ hệ điều hành/source hoặc khẳng định đã chờ10phút."
+      },
+      "status": "PASS",
+      "executedAtUTC": "2026-11-03T07:23:25.371Z"
+    },
+    {
+      "id": "HTTP-AUTH",
+      "steps": [
+        "GuestGETcalendar; POSTloginforCUSTOMER,pending,unassigned;GETcalendarwithoutfollowingunrelatedbooking-historyredirect."
+      ],
+      "expected": {
+        "guest": "303/login",
+        "customer": 403,
+        "pending": 403,
+        "unassigned": 403
+      },
+      "actual": {
+        "guestHTTP": 303,
+        "guestRedirect": "/login",
+        "denied": {
+          "customer": 403,
+          "pending": 403,
+          "unassigned": 403
+        },
+        "noCourtRowsInDeniedResponses": true
+      },
+      "status": "PASS",
+      "executedAtUTC": "2026-11-03T07:25:48.898Z"
+    },
+    {
+      "id": "HTTP-OWNER-SCOPE",
+      "steps": [
+        "A/BGETsamefuturedate;Ainjectsfacility/ownerqueryvaluesofB."
+      ],
+      "expected": {
+        "aRows": 4,
+        "bRows": 2,
+        "queryCannotChangeScope": true
+      },
+      "actual": {
+        "aHTTP": 200,
+        "bHTTP": 200,
+        "aRows": 4,
+        "bRows": 2,
+        "querySwitchHTTP": 200,
+        "queryScopeUnchanged": true,
+        "otherFacilityCourtIDsAbsent": true
+      },
+      "status": "PASS",
+      "executedAtUTC": "2026-11-03T07:25:48.928Z"
+    },
+    {
+      "id": "HTTP-AXIS-INACTIVE",
+      "steps": [
+        "GETAcalendarwith4courtsdifferenthours;inspectheader/rowsandallinactivecells."
+      ],
+      "expected": "Houraxis=unionofconfiguredcourts; outsidehours/inactiveUNAVAILABLE; nofakecontinuoushours.",
+      "actual": {
+        "http": 200,
+        "axisTimes": [
+          "00:00",
+          "05:00",
+          "05:30",
+          "06:00",
+          "06:30",
+          "07:00",
+          "07:30",
+          "08:00",
+          "08:30",
+          "17:00",
+          "17:30",
+          "18:00",
+          "18:30",
+          "19:00",
+          "19:30",
+          "20:00",
+          "20:30",
+          "21:00",
+          "21:30"
+        ],
+        "rowCount": 4,
+        "identicalAxisForAllRows": true,
+        "outsideHoursUnavailable": true,
+        "inactiveAllUnavailable": true,
+        "inactiveLabel": true
+      },
+      "status": "PASS",
+      "executedAtUTC": "2026-11-03T07:25:48.967Z"
+    },
+    {
+      "id": "HTTP-EMPTY-LONG",
+      "steps": [
+        "GETemptyandlongOWNERcalendars."
+      ],
+      "expected": "Empty0rowswithmessage;150charfacility/court+500charaddressescapedandscoped.",
+      "actual": {
+        "emptyHTTP": 200,
+        "emptyRows": 0,
+        "explanatoryEmptyState": true,
+        "longHTTP": 200,
+        "longRows": 3,
+        "longTextLengths": {
+          "facility": 150,
+          "address": 500,
+          "court": 150
+        },
+        "escaped": true,
+        "limitation": "HTML/data only; browser geometry is separate."
+      },
+      "status": "PASS",
+      "executedAtUTC": "2026-11-03T07:25:48.980Z"
+    },
+    {
+      "id": "HTTP-DATES",
+      "steps": [
+        "GETwithoutdate;GETfuture+20days;inspect7navigationlinksandretainedselecteddate."
+      ],
+      "expected": "Vietnamtodaydefault;exacttoday→+6links;futuredateaccepted.",
+      "actual": {
+        "todayVN": "2026-11-03",
+        "defaultHTTP": 200,
+        "dayOptions": [
+          "2026-11-03",
+          "2026-11-04",
+          "2026-11-05",
+          "2026-11-06",
+          "2026-11-07",
+          "2026-11-08",
+          "2026-11-09"
+        ],
+        "futureHTTP": 200,
+        "selectedFutureDate": "2026-11-23",
+        "sevenDaysRemainFromToday": true
+      },
+      "status": "PASS",
+      "executedAtUTC": "2026-11-03T07:25:49.002Z"
+    },
+    {
+      "id": "HTTP-BAD-DATES",
+      "steps": [
+        "GETempty,malformed,nonexistent,pastandrepeateddates."
+      ],
+      "expected": "All400,noempty-calendarreplacementor500.",
+      "actual": {
+        "total": 6,
+        "responses": [
+          {
+            "http": 400,
+            "noCourtRows": true,
+            "notEmptyState": true
+          },
+          {
+            "http": 400,
+            "noCourtRows": true,
+            "notEmptyState": true
+          },
+          {
+            "http": 400,
+            "noCourtRows": true,
+            "notEmptyState": true
+          },
+          {
+            "http": 400,
+            "noCourtRows": true,
+            "notEmptyState": true
+          },
+          {
+            "http": 400,
+            "noCourtRows": true,
+            "notEmptyState": true
+          },
+          {
+            "http": 400,
+            "noCourtRows": true,
+            "notEmptyState": true
+          }
+        ]
+      },
+      "status": "PASS",
+      "executedAtUTC": "2026-11-03T07:25:49.027Z"
+    },
+    {
+      "id": "HTTP-PRIVACY",
+      "steps": [
+        "ComparecalendarHTMLagainstprivatevaluesofthethreeQAbookingswithoutrecordingthosevalues."
+      ],
+      "expected": "Noidentity/contact,bookingID/code,guestTokenHashortokenURLincalendar.",
+      "actual": {
+        "http": 200,
+        "comparedBookings": 3,
+        "privateBookingFieldsAbsent": true,
+        "receiptTokenLinkAbsent": true
+      },
+      "status": "PASS",
+      "executedAtUTC": "2026-11-03T07:25:49.077Z"
+    },
+    {
+      "id": "HTTP-NAV-CSS-SOURCE",
+      "steps": [
+        "GETexistingpublicpages,ownerDashboardandcalendarCSS;compareUIworkingfilestoexecutionSHA."
+      ],
+      "expected": "Existingroutes/CSS200;workingUIexactcommittedsource;calendarhrefreal.",
+      "actual": {
+        "statuses": {
+          "/": 200,
+          "/facilities": 200,
+          "/courts": 200,
+          "/login": 200,
+          "/assets/css/owner-calendar.css": 200
+        },
+        "ownerDashboardHTTP": 200,
+        "calendarNavigationPresent": true,
+        "exactExecutionSource": true,
+        "sourceHashes": {
+          "views/owner-calendar.ejs": "734fae7df295d25436dd16401595d88a7e38bfc63a3b84865b7b634c978fab99",
+          "public/css/owner-calendar.css": "26572da773c8151916e9512160aeceec08f594db57216c41261d6b8af89a5291",
+          "views/owner-dashboard.ejs": "261743943de6f193993184fb78aaadfc7419db21b54081cecdaa75ead77f9762"
+        }
+      },
+      "status": "PASS",
+      "executedAtUTC": "2026-11-03T07:25:49.095Z"
+    },
+    {
+      "id": "HTTP-READ-ONLY",
+      "steps": [
+        "Compareall7businesscollectioncounts+SHA256before/afterallGETs,includingbrowserGETssofar;excludeSessions."
+      ],
+      "expected": "Booking/SlotLock/Payment/Request/User/Facility/Courtunchanged.",
+      "actual": {
+        "unchanged": true,
+        "before": {
+          "User": {
+            "count": 7,
+            "sha256": "2003db9f5f72035dade8af657010a28ca33e026ec070044ee82a6ab1df6e4026"
+          },
+          "Facility": {
+            "count": 4,
+            "sha256": "ccba5332136cbb4816eca0ba1df8ae5e45321fa187eb928e6a30b1b8a01c3b4e"
+          },
+          "Court": {
+            "count": 9,
+            "sha256": "98b739511a3cac8a3d35d5dc1cd2d8ccf258d875808dc25806cfa926a4a0ad51"
+          },
+          "Booking": {
+            "count": 3,
+            "sha256": "a4c9c6a21867d69ab7f9d85eb129d98e6d36303ac10112fadf19441f31ef18d9"
+          },
+          "SlotLock": {
+            "count": 4,
+            "sha256": "c5167fc81c6d0f107a67fee0845dc56892b2a8133869e38abaee343f1228b4a9"
+          },
+          "Payment": {
+            "count": 1,
+            "sha256": "529d492d755d1ae33f5a9498a14e949cdad221e64a906aef0f76b1647f13d6e0"
+          },
+          "BookingRequest": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        },
+        "after": {
+          "User": {
+            "count": 7,
+            "sha256": "2003db9f5f72035dade8af657010a28ca33e026ec070044ee82a6ab1df6e4026"
+          },
+          "Facility": {
+            "count": 4,
+            "sha256": "ccba5332136cbb4816eca0ba1df8ae5e45321fa187eb928e6a30b1b8a01c3b4e"
+          },
+          "Court": {
+            "count": 9,
+            "sha256": "98b739511a3cac8a3d35d5dc1cd2d8ccf258d875808dc25806cfa926a4a0ad51"
+          },
+          "Booking": {
+            "count": 3,
+            "sha256": "a4c9c6a21867d69ab7f9d85eb129d98e6d36303ac10112fadf19441f31ef18d9"
+          },
+          "SlotLock": {
+            "count": 4,
+            "sha256": "c5167fc81c6d0f107a67fee0845dc56892b2a8133869e38abaee343f1228b4a9"
+          },
+          "Payment": {
+            "count": 1,
+            "sha256": "529d492d755d1ae33f5a9498a14e949cdad221e64a906aef0f76b1647f13d6e0"
+          },
+          "BookingRequest": {
+            "count": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        },
+        "sessionsExcluded": true
+      },
+      "status": "PASS",
+      "executedAtUTC": "2026-11-03T07:25:49.296Z"
+    }
+  ],
+  "limits": [
+    "Browserlayout/keyboard/scrollingareindependentrootobservations.",
+    "DB500andstale-sessioncasesarecoveredbyfreshrepositoryautomatedsuite; notfabricatedasmanualHTTPfaultinjection."
+  ],
+  "privacy": "No password, QAmarker, cookie, CSRF value, rawHTML, bookingID/code, guest token or checkout/receiptURL in this report."
+}

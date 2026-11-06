@@ -210,27 +210,32 @@ test('Đặt nhiều ô, vai trò, khách vãng lai và xử lý đơn trên Mon
     assert.equal(await SlotLock.countDocuments({ booking: details.id }), 0);
   });
 
-  await t.test('Tắt DEMO_MODE không được xác nhận tiền mô phỏng', async () => {
+  await t.test('PAYMENT_MODE=off không được xác nhận tiền mô phỏng', async () => {
     const client = browser();
     const details = await holdAs(client, court, ['10:00']);
     const { simulatePayment } = await import('../services/booking.service.js');
-    process.env.DEMO_MODE = 'false';
+    process.env.PAYMENT_MODE = 'off';
     try {
       await assert.rejects(simulatePayment(details.id, { token: details.token }), error => error.status >= 400 && error.status < 500);
       assert.equal((await Booking.findById(details.id)).paymentStatus, 'UNPAID');
-    } finally { process.env.DEMO_MODE = 'true'; }
+      assert.equal(await Payment.countDocuments({ booking: details.id }), 0);
+    } finally { process.env.PAYMENT_MODE = 'demo'; }
   });
 
-  await t.test('NODE_ENV production chặn mô phỏng dù DEMO_MODE bật', async () => {
+  await t.test('Production cho phép demo được cấu hình rõ và vẫn lưu DEMO_PAID', async () => {
     const client = browser();
     const details = await holdAs(client, court, ['10:30']);
     const { simulatePayment } = await import('../services/booking.service.js');
     process.env.NODE_ENV = 'production';
+    process.env.DEMO_DATA_ONLY = 'true';
     try {
-      await assert.rejects(simulatePayment(details.id, { token: details.token }), error => error.status === 403);
-      assert.equal((await Booking.findById(details.id)).paymentStatus, 'UNPAID');
-      assert.equal(await Payment.countDocuments({ booking: details.id }), 0);
-    } finally { process.env.NODE_ENV = 'test'; }
+      await simulatePayment(details.id, { token: details.token });
+      assert.equal((await Booking.findById(details.id)).paymentStatus, 'DEMO_PAID');
+      assert.equal(await Payment.countDocuments({ booking: details.id, method: 'DEMO' }), 1);
+    } finally {
+      process.env.NODE_ENV = 'test';
+      process.env.DEMO_DATA_ONLY = 'false';
+    }
   });
 
   await t.test('Khách có tài khoản chỉ xem/quản lý đơn của mình', async () => {
@@ -296,6 +301,36 @@ test('Đặt nhiều ô, vai trò, khách vãng lai và xử lý đơn trên Mon
     assert.equal((await ownerBrowser.post(`/owner/requests/${request._id}/reject`, { ownerNote: 'Chưa có lịch phù hợp' })).status, 303);
     assert.equal((await BookingRequest.findById(request._id)).status, 'REJECTED');
     assert.equal((await Booking.findById(details.id)).status, 'CONFIRMED');
+  });
+
+  await t.test('Tắt demo chặn khoản chênh lệch EXTRA_DEMO và giữ nguyên đơn, lịch, yêu cầu', async () => {
+    const details = await holdAs(customerBrowser, court, ['14:00']);
+    await payAs(customerBrowser, details);
+    const submitted = await customerBrowser.post(`/bookings/${details.id}/requests`, {
+      type: 'CHANGE', reason: 'Kiểm tra chế độ thanh toán khi đổi sân',
+      requestedCourt: String(secondCourt._id), requestedDate: date, requestedTimes: ['14:00']
+    });
+    assert.equal(submitted.status, 303, submitted.html);
+    const request = await BookingRequest.findOne({ booking: details.id, status: 'PENDING' }).lean();
+    const snapshot = async () => JSON.stringify({
+      booking: await Booking.findById(details.id).lean(),
+      locks: await SlotLock.find({ booking: details.id }).sort({ _id: 1 }).lean(),
+      request: await BookingRequest.findById(request._id).lean(),
+      payments: await Payment.find({ booking: details.id }).sort({ _id: 1 }).lean()
+    });
+    const before = await snapshot();
+    process.env.PAYMENT_MODE = 'off';
+    try {
+      const receipt = await customerBrowser.get(`/bookings/${details.id}/receipt`);
+      assert.equal(receipt.status, 200);
+      assert.match(receipt.html, /THANH TOÁN MÔ PHỎNG/);
+      const denied = await ownerBrowser.post(`/owner/requests/${request._id}/approve`, {
+        refundAmount: 0, extraPaymentConfirmed: 'on', PAYMENT_MODE: 'demo', demoMode: 'true'
+      });
+      assert.equal(denied.status, 403, denied.html);
+      assert.equal(await Payment.countDocuments({ booking: details.id, type: 'EXTRA_DEMO' }), 0);
+      assert.equal(await snapshot(), before);
+    } finally { process.env.PAYMENT_MODE = 'demo'; }
   });
 
   await t.test('Đổi nhiều ô thành công cần xác nhận khoản chênh lệch', async () => {

@@ -1,0 +1,471 @@
+{
+  "issue": 79,
+  "checkedAtUtc": "2026-11-04T10:19:37.490Z",
+  "mainSha": "5c3e72d50a9802a1533a9ca7b17db0fb8fc3aa47",
+  "baselineViewBlob": "67bd957ee033369a3f219647885ef2a96e00ab3e",
+  "fixedViewBlob": "23aff7e16a90c902db857495e0bdb6a819c580c8",
+  "node": "v24.15.0",
+  "cases": [
+    {
+      "name": "empty-database",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "layout": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390
+      },
+      "status": 200,
+      "path": "/courts",
+      "alerts": [],
+      "count": [
+        "0 sân trong danh sách"
+      ],
+      "empty": [
+        "Chưa có sân đang hoạt động."
+      ],
+      "suggestions": 0,
+      "suggestionMessage": [],
+      "mainCards": 0,
+      "values": {
+        "facilityId": "",
+        "date": "",
+        "startTime": "",
+        "endTime": ""
+      },
+      "activeElement": "BODY"
+    },
+    {
+      "name": "empty-database",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "layout": {
+        "width": 1366,
+        "height": 900,
+        "scrollWidth": 1366
+      },
+      "status": 200,
+      "path": "/courts",
+      "alerts": [],
+      "count": [
+        "0 sân trong danh sách"
+      ],
+      "empty": [
+        "Chưa có sân đang hoạt động."
+      ],
+      "suggestions": 0,
+      "suggestionMessage": [],
+      "mainCards": 0,
+      "values": {
+        "facilityId": "",
+        "date": "",
+        "startTime": "",
+        "endTime": ""
+      },
+      "activeElement": "BODY"
+    },
+    {
+      "name": "before-invalid",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "layout": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390
+      },
+      "status": 400,
+      "path": "/courts?facilityId=6aeb06c4e0b916299ef9a044&date=2026-11-06&startTime=18%3A00&endTime=17%3A00",
+      "alerts": [
+        "Giờ kết thúc phải sau giờ bắt đầu."
+      ],
+      "count": [
+        "0 sân trong danh sách"
+      ],
+      "empty": [
+        "Không tìm được sân phù hợp bộ lọc."
+      ],
+      "suggestions": 0,
+      "suggestionMessage": [],
+      "mainCards": 0,
+      "values": {
+        "facilityId": "6aeb06c4e0b916299ef9a044",
+        "date": "2026-11-06",
+        "startTime": "18:00",
+        "endTime": "17:00"
+      },
+      "activeElement": "BODY"
+    },
+    {
+      "name": "after-invalid",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "layout": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390
+      },
+      "status": 400,
+      "path": "/courts?facilityId=6aeb06c4e0b916299ef9a044&date=2026-11-06&startTime=18%3A00&endTime=17%3A00",
+      "alerts": [
+        "Giờ kết thúc phải sau giờ bắt đầu."
+      ],
+      "count": [],
+      "empty": [],
+      "suggestions": 0,
+      "suggestionMessage": [],
+      "mainCards": 0,
+      "values": {
+        "facilityId": "6aeb06c4e0b916299ef9a044",
+        "date": "2026-11-06",
+        "startTime": "18:00",
+        "endTime": "17:00"
+      },
+      "activeElement": "filter-facility",
+      "focusAfterTab": "filter-date"
+    },
+    {
+      "name": "valid-empty-with-alternative",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "layout": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390
+      },
+      "status": 200,
+      "path": "/courts?facilityId=6aeb06c4e0b916299ef9a044&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+      "alerts": [],
+      "count": [
+        "0 sân trong danh sách"
+      ],
+      "empty": [
+        "Không tìm được sân phù hợp bộ lọc."
+      ],
+      "suggestions": 1,
+      "suggestionMessage": [
+        "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:"
+      ],
+      "mainCards": 0,
+      "values": {
+        "facilityId": "6aeb06c4e0b916299ef9a044",
+        "date": "2026-11-06",
+        "startTime": "17:00",
+        "endTime": "18:00"
+      },
+      "activeElement": "BODY"
+    },
+    {
+      "name": "valid-empty-with-message",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "layout": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390
+      },
+      "status": 200,
+      "path": "/courts?facilityId=6aeb06c4e0b916299ef9a044&date=2026-11-07&startTime=17%3A00&endTime=18%3A00",
+      "alerts": [],
+      "count": [
+        "0 sân trong danh sách"
+      ],
+      "empty": [
+        "Không tìm được sân phù hợp bộ lọc."
+      ],
+      "suggestions": 0,
+      "suggestionMessage": [
+        "Không tìm thấy phương án thay thế phù hợp cùng thời lượng trong ngày. Bạn vui lòng đổi ngày hoặc chọn khoảng giờ khác."
+      ],
+      "mainCards": 0,
+      "values": {
+        "facilityId": "6aeb06c4e0b916299ef9a044",
+        "date": "2026-11-07",
+        "startTime": "17:00",
+        "endTime": "18:00"
+      },
+      "activeElement": "BODY"
+    },
+    {
+      "name": "valid-match",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "layout": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390
+      },
+      "status": 200,
+      "path": "/courts?facilityId=6aeb06c4e0b916299ef9a044&date=2026-11-06&startTime=16%3A30&endTime=17%3A30",
+      "alerts": [],
+      "count": [
+        "1 sân trong danh sách"
+      ],
+      "empty": [],
+      "suggestions": 0,
+      "suggestionMessage": [],
+      "mainCards": 1,
+      "values": {
+        "facilityId": "6aeb06c4e0b916299ef9a044",
+        "date": "2026-11-06",
+        "startTime": "16:30",
+        "endTime": "17:30"
+      },
+      "activeElement": "BODY"
+    },
+    {
+      "name": "before-invalid",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "layout": {
+        "width": 1366,
+        "height": 900,
+        "scrollWidth": 1366
+      },
+      "status": 400,
+      "path": "/courts?facilityId=6aeb06c4e0b916299ef9a044&date=2026-11-06&startTime=18%3A00&endTime=17%3A00",
+      "alerts": [
+        "Giờ kết thúc phải sau giờ bắt đầu."
+      ],
+      "count": [
+        "0 sân trong danh sách"
+      ],
+      "empty": [
+        "Không tìm được sân phù hợp bộ lọc."
+      ],
+      "suggestions": 0,
+      "suggestionMessage": [],
+      "mainCards": 0,
+      "values": {
+        "facilityId": "6aeb06c4e0b916299ef9a044",
+        "date": "2026-11-06",
+        "startTime": "18:00",
+        "endTime": "17:00"
+      },
+      "activeElement": "BODY"
+    },
+    {
+      "name": "after-invalid",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "layout": {
+        "width": 1366,
+        "height": 900,
+        "scrollWidth": 1366
+      },
+      "status": 400,
+      "path": "/courts?facilityId=6aeb06c4e0b916299ef9a044&date=2026-11-06&startTime=18%3A00&endTime=17%3A00",
+      "alerts": [
+        "Giờ kết thúc phải sau giờ bắt đầu."
+      ],
+      "count": [],
+      "empty": [],
+      "suggestions": 0,
+      "suggestionMessage": [],
+      "mainCards": 0,
+      "values": {
+        "facilityId": "6aeb06c4e0b916299ef9a044",
+        "date": "2026-11-06",
+        "startTime": "18:00",
+        "endTime": "17:00"
+      },
+      "activeElement": "filter-facility",
+      "focusAfterTab": "filter-date"
+    },
+    {
+      "name": "valid-empty-with-alternative",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "layout": {
+        "width": 1366,
+        "height": 900,
+        "scrollWidth": 1366
+      },
+      "status": 200,
+      "path": "/courts?facilityId=6aeb06c4e0b916299ef9a044&date=2026-11-06&startTime=17%3A00&endTime=18%3A00",
+      "alerts": [],
+      "count": [
+        "0 sân trong danh sách"
+      ],
+      "empty": [
+        "Không tìm được sân phù hợp bộ lọc."
+      ],
+      "suggestions": 1,
+      "suggestionMessage": [
+        "Khung giờ bạn tìm hiện đã kín. Dưới đây là các gợi ý thay thế gần nhất cùng thời lượng:"
+      ],
+      "mainCards": 0,
+      "values": {
+        "facilityId": "6aeb06c4e0b916299ef9a044",
+        "date": "2026-11-06",
+        "startTime": "17:00",
+        "endTime": "18:00"
+      },
+      "activeElement": "BODY"
+    },
+    {
+      "name": "valid-empty-with-message",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "layout": {
+        "width": 1366,
+        "height": 900,
+        "scrollWidth": 1366
+      },
+      "status": 200,
+      "path": "/courts?facilityId=6aeb06c4e0b916299ef9a044&date=2026-11-07&startTime=17%3A00&endTime=18%3A00",
+      "alerts": [],
+      "count": [
+        "0 sân trong danh sách"
+      ],
+      "empty": [
+        "Không tìm được sân phù hợp bộ lọc."
+      ],
+      "suggestions": 0,
+      "suggestionMessage": [
+        "Không tìm thấy phương án thay thế phù hợp cùng thời lượng trong ngày. Bạn vui lòng đổi ngày hoặc chọn khoảng giờ khác."
+      ],
+      "mainCards": 0,
+      "values": {
+        "facilityId": "6aeb06c4e0b916299ef9a044",
+        "date": "2026-11-07",
+        "startTime": "17:00",
+        "endTime": "18:00"
+      },
+      "activeElement": "BODY"
+    },
+    {
+      "name": "valid-match",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "layout": {
+        "width": 1366,
+        "height": 900,
+        "scrollWidth": 1366
+      },
+      "status": 200,
+      "path": "/courts?facilityId=6aeb06c4e0b916299ef9a044&date=2026-11-06&startTime=16%3A30&endTime=17%3A30",
+      "alerts": [],
+      "count": [
+        "1 sân trong danh sách"
+      ],
+      "empty": [],
+      "suggestions": 0,
+      "suggestionMessage": [],
+      "mainCards": 1,
+      "values": {
+        "facilityId": "6aeb06c4e0b916299ef9a044",
+        "date": "2026-11-06",
+        "startTime": "16:30",
+        "endTime": "17:30"
+      },
+      "activeElement": "BODY"
+    }
+  ],
+  "images": [
+    {
+      "file": "before-invalid-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "5f00b6f9bd445332f5d243a656522c09424a2b912cbcbbf6e48d7d2cdb599fd7"
+    },
+    {
+      "file": "after-invalid-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "2e387fd043144461d19acc8e30d2aef97a54c5be424cebc55178050e0b293c88"
+    },
+    {
+      "file": "before-invalid-1366.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "sha256": "325bb5f897704448242dfd06c448d9e9a6cb12df71a6c7c97505b0a0f03f26eb"
+    },
+    {
+      "file": "after-invalid-1366.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "sha256": "2281bbca0d8f8071b170b138f16ded66ea2e3f5c84ba589c62cd9eead3ec09ae"
+    }
+  ],
+  "mongo": {
+    "version": "8.3.11",
+    "replicaSet": "qa79"
+  },
+  "browser": {
+    "product": "Google Chrome headless via Playwright",
+    "version": "156.0.8078.80"
+  },
+  "fixtures": {
+    "facilityId": "6aeb06c4e0b916299ef9a044",
+    "courtId": "6aeb06c4e0b916299ef9a045",
+    "date": "2026-11-06",
+    "secondDate": "2026-11-07",
+    "bookedTimes": [
+      {
+        "date": "2026-11-06",
+        "time": "17:30"
+      },
+      {
+        "date": "2026-11-07",
+        "time": "17:00"
+      }
+    ]
+  },
+  "check": {
+    "exitCode": 0,
+    "compiledEjs": 19
+  },
+  "render": {
+    "exitCode": 0,
+    "tests": 12,
+    "pass": 12,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "test": {
+    "exitCode": 0,
+    "tests": 159,
+    "pass": 159,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "pass": true,
+  "cleanup": {
+    "qaDatabaseDropped": true,
+    "automatedTestDatabasesRemaining": 0
+  }
+}
