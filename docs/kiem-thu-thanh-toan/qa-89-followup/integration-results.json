@@ -1,0 +1,150 @@
+{
+  "issue": 89,
+  "phase": "MOCK",
+  "runAtUtc": "2026-11-06T17:08:57.053Z",
+  "candidateSha": "931bf9e98605c73a8b7fbaba5053312008efa631",
+  "candidateTree": "29e4a4afcc98d32c6a81b2e5d4b14a3b579dc5f9",
+  "node": "v24.15.0",
+  "backend": "HTTP loopback",
+  "cases": [
+    {
+      "case": "checkout → signed webhook → receipt",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "viewer": "GUEST",
+      "result": "PASS_MOCK",
+      "decodedQrMatchesFixture": true,
+      "keyboardTabAndEnter": true,
+      "recipientAndPriceMatched": true,
+      "horizontalOverflow": false,
+      "invalidSignature": 401,
+      "callback": "200 APPLIED",
+      "replay": "200 DUPLICATE",
+      "unauthenticatedIntentStatusReceipt": [
+        403,
+        403,
+        403
+      ],
+      "booking": "CONFIRMED",
+      "paymentStatus": "DEMO_PAID",
+      "intentStatus": "SETTLED",
+      "appliedReceipts": 1,
+      "initialDemoRecords": 0,
+      "confirmedLocks": 2,
+      "snapshotAmountVND": 125000
+    },
+    {
+      "case": "checkout → signed webhook → receipt",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "viewer": "CUSTOMER",
+      "result": "PASS_MOCK",
+      "decodedQrMatchesFixture": true,
+      "keyboardTabAndEnter": true,
+      "recipientAndPriceMatched": true,
+      "horizontalOverflow": false,
+      "invalidSignature": 401,
+      "callback": "200 APPLIED",
+      "replay": "200 DUPLICATE",
+      "unauthenticatedIntentStatusReceipt": [
+        403,
+        403,
+        403
+      ],
+      "booking": "CONFIRMED",
+      "paymentStatus": "DEMO_PAID",
+      "intentStatus": "SETTLED",
+      "appliedReceipts": 1,
+      "initialDemoRecords": 0,
+      "confirmedLocks": 2,
+      "snapshotAmountVND": 125000
+    },
+    {
+      "case": "webhook REVIEW → owner/admin and booking notice",
+      "result": "PASS_MOCK",
+      "webhookCases": [
+        {
+          "name": "underpaid",
+          "webhook": "200 REVIEW",
+          "receiptStatus": "REVIEW",
+          "reviewReason": "AMOUNT_MISMATCH",
+          "replay": "200 DUPLICATE",
+          "flag": "UNDERPAID",
+          "audience": "OWNER_AND_ADMIN"
+        },
+        {
+          "name": "overpaid",
+          "webhook": "200 REVIEW",
+          "receiptStatus": "REVIEW",
+          "reviewReason": "AMOUNT_MISMATCH",
+          "replay": "200 DUPLICATE",
+          "flag": "OVERPAID",
+          "audience": "OWNER_AND_ADMIN"
+        },
+        {
+          "name": "currency",
+          "webhook": "200 REVIEW",
+          "receiptStatus": "REVIEW",
+          "reviewReason": "CURRENCY_MISMATCH",
+          "replay": "200 DUPLICATE",
+          "flag": "CURRENCY_MISMATCH",
+          "audience": "ADMIN_ONLY"
+        },
+        {
+          "name": "merchant",
+          "webhook": "200 REVIEW",
+          "receiptStatus": "REVIEW",
+          "reviewReason": "MERCHANT_MISMATCH",
+          "replay": "200 DUPLICATE",
+          "flag": "UNMATCHED",
+          "audience": "ADMIN_ONLY"
+        }
+      ],
+      "reviewPayments": 4,
+      "paymentReceiptRows": 4,
+      "adminRows": 4,
+      "ownerRows": 2,
+      "foreignOwnerRows": 0,
+      "bookingNoticeVisible": true,
+      "bookingAndLocksUnchanged": true,
+      "foreignBookingAccess": 403,
+      "foreignReviewAccess": 404
+    },
+    {
+      "case": "late webhook after the slot was rebooked, manual refund replay",
+      "result": "PASS_MOCK",
+      "setup": "synthetic expired HOLD fixture",
+      "callback": "200 REVIEW",
+      "reviewFlag": "LATE",
+      "oldBooking": "EXPIRED",
+      "guestReceiptShowsReview": true,
+      "oldBookingLocks": 0,
+      "winnerBookingAndLocksUnchanged": true,
+      "foreignWrite": 404,
+      "missingCsrf": 403,
+      "repeatedRefund": [
+        303,
+        303
+      ],
+      "replay": "200 DUPLICATE",
+      "refundHistoryRows": 1,
+      "refundedVND": 50000
+    },
+    {
+      "case": "local Node process restart",
+      "result": "PASS_MOCK",
+      "freshProcess": true,
+      "guestCapabilityAndCustomerSessionSurvived": true,
+      "confirmationsStillPresent": 2,
+      "replayAfterRestart": "200 DUPLICATE"
+    }
+  ],
+  "mongo": "8.3.11",
+  "url": "http://127.0.0.1:50204",
+  "browser": "Google Chrome 156.0.8078.80",
+  "temporaryDatabaseDropped": true
+}

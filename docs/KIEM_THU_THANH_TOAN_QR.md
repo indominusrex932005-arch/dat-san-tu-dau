@@ -1,6 +1,27 @@
 # Kiểm thử thanh toán QR tự động
 
-Ngày kiểm thử 06/11/2026. Trạng thái **MOCK cục bộ, còn lỗi tích hợp #86 → #88**. Kết quả SANDBOX của nhà cung cấp và LIVE đều **chưa chạy**. Báo cáo dùng `Refs #89`. [Issue #89](https://github.com/indominusrex932005-arch/dat-san-tu-dau/issues/89)
+Ngày cập nhật 07/11/2026. Trạng thái **MOCK cục bộ**. Điểm bàn giao #86 → #88 đã được tích hợp và kiểm tra lại. Kết quả SANDBOX của nhà cung cấp và LIVE đều **chưa chạy**. Báo cáo dùng `Refs #89`. [Issue #89](https://github.com/indominusrex932005-arch/dat-san-tu-dau/issues/89)
+
+## Kiểm tra lại trên bản tích hợp ngày 07/11
+
+`main` hiện ở `ba0d0b352aa8ab7c7e9397f22e2a5e6bac60c94f`, đã có hợp đồng mode #81 và intent #85. Các PR #99, #100, #101 đã merge vào `feat/tich-hop-thanh-toan` ở `931bf9e98605c73a8b7fbaba5053312008efa631`. Bản đó dùng `recordAndReconcileProviderReceipt` để đưa biên nhận `REVIEW` sang sổ đối soát và phục hồi thao tác nếu callback được gửi lại. [Nhánh tích hợp đã thử](https://github.com/indominusrex932005-arch/dat-san-tu-dau/tree/931bf9e98605c73a8b7fbaba5053312008efa631)
+
+Kiểm thử với Node 24.15.0, Chrome 156.0.8078.80, MongoDB 8.3.11 replica set riêng và provider `mock_qa89`. Bootstrap kiểm thử sử dụng `PAYMENT_MODE=demo`, mock adapter và handler của ứng dụng. Origin HTTP loopback và kết quả được ghi trong [JSON bản tích hợp](kiem-thu-thanh-toan/qa-89-followup/integration-results.json). `npm run check` đạt và `npm test` đạt **261/261**.
+
+| Đầu vào | Mong đợi | Kết quả MOCK |
+| --- | --- | --- |
+| Khách vãng lai 390×844 và CUSTOMER 1366×900, hai ô rời nhau 125.000đ | QR đúng dữ liệu thử. Callback đúng mở phiếu, callback sai hoặc lặp giữ an toàn | Tab/Enter tạo yêu cầu. OpenCV đọc đúng QR. Callback sai `401`, hợp lệ `200 APPLIED`, lặp `200 DUPLICATE`. Mỗi đơn `CONFIRMED/DEMO_PAID` với đúng 1 biên nhận và 2 lock xác nhận. GET ngoài quyền trả 403 |
+| Webhook thiếu/thừa VND, sai currency hoặc merchant | Tạo hàng đối soát, giữ nguyên đơn/lock, hiển thị đúng quyền | 4 biên nhận `REVIEW` và 4 mục đối soát. ADMIN thấy 4, OWNER đúng cơ sở thấy 2, OWNER khác thấy 0. Checkout của khách có thông báo. Replay không nhân bản |
+| Khoản muộn khi khách khác đã giữ lại ô | Giữ đơn cũ hết hạn và dữ liệu khách thắng. Hoàn thủ công có audit và an toàn khi lặp | Dùng fixture HOLD hết hạn. Callback `200 REVIEW`, cờ `LATE`. Đơn cũ `EXPIRED` với 0 lock, đơn và lock khách thắng giữ nguyên. Phiếu cũ có thông báo. POST ngoài quyền `404`, thiếu CSRF `403`. Hai POST ghi hoàn và replay webhook vẫn có 1 dòng lịch sử |
+| Khởi động tiến trình Node mới trên cùng DB | Phiếu và phiên/capability còn dùng được, replay trả kết quả cũ | Hai phiếu tải lại được, replay `200 DUPLICATE`, mỗi đơn vẫn đúng 1 biên nhận |
+
+Phát hiện thêm ở #87 khi kiểm tra checkout đang HOLD. Màn hình có thể cùng lúc báo cần đối soát và tiếp tục hiện QR cũ. Bản sửa `607129412cd1947279f08ea4082d01c14d15c02f` bỏ QR/link khỏi DTO checkout và tắt nút tạo yêu cầu khi `IN_REVIEW`. Chrome 390px xác nhận QR/link biến mất khi kiểm tra trạng thái và sau reload. Cả 5 ca tích hợp MOCK, `npm run check` và **261/261** test đều đạt lại. Khi nhóm chọn SHA để nghiệm thu Sandbox, cần đưa bản sửa vào release. [JSON kiểm tra lại và hash ảnh](kiem-thu-thanh-toan/qa-89-followup/checkout-results.json) · [Checkout đang đối soát](kiem-thu-thanh-toan/qa-89-followup/checkout-review-390.png)
+
+SANDBOX vẫn cần provider/test merchant do nhóm bàn giao, URL callback HTTPS ở #82 và một SHA triển khai được nhóm duyệt. Chưa có xác nhận từ provider đối chiếu DB hoặc giao dịch LIVE. Restart Node cục bộ chỉ chứng minh hành vi với DB bền vững, cold start Render cần chạy riêng.
+
+## Lịch sử lần kiểm tra ngày 06/11
+
+Phần dưới lưu bằng chứng trước khi nhóm tích hợp bản sửa #86 → #88. Kết quả lỗi ở lần chạy này đã được kiểm tra lại ở trên.
 
 ## Bản thử và môi trường
 
@@ -37,17 +58,17 @@ Node 24.15.0, MongoDB replica set riêng trên loopback và adapter `mock_qa89`.
 
 Bằng chứng đã lọc gồm [kết quả từng ca và hash ảnh](kiem-thu-thanh-toan/qa-89/local-results.json), ảnh [QR 390px](kiem-thu-thanh-toan/qa-89/qr-mock-390.png), [QR 1366px](kiem-thu-thanh-toan/qa-89/qr-mock-1366.png), [phiếu 390px](kiem-thu-thanh-toan/qa-89/receipt-mock-390.png) và [phiếu 1366px](kiem-thu-thanh-toan/qa-89/receipt-mock-1366.png). Dữ liệu hiển thị là fixture. Mã đơn, mã thanh toán và số liên hệ được che trong ảnh. JSON chỉ giữ mã trạng thái, tổng tiền, số bản ghi, metadata phiên bản và kết quả. DB tạm đã được dọn.
 
-### Điểm cần xử lý trước khi thử provider
+### Lỗi tái hiện ở bản ghép ngày 06/11
 
 #86 lưu `REVIEW` trong `Payment` qua `recordProviderReceipt`. #88 dùng `recordReceiptForReview` để tạo `PaymentReceipt` rồi đọc collection đó ở dashboard và phiếu. Chưa có điểm bàn giao giữa hai luồng trong bản thử. Có thể lặp lỗi bằng cách tạo HOLD 50.000 đồng, tạo intent và gửi callback mock hợp lệ 49.999 đồng, rồi so `reviewReason=AMOUNT_MISMATCH` trong `Payment` với danh sách trống ở `/owner/payment-reconciliation` và `/admin/payment-reconciliation`. Replay trả `DUPLICATE`, danh sách vẫn trống.
 
-Khi sửa, chốt nguồn dữ liệu đối soát cùng #86/#88, gồm ngoại tệ, thiếu binding và khoản chưa gán đơn. Chạy lại ca trên với các kiểm tra quyền OWNER/ADMIN, CSRF, lịch sử, retry và số lượng bản ghi. Bootstrap `server.js` hiện chưa gắn adapter provider đã duyệt. Cần ghép #81 và xác nhận cách bật demo/adapter trên bản triển khai trước khi thử HTTPS.
+Bootstrap `server.js` chưa gắn adapter provider đã duyệt. Lần kiểm tra 07/11 dùng hợp đồng #81 đã có trong bản tích hợp, còn việc gắn adapter và cấu hình triển khai sẽ được xác minh trên release HTTPS.
 
 ## SANDBOX và LIVE còn chờ
 
 | Môi trường | Điều kiện và ca cần chạy | Bằng chứng cần lưu |
 | --- | --- | --- |
-| **SANDBOX · Chưa chạy** | Chốt provider và merchant thử ở #84, sửa điểm tích hợp, thống nhất SHA #85–#88, có URL HTTPS #82 và DB thử riêng. Chạy lại luồng QR → provider → callback/query → phiếu, các ca lỗi, replay, hết hạn, phân quyền, restart và cold start | Release SHA, HTTPS origin, provider và alias merchant thử, mốc giờ, tham chiếu đã che, trạng thái provider, HTTP/ACK, số lượng và trạng thái Booking/Payment/SlotLock trước/sau |
+| **SANDBOX · Chưa chạy** | Chốt provider và merchant thử ở #84, thống nhất SHA #85–#88 có bản sửa checkout, có URL HTTPS #82 và DB thử riêng. Chạy lại luồng QR → provider → callback/query → phiếu, các ca lỗi, replay, hết hạn, phân quyền, restart và cold start | Release SHA, HTTPS origin, provider và alias merchant thử, mốc giờ, tham chiếu đã che, trạng thái provider, HTTP/ACK, số lượng và trạng thái Booking/Payment/SlotLock trước/sau |
 | **Phương án thay thế · Chưa thống nhất** | Nếu provider được chọn thiếu Sandbox, nhóm trưởng thống nhất môi trường và phạm vi kiểm tra thay thế | Ghi phê duyệt, phạm vi, nguồn xác nhận và nhãn môi trường tương ứng |
 | **LIVE · Chưa chạy** | Sau khi Sandbox đạt và nhóm trưởng chốt người nhận, số tiền nhỏ và người được phép thực hiện. Chủ tài khoản hoặc người được ủy quyền thực hiện giao dịch | Bằng chứng provider/ngân hàng và DB cùng mã đã che, số tiền đã duyệt, người xác nhận, trạng thái phiếu và số biên nhận, kèm release SHA |
 
