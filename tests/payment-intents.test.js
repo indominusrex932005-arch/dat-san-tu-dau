@@ -6,6 +6,7 @@ import { createTestEnvironment, mongoose, User, Facility, Court, Booking, SlotLo
 import { TestBrowser, bookingFromLocation } from './helpers/http.js';
 import { createPaymentService } from '../services/payment.service.js';
 import { migratePaymentIntents } from '../scripts/chuan-bi-payment-intents.js';
+import { getPaymentConfig } from '../config/payment-mode.js';
 
 const password = 'SyntheticIntentFixture-2026!';
 const futureDate = () => new Date(Date.now() + 3 * 86400000 + 7 * 3600000).toISOString().slice(0, 10);
@@ -17,6 +18,57 @@ const allowlistedDTOKeys = new Set([
   'id', 'bookingId', 'status', 'mode', 'provider', 'amountVND', 'currency', 'expiresAt',
   'reconciliationCode', 'recipientName', 'checkoutUrl', 'qrPayload', 'failureCode'
 ]);
+
+test('Payment intent dùng PAYMENT_MODE chung khi inject service qua app', { timeout: 30000 }, async t => {
+  for (const paymentMode of ['off', 'demo']) {
+    await t.test(paymentMode, async context => {
+      let createCalls = 0;
+      const service = createPaymentService({
+        adapter: {
+          provider: 'fixture_provider', environment: 'sandbox', checkoutOrigins: ['https://sandbox.example.test'],
+          async createIntent(request) {
+            createCalls++;
+            return pendingResult(request);
+          }
+        },
+        resolveRecipient: async () => ({
+          verified: true, merchantId: 'fixture-merchant', bindingId: 'fixture-binding',
+          recipientId: 'fixture-recipient', displayName: 'Cơ sở thử'
+        }),
+        getPaymentConfig
+      });
+      const environment = await createTestEnvironment({ paymentMode, appOptions: { paymentService: service } });
+      context.after(() => environment.close());
+      await migratePaymentIntents(mongoose.connection.db, { apply: true });
+      const owner = await User.create({
+        fullName: 'Chủ thử mode', email: 'mode-owner@example.test', passwordHash: 'fixture-only',
+        role: 'OWNER', ownerStatus: 'APPROVED'
+      });
+      const facility = await Facility.create({ name: 'Cơ sở thử mode', address: 'Địa chỉ thử', phone: '0912345678', owner: owner._id });
+      const court = await Court.create({ name: 'Sân thử mode', facility: facility._id, basePriceVND: 50000, peakPriceVND: 75000 });
+      const client = new TestBrowser(environment.base);
+      const held = await client.hold({ courtId: String(court._id), date: futureDate(), times: ['08:00'], guestName: 'Khách thử', guestPhone: '0912345678' });
+      assert.equal(held.status, 303);
+      const booking = bookingFromLocation(held.location);
+      const url = `/bookings/${booking.id}/payment-intents`;
+      const result = await client.post(url, { token: booking.token, PAYMENT_MODE: 'demo' });
+      assert.equal(result.status, paymentMode === 'demo' ? 201 : 403);
+      assert.equal(createCalls, paymentMode === 'demo' ? 1 : 0);
+      assert.equal(await Payment.countDocuments(intentFilter(booking.id)), createCalls);
+      if (paymentMode === 'demo') {
+        assert.equal(dto(result).status, 'PENDING');
+        process.env.PAYMENT_MODE = 'off';
+        const disabled = await client.post(url, { token: booking.token, PAYMENT_MODE: 'demo' });
+        assert.equal(disabled.status, 403);
+        assert.equal(createCalls, 1);
+        assert.equal(await Payment.countDocuments(intentFilter(booking.id)), 1);
+      }
+      const saved = await Booking.findById(booking.id).lean();
+      assert.equal(saved.status, 'HOLD');
+      assert.equal(saved.paymentStatus, 'UNPAID');
+    });
+  }
+});
 
 function deferred() {
   let resolve;

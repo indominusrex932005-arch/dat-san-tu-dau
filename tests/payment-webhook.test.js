@@ -38,12 +38,20 @@ function verifyFixture({ rawBody, headers, receivedAt }) {
 
 test('Webhook mặc định chưa được mở và POST vẫn qua CSRF', async t => {
   const previous = process.env.SESSION_SECRET;
+  const previousMode = process.env.PAYMENT_MODE;
+  const previousLegacy = process.env.DEMO_MODE;
+  delete process.env.DEMO_MODE;
+  process.env.PAYMENT_MODE = 'off';
   process.env.SESSION_SECRET = 'synthetic-webhook-test-session-secret';
   let server;
   t.after(async () => {
     if (server) await new Promise((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
     if (previous === undefined) delete process.env.SESSION_SECRET;
     else process.env.SESSION_SECRET = previous;
+    if (previousMode === undefined) delete process.env.PAYMENT_MODE;
+    else process.env.PAYMENT_MODE = previousMode;
+    if (previousLegacy === undefined) delete process.env.DEMO_MODE;
+    else process.env.DEMO_MODE = previousLegacy;
   });
   server = createApp(new session.MemoryStore()).listen(0, '127.0.0.1');
   await once(server, 'listening');

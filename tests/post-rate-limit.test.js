@@ -14,7 +14,8 @@ const password = 'LocalRateLimitFixture-2026!';
 function configure(t, settings) {
   for (const [name, value] of Object.entries(settings)) {
     const previous = process.env[name];
-    process.env[name] = value;
+    if (value === undefined) delete process.env[name];
+    else process.env[name] = value;
     t.after(() => {
       if (previous === undefined) delete process.env[name];
       else process.env[name] = previous;
@@ -126,7 +127,7 @@ test('Giới hạn riêng bốn POST, giữ CSRF và không ghi đơn bị chặ
 
 async function startProxyTestApp(t, env) {
   configure(t, {
-    NODE_ENV: 'test', DEMO_MODE: 'false', SESSION_SECRET: password.repeat(2),
+    NODE_ENV: 'test', PAYMENT_MODE: 'off', DEMO_MODE: undefined, SESSION_SECRET: password.repeat(2),
     RATE_LIMIT_LOGIN_WINDOW_SECONDS: '60', RATE_LIMIT_LOGIN_IP_MAX: '1',
     RATE_LIMIT_LOGIN_ACCOUNT_IP_MAX: '5', ...env
   });
@@ -191,6 +192,9 @@ test('Từ chối cấu hình proxy quá rộng và ngưỡng không hợp lệ'
   for (const value of ['true', '1', '0.0.0.0/0', '::/0', '192.0.2.0/33']) {
     assert.throws(() => trustedProxyAddresses(value), /TRUST_PROXY_IPS/);
   }
-  configure(t, { SESSION_SECRET: password.repeat(2), RATE_LIMIT_BOOKINGS_ACTOR_MAX: '0' });
+  configure(t, {
+    PAYMENT_MODE: 'off', DEMO_MODE: undefined,
+    SESSION_SECRET: password.repeat(2), RATE_LIMIT_BOOKINGS_ACTOR_MAX: '0'
+  });
   assert.throws(() => createApp(new session.MemoryStore()), /RATE_LIMIT_BOOKINGS_ACTOR_MAX/);
 });

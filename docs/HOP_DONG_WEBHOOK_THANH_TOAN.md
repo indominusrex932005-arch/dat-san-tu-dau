@@ -1,6 +1,6 @@
 # Xác minh webhook và ghi nhận thanh toán thử (#86)
 
-Lõi #86 được kiểm tra bằng adapter mock trên nhánh kế thừa [payment intent #85](HOP_DONG_PAYMENT_INTENT.md). Nhóm còn chờ chốt nhà cung cấp và tài khoản nhận tiền ở [#84](https://github.com/indominusrex932005-arch/dat-san-tu-dau/issues/84), review #85 và tích hợp hợp đồng mode #81. Kết quả với sandbox của nhà cung cấp **Chưa chạy**.
+Lõi #86 được kiểm tra bằng adapter mock trên nhánh kế thừa [payment intent #85](HOP_DONG_PAYMENT_INTENT.md). Đã cập nhật nền có hợp đồng `PAYMENT_MODE` của #81/#95 và #98; phải xóa key `DEMO_MODE` cũ. Nhóm còn chờ chốt nhà cung cấp và tài khoản nhận tiền ở [#84](https://github.com/indominusrex932005-arch/dat-san-tu-dau/issues/84). Kết quả với sandbox của nhà cung cấp **Chưa chạy**.
 
 ## Điểm gắn adapter phía server
 
