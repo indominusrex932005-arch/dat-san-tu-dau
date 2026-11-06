@@ -13,15 +13,15 @@ import { csrfProtection } from './middlewares/csrf.middleware.js';
 import { createPostRateLimits } from './middlewares/post-rate-limit.js';
 import { trustedProxyAddresses } from './config/trust-proxy.js';
 import { formatMoney, formatDate } from './utils/booking-time.js';
+import { getPaymentConfig } from './config/payment-mode.js';
+import { health } from './controllers/health.controller.js';
 
 export default function createApp(sessionStore) {
   if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
     throw new Error('Hãy thêm SESSION_SECRET dài ít nhất 32 ký tự vào .env.');
   }
   if (!sessionStore) throw new Error('Cần cung cấp nơi lưu session.');
-  if (process.env.NODE_ENV === 'production' && process.env.DEMO_MODE === 'true') {
-    throw new Error('Không bật thanh toán mô phỏng ở production.');
-  }
+  getPaymentConfig();
 
   const app = express();
   app.set('view engine', 'ejs');
@@ -39,7 +39,9 @@ export default function createApp(sessionStore) {
   app.locals.paymentLabel = value => ({
     UNPAID: 'Chưa ghi nhận thanh toán', DEMO_PAID: 'Thanh toán mô phỏng', PAID: 'Đã ghi nhận thanh toán'
   })[value] || value;
-  app.locals.demoMode = process.env.DEMO_MODE === 'true' && process.env.NODE_ENV !== 'production';
+  for (const [name, key] of [['paymentMode', 'mode'], ['demoMode', 'demoMode'], ['publicDemo', 'publicDemo']]) {
+    Object.defineProperty(app.locals, name, { enumerable: true, get: () => getPaymentConfig()[key] });
+  }
   app.disable('x-powered-by');
   app.set('trust proxy', trustedProxyAddresses(process.env.TRUST_PROXY_IPS));
   const limits = createPostRateLimits();
@@ -52,6 +54,8 @@ export default function createApp(sessionStore) {
     res.setHeader('Cache-Control', 'no-store');
     next();
   });
+  // Readiness must not create a session or read a user's identity.
+  app.get('/health', health);
   app.use('/assets', express.static(fileURLToPath(new URL('./public', import.meta.url))));
   app.use(express.urlencoded({ extended: false, limit: '20kb' }));
   app.use(session({

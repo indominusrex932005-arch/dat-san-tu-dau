@@ -7,6 +7,7 @@ import SlotLock from '../models/SlotLock.js';
 import Payment from '../models/Payment.js';
 import BookingRequest from '../models/BookingRequest.js';
 import User from '../models/User.js';
+import { getPaymentConfig } from '../config/payment-mode.js';
 import { HOLD_MINUTES, makeSlots, quoteSelection, vietnamDate, slotInstant, holdExpiresAt, effectiveHoldExpiresAt, validateDate } from '../domain/booking-rules.js';
 
 function fail(status, message) { throw Object.assign(new Error(message), { status }); }
@@ -232,7 +233,7 @@ export async function getBookingForViewer(id, { user, token } = {}) {
 }
 
 export async function simulatePayment(id, { user, token } = {}) {
-  if (process.env.DEMO_MODE !== 'true' || process.env.NODE_ENV === 'production') fail(403, 'Mô phỏng thanh toán chỉ mở trong chế độ demo.');
+  if (!getPaymentConfig().demoMode) fail(403, 'Mô phỏng thanh toán chỉ mở trong chế độ demo.');
   await getBookingForViewer(id, { user, token });
   const confirmed = await transaction(async session => {
     const now = new Date();
@@ -338,6 +339,9 @@ export async function approveRequest(requestId, owner, body = {}) {
     const times = selectedTimes(request.requestedTimes);
     const quote = checkedQuote(court, date, times, await locksFor(court._id, date, session, booking._id), now);
     const extraAmount = Math.max(0, quote.totalPriceVND - booking.totalPrice);
+    if (extraAmount > 0 && booking.paymentStatus === 'DEMO_PAID' && !getPaymentConfig().demoMode) {
+      fail(403, 'Cần mở chế độ demo để ghi nhận khoản chênh lệch mô phỏng.');
+    }
     if (extraAmount > 0 && !['yes', 'on', 'true', '1'].includes(body.extraPaymentConfirmed)) {
       fail(400, 'Cần xác nhận đã xử lý khoản chênh lệch với khách trước khi duyệt đổi.');
     }
