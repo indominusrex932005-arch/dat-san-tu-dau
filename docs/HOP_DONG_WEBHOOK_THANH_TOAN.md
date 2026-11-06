@@ -52,6 +52,8 @@ Script kiểm tra cả index intent và receipt. Bản ghi sai, khóa trùng ho�
 
 ## Kiểm tra và bàn giao
 
+Ngày **06/11/2026**, bản tích hợp với nền #95/#98 đạt `npm run check` (19 EJS) và **243/243 test**, không lỗi/bỏ qua trên MongoDB replica set cục bộ. CI kiểm tra cả PR/push tới `feat/tich-hop-thanh-toan` để nhánh tích hợp được kiểm tra trước khi vào main. Đây vẫn là test mock, chưa phải Sandbox của nhà cung cấp.
+
 - Chạy `npm run check` và `npm test` với MongoDB replica set cục bộ, DB thử riêng. [Bộ test webhook](../tests/payment-webhook.test.js) kiểm tra raw body, chữ ký/timestamp mock, CSRF, sai dữ liệu, ghi trùng, timeout, rollback và hết hạn/tranh ô. [Bộ test migration](../tests/payment-intent-migration.test.js) kiểm tra dry-run, dữ liệu cũ và unique index. Kết quả chạy và commit ghi trong PR.
 - #87 có thể đọc `intent.status = SETTLED`, `mode = demo` từ GET intent khi xác nhận sandbox đã hoàn tất. DTO bỏ QR/checkout và giữ trạng thái đã chốt sau mốc hết hạn intent. Booking vẫn có trạng thái riêng.
 - #88 dùng biên nhận `REVIEW` làm đầu vào đối soát. Việc duyệt, ghi lịch sử, quyền OWNER/ADMIN và chính sách hoàn thuộc #88 và quyết định của nhóm.
