@@ -1,14 +1,16 @@
 # Kiểm thử Render sau triển khai — #83
 
-**Trạng thái ngày 05/11/2026: CHUẨN BỊ, GIỮ DRAFT; toàn bộ ca online CHƯA CHẠY.** Chưa có URL HTTPS, release SHA hoặc xác nhận DB demo được bàn giao. Báo cáo này là kế hoạch và biểu mẫu ghi kết quả; không phải bằng chứng website đã hoạt động online.
+**Cập nhật ngày 06/11/2026: CHUẨN BỊ, GIỮ DRAFT; toàn bộ ca online CHƯA CHẠY.** Chưa có URL HTTPS, release SHA hoặc xác nhận DB demo được bàn giao. Báo cáo này là kế hoạch và biểu mẫu ghi kết quả; không phải bằng chứng website đã hoạt động online.
+
+Phần payment intent trên main mới là core thử; adapter/người nhận vẫn chưa được cấu hình mặc định. Các sửa webhook/checkout/đối soát ở #99–#101 còn nằm trên nhánh tích hợp. Các kết quả local mới không thay kết quả online; giữ nguyên 32 ca Chưa chạy cho đến khi có deployment thực.
 
 ## Mốc nguồn và điều kiện bắt đầu
 
 | Mục | Thông tin hiện có / phần còn thiếu |
 | --- | --- |
-| Mã nguồn đã đọc | Main `180a3c586f86276778f9f5492e998f64688016a0`; **SHA nguồn này không phải release SHA online chưa được bàn giao** |
+| Mã nguồn đã đọc | Main `e8133a77e28b352ca0286afd6b8613e7fb799e3c` có #95 và #98/#102; **SHA nguồn này không phải release SHA online chưa được bàn giao** |
 | Giới hạn POST/proxy đã tích hợp | [PR #92 / #80](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/92) **đã merge**, có trong main `180a3c5`; chưa phải bằng chứng cấu hình hoặc kết quả trên Render |
-| Production/mode/health dự kiến | [PR #95 / #81](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/95), nguồn cuối đã đọc `b605408499c3f1b55e8708766c74ca422677338d`; **chưa merge** tại lúc soạn. Cần tích hợp trước khi triển khai public-demo |
+| Production/mode/health dự kiến | [PR #95 / #81](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/95), nguồn cuối đã đọc `b605408499c3f1b55e8708766c74ca422677338d`; **đã merge**; cập nhật này kiểm tra theo hợp đồng mode/health hiện có trên main, vẫn cần xác minh triển khai thực |
 | Kiểm chứng local/CI hỗ trợ | Nguồn #95 `b605408`: 181 tests local đạt; [CI run 41927058743](https://github.com/indominusrex932005-arch/dat-san-tu-dau/actions/runs/41927058743) đạt. **Không tính vào kết quả online, không dùng làm release SHA hoặc bằng chứng TLS/proxy Render** |
 | Triển khai | [#82](https://github.com/indominusrex932005-arch/dat-san-tu-dau/issues/82), [PR #94](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/94) còn Draft; chưa nhận URL HTTPS, Render deploy ID hoặc bản bàn giao deployment thực tế trong task này |
 | URL HTTPS origin thực tế | **CHƯA BÀN GIAO / CHƯA BIẾT**; chỉ ghi origin được phép công khai, không query/token |
