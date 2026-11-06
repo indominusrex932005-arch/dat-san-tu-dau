@@ -81,6 +81,7 @@ npm test
 - [Cách chạy, chuyển dữ liệu và luồng từng file](docs/HUONG_DAN_TICH_HOP.md)
 - [QR/thanh toán thật còn dở](docs/THANH_TOAN_CON_DANG_DO.md)
 - [Hợp đồng dữ liệu/route](docs/HOP_DONG_TICH_HOP.md)
+- [Chuẩn bị triển khai Render và bàn giao demo — Draft, chưa có bàn giao online](docs/TRIEN_KHAI_RENDER.md)
 - [Chế độ thanh toán và production public-demo](docs/CHE_DO_THANH_TOAN.md)
 - [Hạn mức gửi form và cấu hình proxy](docs/GIOI_HAN_YEU_CAU.md)
 
