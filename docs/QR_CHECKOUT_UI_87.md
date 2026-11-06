@@ -4,6 +4,8 @@ Nhánh `feat/qr-checkout-ui-87` được phát triển trên hợp đồng của
 
 ## Hành vi giao diện
 
+Khi máy chủ trả `reviewStatus: IN_REVIEW`, checkout ẩn QR và liên kết provider, dừng tạo hoặc tra cứu lại yêu cầu thanh toán và hướng dẫn khách liên hệ cơ sở. Nút kiểm tra trạng thái vẫn đọc kết quả từ máy chủ. Booking tiếp tục theo hạn giữ và trạng thái nghiệp vụ của nó.
+
 Checkout hiển thị người nhận, tổng giá snapshot, mã đối soát và ảnh QR được tạo cục bộ từ `qrPayload` đã được server kiểm tra. Nếu chỉ có `checkoutUrl`, khách có thể mở trang thanh toán bằng liên kết HTTPS được server cho phép. Liên kết ngoài dùng `noreferrer` và không thêm guest token. Phần UI thử có nhãn Sandbox. Luồng mô phỏng nội bộ vẫn có nút riêng và phiếu ghi `DEMO_PAID`.
 
 Nút **Tạo yêu cầu thanh toán thử** gửi đúng một POST có CSRF theo thao tác của khách. Sau khi gửi, focus chuyển tới **Kiểm tra thanh toán**. Mở trang, tải lại, Back và polling chỉ gửi GET. Khi intent ở CREATING/UNKNOWN, nút **Tra cứu yêu cầu cũ** gửi POST có CSRF để backend lookup cùng intent/mã đã lưu; không tạo yêu cầu thu tiền thứ hai. Với trạng thái khác, nút kiểm tra chỉ gửi GET. Client đọc JSON trả về từ server, dùng `textContent` cho nội dung động, ẩn QR/link khi trạng thái không rõ, provider lỗi, mất quyền hoặc tới hạn. Nếu đã chuyển tiền nhưng hết hạn/chưa có kết quả, UI hướng dẫn liên hệ cơ sở.

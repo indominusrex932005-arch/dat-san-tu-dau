@@ -109,6 +109,14 @@ if (paymentPanel) {
     deadline = Math.min(deadline, until);
     clockStarted = responseStarted;
     clearPaymentLinks();
+    if (data.reviewStatus === 'IN_REVIEW') {
+      canCreate = false;
+      details.hidden = true;
+      createButton.hidden = true;
+      status.textContent = 'Tạm dừng thanh toán thử để đối soát.';
+      updateClock();
+      return;
+    }
     const intent = data.intent;
     canCreate = !intent && !createAttempted;
     details.hidden = !intent;

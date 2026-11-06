@@ -62,8 +62,13 @@ export function createPaymentController(service) {
           intent = null;
           qrImage = null;
         }
-        if (intent && viewer.token && [intent.qrPayload, intent.checkoutUrl].some(value => value?.includes(viewer.token))) {
+        const reviewStatus = req.app.locals.demoMode ? await bookingReceiptReviewStatus(booking) : null;
+        const includesGuestToken = intent && viewer.token
+          && [intent.qrPayload, intent.checkoutUrl].some(value => value?.includes(viewer.token));
+        if (includesGuestToken) {
           intent = { ...intent, status: 'UNKNOWN', failureCode: 'INVALID_PROVIDER_RESPONSE' };
+        }
+        if (intent && (includesGuestToken || reviewStatus === 'IN_REVIEW')) {
           delete intent.qrPayload;
           delete intent.checkoutUrl;
           qrImage = null;
@@ -74,7 +79,7 @@ export function createPaymentController(service) {
             amountVND: booking.totalPrice, currency: 'VND'
           },
           intent, qrImage, serverNow: new Date().toISOString(),
-          reviewStatus: req.app.locals.demoMode ? await bookingReceiptReviewStatus(booking) : null
+          reviewStatus
         };
         if (booking.status === 'HOLD') {
           result.holdUntil = new Date(Math.min(
