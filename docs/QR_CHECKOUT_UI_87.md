@@ -37,3 +37,7 @@ Các ca browser kiểm tra Tab/Enter, hai ô rời nhau tổng 125.000đ, một 
 Kết quả cục bộ đạt 12/12 ca browser ở hai viewport, QR mock đọc lại khớp payload, `npm run check` đạt ESLint và 19 EJS, `npm test` đạt 216/216 với 0 lỗi hoặc bỏ qua trên DB thử. Các ca còn chờ gồm Sandbox provider, webhook #86, UI đối soát #88 và mode triển khai hợp nhất với #81.
 
 [JSON từng ca, hash source và ảnh](kiem-thu-thanh-toan/ui-draft-87/browser-results.json). Số điện thoại khách thử được che trong ảnh. Query chứa capability, cookie, CSRF và payload xác thực không được ghi vào bằng chứng.
+
+## Cập nhật tích hợp ngày 06/11/2026
+
+Đã tích hợp nền mode #95/#98 và webhook mock #99; `npm run check` đạt 19 EJS, `npm test` đạt **253/253**, không lỗi/bỏ qua trên MongoDB replica set cục bộ. Test mới xác minh UNKNOWN được tra cứu bằng POST có CSRF trên cùng intent/mã, GET không gọi provider. Chrome cục bộ tại 1366px và 390px xác minh create timeout → UNKNOWN → bấm Tra cứu yêu cầu cũ → PENDING/QR; provider create một lần, lookup một lần; reload không gửi POST mới. Bootstrap vẫn tắt mặc định; đây chưa phải provider Sandbox hoặc Render.
