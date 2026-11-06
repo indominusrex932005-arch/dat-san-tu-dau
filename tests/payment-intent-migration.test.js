@@ -4,7 +4,9 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { createTestEnvironment, mongoose, Payment } from './helpers/database.js';
 import { migratePaymentIntents } from '../scripts/chuan-bi-payment-intents.js';
-import { PAYMENT_INTENT_INDEXES, assertPaymentIntentIndexes } from '../services/payment-intent-indexes.js';
+import {
+  PAYMENT_INTENT_INDEXES, PAYMENT_RECEIPT_INDEX, assertPaymentIntentIndexes, assertPaymentReceiptIndex
+} from '../services/payment-intent-indexes.js';
 
 function intent(overrides = {}) {
   return {
@@ -68,7 +70,7 @@ test('Payment intent migration chỉ tạo index rõ ràng, giữ nguyên mọi 
     assert.deepEqual(result.errors, []);
     assert.equal(result.paymentsScanned, 3);
     assert.equal(result.intentsScanned, 0);
-    assert.equal(result.indexesToCreate.length, 4);
+    assert.deepEqual(result.indexesToCreate, [...PAYMENT_INTENT_INDEXES, PAYMENT_RECEIPT_INDEX].map(index => index.name));
     assert.deepEqual(await payments.find({}).sort({ _id: 1 }).toArray(), legacyBefore);
     assert.deepEqual(await payments.listIndexes().toArray(), indexesBefore);
   });
@@ -128,13 +130,34 @@ test('Payment intent migration chỉ tạo index rõ ràng, giữ nguyên mọi 
     await payments.dropIndex('payment_intent_booking_unique');
   });
 
-  await t.test('Apply hai lần chỉ bổ sung bốn index và giữ nguyên legacy', async () => {
+  const unmatchedReceipt = {
+    type: 'PROVIDER_RECEIPT', method: 'PROVIDER', provider: 'mock_gateway', environment: 'sandbox',
+    merchantId: 'MERCHANT_TEST', providerTransactionId: 'TX_FIXTURE', currency: 'USD',
+    receivedAmountMinor: 125, receiptStatus: 'REVIEW', reviewReason: 'UNMATCHED_INTENT'
+  };
+  await t.test('Biên nhận trùng hoặc sai kiểu chặn apply và được giữ nguyên', async () => {
+    await payments.insertMany([{ ...unmatchedReceipt }, { ...unmatchedReceipt, receivedAmountMinor: '125' }]);
+    const before = await payments.find({ type: 'PROVIDER_RECEIPT' }).sort({ _id: 1 }).toArray();
+    const report = await migratePaymentIntents(db, { apply: true });
+    assert.equal(report.applied, false);
+    assert.equal(report.receiptsScanned, 2);
+    assert.equal(report.invalidReceipts, 1);
+    assert.equal(report.duplicateGroups, 1);
+    assert.doesNotMatch(JSON.stringify(report), /TX_FIXTURE|MERCHANT_TEST/);
+    assert.deepEqual(await payments.listIndexes().toArray(), indexesBefore);
+    assert.deepEqual(await payments.find({ type: 'PROVIDER_RECEIPT' }).sort({ _id: 1 }).toArray(), before);
+    await assert.rejects(assertPaymentReceiptIndex(db), error => error.code === 'PAYMENT_MIGRATION_REQUIRED');
+    await payments.deleteMany({ type: 'PROVIDER_RECEIPT' });
+  });
+
+  await t.test('Apply hai lần chỉ bổ sung index provider và giữ nguyên legacy', async () => {
     const first = await migratePaymentIntents(db, { apply: true });
     assert.equal(first.applied, true);
     assert.deepEqual(first.errors, []);
     await assertPaymentIntentIndexes(db);
+    await assertPaymentReceiptIndex(db);
     const appliedIndexes = await payments.listIndexes().toArray();
-    assert.equal(appliedIndexes.length, indexesBefore.length + 4);
+    assert.equal(appliedIndexes.length, indexesBefore.length + PAYMENT_INTENT_INDEXES.length + 1);
     assert.deepEqual(await payments.find({}).sort({ _id: 1 }).toArray(), legacyBefore);
     const second = await migratePaymentIntents(db, { apply: true });
     assert.equal(second.applied, true);
@@ -156,5 +179,15 @@ test('Payment intent migration chỉ tạo index rõ ràng, giữ nguyên mọi 
     assert.equal(await payments.countDocuments({ type: 'INITIAL_INTENT' }), 4);
     assert.equal((await payments.findOne({ _id: first._id })).intentStatus, 'CREATING');
     assert.equal(PAYMENT_INTENT_INDEXES.length, 4);
+  });
+
+  await t.test('Biên nhận dùng ID giao dịch theo merchant và tách khỏi ID intent', async () => {
+    await Payment.create(intent({ externalId: unmatchedReceipt.providerTransactionId }));
+    await Payment.create(unmatchedReceipt);
+    await assert.rejects(Payment.create(unmatchedReceipt), error => (
+      error.code === 11000 && error.keyPattern?.providerTransactionId === 1
+    ));
+    await Payment.create({ ...unmatchedReceipt, merchantId: 'MERCHANT_OTHER' });
+    assert.equal(await payments.countDocuments({ type: 'PROVIDER_RECEIPT' }), 2);
   });
 });

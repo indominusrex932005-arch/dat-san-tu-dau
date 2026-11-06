@@ -1,0 +1,259 @@
+{
+  "issue": 87,
+  "phase": "DRAFT - local UI with mock adapter, no provider Sandbox",
+  "testedAtUtc": "2026-11-05T12:50:01.066Z",
+  "baseIntentSha": "a98294a1456946320cbc3556ed4e7dbe22c6f10f",
+  "mainSha": "180a3c586f86276778f9f5492e998f64688016a0",
+  "sourceBlobs": {
+    "public/js/payment-checkout.js": "617c96cdd7ad53096289ec7e270481e8da136a68",
+    "views/booking-checkout.ejs": "95a7d08617070176361608c5bc05d418518b0ba5",
+    "controllers/payment.controller.js": "2d11a020f725d3ce107a1123367d053cd614a9a0"
+  },
+  "cases": [
+    {
+      "name": "explicit-create-tab-enter-qr-reload-back-readonly",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "qr": {
+        "method": "OpenCV QRCodeDetector",
+        "decodedMatchesMockPayload": true
+      },
+      "reachedCreateByKeyboard": true,
+      "focusAfterCreate": "provider-check-payment",
+      "postCreates": 1,
+      "providerLookupCalls": 0,
+      "amountVND": 125000,
+      "selectedTimes": [
+        "16:30",
+        "18:00"
+      ],
+      "image": "pending-mock-390.png",
+      "pass": true
+    },
+    {
+      "name": "network-error-and-read-recovery",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "postCreates": 1,
+      "image": "network-error-mock-390.png",
+      "pass": true
+    },
+    {
+      "name": "foreign-context-without-capability",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 403,
+      "pass": true
+    },
+    {
+      "name": "poll-redirect-after-server-demo-confirmation",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 303,
+      "confirmationSource": "Existing internal demo endpoint, not provider webhook",
+      "pass": true
+    },
+    {
+      "name": "provider-failed-mock",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "image": "failed-mock-390.png",
+      "pass": true
+    },
+    {
+      "name": "short-deadline-fixture-hides-qr-and-links",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "setup": "Synthetic stored HOLD prepared with 12 seconds remaining before test; no claim of real 10-minute wait",
+      "image": "expired-mock-390.png",
+      "pass": true
+    },
+    {
+      "name": "explicit-create-tab-enter-qr-reload-back-readonly",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "qr": {
+        "method": "OpenCV QRCodeDetector",
+        "decodedMatchesMockPayload": true
+      },
+      "reachedCreateByKeyboard": true,
+      "focusAfterCreate": "provider-check-payment",
+      "postCreates": 1,
+      "providerLookupCalls": 0,
+      "amountVND": 125000,
+      "selectedTimes": [
+        "16:30",
+        "18:00"
+      ],
+      "image": "pending-mock-1366.png",
+      "pass": true
+    },
+    {
+      "name": "network-error-and-read-recovery",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "postCreates": 1,
+      "image": "network-error-mock-1366.png",
+      "pass": true
+    },
+    {
+      "name": "foreign-context-without-capability",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "status": 403,
+      "pass": true
+    },
+    {
+      "name": "poll-redirect-after-server-demo-confirmation",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "status": 303,
+      "confirmationSource": "Existing internal demo endpoint, not provider webhook",
+      "pass": true
+    },
+    {
+      "name": "provider-failed-mock",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "image": "failed-mock-1366.png",
+      "pass": true
+    },
+    {
+      "name": "short-deadline-fixture-hides-qr-and-links",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "setup": "Synthetic stored HOLD prepared with 12 seconds remaining before test; no claim of real 10-minute wait",
+      "image": "expired-mock-1366.png",
+      "pass": true
+    }
+  ],
+  "images": [
+    {
+      "file": "pending-mock-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "dcc7046c3e2e8e44b41f7b3dda8278d58d010a677e26834ad11b6965f81c9e37"
+    },
+    {
+      "file": "network-error-mock-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "395db80d0c9d067e4bc580d6fe31c93cb5e6ce97371e15f03004a8136839c876"
+    },
+    {
+      "file": "failed-mock-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "873d8a550c851abb2fd66fdc0a2875ac336163379ace007fa47a02f5bd2addc5"
+    },
+    {
+      "file": "expired-mock-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "00b5e498bc04ad452d710788617e2db79ac55d6525832b520fea47cd95206653"
+    },
+    {
+      "file": "pending-mock-1366.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "sha256": "a5cb98308abcbd89b3c8235d68c04a7a0a26dd1df073796726c41a7729ae10a6"
+    },
+    {
+      "file": "network-error-mock-1366.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "sha256": "c8a7f9b69a3641d6946bba7ea222db558852b069efe30ce9ce55f90a31b67dc9"
+    },
+    {
+      "file": "failed-mock-1366.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "sha256": "6bd60344438bb70a2e86ba1a1fd95540bd324a6a713ce66d15a06112334a9bcf"
+    },
+    {
+      "file": "expired-mock-1366.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "sha256": "6c665906ff539cd5175a9109d5b1bd129c9449b188193780e88a800505dd8aef"
+    }
+  ],
+  "mongo": "8.3.11",
+  "browser": {
+    "product": "Google Chrome headless via Playwright",
+    "version": "156.0.8078.80"
+  },
+  "pass": true,
+  "cleanup": {
+    "testDatabasesRemaining": 0
+  },
+  "renderedQrChecks": [
+    {
+      "viewportWidth": 390,
+      "renderedScreenshotDecoded": true,
+      "matchesMockPayload": true,
+      "inspectionWindow": [
+        0,
+        1760,
+        390,
+        500
+      ]
+    },
+    {
+      "viewportWidth": 1366,
+      "renderedScreenshotDecoded": true,
+      "matchesMockPayload": true,
+      "inspectionWindow": null
+    }
+  ],
+  "validation": {
+    "check": {
+      "passed": true,
+      "ejs": 19
+    },
+    "tests": {
+      "pass": 216,
+      "fail": 0,
+      "skipped": 0
+    }
+  }
+}

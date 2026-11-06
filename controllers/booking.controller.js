@@ -2,6 +2,7 @@ import Court from '../models/Court.js';
 import Booking from '../models/Booking.js';
 import BookingRequest from '../models/BookingRequest.js';
 import { createHold, getAvailability, getBookingForViewer, simulatePayment, createChangeRequest, expireHolds } from '../services/booking.service.js';
+import { bookingReceiptReviewStatus } from '../services/payment-reconciliation.service.js';
 
 function tokenFrom(req) {
   const token = req.body?.token ?? req.query.token;
@@ -53,8 +54,9 @@ export async function showCheckout(req, res) {
   const token = tokenFrom(req);
   const booking = await getBookingForViewer(req.params.id, { user: req.currentUser, token });
   if (booking.status === 'CONFIRMED') return res.redirect(303, `/bookings/${booking._id}/receipt${tokenQuery(token)}`);
+  const reviewStatus = req.app.locals.demoMode ? await bookingReceiptReviewStatus(booking) : null;
   res.status(booking.status === 'EXPIRED' ? 410 : 200).render('booking-checkout', {
-    title: 'Kiểm tra và thanh toán', booking, token, errorMessage: null, serverNow: new Date().toISOString()
+    title: 'Kiểm tra và thanh toán', booking, token, errorMessage: null, serverNow: new Date().toISOString(), reviewStatus
   });
 }
 
@@ -68,7 +70,8 @@ export async function showReceipt(req, res) {
   const token = tokenFrom(req);
   const booking = await getBookingForViewer(req.params.id, { user: req.currentUser, token });
   if (booking.status === 'HOLD') return res.redirect(303, `/bookings/${booking._id}/checkout${tokenQuery(token)}`);
-  res.render('booking-receipt', { title: 'Phiếu đặt sân', booking, token, errorMessage: null });
+  const reviewStatus = req.app.locals.demoMode ? await bookingReceiptReviewStatus(booking) : null;
+  res.render('booking-receipt', { title: 'Phiếu đặt sân', booking, token, errorMessage: null, reviewStatus });
 }
 
 export async function showMyBookings(req, res) {

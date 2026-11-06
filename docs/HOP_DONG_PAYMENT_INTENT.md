@@ -49,7 +49,7 @@ DTO intent chỉ có các trường được phép dưới đây. Không trả d
 | Trường | Hợp đồng |
 | --- | --- |
 | `id`, `bookingId` | ID intent và đơn liên quan; không cấp quyền xem đơn |
-| `status` | `CREATING`, `PENDING`, `UNKNOWN`, `FAILED` hoặc `EXPIRED` |
+| `status` | `CREATING`, `PENDING`, `UNKNOWN`, `FAILED`, `EXPIRED` hoặc `SETTLED` |
 | `mode` | Hiện chỉ `demo`; không dùng để tuyên bố đã thanh toán |
 | `provider` | Tên adapter phía server đã cấu hình; không mặc định là SePay thật |
 | `amountVND`, `currency` | 100% tổng đã lưu, số nguyên VND; currency cố định `VND` |
@@ -78,6 +78,8 @@ Mã đối soát và snapshot provider/mode/giá/hạn được lưu trước kh
 | `EXPIRED` | Hết hạn hiệu lực ứng dụng; không cho tiếp tục cấp sân từ intent này. Không có nghĩa ngân hàng/provider chắc chắn không thể nhận tiền |
 
 Khi trả DTO, server đọc lại Booking, tổng tiền và toàn bộ lock. Hết hạn, mất lock hoặc Booking không còn HOLD/UNPAID hợp lệ (kể cả đã CONFIRMED/CANCELLED) thì DTO đóng thành EXPIRED và bỏ checkout/QR, dù timestamp intent chưa tới hoặc `intentStatus` trong DB chưa đổi. GET không tự ghi lại trạng thái intent; #86 phải kiểm tra điều kiện hiện tại, không chỉ nhìn status đã lưu.
+
+Webhook thử có thể chuyển intent sang `SETTLED` cùng Booking `CONFIRMED/DEMO_PAID`; DTO giữ trạng thái này và bỏ QR/checkout. Xem [hợp đồng webhook](HOP_DONG_WEBHOOK_THANH_TOAN.md).
 
 ## Adapter và phục hồi khi chưa rõ kết quả
 

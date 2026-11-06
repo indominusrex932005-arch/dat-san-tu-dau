@@ -16,6 +16,7 @@
       <p class="booking-eyebrow">SÂN THỂ THAO</p><h1 id="receipt-title">Phiếu thông tin đặt sân</h1>
       <p class="booking-code">Mã đơn: <strong><%= booking.publicCode || booking._id %></strong></p>
       <p><span class="booking-badge"><%= statusLabel(booking.status) %></span></p>
+      <%- include('partials/payment-review-notice', { reviewStatus }) %>
       <% if (booking.paymentStatus === 'DEMO_PAID') { %>
         <p class="booking-notice">THANH TOÁN MÔ PHỎNG — Phiếu dùng để trình bày, chưa xác minh giao dịch ngân hàng hoặc nhận tiền thật.</p>
       <% } else if (booking.paymentStatus !== 'PAID') { %>

@@ -16,6 +16,7 @@
     <% const approvedOwners = Array.isArray(owners) ? owners : []; %>
     <main aria-labelledby="admin-title">
       <div class="owner-heading"><div><span class="owner-kicker">QUẢN TRỊ NHÓM</span><h1 id="admin-title"><%= title %></h1><p>Duyệt tài khoản chủ sân và cấp cơ sở quản lý.</p></div></div>
+      <% if (demoMode) { %><p><a class="demo-button demo-button-secondary" href="/admin/payment-reconciliation">Đối soát QR thử nghiệm</a></p><% } %>
       <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
       <section class="owner-stat-grid" aria-label="Tổng quan tài khoản">
         <div class="demo-card owner-stat"><span>Đang chờ duyệt</span><strong><%= pendingApplications.length %></strong></div>
