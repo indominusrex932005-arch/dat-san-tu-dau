@@ -15,8 +15,9 @@ import { trustedProxyAddresses } from './config/trust-proxy.js';
 import { formatMoney, formatDate } from './utils/booking-time.js';
 import { createPaymentService } from './services/payment.service.js';
 import { createPaymentRoutes } from './routes/payment.routes.js';
+import { createPaymentWebhookRoutes } from './routes/payment-webhook.routes.js';
 
-export default function createApp(sessionStore, { paymentService = createPaymentService() } = {}) {
+export default function createApp(sessionStore, { paymentService = createPaymentService(), paymentWebhookHandler } = {}) {
   if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
     throw new Error('Hãy thêm SESSION_SECRET dài ít nhất 32 ký tự vào .env.');
   }
@@ -54,6 +55,7 @@ export default function createApp(sessionStore, { paymentService = createPayment
     res.setHeader('Cache-Control', 'no-store');
     next();
   });
+  if (paymentWebhookHandler) app.use(createPaymentWebhookRoutes(paymentWebhookHandler));
   app.use('/assets', express.static(fileURLToPath(new URL('./public', import.meta.url))));
   app.use(express.urlencoded({ extended: false, limit: '20kb' }));
   app.use(session({

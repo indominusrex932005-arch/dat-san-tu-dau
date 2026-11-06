@@ -49,7 +49,7 @@ DTO intent chỉ có các trường được phép dưới đây. Không trả d
 | Trường | Hợp đồng |
 | --- | --- |
 | `id`, `bookingId` | ID intent và đơn liên quan; không cấp quyền xem đơn |
-| `status` | `CREATING`, `PENDING`, `UNKNOWN`, `FAILED` hoặc `EXPIRED` |
+| `status` | `CREATING`, `PENDING`, `UNKNOWN`, `FAILED`, `EXPIRED` hoặc `SETTLED` |
 | `mode` | Hiện chỉ `demo`; không dùng để tuyên bố đã thanh toán |
 | `provider` | Tên adapter phía server đã cấu hình; không mặc định là SePay thật |
 | `amountVND`, `currency` | 100% tổng đã lưu, số nguyên VND; currency cố định `VND` |
@@ -76,8 +76,9 @@ Mã đối soát và snapshot provider/mode/giá/hạn được lưu trước kh
 | `UNKNOWN` | Có thể provider đã nhận lệnh nhưng app chưa có kết quả xác định; chỉ được lookup phục hồi |
 | `FAILED` | Thất bại xác định được lưu bằng mã an toàn; không tự sinh intent/hóa đơn mới |
 | `EXPIRED` | Hết hạn hiệu lực ứng dụng; không cho tiếp tục cấp sân từ intent này. Không có nghĩa ngân hàng/provider chắc chắn không thể nhận tiền |
+| `SETTLED` | #86 đã ghi nhận giao dịch thử và xác nhận Booking với `DEMO_PAID`. DTO giữ trạng thái này và bỏ checkout/QR |
 
-Khi trả DTO, server đọc lại Booking, tổng tiền và toàn bộ lock. Hết hạn, mất lock hoặc Booking không còn HOLD/UNPAID hợp lệ (kể cả đã CONFIRMED/CANCELLED) thì DTO đóng thành EXPIRED và bỏ checkout/QR, dù timestamp intent chưa tới hoặc `intentStatus` trong DB chưa đổi. GET không tự ghi lại trạng thái intent; #86 phải kiểm tra điều kiện hiện tại, không chỉ nhìn status đã lưu.
+Khi trả DTO cho intent chưa chốt, server đọc lại Booking, tổng tiền và toàn bộ lock. Hết hạn, mất lock hoặc Booking không còn HOLD/UNPAID hợp lệ thì DTO đóng thành EXPIRED và bỏ checkout/QR. GET không tự ghi lại trạng thái intent. Xem điều kiện xác nhận, index biên nhận và trạng thái `SETTLED` ở [hợp đồng webhook #86](HOP_DONG_WEBHOOK_THANH_TOAN.md).
 
 ## Adapter và phục hồi khi chưa rõ kết quả
 
