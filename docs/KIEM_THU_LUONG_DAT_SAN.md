@@ -37,7 +37,22 @@ Ngày chơi 04/11/2026, khách C05b chọn hai ô rời nhau **16:30–17:00** (
 
 - C01–C04 và C08–C09 giữ kết quả theo phạm vi thực thi của PR #59 ở bảng dưới. C04 đã có bổ sung hai phiên trình duyệt, còn HTTP 409 được ghi trong lần thử trước đó.
 - C05 đã có bằng chứng chờ hết đủ 10 phút. C05b nay có bằng chứng chờ đúng mốc ô đầu tiên. C06 giữ phiếu và PDF thực từ lần bổ sung của PR #59.
-- C07 giữ các ca qua UI đã ghi, gồm đổi trùng, duyệt hủy và hoàn mô phỏng, từ chối yêu cầu đổi. **CHƯA CHẠY qua UI** nhánh đổi thành công có chênh lệch. Ca này đạt ở mức test HTTP/DB tự động. Chưa chạy Firefox, Safari hoặc thiết bị thật. Kết luận lần này giới hạn ở **C05b của #78**.
+- C07 giữ các ca qua UI đã ghi, gồm đổi trùng, duyệt hủy và hoàn mô phỏng, từ chối yêu cầu đổi. Lần chạy 04/11 mới kiểm tra đổi thành công có chênh lệch qua HTTP/DB. Lần bổ sung 07/11 đã kiểm tra nhánh đó trên Chrome.
+
+## C07 — đổi lịch có chênh lệch qua Chrome ngày 07/11/2026
+
+**Đạt trong chế độ mô phỏng.** Chạy source `main` tại `ba0d0b352aa8ab7c7e9397f22e2a5e6bac60c94f` với Chrome 156.0.8078.80, Node 24.15.0 và MongoDB 8.3.11 replica set cục bộ. CUSTOMER và OWNER dùng hai phiên độc lập, với dữ liệu tổng hợp trong DB riêng.
+
+| Bước | Kết quả thực tế |
+| --- | --- |
+| CUSTOMER giữ và thanh toán mô phỏng ô 13:00 của sân cũ, rồi yêu cầu hai ô 13:00 và 19:00 ở sân đích | Form trả 303, yêu cầu `PENDING`, lịch cũ 50.000đ còn giữ |
+| OWNER bấm chấp thuận khi chưa xác nhận chênh lệch | HTTP 400. Yêu cầu vẫn `PENDING`, sân cũ và lock cũ giữ nguyên, 0 `EXTRA_DEMO` |
+| OWNER xác nhận chênh lệch mô phỏng rồi bấm chấp thuận | HTTP 303, yêu cầu `APPROVED`. Giá mới 160.000đ, gồm 65.000đ và 95.000đ. DB có 2 lock xác nhận ở sân đích, 0 lock ở sân cũ và đúng 1 `EXTRA_DEMO` 110.000đ |
+| CUSTOMER mở lại phiếu | Phiếu hiện sân đích, hai ô và tổng mới, giữ `CONFIRMED` / `DEMO_PAID`. Kiểm tra không tràn ngang ở 390×844 và 1366×900 |
+
+`npm run check` đạt, `npm test` đạt 227/227 trên cùng source. [JSON kết quả và hash ảnh](kiem-thu-dat-san/change-fee-2026-11-07/c07-results.json) · [Phiếu mobile](kiem-thu-dat-san/change-fee-2026-11-07/c07-receipt-390.png) · [Phiếu desktop](kiem-thu-dat-san/change-fee-2026-11-07/c07-receipt-1366.png)
+
+C05b và các nhánh còn thiếu đã nêu trong đối chiếu #33 nay có bằng chứng trong phạm vi Chrome, HTTP và DB thử. Firefox, Safari và thiết bị thật vẫn chưa chạy.
 
 Phần còn lại bên dưới là kết quả lịch sử của PR #59.
 

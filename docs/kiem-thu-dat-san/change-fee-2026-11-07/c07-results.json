@@ -1,0 +1,47 @@
+{
+  "mainSha": "ba0d0b352aa8ab7c7e9397f22e2a5e6bac60c94f",
+  "runAtUtc": "2026-11-06T17:08:53.578Z",
+  "node": "v24.15.0",
+  "mongo": "8.3.11",
+  "browser": "Google Chrome 156.0.8078.80",
+  "c07": {
+    "pass": true,
+    "date": "2026-11-10",
+    "oldTimes": [
+      "13:00"
+    ],
+    "requestedTimes": [
+      "13:00",
+      "19:00"
+    ],
+    "requestPost": 303,
+    "denyWithoutConfirmation": 400,
+    "approveWithConfirmation": 303,
+    "oldPriceVND": 50000,
+    "newPriceVND": 160000,
+    "differenceVND": 110000,
+    "oldLocksAfter": 0,
+    "confirmedNewLocks": 2,
+    "status": "CONFIRMED",
+    "paymentStatus": "DEMO_PAID",
+    "extraDemoRows": 1,
+    "images": [
+      {
+        "file": "c07-receipt-1366.png",
+        "sha256": "bc8c764495800dbcd983a3598cde14d30bc9cabdec25790da985479062ad78c2",
+        "viewport": {
+          "width": 1366,
+          "height": 900
+        }
+      },
+      {
+        "file": "c07-receipt-390.png",
+        "sha256": "686690ceff807c45085bbb502960aa29ce7c958089b7663f9da7c123e92137d3",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      }
+    ]
+  }
+}
