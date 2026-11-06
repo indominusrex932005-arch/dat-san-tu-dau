@@ -1,0 +1,5 @@
+<% if (reviewStatus === 'IN_REVIEW') { %>
+  <p class="booking-notice"><strong>QR thử nghiệm đang được đối soát.</strong> Khoản nhận được theo dõi riêng với trạng thái đặt sân. Hãy liên hệ cơ sở và cung cấp mã đơn để được hướng dẫn.</p>
+<% } else if (reviewStatus === 'REFUNDED') { %>
+  <p class="booking-notice"><strong>Đã ghi nhận hoàn thủ công cho khoản QR thử nghiệm.</strong> Hãy liên hệ cơ sở nếu cần đối chiếu lại.</p>
+<% } %>

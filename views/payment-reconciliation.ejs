@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Sân Thể Thao</title>
+  <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/owner.css">
+</head>
+<body class="demo-page"><div class="demo-shell">
+  <%- include('partials/navigation') %>
+  <% const dateTime = value => new Intl.DateTimeFormat('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', dateStyle: 'short', timeStyle: 'medium' }).format(value); %>
+  <main aria-labelledby="reconciliation-title">
+    <div class="owner-heading"><div><span class="owner-kicker">DỮ LIỆU THỬ NGHIỆM</span><h1 id="reconciliation-title"><%= title %></h1></div></div>
+    <p class="owner-note">Đối chiếu khoản nhận với nguồn đã xác minh. Trạng thái khoản tiền và trạng thái giữ sân được theo dõi riêng. Chỉ ghi nhận hoàn khi đã kiểm tra bằng chứng xử lý bên ngoài hệ thống.</p>
+    <p><a href="<%= receipt ? baseUrl : dashboardUrl %>">← <%= receipt ? 'Danh sách đối soát' : 'Trang quản lý' %></a></p>
+    <% if (receipt) { %>
+      <section class="demo-card owner-application" aria-labelledby="receipt-detail-title">
+        <h2 id="receipt-detail-title">Khoản nhận <%= formatMoney(receipt.amountVND) %></h2>
+        <p class="owner-badge"><%= statusLabels[receipt.status] %></p>
+        <dl class="owner-detail-list">
+          <div><dt>Cơ sở</dt><dd><%= receipt.facility?.name || 'Chưa xác định' %></dd></div>
+          <div><dt>Đơn</dt><dd><% if (receipt.booking) { %><a href="/bookings/<%= receipt.booking._id %>/receipt"><%= receipt.booking.publicCode || 'Xem đơn' %></a> · <%= statusLabel(receipt.booking.status) %><% } else { %>Chưa khớp đơn<% } %></dd></div>
+          <div><dt>Thời điểm nhận</dt><dd><time datetime="<%= receipt.receivedAt.toISOString() %>"><%= dateTime(receipt.receivedAt) %></time></dd></div>
+          <div><dt>Mã giao dịch</dt><dd><%= receipt.provider %> / <%= receipt.transactionId %></dd></div>
+          <div><dt>Mã tham chiếu</dt><dd><%= receipt.reconciliationCode || 'Chưa có' %></dd></div>
+          <% if (currentUser.role === 'ADMIN') { %>
+            <div><dt>Mã merchant thử nghiệm</dt><dd><%= receipt.merchantId %></dd></div>
+            <div><dt>Mã đơn bên cung cấp</dt><dd><%= receipt.orderReference || 'Chưa có' %></dd></div>
+          <% } %>
+          <div><dt>Lý do đối soát</dt><dd><%= receipt.flags.map(flag => flagLabels[flag]).join(' · ') || 'Chờ phân loại' %></dd></div>
+          <% if (receipt.expectedAmountVND !== undefined) { %><div><dt>Số tiền theo yêu cầu</dt><dd><%= formatMoney(receipt.expectedAmountVND) %></dd></div><% } %>
+          <div><dt>Đã ghi nhận hoàn</dt><dd><%= formatMoney(receipt.refundedVND) %></dd></div>
+        </dl>
+      </section>
+      <section aria-labelledby="receipt-history-title">
+        <h2 id="receipt-history-title">Lịch sử xử lý</h2>
+        <% if (!receipt.history.length) { %><p class="demo-muted">Chưa có thao tác xử lý.</p><% } %>
+        <ul>
+          <% for (const entry of receipt.history) { %>
+            <li><strong><%= entry.action === 'REFUND_RECORDED' ? 'Ghi nhận hoàn ' + formatMoney(entry.amountVND) : 'Rà soát' %></strong>
+              · <%= entry.actor?.fullName || 'Tài khoản đã xử lý' %>
+              · <time datetime="<%= entry.at.toISOString() %>"><%= dateTime(entry.at) %></time>
+              · <%= entry.reference %><p><%= entry.reason %></p></li>
+          <% } %>
+        </ul>
+      </section>
+      <% if (receipt.status !== 'UNCLASSIFIED') { %>
+        <div class="demo-grid">
+          <section class="demo-card owner-application">
+            <h2>Ghi kết quả rà soát</h2>
+            <form action="<%= baseUrl %>/<%= receipt._id %>" method="POST" class="demo-form owner-review-form">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="action" value="REVIEWED">
+              <label for="review-reference">Mã đối soát</label><input id="review-reference" name="reference" maxlength="100" required>
+              <label for="review-reason">Lý do và kết quả</label><input id="review-reason" name="reason" maxlength="500" required>
+              <button class="demo-button" type="submit">Lưu kết quả rà soát</button>
+            </form>
+          </section>
+          <% if (receipt.refundedVND < receipt.amountVND) { %>
+            <section class="demo-card owner-application">
+              <h2>Ghi nhận đã hoàn thủ công</h2>
+              <p>Nhập số tiền đã xử lý theo thỏa thuận. Thao tác này lưu bằng chứng đối soát.</p>
+              <form action="<%= baseUrl %>/<%= receipt._id %>" method="POST" class="demo-form owner-review-form">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="action" value="REFUND_RECORDED">
+                <label for="refund-amount">Số tiền đã hoàn (đồng)</label><input id="refund-amount" name="amountVND" type="number" min="1" max="<%= receipt.amountVND - receipt.refundedVND %>" step="1" required>
+                <label for="refund-reference">Mã giao dịch hoàn đã đối chiếu</label><input id="refund-reference" name="reference" maxlength="100" required>
+                <label for="refund-reason">Lý do ghi nhận hoàn</label><input id="refund-reason" name="reason" maxlength="500" required>
+                <label class="owner-checkbox"><input name="evidenceChecked" type="checkbox" value="yes" required><span>Đã kiểm tra bằng chứng hoàn tiền bên ngoài hệ thống</span></label>
+                <button class="demo-button demo-button-secondary" type="submit">Ghi nhận đã hoàn</button>
+              </form>
+            </section>
+          <% } %>
+        </div>
+      <% } %>
+    <% } else { %>
+      <% if (!items.length) { %><p class="demo-card owner-empty">Chưa có khoản nhận cần đối soát.</p><% } %>
+      <div class="demo-grid">
+        <% for (const item of items) { %>
+          <article class="demo-card owner-application">
+            <div class="owner-card-heading"><h2><%= formatMoney(item.amountVND) %></h2><span class="owner-badge"><%= statusLabels[item.status] %></span></div>
+            <p><%= item.flags.map(flag => flagLabels[flag]).join(' · ') || 'Chờ phân loại' %></p>
+            <p><%= item.facility?.name || 'Chưa xác định cơ sở' %> · <%= item.booking?.publicCode || 'Chưa khớp mã đơn' %></p>
+            <a href="<%= baseUrl %>/<%= item._id %>">Xem khoản nhận ngày <%= dateTime(item.receivedAt) %></a>
+          </article>
+        <% } %>
+      </div>
+      <% if (next) { %><p><a href="<%= baseUrl %>?before=<%= next %>">Xem khoản nhận cũ hơn →</a></p><% } %>
+    <% } %>
+  </main>
+</div></body>
+</html>

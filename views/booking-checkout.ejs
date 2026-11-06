@@ -27,6 +27,7 @@
         <p class="demo-muted">Giá từng ô đã được lưu vào đơn. Không có bước đặt cọc.</p>
       </section>
       <aside class="demo-card booking-summary">
+        <%- include('partials/payment-review-notice', { reviewStatus }) %>
         <% if (booking.status === 'HOLD') { %>
           <h2>Chỗ đang được giữ</h2>
           <p class="booking-countdown" role="timer" data-hold-until="<%= booking.holdExpiresAt ? new Date(booking.holdExpiresAt).toISOString() : '' %>" data-server-now="<%= typeof serverNow === 'string' ? serverNow : '' %>" aria-live="off">Đang tính thời gian còn lại…</p>
