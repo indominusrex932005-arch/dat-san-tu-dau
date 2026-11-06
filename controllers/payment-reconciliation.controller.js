@@ -7,6 +7,7 @@ const statusLabels = {
   PARTIALLY_REFUNDED: 'Đã ghi nhận hoàn một phần', REFUNDED: 'Đã ghi nhận hoàn toàn bộ'
 };
 const flagLabels = {
+  CURRENCY_MISMATCH: 'Sai đơn vị tiền; cần quản trị đối chiếu riêng',
   UNMATCHED: 'Chưa khớp đơn', WRONG_REFERENCE: 'Sai mã tham chiếu', RECIPIENT_MISMATCH: 'Sai thông tin người nhận',
   UNDERPAID: 'Thiếu tiền', OVERPAID: 'Thừa tiền', LATE: 'Quá hạn giữ sân',
   INVALID_DEADLINE: 'Cần kiểm tra hạn giữ sân', UNALLOCATED: 'Khoản nhận chưa phân bổ vào đơn'

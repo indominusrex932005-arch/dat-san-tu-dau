@@ -6,7 +6,7 @@ Ngày soạn: **05/11/2026**. Nhánh `feat/payment-intents-85`, đã cập nhậ
 
 Phần #85 tạo và đọc yêu cầu thanh toán **INITIAL**, độc lập nhà cung cấp. Yêu cầu này biểu diễn việc xin checkout/QR cho **100% tổng tiền đơn đã lưu**, không biểu diễn tiền đã nhận. Chưa tạo EXTRA cho đổi sân, chưa có webhook/IPN xác nhận tiền, đối soát live hoặc giao diện QR mới.
 
-Nhà cung cấp và mô hình nhận tiền vẫn chờ quyết định trong [#84 / PR #97](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/97), đặc biệt D01/D02. Không tự chọn merchant, tài khoản tập trung hoặc tài khoản từng OWNER. Hợp đồng `PAYMENT_MODE` của [#81 / PR #95](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/95) chưa tích hợp trên nền này; phần core nhận resolver `getPaymentConfig` qua dependency injection để nối **cùng resolver trung tâm** sau khi phần nền được review. Không thêm cờ env thay thế hoặc suy quyền gọi nhà cung cấp từ `DEMO_MODE` cũ.
+Nhà cung cấp và mô hình nhận tiền vẫn chờ quyết định trong [#84 / PR #97](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/97), đặc biệt D01/D02. Không tự chọn merchant, tài khoản tập trung hoặc tài khoản từng OWNER. Ngày **06/11/2026**, nhánh đã tích hợp nền `de09ec3` có hợp đồng `PAYMENT_MODE` của [#81 / PR #95](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/95). App truyền resolver trung tâm `config/payment-mode.js#getPaymentConfig` cho service mặc định; khi bootstrap cung cấp adapter/người nhận, dùng cùng resolver này cho service được inject. Không thêm cờ env thay thế hoặc suy quyền gọi nhà cung cấp từ `DEMO_MODE` cũ; phải xóa key cũ, kể cả `false`.
 
 **App/server mặc định chưa có adapter được cấp phép, nên POST khởi tạo trả 503 khi chưa cấu hình.** GET vẫn được đọc intent cục bộ đúng quyền, hoặc trả 404 nếu chưa có intent; nó không cần bật adapter để đọc lịch sử. Bật demo nội bộ không tự tạo QR hay gọi SePay. Test dùng adapter mock được inject riêng; kết quả mock không chứng minh đã gọi SDK/API, có merchant thật, nhận tiền hoặc có URL triển khai online.
 
@@ -49,7 +49,7 @@ DTO intent chỉ có các trường được phép dưới đây. Không trả d
 | Trường | Hợp đồng |
 | --- | --- |
 | `id`, `bookingId` | ID intent và đơn liên quan; không cấp quyền xem đơn |
-| `status` | `CREATING`, `PENDING`, `UNKNOWN`, `FAILED` hoặc `EXPIRED` |
+| `status` | `CREATING`, `PENDING`, `UNKNOWN`, `FAILED`, `EXPIRED` hoặc `SETTLED` |
 | `mode` | Hiện chỉ `demo`; không dùng để tuyên bố đã thanh toán |
 | `provider` | Tên adapter phía server đã cấu hình; không mặc định là SePay thật |
 | `amountVND`, `currency` | 100% tổng đã lưu, số nguyên VND; currency cố định `VND` |
@@ -78,6 +78,8 @@ Mã đối soát và snapshot provider/mode/giá/hạn được lưu trước kh
 | `EXPIRED` | Hết hạn hiệu lực ứng dụng; không cho tiếp tục cấp sân từ intent này. Không có nghĩa ngân hàng/provider chắc chắn không thể nhận tiền |
 
 Khi trả DTO, server đọc lại Booking, tổng tiền và toàn bộ lock. Hết hạn, mất lock hoặc Booking không còn HOLD/UNPAID hợp lệ (kể cả đã CONFIRMED/CANCELLED) thì DTO đóng thành EXPIRED và bỏ checkout/QR, dù timestamp intent chưa tới hoặc `intentStatus` trong DB chưa đổi. GET không tự ghi lại trạng thái intent; #86 phải kiểm tra điều kiện hiện tại, không chỉ nhìn status đã lưu.
+
+Webhook thử có thể chuyển intent sang `SETTLED` cùng Booking `CONFIRMED/DEMO_PAID`; DTO giữ trạng thái này và bỏ QR/checkout. Xem [hợp đồng webhook](HOP_DONG_WEBHOOK_THANH_TOAN.md).
 
 ## Adapter và phục hồi khi chưa rõ kết quả
 
@@ -109,6 +111,8 @@ Lệnh đầu mặc định dry-run. Báo cáo có tổng số đã quét, inten
 
 ## Kiểm chứng và bàn giao tiếp
 
+Cập nhật tích hợp **06/11/2026** với nền `de09ec3` (#95): đã giải quyết xung đột `app.js` và helper DB, giữ route intent cùng `/health`, mode trung tâm, session/CSRF và limiter. `npm run check` đạt **19 EJS**; `npm test` đạt **227/227**, không fail/skipped, trên MongoDB replica set cục bộ cổng `127.0.0.1:27029`, mỗi suite dùng DB tạm riêng. Test bổ sung kiểm tra service inject dùng resolver mode chung: `off` không tạo intent/gọi provider, `demo` tạo intent PENDING, chuyển về `off` chặn POST tiếp mà không tạo thêm; Booking vẫn HOLD/UNPAID. Đây là kết quả mock/DB cục bộ, chưa nghiệm thu nhà cung cấp hoặc online. Số liệu ngày 05/11 bên dưới là lịch sử trước tích hợp.
+
 Đã chạy ngày **05/11/2026** trên Node.js **24.15.0**, MongoDB **8.3.11** replica cục bộ riêng `qaPayment85`, cổng `127.0.0.1:27063`. Từng suite tạo DB thử riêng và tự dọn; không đọc `.env` riêng hoặc dùng Atlas. Sau khi cập nhật main `180a3c5`, `npm run check` đạt ESLint và **19 EJS**; `npm test` đạt **207/207**, không fail/skipped, gồm bộ test cũ và các test mới bên dưới. Suite intent đặt quota cao chỉ trong fixture và khôi phục sau test; bộ test limiter của main vẫn kiểm tra chính sách thực. SHA commit cuối cùng và CI được ghi trong PR để không nhầm với nguồn main nền.
 
 | Nội dung cần chứng minh bằng test/mock + DB replica cục bộ | Trạng thái trong tài liệu này |
@@ -123,6 +127,6 @@ Lệnh đầu mặc định dry-run. Báo cáo có tổng số đã quét, inten
 
 - **#86:** xác thực webhook/query theo sản phẩm được chốt, inbox/idempotency/đối soát và transaction xác nhận cuối; intent PENDING không tự chuyển Booking hoặc Payment thành đã trả. Không hồi sinh đơn đã hết hạn hoặc chiếm ô của người khác.
 - **#87:** dùng DTO/status đã bàn giao để làm checkout/QR an toàn, xử lý 201/200/202/4xx/5xx và polling local có giới hạn; giữ CSRF/quyền guest, không log token và không coi redirect/QR/PENDING là đã thanh toán.
-- **#84/#81:** chốt provider/cách nhận tiền và tích hợp resolver mode trung tâm trước adapter thật. Không mở live hoặc tự thêm env để hoàn thành giao diện.
+- **#84/#81:** nền mode trung tâm đã tích hợp; còn chốt provider/cách nhận tiền và cấu hình adapter thử cùng resolver trước khi nghiệm thu. Không mở live hoặc tự thêm env để hoàn thành giao diện.
 
 PR phải giữ Draft khi điều kiện nhà cung cấp/mode/nhận tiền cần thiết còn chưa được bàn giao. Tài liệu và mock/test đạt không thay chữ ký nghiệm thu, credential đúng môi trường hoặc bằng chứng Sandbox/online. Báo cáo ghi rõ phần đã chạy, phần chưa chạy và giới hạn; không tự đóng #85 chỉ vì có route/schema mới.

@@ -8,6 +8,9 @@ import { recordReceiptForReview } from '../services/payment-reconciliation.servi
 import { migratePaymentIntents } from '../scripts/chuan-bi-payment-intents.js';
 import PaymentReceipt from '../models/PaymentReceipt.js';
 import mongoose from 'mongoose';
+import { createHmac } from 'node:crypto';
+import { createPaymentWebhookHandler } from '../services/payment-webhook.service.js';
+import { getPaymentConfig } from '../config/payment-mode.js';
 
 const password = 'SyntheticReconciliationFixture-2026!';
 const futureDate = () => new Date(Date.now() + 3 * 86400000 + 7 * 3600000).toISOString().slice(0, 10);
@@ -31,7 +34,17 @@ test('QR reconciliation on isolated MongoDB, through the staff and booking route
     resolveRecipient: () => ({ ...identity, verified: true, displayName: 'Người nhận thử nghiệm' }),
     getPaymentConfig: () => ({ mode: 'demo' })
   });
-  const env = await createTestEnvironment({ appOptions: { paymentService } });
+  const fixtureKey = 'synthetic-handoff-signature-key';
+  const paymentWebhookHandler = createPaymentWebhookHandler({
+    adapter: {
+      provider: identity.provider, environment: identity.environment,
+      verifyWebhook({ rawBody, headers }) {
+        const expected = createHmac('sha256', fixtureKey).update(rawBody).digest('hex');
+        return headers['x-fixture-signature'] === expected ? JSON.parse(rawBody) : null;
+      }
+    }, getPaymentConfig
+  });
+  const env = await createTestEnvironment({ appOptions: { paymentService, paymentWebhookHandler, paymentCheckoutEnabled: true } });
   t.after(() => env.close());
   await migratePaymentIntents(mongoose.connection.db, { apply: true });
 
@@ -91,6 +104,109 @@ test('QR reconciliation on isolated MongoDB, through the staff and booking route
       payments: await Payment.find({ booking: booking.id }).sort({ _id: 1 }).lean()
     };
   }
+
+  async function callback(payment, changes = {}) {
+    const body = JSON.stringify({
+      status: 'SUCCEEDED', merchantId: identity.merchantId, recipientId: identity.recipientId,
+      transactionId: payment.transactionId, receivedAmountMinor: payment.amountVND, currency: payment.currency,
+      reconciliationCode: payment.reconciliationCode, providerPaymentId: payment.orderReference, ...changes
+    });
+    return guest.request('/webhooks/payments', {
+      method: 'POST', headers: {
+        'Content-Type': 'application/json',
+        'x-fixture-signature': createHmac('sha256', fixtureKey).update(body).digest('hex')
+      }, body
+    });
+  }
+
+  await t.test('Webhook đủ tiền xác nhận đơn và trả phiếu qua checkout; không vào hàng hoàn bất thường', async () => {
+    const booking = await hold(await createCourt(), guest);
+    await issueIntent(booking, guest);
+    const payment = await transfer(booking, 'handoff-applied');
+    const result = await callback(payment);
+    assert.equal(result.status, 200);
+    assert.equal(JSON.parse(result.html).status, 'APPLIED');
+    const status = await guest.get(`/bookings/${booking.id}/payment-status?token=${booking.token}`);
+    const data = JSON.parse(status.html);
+    assert.equal(data.booking.status, 'CONFIRMED');
+    assert.equal(data.booking.paymentStatus, 'DEMO_PAID');
+    assert.match(data.receiptUrl, /\/receipt\?token=/);
+    assert.equal(data.qrImage, null);
+    assert.equal(await PaymentReceipt.countDocuments({ transactionId: payment.transactionId }), 0);
+    assert.equal(JSON.parse((await callback(payment)).html).status, 'DUPLICATE');
+  });
+
+  await t.test('Webhook thiếu tiền hiện đúng cơ sở; replay không tạo khoản thứ hai hay xóa lịch sử hoàn', async () => {
+    const booking = await hold(await createCourt(), guest);
+    await issueIntent(booking, guest);
+    const payment = await transfer(booking, 'handoff-underpaid', { amountVND: 40000 });
+    const results = await Promise.all([callback(payment), callback(payment)]);
+    assert.deepEqual(results.map(result => result.status), [200, 200]);
+    assert.deepEqual(results.map(result => JSON.parse(result.html).status).sort(), ['DUPLICATE', 'REVIEW']);
+    const receipt = await PaymentReceipt.findOne({ transactionId: payment.transactionId }).lean();
+    assert.ok(receipt);
+    assert.equal(String(receipt.facility), facility.id);
+    assert.ok((await ownerBrowser.get(ownerQueue)).html.includes(receipt._id));
+    assert.equal((await otherBrowser.get(`${ownerQueue}/${receipt._id}`)).status, 404);
+    assert.match((await guest.get(booking.checkout)).html, /QR thử nghiệm đang được đối soát/);
+    const status = await guest.get(`/bookings/${booking.id}/payment-status?token=${booking.token}`);
+    assert.equal(JSON.parse(status.html).reviewStatus, 'IN_REVIEW');
+    assert.ok(!status.html.includes(payment.transactionId));
+    assert.equal((await ownerBrowser.post(`${ownerQueue}/${receipt._id}`, {
+      action: 'REFUND_RECORDED', reference: 'HANDOFF-REFUND', reason: 'Đã kiểm tra khoản hoàn thử',
+      amountVND: '10000', evidenceChecked: 'yes'
+    })).status, 303);
+    assert.equal((await callback(payment)).status, 200);
+    const saved = await PaymentReceipt.findById(receipt._id).lean();
+    assert.equal(saved.refundedVND, 10000);
+    assert.equal(saved.history.length, 1);
+    assert.equal(await PaymentReceipt.countDocuments({ transactionId: payment.transactionId }), 1);
+    assert.equal((await callback(payment, { receivedAmountMinor: 45000 })).status, 409);
+    assert.equal((await Booking.findById(booking.id).lean()).status, 'HOLD');
+  });
+
+  await t.test('Ghi hàng đối soát lỗi trả 503; callback lặp phục hồi từ biên nhận bền vững', async () => {
+    const booking = await hold(await createCourt(), guest);
+    await issueIntent(booking, guest);
+    const payment = await transfer(booking, 'handoff-retry', { amountVND: 49000 });
+    const original = PaymentReceipt.create;
+    PaymentReceipt.create = async () => { throw new Error('Synthetic review projection outage'); };
+    try { assert.equal((await callback(payment)).status, 503); }
+    finally { PaymentReceipt.create = original; }
+    assert.equal(await Payment.countDocuments({ type: 'PROVIDER_RECEIPT', providerTransactionId: payment.transactionId }), 1);
+    assert.equal(await PaymentReceipt.countDocuments({ transactionId: payment.transactionId }), 0);
+    const retry = await callback(payment);
+    assert.equal(retry.status, 200);
+    assert.equal(JSON.parse(retry.html).status, 'DUPLICATE');
+    assert.equal(await PaymentReceipt.countDocuments({ transactionId: payment.transactionId }), 1);
+    assert.equal((await Booking.findById(booking.id).lean()).status, 'HOLD');
+  });
+
+  await t.test('Khoản sai người nhận hoặc đơn vị tiền chỉ hiện cho ADMIN, không ghi hoàn VND cho ngoại tệ', async () => {
+    const booking = await hold(await createCourt(), guest);
+    await issueIntent(booking, guest);
+    for (const changes of [
+      { transactionId: 'handoff-wrong-recipient', recipientId: 'other-recipient' },
+      { transactionId: 'handoff-foreign', currency: 'USD' }
+    ]) {
+      const payment = await transfer(booking, changes.transactionId);
+      assert.equal((await callback(payment, changes)).status, 200);
+      const receipt = await PaymentReceipt.findOne({ transactionId: changes.transactionId }).lean();
+      assert.ok(receipt);
+      assert.equal(receipt.facility, undefined);
+      assert.ok(!(await ownerBrowser.get(ownerQueue)).html.includes(receipt._id));
+      const page = await adminBrowser.get(`${adminQueue}/${receipt._id}`);
+      assert.equal(page.status, 200);
+      if (changes.currency) {
+        assert.match(page.html, /USD/);
+        assert.doesNotMatch(page.html, /name="action" value="REFUND_RECORDED"/);
+        assert.equal((await adminBrowser.post(`${adminQueue}/${receipt._id}`, {
+          action: 'REFUND_RECORDED', reference: 'DENIED-FX', reason: 'Không được đổi đơn vị tiền',
+          amountVND: '100', evidenceChecked: 'yes'
+        })).status, 409);
+      }
+    }
+  });
 
   await t.test('Tiền tới đúng hạn hết giữ, replay và hoàn thủ công bảo toàn đơn/lock của khách thắng', async () => {
     const court = await createCourt();

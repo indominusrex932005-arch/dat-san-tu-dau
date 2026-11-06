@@ -14,7 +14,7 @@ const validText = (value, max) => typeof value === 'string' && value.trim() === 
   && [...value].every(char => char.charCodeAt(0) >= 32 && char.charCodeAt(0) !== 127);
 const instant = value => new Date(value).getTime();
 
-function requireHold(booking, locks, now) {
+export function requireHold(booking, locks, now) {
   if (booking?.status === 'EXPIRED') fail(410, 'BOOKING_EXPIRED', 'Đã hết hạn giữ sân. Hãy chọn lại các ô còn trống.');
   if (!booking || booking.status !== 'HOLD' || booking.paymentStatus !== 'UNPAID' || booking.legacy) {
     fail(409, 'BOOKING_NOT_PAYABLE', 'Đơn không còn ở trạng thái giữ chỗ chưa thanh toán.');
@@ -44,7 +44,7 @@ function publicIntent(record) {
   const expired = instant(record.expiresAt) <= Date.now();
   const dto = {
     id: String(record._id), bookingId: String(record.booking),
-    status: expired ? 'EXPIRED' : record.intentStatus,
+    status: expired && record.intentStatus !== 'SETTLED' ? 'EXPIRED' : record.intentStatus,
     mode: 'demo', provider: record.provider, amountVND: record.amountVND,
     currency: record.currency, expiresAt: new Date(record.expiresAt).toISOString(),
     reconciliationCode: record.reconciliationCode,
@@ -72,6 +72,7 @@ function providerRequest(record) {
 }
 
 async function currentPublicIntent(record) {
+  if (record.intentStatus === 'SETTLED') return publicIntent(record);
   const [booking, locks] = await Promise.all([
     Booking.findById(record.booking).lean(), SlotLock.find({ booking: record.booking }).lean()
   ]);

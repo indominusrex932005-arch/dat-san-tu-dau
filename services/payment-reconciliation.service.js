@@ -16,16 +16,20 @@ const sameId = (a, b) => String(a) === String(b);
 
 function receiptSnapshot(input) {
   const { provider, environment, merchantId, recipientId, bindingId, transactionId,
-    orderReference, orderReferenceKind, reconciliationCode, currency, amountVND, receivedAt } = input ?? {};
+    orderReference, orderReferenceKind, reconciliationCode, currency, amountVND, receivedAt,
+    receivedAmountMinor = amountVND } = input ?? {};
   if (typeof provider !== 'string' || !/^[a-z][a-z0-9_-]{0,49}$/.test(provider)
-      || environment !== 'sandbox' || currency !== 'VND' || !positiveAmount(amountVND)
+      || environment !== 'sandbox' || typeof currency !== 'string' || !/^[A-Z]{3}$/.test(currency)
+      || !positiveAmount(receivedAmountMinor)
+      || currency === 'VND' && (!positiveAmount(amountVND) || amountVND !== receivedAmountMinor)
       || !validText(merchantId, 128) || !validText(transactionId, 200)
       || !(receivedAt instanceof Date) || !Number.isFinite(+receivedAt)) {
     fail(400, 'Dữ liệu khoản nhận đã xác minh không hợp lệ.');
   }
   const hasOrder = validText(orderReference, 200) && ['providerPaymentId', 'externalId'].includes(orderReferenceKind);
   return {
-    provider, environment, merchantId, transactionId, currency, amountVND, receivedAt,
+    provider, environment, merchantId, transactionId, currency, receivedAmountMinor,
+    amountVND: currency === 'VND' ? amountVND : undefined, receivedAt,
     recipientId: validText(recipientId, 128) ? recipientId : undefined,
     bindingId: validText(bindingId, 128) ? bindingId : undefined,
     orderReference: hasOrder ? orderReference : undefined,
@@ -35,6 +39,7 @@ function receiptSnapshot(input) {
 }
 
 async function classify(receipt) {
+  if (receipt.currency !== 'VND') return { flags: ['CURRENCY_MISMATCH'] };
   const { provider, environment, merchantId, orderReference, orderReferenceKind } = receipt;
   const intent = orderReference && await Payment.findOne({
     type: 'INITIAL_INTENT', provider, environment, merchantId, [orderReferenceKind]: orderReference
@@ -80,7 +85,8 @@ export async function recordReceiptForReview(verifiedTransfer) {
     receipt = await PaymentReceipt.findById(_id).readConcern('majority');
     if (!receipt) throw error;
     if (Object.entries(snapshot).some(([key, value]) => key === 'receivedAt'
-      ? +value !== +receipt[key] : value !== receipt[key])) {
+      ? +value !== +receipt[key]
+      : key === 'receivedAmountMinor' ? value !== (receipt[key] ?? receipt.amountVND) : value !== receipt[key])) {
       fail(409, 'Dữ liệu nhận lại mâu thuẫn với khoản đã lưu.');
     }
   }
@@ -148,6 +154,7 @@ export async function appendPaymentReview(id, user, body = {}) {
   return mongoose.connection.transaction(async session => {
     const receipt = await PaymentReceipt.findOne({ ...await scopeFor(user, session), _id: receiptId(id) }).session(session);
     if (!receipt) fail(404, 'Không tìm thấy khoản đối soát.');
+    if (refund && receipt.currency !== 'VND') fail(409, 'Khoản sai đơn vị tiền cần ADMIN đối chiếu riêng; không ghi hoàn bằng VND.');
     if (receipt.status === 'UNCLASSIFIED') fail(409, 'Khoản nhận đang chờ phân loại từ nguồn xác minh.');
     const previous = receipt.history.find(item => item.action === action && item.reference === reference);
     if (previous) {

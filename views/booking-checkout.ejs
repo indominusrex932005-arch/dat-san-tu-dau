@@ -3,12 +3,13 @@
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %> | Sân Thể Thao</title>
   <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/booking.css">
-  <script src="/assets/js/booking.js" defer></script>
+  <script src="/assets/js/<%= typeof providerCheckoutEnabled !== 'undefined' && providerCheckoutEnabled ? 'payment-checkout.js' : 'booking.js' %>" defer></script>
 </head><body class="demo-page"><div class="demo-shell">
   <%- include('partials/navigation') %>
   <% const facility = booking.facility || booking.court?.facility; const accessToken = typeof token === 'string' ? token : ''; const query = accessToken ? '?token=' + encodeURIComponent(accessToken) : ''; %>
   <main>
     <p class="booking-eyebrow">GIỮ CHỖ / THANH TOÁN</p><h1>Kiểm tra đơn <%= booking.publicCode || booking._id %></h1>
+    <% if (demoMode) { %><p class="booking-notice">BẢN DEMO — Chỉ dùng dữ liệu và tài khoản thử. Thanh toán được mô phỏng, không chuyển hoặc nhận tiền thật.</p><% } %>
     <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
     <div class="booking-layout">
       <section class="demo-card">
@@ -18,7 +19,7 @@
           <div><dt>Người chơi</dt><dd><%= booking.guestName %></dd></div>
           <div><dt>Số điện thoại</dt><dd><%= booking.guestPhone %></dd></div>
           <div><dt>Ngày chơi</dt><dd><%= formatDate(booking.date) %></dd></div>
-          <div><dt>Trạng thái</dt><dd><%= statusLabel(booking.status) %></dd></div>
+          <div><dt>Trạng thái</dt><dd data-checkout-booking-status><%= statusLabel(booking.status) %></dd></div>
         </dl>
         <ul class="booking-time-list">
           <% for (const slot of booking.slots || []) { %><li><span><%= formatTime(slot.startAt) %>–<%= formatTime(slot.endAt) %></span><strong><%= formatMoney(slot.priceVND) %></strong></li><% } %>
@@ -29,12 +30,36 @@
       <aside class="demo-card booking-summary">
         <%- include('partials/payment-review-notice', { reviewStatus }) %>
         <% if (booking.status === 'HOLD') { %>
-          <h2>Chỗ đang được giữ</h2>
+          <h2 data-checkout-hold-title>Chỗ đang được giữ</h2>
           <p class="booking-countdown" role="timer" data-hold-until="<%= booking.holdExpiresAt ? new Date(booking.holdExpiresAt).toISOString() : '' %>" data-server-now="<%= typeof serverNow === 'string' ? serverNow : '' %>" aria-live="off">Đang tính thời gian còn lại…</p>
-          <p class="demo-muted">Giữ chỗ tối đa 10 phút, trước khi ô đầu tiên bắt đầu. Đồng hồ dùng thời hạn máy chủ trả về; máy chủ kiểm tra lại khi thanh toán.</p>
-          <% if (booking.holdExpiresAt) { %><p class="demo-muted">Hạn giữ: <%= formatTime(booking.holdExpiresAt) %> (giờ Việt Nam). Thời hạn được máy chủ kiểm tra.</p><% } %>
-          <img src="/assets/images/qr-minh-hoa.svg" class="booking-qr" width="240" height="270" alt="Hình minh họa vị trí mã QR; chưa thể dùng để thanh toán">
-          <p class="booking-notice">QR minh họa — chưa thể thanh toán. Chưa kết nối ngân hàng và chưa xác minh tiền thật.</p>
+          <p class="demo-muted" data-hold-instructions>Giữ chỗ tối đa 10 phút, trước khi ô đầu tiên bắt đầu. Đồng hồ dùng thời hạn máy chủ trả về; máy chủ kiểm tra lại khi thanh toán.</p>
+          <% if (booking.holdExpiresAt) { %><p class="demo-muted" data-hold-instructions>Hạn giữ: <%= formatTime(booking.holdExpiresAt) %> (giờ Việt Nam). Thời hạn được máy chủ kiểm tra.</p><% } %>
+          <% if (typeof providerCheckoutEnabled !== 'undefined' && providerCheckoutEnabled) { %>
+            <section class="provider-payment" id="provider-payment-panel" aria-labelledby="provider-payment-title"
+              data-booking-id="<%= booking._id %>" data-status-url="/bookings/<%= booking._id %>/payment-status<%= query %>">
+              <span class="booking-badge">Thử nghiệm Sandbox</span>
+              <h3 id="provider-payment-title">Thanh toán thử</h3>
+              <p class="demo-muted">Kiểm tra đúng người nhận và tổng tiền trước khi tiếp tục.</p>
+              <p id="provider-payment-status" role="status" aria-live="polite">Đang đọc trạng thái từ máy chủ…</p>
+              <dl class="provider-payment-details" id="provider-payment-details" hidden>
+                <div><dt>Người nhận</dt><dd id="provider-recipient"></dd></div>
+                <div><dt>Tổng thanh toán</dt><dd id="provider-amount"></dd></div>
+                <div><dt>Mã thanh toán</dt><dd id="provider-reference"></dd></div>
+              </dl>
+              <img id="provider-payment-qr" class="provider-payment-qr" alt="Mã QR thanh toán thử từ yêu cầu của máy chủ" width="320" height="320" hidden>
+              <a class="demo-button" id="provider-checkout-link" target="_blank" rel="noopener noreferrer" hidden>Mở trang thanh toán thử</a>
+              <form id="provider-payment-form" class="demo-form" action="/bookings/<%= booking._id %>/payment-intents" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="token" value="<%= accessToken %>">
+                <button class="demo-button" type="submit" id="provider-create-payment" disabled>Tạo yêu cầu thanh toán thử</button>
+              </form>
+              <button class="demo-button demo-button-secondary" type="button" id="provider-check-payment">Kiểm tra thanh toán</button>
+              <p class="demo-muted">Nếu đã thanh toán nhưng trạng thái chưa cập nhật hoặc đã hết hạn, hãy liên hệ cơ sở và cung cấp mã đơn.</p>
+              <noscript><p>Bật JavaScript để đọc trạng thái yêu cầu thanh toán thử.</p></noscript>
+            </section>
+          <% } else { %>
+            <img src="/assets/images/qr-minh-hoa.svg" class="booking-qr" width="240" height="270" alt="Hình minh họa vị trí mã QR; chưa thể dùng để thanh toán">
+            <p class="booking-notice">QR minh họa — chưa thể thanh toán. Chưa kết nối ngân hàng và chưa xác minh tiền thật.</p>
+          <% } %>
           <% if (demoMode) { %>
             <form action="/bookings/<%= booking._id %>/demo-payment" method="POST" class="demo-form" id="demo-payment-form">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="token" value="<%= accessToken %>">

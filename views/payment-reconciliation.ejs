@@ -8,13 +8,14 @@
 <body class="demo-page"><div class="demo-shell">
   <%- include('partials/navigation') %>
   <% const dateTime = value => new Intl.DateTimeFormat('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', dateStyle: 'short', timeStyle: 'medium' }).format(value); %>
+  <% const receiptAmount = value => value.currency === 'VND' ? formatMoney(value.amountVND) : `${value.receivedAmountMinor} đơn vị nhỏ nhất (${value.currency})`; %>
   <main aria-labelledby="reconciliation-title">
     <div class="owner-heading"><div><span class="owner-kicker">DỮ LIỆU THỬ NGHIỆM</span><h1 id="reconciliation-title"><%= title %></h1></div></div>
     <p class="owner-note">Đối chiếu khoản nhận với nguồn đã xác minh. Trạng thái khoản tiền và trạng thái giữ sân được theo dõi riêng. Chỉ ghi nhận hoàn khi đã kiểm tra bằng chứng xử lý bên ngoài hệ thống.</p>
     <p><a href="<%= receipt ? baseUrl : dashboardUrl %>">← <%= receipt ? 'Danh sách đối soát' : 'Trang quản lý' %></a></p>
     <% if (receipt) { %>
       <section class="demo-card owner-application" aria-labelledby="receipt-detail-title">
-        <h2 id="receipt-detail-title">Khoản nhận <%= formatMoney(receipt.amountVND) %></h2>
+        <h2 id="receipt-detail-title">Khoản nhận <%= receiptAmount(receipt) %></h2>
         <p class="owner-badge"><%= statusLabels[receipt.status] %></p>
         <dl class="owner-detail-list">
           <div><dt>Cơ sở</dt><dd><%= receipt.facility?.name || 'Chưa xác định' %></dd></div>
@@ -28,7 +29,7 @@
           <% } %>
           <div><dt>Lý do đối soát</dt><dd><%= receipt.flags.map(flag => flagLabels[flag]).join(' · ') || 'Chờ phân loại' %></dd></div>
           <% if (receipt.expectedAmountVND !== undefined) { %><div><dt>Số tiền theo yêu cầu</dt><dd><%= formatMoney(receipt.expectedAmountVND) %></dd></div><% } %>
-          <div><dt>Đã ghi nhận hoàn</dt><dd><%= formatMoney(receipt.refundedVND) %></dd></div>
+          <% if (receipt.currency === 'VND') { %><div><dt>Đã ghi nhận hoàn</dt><dd><%= formatMoney(receipt.refundedVND) %></dd></div><% } %>
         </dl>
       </section>
       <section aria-labelledby="receipt-history-title">
@@ -54,7 +55,7 @@
               <button class="demo-button" type="submit">Lưu kết quả rà soát</button>
             </form>
           </section>
-          <% if (receipt.refundedVND < receipt.amountVND) { %>
+          <% if (receipt.currency === 'VND' && receipt.refundedVND < receipt.amountVND) { %>
             <section class="demo-card owner-application">
               <h2>Ghi nhận đã hoàn thủ công</h2>
               <p>Nhập số tiền đã xử lý theo thỏa thuận. Thao tác này lưu bằng chứng đối soát.</p>
@@ -75,7 +76,7 @@
       <div class="demo-grid">
         <% for (const item of items) { %>
           <article class="demo-card owner-application">
-            <div class="owner-card-heading"><h2><%= formatMoney(item.amountVND) %></h2><span class="owner-badge"><%= statusLabels[item.status] %></span></div>
+            <div class="owner-card-heading"><h2><%= receiptAmount(item) %></h2><span class="owner-badge"><%= statusLabels[item.status] %></span></div>
             <p><%= item.flags.map(flag => flagLabels[flag]).join(' · ') || 'Chờ phân loại' %></p>
             <p><%= item.facility?.name || 'Chưa xác định cơ sở' %> · <%= item.booking?.publicCode || 'Chưa khớp mã đơn' %></p>
             <a href="<%= baseUrl %>/<%= item._id %>">Xem khoản nhận ngày <%= dateTime(item.receivedAt) %></a>
