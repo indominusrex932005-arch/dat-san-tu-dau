@@ -28,6 +28,7 @@
         <% if (facility) { %>
           <nav class="demo-actions" aria-label="Thao tác cơ sở">
             <a href="/owner/calendar" class="demo-button demo-button-secondary">Lịch điều hành</a>
+            <% if (demoMode) { %><a href="/owner/payment-reconciliation" class="demo-button demo-button-secondary">Đối soát QR thử nghiệm</a><% } %>
             <a href="/owner/facilities/<%= facility._id %>/edit" class="demo-button demo-button-secondary">Sửa thông tin cơ sở</a>
             <a href="/owner/courts/new" class="demo-button">+ Thêm sân</a>
           </nav>

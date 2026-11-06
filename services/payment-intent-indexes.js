@@ -7,6 +7,13 @@ export const PAYMENT_INTENT_INDEXES = Object.freeze([
   { key: { provider: 1, environment: 1, merchantId: 1, externalId: 1 }, name: 'payment_intent_external_unique', unique: true, partialFilterExpression: { type: 'INITIAL_INTENT', externalId: { $type: 'string' } } }
 ]);
 
+export const PAYMENT_RECEIPT_INDEX = Object.freeze({
+  key: { provider: 1, environment: 1, merchantId: 1, providerTransactionId: 1 },
+  name: 'payment_receipt_transaction_unique',
+  unique: true,
+  partialFilterExpression: { type: 'PROVIDER_RECEIPT' }
+});
+
 const canonical = value => value && typeof value === 'object' && !Array.isArray(value)
   ? Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key])])) : value;
 
@@ -22,13 +29,21 @@ export async function listPaymentIndexes(db) {
   catch (error) { if (error.code === 26) return []; throw error; }
 }
 
-export async function assertPaymentIntentIndexes(db = mongoose.connection.db) {
-  const fail = () => Object.assign(new Error('Cần dừng writer, sao lưu và chạy migration payment intent trước khi dùng chức năng này.'), {
+async function assertPaymentIndexes(expectedIndexes, db) {
+  const fail = () => Object.assign(new Error('Cần dừng writer, sao lưu và chuẩn bị index thanh toán trước khi dùng chức năng này.'), {
     status: 503, code: 'PAYMENT_MIGRATION_REQUIRED'
   });
   if (!db) throw fail();
   let indexes;
   try { indexes = await listPaymentIndexes(db); }
   catch { throw fail(); }
-  if (PAYMENT_INTENT_INDEXES.some(expected => !indexes.some(index => matchesPaymentIntentIndex(index, expected)))) throw fail();
+  if (expectedIndexes.some(expected => !indexes.some(index => matchesPaymentIntentIndex(index, expected)))) throw fail();
+}
+
+export function assertPaymentIntentIndexes(db = mongoose.connection.db) {
+  return assertPaymentIndexes(PAYMENT_INTENT_INDEXES, db);
+}
+
+export function assertPaymentReceiptIndex(db = mongoose.connection.db) {
+  return assertPaymentIndexes([...PAYMENT_INTENT_INDEXES, PAYMENT_RECEIPT_INDEX], db);
 }
