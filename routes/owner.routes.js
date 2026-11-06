@@ -1,6 +1,7 @@
 import express from 'express';
 import { requireAuth, requireOwner } from '../middlewares/auth.middleware.js';
 import { showOwnerCalendar } from '../controllers/owner-calendar.controller.js';
+import paymentReconciliationRoutes from './payment-reconciliation.routes.js';
 import {
   showOwnerDashboard, showNewCourtForm, showEditCourtForm, createCourt, updateCourt,
   approveBookingRequest, rejectBookingRequest, recordBookingRefund, cancelGuestBooking,
@@ -11,6 +12,7 @@ const router = express.Router();
 router.use(requireAuth);
 router.get('/', showOwnerDashboard);
 router.use(requireOwner);
+router.use('/payment-reconciliation', paymentReconciliationRoutes);
 router.get('/calendar', showOwnerCalendar);
 router.get('/facilities/:id/edit', showEditFacilityForm);
 router.post('/facilities/:id', updateFacility);

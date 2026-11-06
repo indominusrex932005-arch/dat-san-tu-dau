@@ -1,4 +1,4 @@
-import { recordProviderReceipt } from './payment-settlement.service.js';
+import { recordAndReconcileProviderReceipt as recordProviderReceipt } from './payment-receipt-handoff.service.js';
 
 const acceptedStatuses = new Set(['APPLIED', 'REVIEW', 'DUPLICATE']);
 

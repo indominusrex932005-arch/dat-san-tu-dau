@@ -1,5 +1,6 @@
 import QRCode from 'qrcode';
 import { getBookingForViewer } from '../services/booking.service.js';
+import { bookingReceiptReviewStatus } from '../services/payment-reconciliation.service.js';
 
 function access(req) {
   const token = req.body?.token ?? req.query.token;
@@ -72,7 +73,8 @@ export function createPaymentController(service) {
             id: String(booking._id), status: booking.status, paymentStatus: booking.paymentStatus,
             amountVND: booking.totalPrice, currency: 'VND'
           },
-          intent, qrImage, serverNow: new Date().toISOString()
+          intent, qrImage, serverNow: new Date().toISOString(),
+          reviewStatus: req.app.locals.demoMode ? await bookingReceiptReviewStatus(booking) : null
         };
         if (booking.status === 'HOLD') {
           result.holdUntil = new Date(Math.min(

@@ -75,6 +75,10 @@ if (paymentPanel) {
     needsRecovery = false;
     checkButton.textContent = 'Kiểm tra thanh toán';
     if (data.booking?.id !== bookingId || data.booking.currency !== 'VND') throw new Error('Unexpected booking status');
+    const reviewNotice = document.querySelector('[data-payment-review-notice]');
+    if (reviewNotice) reviewNotice.textContent = data.reviewStatus === 'IN_REVIEW'
+      ? 'QR thử nghiệm đang được đối soát. Hãy liên hệ cơ sở và cung cấp mã đơn trước khi chuyển thêm tiền.'
+      : data.reviewStatus === 'REFUNDED' ? 'Đã ghi nhận hoàn thủ công cho khoản QR thử nghiệm.' : '';
     const receipt = receiptUrl(data);
     if (receipt) {
       stopped = true;
