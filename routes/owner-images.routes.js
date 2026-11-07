@@ -1,5 +1,6 @@
 import express from 'express';
 import multer from 'multer';
+import { uploadDemoQr, deleteDemoQr } from '../services/demo-qr.service.js';
 import { requireAuth, requireOwner } from '../middlewares/auth.middleware.js';
 import { ownedImageTarget, uploadOwnerImage, changeOwnerImage } from '../services/owner-images.service.js';
 
@@ -28,6 +29,21 @@ export default function createOwnerImageRoutes(storage, limiter) {
     if (!storage.ready()) return res.status(503).json({ message: 'Tải ảnh chưa được mở. Vui lòng nhờ quản trị viên cấu hình kho ảnh.' });
     next();
   };
+  router.post('/facilities/:id/demo-qr', async (req, res, next) => {
+    try { await ownedImageTarget('facilities', req.params.id, req.currentUser); next(); } catch (error) { next(error); }
+  }, provider, reserveUploadSlot, limiter, (req, res, next) => {
+    upload.single('image')(req, res, error => {
+      if (!error) return next();
+      res.status(error.code === 'LIMIT_FILE_SIZE' ? 413 : 400).json({ message: 'Mỗi lần chỉ tải một ảnh tối đa 5 MB.' });
+    });
+  }, async (req, res, next) => {
+    try { await uploadDemoQr(req.params.id, req.currentUser, req.file, storage); res.status(201).json({ message: 'Đã lưu ảnh QR minh họa.' }); }
+    catch (error) { if ([409, 415, 502, 503].includes(error.status)) return res.status(error.status).json({ message: error.message }); next(error); }
+  });
+  router.post('/facilities/:id/demo-qr/delete', async (req, res, next) => {
+    try { await deleteDemoQr(req.params.id, req.currentUser, storage); res.redirect(303, `/owner/facilities/${req.params.id}/edit`); }
+    catch (error) { next(error); }
+  });
   router.post('/:kind/:id/images', authorize, provider, reserveUploadSlot, limiter, (req, res, next) => {
     upload.single('image')(req, res, error => {
       if (!error) return next();

@@ -55,3 +55,9 @@ Không tự seed khi khởi động server hoặc mở trang chủ. Tạo PR ch�
 Các phần chính: model Facility/Court thêm ảnh và trường nội bộ; `owner-images.service.js` xử lý nghiệp vụ; `image-storage.js` gọi Cloudinary; `owner-images.routes.js` nhận file; `facility-catalog.service.js` lấy dữ liệu trang chủ/danh sách theo truy vấn hàng loạt; `demo-seed.service.js` bổ sung mẫu. View, `media.css`, `media.js` phụ trách hiển thị/xem trước. Không thay nghiệp vụ giữ chỗ, giá, thanh toán hay hủy/đổi.
 
 Kiểm thử bổ sung ở `tests/owner-images.test.js`; chạy `npm run check` và toàn bộ `npm test` bằng MongoDB replica set local dùng một lần.
+
+## Ảnh QR minh họa của cơ sở
+
+OWNER vào **Quản lý cơ sở → Sửa thông tin cơ sở → Ảnh QR minh họa** để tải hoặc thay một ảnh. Đây là trường riêng, không chiếm vị trí trong bộ 5 ảnh cơ sở và không trở thành ảnh bìa. Cần cấu hình Cloudinary như trên; nếu chưa cấu hình thì nút tải chưa mở. Có thể xóa ảnh để quay lại QR minh họa mặc định.
+
+Chỉ dùng ảnh QR giả, không chứa tài khoản ngân hàng hoặc thông tin thanh toán thật. Khi `PAYMENT_MODE=demo`, checkout dùng ảnh minh họa của cơ sở; giao diện vẫn ghi không quét/chuyển tiền và nút thanh toán chỉ mô phỏng. `off` không hiển thị ảnh QR này như một cách thanh toán. Tính năng không xác nhận tiền về, không thay đổi thời hạn giữ sân, không tích hợp ngân hàng và không bật thanh toán thật. Các kiểm thử dùng storage giả lập, không chứng minh đã kết nối Cloudinary thật.
