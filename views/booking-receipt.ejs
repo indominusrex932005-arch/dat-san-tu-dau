@@ -31,6 +31,7 @@
         <div><dt>Ngày chơi</dt><dd><%= formatDate(booking.date) %></dd></div>
         <div><dt>Thanh toán</dt><dd><%= paymentLabel(booking.paymentStatus) %></dd></div>
       </dl>
+      <% if (booking.checkedInAt) { %><p class="booking-notice">Đã check-in lúc <%= formatTime(booking.checkedInAt) %>. Đơn không thể hủy hoặc đổi lịch.</p><% } %>
       <h2>Các ô đã chọn</h2>
       <ul class="booking-time-list">
         <% for (const slot of booking.slots || []) { %><li><span><%= formatTime(slot.startAt) %>–<%= formatTime(slot.endAt) %></span><strong><%= formatMoney(slot.priceVND) %></strong></li><% } %>
@@ -41,7 +42,7 @@
       <p class="booking-receipt-footer">Chủ sân đối chiếu đơn trên hệ thống. Phiếu hoặc ảnh chụp không thay thế việc xác minh tiền.</p>
     </article>
     <div class="demo-actions no-print">
-      <% if (owned && ['CONFIRMED', 'LEGACY_RESERVED'].includes(booking.status) && booking.slots?.length && booking.slots.every(slot => new Date(slot.startAt).getTime() > Date.now())) { %>
+      <% if (owned && !booking.checkedInAt && ['CONFIRMED', 'LEGACY_RESERVED'].includes(booking.status) && booking.slots?.length && booking.slots.every(slot => new Date(slot.startAt).getTime() > Date.now())) { %>
         <a class="demo-button demo-button-secondary" href="/bookings/<%= booking._id %>/request">Gửi yêu cầu hủy / đổi</a>
       <% } %>
       <% if (booking.status === 'HOLD') { %><a class="demo-button" href="/bookings/<%= booking._id %>/checkout<%= query %>">Tiếp tục xem giữ chỗ</a><% } %>

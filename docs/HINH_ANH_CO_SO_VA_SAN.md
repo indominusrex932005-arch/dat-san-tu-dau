@@ -1,4 +1,4 @@
-# Ảnh cơ sở, sân và ba cơ sở mẫu
+# Ảnh cơ sở, sân và tổng bốn cơ sở mẫu
 
 ## Dùng chức năng trên web
 
@@ -26,7 +26,7 @@ Trang chủ hiển thị một ảnh cho mỗi cơ sở: ưu tiên ảnh cơ s�
 
 Upload được ký từ backend; không cần unsigned upload preset. MongoDB lưu metadata/đường dẫn, file ở Cloudinary nên không mất theo ổ đĩa tạm của Render. Khi chưa cấu hình, chỉ phần tải ảnh bị khóa; các trang và đặt sân vẫn hoạt động với ảnh minh họa. Hiện chưa có tài khoản/secret Cloudinary thật trong môi trường thực thi: các kiểm thử upload dùng storage thay thế trên server và DB local, không phải kết luận đã nghiệm thu Cloudinary thật.
 
-## Thêm ba cơ sở
+## Bổ sung tới tổng bốn cơ sở
 
 ```powershell
 npm run seed
@@ -34,7 +34,7 @@ npm run seed
 
 Lệnh seed trong repo đã bổ sung **Cơ sở mẫu Hải Châu**, **Cơ sở mẫu Thanh Khê**, **Cơ sở mẫu Sơn Trà**, mỗi cơ sở mới có hai sân. Địa chỉ ghi rõ minh họa, không có thông tin người thật.
 
-DB trống sẽ có 4 cơ sở/8 sân gồm Demo MVC ban đầu. DB đã có cơ sở cũ đổi tên sẽ dùng lại cơ sở cũ cho vị trí ban đầu và chỉ bổ sung ba mẫu còn thiếu; không xóa dữ liệu để ép tổng về 4 nếu DB đã có nhiều cơ sở. ID cố định giúp chạy lại sau đổi tên không tạo trùng. Không thêm lại sân vào cơ sở đã có, không đổi chủ, ảnh, giá hoặc liên hệ cũ. Mỗi cơ sở mới và hai sân được tạo trong cùng transaction.
+DB trống sẽ có 4 cơ sở/8 sân gồm Demo MVC ban đầu. DB đã có 1–3 cơ sở sẽ giữ nguyên và chỉ thêm số mẫu còn thiếu tới tổng 4. DB đã có từ 4 cơ sở thì không thêm và không xóa. Chạy một tiến trình seed khi không có người khác đang tạo cơ sở. ID cố định giúp chạy lại sau đổi tên không tạo trùng. Không thêm lại sân vào cơ sở đã có, không đổi chủ, ảnh, giá hoặc liên hệ cũ. Mỗi cơ sở mới và hai sân được tạo trong cùng transaction.
 
 Không tự seed khi khởi động server hoặc mở trang chủ. Tạo PR chưa đồng nghĩa đã thêm dữ liệu trên Atlas. Sau merge, nhóm trưởng chạy seed trên đúng DB phát triển/demo. ADMIN chọn **cơ sở có sẵn** khi duyệt OWNER; OWNER cập nhật số liên hệ trước khi nhận đặt.
 

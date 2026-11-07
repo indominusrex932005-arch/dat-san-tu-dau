@@ -26,6 +26,10 @@ export async function seedDemoFacilities() {
           facility = await Facility.findOne({ _id: { $nin: demoFacilities.filter(item => !item.legacy).map(item => stableId(item.key)) } })
             .sort({ createdAt: 1, _id: 1 }).session(session);
         }
+        if (!facility && await Facility.countDocuments().session(session) >= 4) {
+          session.seedResult = null;
+          return;
+        }
         const created = !facility;
         if (!facility) {
           const illustrationIndex = demoFacilities.indexOf(sample) + 1;
@@ -40,7 +44,7 @@ export async function seedDemoFacilities() {
         // The callback can be retried. Do not append to results until the transaction commits.
         session.seedResult = { name: facility.name, created };
       });
-      results.push(session.seedResult);
+      if (session.seedResult) results.push(session.seedResult);
     } finally { await session.endSession(); }
   }
   return results;

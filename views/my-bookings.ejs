@@ -51,6 +51,7 @@
                   </span>
                 </div>
 
+                <% if (booking.checkedInAt) { %><p class="demo-muted">Đã check-in — không thể hủy/đổi.</p><% } %>
                 <h2 class="my-bookings-court-name"><%= booking.court?.name || 'Sân đang cập nhật' %></h2>
                 <p class="my-bookings-meta">
                   <span><%= facility?.name || 'Cơ sở đang cập nhật' %></span>
@@ -90,7 +91,7 @@
                   <a class="my-bookings-btn-receipt" href="/bookings/<%= booking._id %>/<%= booking.status === 'HOLD' ? 'checkout' : 'receipt' %>">
                     <%= booking.status === 'HOLD' ? 'Xem giữ chỗ' : 'Xem / lưu phiếu' %>
                   </a>
-                  <% if (!pending && ['CONFIRMED', 'LEGACY_RESERVED'].includes(booking.status) && (booking.slots || []).every(slot => new Date(slot.startAt).getTime() > Date.now())) { %>
+                  <% if (!pending && !booking.checkedInAt && ['CONFIRMED', 'LEGACY_RESERVED'].includes(booking.status) && (booking.slots || []).every(slot => new Date(slot.startAt).getTime() > Date.now())) { %>
                     <a class="my-bookings-btn-request" href="/bookings/<%= booking._id %>/request">Yêu cầu hủy / đổi</a>
                   <% } %>
                 </div>
@@ -117,6 +118,13 @@
             </article>
           <% } %>
         </div>
+      <% } %>
+      <% if (typeof pagination !== 'undefined' && pagination.pages > 1) { %>
+        <nav class="demo-actions" aria-label="Trang đơn của tôi">
+          <% if (pagination.page > 1) { %><a class="demo-button demo-button-secondary" href="/my-bookings?page=<%= pagination.page - 1 %>">← Trang trước</a><% } %>
+          <span>Trang <%= pagination.page %>/<%= pagination.pages %> · <%= pagination.total %> đơn</span>
+          <% if (pagination.page < pagination.pages) { %><a class="demo-button demo-button-secondary" href="/my-bookings?page=<%= pagination.page + 1 %>">Trang sau →</a><% } %>
+        </nav>
       <% } %>
     </main>
   </div>

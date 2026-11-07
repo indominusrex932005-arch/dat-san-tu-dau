@@ -68,6 +68,7 @@ function refundValue(value, maximum) {
   return result;
 }
 function canModify(booking, now) {
+  if (booking.checkedInAt) fail(409, 'Đơn đã check-in, không thể hủy hoặc đổi lịch.');
   if (!['CONFIRMED', 'LEGACY_RESERVED'].includes(booking.status)) fail(409, 'Đơn chưa xác nhận, đã hết hạn hoặc đã hủy.');
   if (!booking.slots?.length || Math.min(...booking.slots.map(slot => Number(slot.startAt))) <= Number(now)) {
     fail(409, 'Chỉ xử lý hủy/đổi trước khi ô đầu tiên của đơn bắt đầu.');
@@ -417,5 +418,28 @@ export async function cancelByOwner(bookingId, owner, body = {}) {
       }], { session });
     }
     return applyCancellation(booking, request, body, session, now);
+  });
+}
+
+// Whole-booking attendance; the original reservation and its locks remain intact.
+export async function checkInBooking(bookingId, owner, now = new Date()) {
+  objectId(bookingId, 'Mã đơn');
+  return transaction(async session => {
+    const booking = await ownedBooking(bookingId, owner, session);
+    if (booking.checkedInAt) return booking.toObject();
+    if (booking.status !== 'CONFIRMED' || !['DEMO_PAID', 'PAID'].includes(booking.paymentStatus)) {
+      fail(409, 'Chỉ check-in đơn đã xác nhận và đã ghi nhận thanh toán.');
+    }
+    if (booking.date !== vietnamDate(now) || !booking.slots.length
+      || Math.max(...booking.slots.map(slot => Number(slot.endAt))) <= Number(now)) {
+      fail(409, 'Chỉ check-in đúng ngày chơi và trước khi ô cuối cùng kết thúc.');
+    }
+    if (await BookingRequest.exists({ booking: booking._id, status: 'PENDING' }).session(session)) {
+      fail(409, 'Hãy xử lý yêu cầu hủy/đổi đang chờ trước khi check-in.');
+    }
+    booking.checkedInAt = now;
+    booking.checkedInBy = owner._id;
+    await booking.save({ session });
+    return booking.toObject();
   });
 }

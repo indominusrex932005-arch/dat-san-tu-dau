@@ -1,10 +1,12 @@
 import mongoose from 'mongoose';
+import { PAGE_SIZE, pageNumber, pageInfo } from '../utils/pagination.js';
+import { vietnamDate } from '../domain/booking-rules.js';
 import Facility from '../models/Facility.js';
 import Court from '../models/Court.js';
 import Booking from '../models/Booking.js';
 import BookingRequest from '../models/BookingRequest.js';
 import {
-  approveRequest, rejectRequest, recordRefund, cancelByOwner
+  approveRequest, rejectRequest, recordRefund, cancelByOwner, checkInBooking
 } from '../services/booking.service.js';
 
 function fail(status, message) {
@@ -131,16 +133,46 @@ export async function showOwnerDashboard(req, res) {
   }
   try {
     const facility = await ownFacility(req.currentUser);
-    const [courts, bookings] = await Promise.all([
+    const requestedPage = pageNumber(req.query.page);
+    const requestedRequestPage = pageNumber(req.query.requestPage);
+    const bookingFilter = { facility: facility._id };
+    const queryText = typeof req.query.q === 'string' ? req.query.q.trim() : '';
+    if (req.query.q !== undefined && (typeof req.query.q !== 'string' || queryText.length > 100)) fail(400, 'Mã đơn tra cứu không hợp lệ.');
+    if (queryText) bookingFilter.publicCode = queryText;
+    // Join requests to their booking inside MongoDB; do not load all booking IDs.
+    const requestScope = [
+      { $lookup: { from: 'bookings', localField: 'booking', foreignField: '_id', as: 'bookingDoc' } },
+      { $unwind: '$bookingDoc' },
+      { $match: { 'bookingDoc.facility': facility._id } }
+    ];
+    const [courtList, bookingCount, requestCounts] = await Promise.all([
       Court.find({ facility: facility._id }).sort({ name: 1 }).lean(),
-      Booking.find({ facility: facility._id }).populate('court', 'name')
-        .populate('user', 'fullName email').populate('facility').sort({ createdAt: -1 }).lean()
+      Booking.countDocuments(bookingFilter),
+      BookingRequest.aggregate([...requestScope, { $group: {
+        _id: null, total: { $sum: 1 },
+        pending: { $sum: { $cond: [{ $eq: ['$status', 'PENDING'] }, 1, 0] } },
+        refunds: { $sum: { $cond: [{ $eq: ['$refundStatus', 'PENDING'] }, 1, 0] } }
+      } }])
     ]);
-    const requests = await BookingRequest.find({ booking: { $in: bookings.map(booking => booking._id) } })
-      .populate({ path: 'booking', populate: [{ path: 'court', select: 'name' }, { path: 'user', select: 'fullName email' }] })
-      .populate('requestedCourt', 'name').sort({ createdAt: -1 }).lean();
+    const summary = requestCounts[0] || { total: 0, pending: 0, refunds: 0 };
+    const pagination = pageInfo(requestedPage, bookingCount);
+    const requestPagination = pageInfo(requestedRequestPage, summary.total);
+    const [bookings, requestRows] = await Promise.all([
+      Booking.find(bookingFilter).populate('court', 'name')
+        .populate('user', 'fullName email').populate('facility')
+        .sort({ createdAt: -1, _id: -1 }).skip(pagination.skip).limit(PAGE_SIZE).lean(),
+      BookingRequest.aggregate([...requestScope, { $sort: { createdAt: -1, _id: -1 } },
+        { $skip: requestPagination.skip }, { $limit: PAGE_SIZE }, { $unset: 'bookingDoc' }])
+    ]);
+    const requests = await BookingRequest.populate(requestRows, [
+      { path: 'booking', populate: [{ path: 'court', select: 'name' }, { path: 'user', select: 'fullName email' }] },
+      { path: 'requestedCourt', select: 'name' }
+    ]);
+    const courts = courtList;
     return res.render('owner-dashboard', {
-      title: 'Quản lý cơ sở của bạn', facility, courts, bookings, requests, errorMessage: null
+      title: 'Quản lý cơ sở của bạn', facility, courts, bookings, requests,
+      today: vietnamDate(), serverNow: Date.now(), errorMessage: null,
+      pagination, requestPagination, summary, queryText
     });
   } catch (error) {
     return ownerError(res, error);
@@ -243,4 +275,8 @@ export function recordBookingRefund(req, res) {
 
 export function cancelGuestBooking(req, res) {
   return ownerAction(req, res, cancelByOwner);
+}
+
+export function recordBookingCheckIn(req, res) {
+  return ownerAction(req, res, (id, owner) => checkInBooking(id, owner));
 }

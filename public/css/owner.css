@@ -94,3 +94,10 @@
   .owner-card-heading { gap: 10px; }
   .owner-review-form { padding: 12px; }
 }
+
+.owner-report-table { overflow-x: auto; margin: 1rem 0; }
+.owner-report-table table { border-collapse: collapse; width: 100%; min-width: 650px; background: white; }
+.owner-report-table th, .owner-report-table td { padding: .9rem; border-bottom: 1px solid #d7dfd3; text-align: left; }
+.owner-report-table thead { background: #e6ecdc; }
+.owner-pagination { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin: 1rem 0 2rem; }
+.owner-check-in { margin: 1rem 0; }
