@@ -12,36 +12,12 @@
   <link rel="stylesheet" href="/assets/css/home.css">
   <link rel="stylesheet" href="/assets/css/media.css">
   <script src="/assets/js/media.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/design-system.css">
 </head>
 <body class="home-page">
   <a class="home-skip-link" href="#noi-dung">Đến nội dung chính</a>
 
-  <header class="home-header home-shell">
-    <a class="home-brand" href="/" aria-label="Sân Thể Thao - Trang chủ">
-      <span class="home-brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 32 32" fill="none">
-          <rect x="7" y="5" width="18" height="22" rx="1" />
-          <path d="M7 16h18M16 5v22M7 10h18M7 22h18" />
-        </svg>
-      </span>
-      <span>Sân Thể Thao<span class="home-brand-dot">.</span></span>
-    </a>
-
-    <nav class="home-nav" aria-label="Điều hướng chính">
-      <a class="home-nav-link" href="/" aria-current="page">Trang chủ</a>
-      <a class="home-nav-link" href="/facilities">Cơ sở <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <a class="home-nav-link" href="/courts">Đặt sân</a>
-      <% if (!currentUser) { %>
-        <a class="home-nav-link" href="/login">Đăng nhập</a>
-        <a class="home-nav-link" href="/register">Đăng ký khách</a>
-        <a class="home-nav-link" href="/register/owner">Dành cho chủ sân</a>
-      <% } else { %>
-        <a class="home-nav-link" href="/my-bookings">Đơn của tôi</a>
-        <% if (currentUser.role === 'OWNER') { %><a class="home-nav-link" href="/owner">Quản lý sân</a><% } %>
-        <% if (currentUser.role === 'ADMIN') { %><a class="home-nav-link" href="/admin">Duyệt chủ sân</a><% } %>
-      <% } %>
-    </nav>
-  </header>
+  <div class="home-shell site-home-nav"><%- include('partials/navigation') %></div>
 
   <main id="noi-dung" class="home-shell" tabindex="-1">
     <section class="home-hero" aria-labelledby="home-title">
