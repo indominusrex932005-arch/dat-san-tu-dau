@@ -58,8 +58,8 @@
               <noscript><p>Bật JavaScript để đọc trạng thái yêu cầu thanh toán thử.</p></noscript>
             </section>
           <% } else { %>
-            <img src="/assets/images/qr-minh-hoa.svg" class="booking-qr" width="240" height="270" alt="Hình minh họa vị trí mã QR; chưa thể dùng để thanh toán">
-            <p class="booking-notice">QR minh họa — chưa thể thanh toán. Chưa kết nối ngân hàng và chưa xác minh tiền thật.</p>
+            <img src="<%= demoMode && facility?.demoQr?.url ? facility.demoQr.url : '/assets/images/qr-minh-hoa.svg' %>" class="booking-qr" width="240" height="270" alt="Hình minh họa vị trí mã QR; chưa thể dùng để thanh toán">
+            <p class="booking-notice">Ảnh QR chỉ minh họa — không quét hoặc chuyển tiền. Chưa kết nối ngân hàng và chưa xác minh tiền thật.</p>
           <% } %>
           <% if (demoMode) { %>
             <form action="/bookings/<%= booking._id %>/demo-payment" method="POST" class="demo-form" id="demo-payment-form">

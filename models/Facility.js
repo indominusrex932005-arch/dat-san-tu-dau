@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
-import { imageFields } from './image-fields.js';
+import { imageFields, imageSchema } from './image-fields.js';
 
 const facilitySchema = new mongoose.Schema({
   ...imageFields,
+  demoQr: { type: imageSchema, default: undefined },
   name: {
     type: String,
     required: true,
