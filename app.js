@@ -18,8 +18,14 @@ import { createPaymentRoutes } from './routes/payment.routes.js';
 import { getPaymentConfig } from './config/payment-mode.js';
 import { health } from './controllers/health.controller.js';
 import { createPaymentWebhookRoutes } from './routes/payment-webhook.routes.js';
+import { coverImage } from './utils/images.js';
+import { cloudImageStorage } from './services/image-storage.js';
+import createOwnerImageRoutes from './routes/owner-images.routes.js';
 
-export default function createApp(sessionStore, { paymentService = createPaymentService({ getPaymentConfig }), paymentWebhookHandler, paymentCheckoutEnabled = false } = {}) {
+export default function createApp(sessionStore, {
+  paymentService = createPaymentService({ getPaymentConfig }), paymentWebhookHandler,
+  paymentCheckoutEnabled = false, imageStorage = cloudImageStorage
+} = {}) {
   if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
     throw new Error('Hãy thêm SESSION_SECRET dài ít nhất 32 ký tự vào .env.');
   }
@@ -31,6 +37,8 @@ export default function createApp(sessionStore, { paymentService = createPayment
   app.set('views', fileURLToPath(new URL('./views', import.meta.url)));
   app.locals.formatMoney = formatMoney;
   app.locals.formatDate = formatDate;
+  app.locals.coverImage = coverImage;
+  app.locals.imageUploadsReady = imageStorage.ready();
   app.locals.formatTime = value => new Intl.DateTimeFormat('vi-VN', {
     timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
   }).format(new Date(value));
@@ -88,6 +96,7 @@ export default function createApp(sessionStore, { paymentService = createPayment
   app.use('/courts', courtRoutes);
   app.use('/', createBookingRoutes(limits.bookings));
   app.use('/owner', ownerRoutes);
+  app.use('/owner', createOwnerImageRoutes(imageStorage, limits.images));
   app.use('/admin', adminRoutes);
 
   app.use((req, res) => {

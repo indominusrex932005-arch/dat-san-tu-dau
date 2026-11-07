@@ -1,0 +1,8 @@
+<% if (info.pages > 1) { %>
+  <% const url = number => '/owner?' + new URLSearchParams({ page: String(kind === 'bookings' ? number : pagination.page), requestPage: String(kind === 'requests' ? number : requestPagination.page), q: queryText }).toString() + '#' + kind; %>
+  <nav class="owner-pagination" aria-label="Phân trang <%= kind === 'requests' ? 'yêu cầu' : 'đơn' %>">
+    <% if (info.page > 1) { %><a class="demo-button demo-button-secondary" href="<%= url(info.page - 1) %>">← Trang trước</a><% } %>
+    <span>Trang <%= info.page %>/<%= info.pages %> · <%= info.total %> <%= kind === 'requests' ? 'yêu cầu' : 'đơn' %></span>
+    <% if (info.page < info.pages) { %><a class="demo-button demo-button-secondary" href="<%= url(info.page + 1) %>">Trang sau →</a><% } %>
+  </nav>
+<% } %>

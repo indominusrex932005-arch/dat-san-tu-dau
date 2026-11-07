@@ -1,13 +1,12 @@
 import mongoose from 'mongoose';
 import Court from '../models/Court.js';
-import SlotLock from '../models/SlotLock.js';
+import { locksByCourtForDay } from './court-locks.service.js';
 import {
   SLOT_MINUTES,
   RuleError,
   timeToMinutes,
   validateDate,
   vietnamDate,
-  slotInstant,
   makeSlots,
   quoteSelection
 } from '../domain/booking-rules.js';
@@ -67,8 +66,7 @@ export async function suggestCourts(query = {}, now = new Date(), options = {}) 
     }).sort({ name: 1 }).lean();
   }
 
-  const startOfDay = slotInstant(rawDate, '00:00');
-  const nextDay = new Date(Number(startOfDay) + 24 * 3600000);
+  const locksByCourt = options.locksByCourt ?? await locksByCourtForDay(candidates, rawDate);
 
   const candidateWindows = [];
 
@@ -97,10 +95,7 @@ export async function suggestCourts(query = {}, now = new Date(), options = {}) 
     }
 
     // Lấy locks trong ngày cho sân một lần duy nhất
-    const locks = await SlotLock.find({
-      court: court._id,
-      slotStart: { $gte: startOfDay, $lt: nextDay }
-    }).lean();
+    const locks = locksByCourt.get(String(court._id)) || [];
 
     const slots = makeSlots(court, rawDate, locks, now);
 

@@ -25,6 +25,10 @@ Nút mô phỏng vẫn kiểm tra mode phía server, CSRF, quyền xem đơn, h�
 
 Hạn giữ áp dụng từ issue #37 ngày 24/10/2026 là mốc sớm hơn giữa 10 phút từ lúc tạo đơn và giờ bắt đầu của ô đầu tiên, theo UTC của máy chủ. Từ đúng mốc này, HOLD không được xác nhận thanh toán; không được kéo dài tới hết 10 phút khi sân đã bắt đầu. Quy tắc dọn HOLD không giải phóng đơn CONFIRMED.
 
+## Phần nền đã có, chưa phải tích hợp ngân hàng
+
+PR #103 đã tích hợp payment intent, webhook xác minh qua adapter, xử lý callback lặp, đối soát và giao diện QR thử nghiệm. Các kiểm thử dùng adapter giả lập và MongoDB cục bộ. `server.js` mặc định chưa gắn nhà cung cấp hoặc webhook; bản final theo lựa chọn nhóm trưởng vẫn dùng nút thanh toán mô phỏng. Các đầu việc dưới đây là phần còn phải chốt/nối với dịch vụ thật và nghiệm thu, không có nghĩa phần lõi tương ứng chưa được viết.
+
 ## Công việc cần nối sau
 
 1. Chốt tài khoản nhận tiền và dịch vụ cung cấp thông tin giao dịch. Chưa có tích hợp MB Bank.

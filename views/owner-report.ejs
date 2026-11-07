@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Sân Thể Thao</title>
+  <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/owner.css">
+</head>
+<body class="demo-page"><div class="demo-shell">
+  <%- include('partials/navigation') %>
+  <main>
+    <a href="/owner">← Quản lý cơ sở</a>
+    <h1>Báo cáo thu / hoàn mô phỏng</h1><p><%= facility.name %></p>
+    <p class="owner-note"><strong>SỐ LIỆU MÔ PHỎNG — không xác minh tiền ngân hàng.</strong> Báo cáo tính theo ngày ghi nhận giao dịch (giờ Việt Nam), không theo ngày chơi. Không cộng yêu cầu thanh toán đang chờ hoặc giao dịch QR thử nghiệm.</p>
+    <form method="GET" action="/owner/reports" class="demo-form demo-card">
+      <label for="from">Từ ngày</label><input id="from" type="date" name="from" value="<%= from %>" required>
+      <label for="to">Đến ngày</label><input id="to" type="date" name="to" value="<%= to %>" required>
+      <button class="demo-button" type="submit">Xem báo cáo</button>
+    </form>
+    <section class="owner-stat-grid" aria-label="Tổng hợp thu hoàn">
+      <div class="demo-card owner-stat"><span>Đã thu mô phỏng</span><strong><%= formatMoney(total.income) %></strong></div>
+      <div class="demo-card owner-stat"><span>Đã ghi nhận hoàn mô phỏng</span><strong><%= formatMoney(total.refund) %></strong></div>
+      <div class="demo-card owner-stat"><span>Thu trừ hoàn mô phỏng</span><strong><%= formatMoney(total.income - total.refund) %></strong></div>
+    </section>
+    <p><strong>Chờ ghi nhận hoàn:</strong> <%= formatMoney(pending.amount) %> (<%= pending.count %> yêu cầu được duyệt trong khoảng đã chọn, hiện chưa hoàn). Khoản chờ chưa trừ vào tổng.</p>
+    <p class="demo-muted">Một khoản thu và hoàn có thể ở hai ngày khác nhau; thu trừ hoàn trong kỳ có thể âm. Đây không phải báo cáo lợi nhuận.</p>
+    <% if (!days.length) { %><p class="demo-card">Chưa có giao dịch mô phỏng trong khoảng ngày này.</p><% } else { %>
+      <div class="owner-report-table" tabindex="0" role="region" aria-label="Chi tiết thu hoàn theo ngày">
+        <table><thead><tr><th scope="col">Ngày</th><th scope="col">Số lượt thu</th><th scope="col">Thu mô phỏng</th><th scope="col">Số lượt hoàn</th><th scope="col">Hoàn mô phỏng</th><th scope="col">Thu trừ hoàn</th></tr></thead>
+        <tbody><% for (const row of days) { %><tr><th scope="row"><%= formatDate(row.date) %></th><td><%= row.incomeCount %></td><td><%= formatMoney(row.income) %></td><td><%= row.refundCount %></td><td><%= formatMoney(row.refund) %></td><td><%= formatMoney(row.income - row.refund) %></td></tr><% } %></tbody></table>
+      </div>
+    <% } %>
+  </main>
+</div></body></html>

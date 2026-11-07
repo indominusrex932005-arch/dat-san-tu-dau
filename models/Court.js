@@ -1,8 +1,10 @@
 import mongoose from 'mongoose';
+import { imageFields } from './image-fields.js';
 
 const money = { type: Number, min: 0, validate: Number.isSafeInteger };
 const time = { type: String, match: /^(?:[01]\d|2[0-3]):[03]0$/ };
 const courtSchema = new mongoose.Schema({
+  ...imageFields,
   facility: { type: mongoose.Schema.Types.ObjectId, ref: 'Facility', required: true },
   name: { type: String, required: true, trim: true, maxlength: 150 },
   sportType: { type: String, enum: ['BADMINTON', 'PICKLEBALL'], default: 'BADMINTON' },

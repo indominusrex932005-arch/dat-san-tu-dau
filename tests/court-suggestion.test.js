@@ -180,15 +180,15 @@ test('Court Suggestion Unit Tests', async (suite) => {
 
   await suite.test('Bỏ qua lock hết hạn, loại bỏ BOOKED và HOLD còn hạn', async () => {
     const expiredLock = {
-      slotStart: slotInstant(validDate, '18:00'),
+      court: court1A._id, slotStart: slotInstant(validDate, '18:00'),
       expiresAt: new Date(fixedNow.getTime() - 60000) // Hết hạn
     };
     const activeHold = {
-      slotStart: slotInstant(validDate, '18:30'),
+      court: court1A._id, slotStart: slotInstant(validDate, '18:30'),
       expiresAt: new Date(fixedNow.getTime() + 60000) // Còn hạn
     };
     const confirmedBooking = {
-      slotStart: slotInstant(validDate, '19:00'),
+      court: court1A._id, slotStart: slotInstant(validDate, '19:00'),
       expiresAt: null // Đã đặt
     };
 
@@ -217,19 +217,19 @@ test('Court Suggestion Unit Tests', async (suite) => {
     // Người dùng tìm 18:00-19:00
     // Giả sử 18:00-19:00 đã kín trên cả 2 sân
     const bookedLockCourt1 = [
-      { slotStart: slotInstant(validDate, '18:00'), expiresAt: null },
-      { slotStart: slotInstant(validDate, '18:30'), expiresAt: null }
+      { court: court1A._id, slotStart: slotInstant(validDate, '18:00'), expiresAt: null },
+      { court: court1A._id, slotStart: slotInstant(validDate, '18:30'), expiresAt: null }
     ];
     const bookedLockCourt2 = [
-      { slotStart: slotInstant(validDate, '18:00'), expiresAt: null },
-      { slotStart: slotInstant(validDate, '18:30'), expiresAt: null }
+      { court: court1A._id, slotStart: slotInstant(validDate, '18:00'), expiresAt: null },
+      { court: court1A._id, slotStart: slotInstant(validDate, '18:30'), expiresAt: null }
     ];
 
     suite.mock.method(SlotLock, 'find', (filter) => ({
       lean: async () => {
-        if (String(filter.court) === String(court1A._id)) return bookedLockCourt1;
-        if (String(filter.court) === String(court2A._id)) return bookedLockCourt2;
-        return [];
+        assert.ok(filter.court.$in.length === 2);
+        return [...bookedLockCourt1.map(lock => ({ ...lock, court: court1A._id })),
+          ...bookedLockCourt2.map(lock => ({ ...lock, court: court2A._id }))];
       }
     }));
 
@@ -261,9 +261,9 @@ test('Court Suggestion Unit Tests', async (suite) => {
     suite.mock.method(SlotLock, 'find', () => ({
       lean: async () => [
         // Chặn các ô từ 17:30 đến 22:00 để buộc gợi ý 16:30
-        { slotStart: slotInstant(validDate, '17:30'), expiresAt: null },
-        { slotStart: slotInstant(validDate, '18:00'), expiresAt: null },
-        { slotStart: slotInstant(validDate, '18:30'), expiresAt: null }
+        { court: court1A._id, slotStart: slotInstant(validDate, '17:30'), expiresAt: null },
+        { court: court1A._id, slotStart: slotInstant(validDate, '18:00'), expiresAt: null },
+        { court: court1A._id, slotStart: slotInstant(validDate, '18:30'), expiresAt: null }
       ]
     }));
 
@@ -326,8 +326,8 @@ test('Court Suggestion Unit Tests', async (suite) => {
     }));
     suite.mock.method(SlotLock, 'find', () => ({
       lean: async () => [
-        { slotStart: slotInstant(validDate, '18:00'), expiresAt: null },
-        { slotStart: slotInstant(validDate, '18:30'), expiresAt: null }
+        { court: court1A._id, slotStart: slotInstant(validDate, '18:00'), expiresAt: null },
+        { court: court1A._id, slotStart: slotInstant(validDate, '18:30'), expiresAt: null }
       ]
     }));
 
