@@ -1,3 +1,4 @@
+import { PAGE_SIZE, pageNumber, pageInfo } from '../utils/pagination.js';
 import Court from '../models/Court.js';
 import Booking from '../models/Booking.js';
 import BookingRequest from '../models/BookingRequest.js';
@@ -76,12 +77,14 @@ export async function showReceipt(req, res) {
 
 export async function showMyBookings(req, res) {
   await expireHolds();
+  const requested = pageNumber(req.query.page);
+  const pagination = pageInfo(requested, await Booking.countDocuments({ user: req.currentUser._id }));
   const bookings = await Booking.find({ user: req.currentUser._id })
     .populate({ path: 'court', populate: { path: 'facility' } }).populate('facility')
-    .sort({ createdAt: -1 }).lean();
+    .sort({ createdAt: -1, _id: -1 }).skip(pagination.skip).limit(PAGE_SIZE).lean();
   const requests = await BookingRequest.find({ booking: { $in: bookings.map(booking => booking._id) } }).sort({ createdAt: -1 }).lean();
   for (const booking of bookings) booking.requests = requests.filter(request => String(request.booking) === String(booking._id));
-  res.render('my-bookings', { title: 'Lịch sử đặt sân', bookings });
+  res.render('my-bookings', { title: 'Lịch sử đặt sân', bookings, pagination });
 }
 
 export async function showRequestForm(req, res) {
@@ -89,6 +92,7 @@ export async function showRequestForm(req, res) {
   if (!booking.user || String(booking.user) !== String(req.currentUser._id)) {
     throw Object.assign(new Error('Bạn chỉ được gửi yêu cầu cho đơn của mình.'), { status: 403 });
   }
+  if (booking.checkedInAt) throw Object.assign(new Error('Đơn đã check-in, không thể hủy hoặc đổi lịch.'), { status: 409 });
   const courts = await Court.find({ facility: booking.facility?._id, active: true }).sort({ name: 1 }).lean();
   res.render('booking-request', { title: 'Yêu cầu hủy hoặc đổi sân', booking, courts, token: '', errorMessage: null });
 }

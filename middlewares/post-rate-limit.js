@@ -99,6 +99,9 @@ function createLimiter(name, windowSeconds, ipMaximum, backUrl, actor) {
 
 export function createPostRateLimits() {
   return {
+    images: createLimiter('IMAGES', 60, 30, '/owner', {
+      suffix: '_ACTOR_MAX', max: 10, key: bookingActorKey
+    }),
     login: createLimiter('LOGIN', 900, 60, '/login', {
       suffix: '_ACCOUNT_IP_MAX', max: 8, key: accountAndIpKey
     }),

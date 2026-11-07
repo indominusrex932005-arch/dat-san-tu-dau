@@ -15,8 +15,8 @@
       const ownerCourts = Array.isArray(courts) ? courts : [];
       const ownerBookings = Array.isArray(bookings) ? bookings : [];
       const ownerRequests = Array.isArray(requests) ? requests : [];
-      const pendingRequests = ownerRequests.filter(item => item.status === 'PENDING');
-      const pendingRefunds = ownerRequests.filter(item => item.refundStatus === 'PENDING');
+
+
       const bookingLabels = { HOLD: 'Giữ chỗ / chờ thanh toán', CONFIRMED: 'Đã xác nhận', EXPIRED: 'Hết hạn', CANCELLED: 'Đã hủy', LEGACY_RESERVED: 'Đơn cũ — chưa ghi nhận tiền' };
       const paymentLabels = { UNPAID: 'Chưa ghi nhận thanh toán', DEMO_PAID: 'Thanh toán mô phỏng — chưa xác minh ngân hàng', PAID: 'Đã ghi nhận thanh toán' };
       const requestLabels = { PENDING: 'Chờ xử lý', APPROVED: 'Đã chấp thuận', REJECTED: 'Đã từ chối' };
@@ -27,6 +27,7 @@
         <div><span class="owner-kicker">QUẢN LÝ CƠ SỞ</span><h1 id="owner-title"><%= facility?.name || 'Cơ sở của bạn' %></h1><p><%= facility?.address || 'Tài khoản chưa được cấp cơ sở quản lý.' %></p></div>
         <% if (facility) { %>
           <nav class="demo-actions" aria-label="Thao tác cơ sở">
+            <a href="/owner/reports" class="demo-button demo-button-secondary">Báo cáo thu / hoàn</a>
             <a href="/owner/calendar" class="demo-button demo-button-secondary">Lịch điều hành</a>
             <% if (demoMode) { %><a href="/owner/payment-reconciliation" class="demo-button demo-button-secondary">Đối soát QR thử nghiệm</a><% } %>
             <a href="/owner/facilities/<%= facility._id %>/edit" class="demo-button demo-button-secondary">Sửa thông tin cơ sở</a>
@@ -39,8 +40,8 @@
         <p class="owner-note">Điện thoại cơ sở: <strong><%= facility.phone || 'Chưa có thông tin' %></strong>. Khách vãng lai dùng số này để liên hệ hủy đơn.</p>
         <section class="owner-stat-grid" aria-label="Tổng quan cơ sở">
           <div class="demo-card owner-stat"><span>Sân đang quản lý</span><strong><%= ownerCourts.length %></strong></div>
-          <div class="demo-card owner-stat"><span>Yêu cầu chờ xử lý</span><strong><%= pendingRequests.length %></strong></div>
-          <div class="demo-card owner-stat"><span>Khoản hoàn chờ ghi nhận</span><strong><%= pendingRefunds.length %></strong></div>
+          <div class="demo-card owner-stat"><span>Yêu cầu chờ xử lý</span><strong><%= summary.pending %></strong></div>
+          <div class="demo-card owner-stat"><span>Khoản hoàn chờ ghi nhận</span><strong><%= summary.refunds %></strong></div>
         </section>
 
         <section id="courts" aria-labelledby="owner-courts-title">
@@ -120,8 +121,15 @@
           </div>
         </section>
 
+        <%- include('partials/owner-pagination', { info: requestPagination, kind: 'requests' }) %>
         <section id="bookings" aria-labelledby="owner-bookings-title">
           <h2 id="owner-bookings-title">Đơn đặt tại cơ sở</h2>
+          <form action="/owner#bookings" method="GET" class="demo-form demo-card">
+            <label for="booking-code">Tra cứu mã đơn chính xác</label>
+            <input id="booking-code" name="q" maxlength="100" value="<%= queryText %>" placeholder="Nhập mã trên phiếu đặt sân">
+            <button class="demo-button" type="submit">Tìm đơn</button>
+            <% if (queryText) { %><a href="/owner#bookings">Xem tất cả đơn</a><% } %>
+          </form>
           <% if (!ownerBookings.length) { %><p class="demo-card owner-empty">Chưa có đơn đặt sân tại cơ sở này.</p><% } %>
           <div class="owner-booking-list">
             <% for (const item of ownerBookings) { %>
@@ -133,8 +141,17 @@
                   <% for (const slot of item.slots || []) { %><li><%= showTime(slot.startAt) %>–<%= showTime(slot.endAt) %> · <%= formatMoney(slot.priceVND) %></li><% } %>
                 </ul>
                 <div class="owner-booking-footer"><strong><%= formatMoney(item.totalPrice || 0) %></strong><span class="<%= item.paymentStatus === 'DEMO_PAID' ? 'owner-demo-payment' : 'demo-muted' %>"><%= paymentLabels[item.paymentStatus] || 'Chưa ghi nhận thanh toán' %></span></div>
+                <% if (item.checkedInAt) { %>
+                  <p class="owner-badge owner-badge-success">Đã check-in lúc <%= showTime(item.checkedInAt) %> · <%= formatDate(item.date) %></p>
+                <% } else if (item.status === 'CONFIRMED' && ['DEMO_PAID', 'PAID'].includes(item.paymentStatus) && item.date === today && (item.slots || []).some(slot => Number(new Date(slot.endAt)) > serverNow)) { %>
+                  <form method="POST" action="/owner/bookings/<%= item._id %>/check-in" class="owner-check-in">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <p class="owner-field-help">Đối chiếu mã đơn và tên khách đã đến. Sau check-in, đơn không thể hủy/đổi.</p>
+                    <button class="demo-button" type="submit">Xác nhận khách đã đến</button>
+                  </form>
+                <% } %>
                 <a href="/bookings/<%= item._id %>/<%= item.status === 'HOLD' ? 'checkout' : 'receipt' %>" class="owner-receipt-link"><%= item.status === 'CONFIRMED' ? 'Xem phiếu đặt sân' : 'Xem thông tin đơn' %> →</a>
-                <% if (!item.user && ['CONFIRMED', 'LEGACY_RESERVED'].includes(item.status)) { %>
+                <% if (!item.checkedInAt && !item.user && ['CONFIRMED', 'LEGACY_RESERVED'].includes(item.status)) { %>
                   <details class="owner-call-cancel">
                     <summary>Xử lý hủy khi khách gọi điện</summary>
                     <p>Đối chiếu mã đơn, tên và số điện thoại với khách trước khi hủy.</p>
@@ -152,6 +169,7 @@
             <% } %>
           </div>
         </section>
+        <%- include('partials/owner-pagination', { info: pagination, kind: 'bookings' }) %>
       <% } %>
     </main>
   </div>

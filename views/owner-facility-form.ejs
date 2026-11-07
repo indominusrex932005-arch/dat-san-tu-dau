@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="/assets/css/demo.css">
   <link rel="stylesheet" href="/assets/css/owner.css">
   <link rel="stylesheet" href="/assets/css/owner-facility-form.css">
+  <link rel="stylesheet" href="/assets/css/media.css">
+  <script src="/assets/js/media.js" defer></script>
 </head>
 <body class="demo-page owner-facility-page">
   <div class="demo-shell">
@@ -68,6 +70,7 @@
           <p class="owner-field-help owner-facility-permission">Bạn chỉ cập nhật thông tin cơ sở được cấp. Việc cấp cơ sở và thay đổi chủ quản lý do quản trị viên xử lý.</p>
         </aside>
       </div>
+      <%- include('partials/owner-images', { imageTarget: facility, imageKind: 'facilities' }) %>
     </main>
   </div>
 </body>

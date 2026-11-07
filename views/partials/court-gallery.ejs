@@ -1,0 +1,9 @@
+<section class="media-gallery" aria-label="Hình ảnh sân">
+  <% const mainPhoto = typeof coverImage === 'function' ? coverImage(court) : null; %>
+  <% if (mainPhoto && !mainPhoto.illustration) { %><a class="media-gallery-main" href="<%= mainPhoto.url %>" target="_blank" rel="noopener" data-gallery-image aria-label="Xem lớn ảnh sân"><%- include('media-cover', { entity: court }) %></a>
+  <% } else { %><%- include('media-cover', { entity: court }) %><% } %>
+  <% if (court.images?.length > 1) { %><div class="media-thumbnails">
+    <% for (const photo of court.images) { %><a href="<%= photo.url %>" target="_blank" rel="noopener" class="media-thumbnail" data-gallery-image aria-label="Xem lớn ảnh của <%= court.name %>"><img src="<%= photo.url %>" alt="Ảnh <%= court.name %>" loading="lazy" width="240" height="160" data-media-fallback></a><% } %>
+  </div><% } %>
+</section>
+<dialog class="media-lightbox"><form method="dialog"><button class="media-button" aria-label="Đóng ảnh">Đóng ×</button></form><img alt="Ảnh sân xem lớn"></dialog>
