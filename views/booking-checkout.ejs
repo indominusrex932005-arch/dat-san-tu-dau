@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/booking.css">
   <script src="/assets/js/<%= typeof providerCheckoutEnabled !== 'undefined' && providerCheckoutEnabled ? 'payment-checkout.js' : 'booking.js' %>" defer></script>
   <link rel="stylesheet" href="/assets/css/design-system.css">
+<link rel="stylesheet" href="/assets/css/groups.css">
 </head><body class="demo-page"><div class="demo-shell">
   <%- include('partials/navigation') %>
   <% const facility = booking.facility || booking.court?.facility; const accessToken = typeof token === 'string' ? token : ''; const query = accessToken ? '?token=' + encodeURIComponent(accessToken) : ''; %>
@@ -25,7 +26,8 @@
         <ul class="booking-time-list">
           <% for (const slot of booking.slots || []) { %><li><span><%= formatTime(slot.startAt) %>–<%= formatTime(slot.endAt) %></span><strong><%= formatMoney(slot.priceVND) %></strong></li><% } %>
         </ul>
-        <p class="booking-total"><span>Tổng số tiền (100%)</span><strong><%= formatMoney(booking.totalPrice) %></strong></p>
+        <%- include('partials/extra-summary', { lines: booking.extras || [] }) %>
+      <p class="booking-total"><span>Tổng số tiền (100%)</span><strong><%= formatMoney(booking.totalPrice) %></strong></p>
         <p class="demo-muted">Giá từng ô đã được lưu vào đơn. Không có bước đặt cọc.</p>
       </section>
       <aside class="demo-card booking-summary">

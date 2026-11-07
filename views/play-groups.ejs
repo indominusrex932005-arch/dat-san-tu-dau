@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>
+<%= title %> | Sân Thể Thao</title>
+<link rel="stylesheet" href="/assets/css/app.css">
+<link rel="stylesheet" href="/assets/css/demo.css">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<link rel="stylesheet" href="/assets/css/groups.css">
+</head>
+<body class="demo-page">
+<div class="demo-shell">
+<%- include('partials/navigation') %>
+<main>
+<section class="group-hero">
+<div>
+<p class="group-kicker">THÊM BẠN · THÊM NIỀM VUI</p>
+<h1>Tìm bạn ra sân.</h1>
+<p>Chọn một buổi chơi hợp lịch. Cùng chia tiền sân và kết nối với bạn mới.</p>
+<div class="demo-actions">
+<a class="demo-button group-lime" href="/groups/new">+ Rủ bạn cùng chơi</a>
+<a class="group-light-link" href="/courts">Muốn thuê riêng? Xem sân →</a>
+</div>
+</div>
+<span class="group-hero-art" aria-hidden="true">◎</span>
+</section>
+<nav class="demo-actions" aria-label="Lọc buổi chơi">
+<a class="demo-button demo-button-secondary" href="/groups">Tất cả buổi chơi</a>
+<% if (currentUser) { %>
+<a class="demo-button demo-button-secondary" href="/groups?mine=1">Buổi tôi tham gia</a>
+<% } %>
+</nav>
+<section class="group-grid">
+<% if (!groups.length) { %>
+<article class="demo-card group-empty">
+<h2>Buổi chơi đầu tiên đang chờ bạn</h2>
+<p>Đặt sân, tạo nhóm rồi chia sẻ đường dẫn để rủ mọi người.</p>
+<a class="demo-button" href="/groups/new">Tạo buổi chơi</a>
+</article>
+<% } %>
+<% for (const g of groups) { if (!g.booking) continue; const cancelled = g.booking.status === 'CANCELLED'; const ended = g.booking.slots.every(s => +new Date(s.endAt) <= Date.now()); const closed = g.closedAt || +new Date(g.closesAt) <= Date.now(); %>
+<article class="demo-card group-card">
+<span class="group-tag">
+<%= cancelled ? 'Đã hủy' : ended ? 'Đã kết thúc' : closed ? 'Đã chốt nhóm' : g.members.length >= g.capacity ? 'Đủ người' : 'Đang tìm bạn' %>
+</span>
+<h2>
+<a href="/groups/<%= g._id %>">
+<%= g.title %>
+</a>
+</h2>
+<p>
+<%= g.booking.facility?.name %> · <%= g.booking.court?.name %>
+</p>
+<p>
+<strong>
+<%= formatDate(g.booking.date) %>
+</strong> · <%= formatTime(g.booking.slots[0].startAt) %>–<%= formatTime(g.booking.slots[g.booking.slots.length-1].endAt) %>
+</p>
+<div class="group-meter">
+<span style="width:<%= Math.round(g.members.length/g.capacity*100) %>%">
+</span>
+</div>
+<div class="group-price">
+<span>
+<%= g.members.length %>/<%= g.capacity %> người</span>
+<strong>
+<%= formatMoney(Math.ceil(g.total/g.members.length)) %>
+<small>/người · <%= closed ? 'xấp xỉ' : 'tạm tính' %>
+</small>
+</strong>
+</div>
+<a class="demo-button demo-button-secondary" href="/groups/<%= g._id %>">Xem buổi chơi →</a>
+</article>
+<% } %>
+</section>
+</main>
+<footer class="group-footer">Hẹn nhau ở sân. Chơi vui, kết nối nhiều hơn.</footer>
+</div>
+</body>
+</html>

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/assets/css/demo.css">
   <link rel="stylesheet" href="/assets/css/owner.css">
   <link rel="stylesheet" href="/assets/css/design-system.css">
+<link rel="stylesheet" href="/assets/css/groups.css">
 </head>
 <body class="demo-page">
   <div class="demo-shell">
@@ -28,7 +29,7 @@
         <div><span class="owner-kicker">QUẢN LÝ CƠ SỞ</span><h1 id="owner-title"><%= facility?.name || 'Cơ sở của bạn' %></h1><p><%= facility?.address || 'Tài khoản chưa được cấp cơ sở quản lý.' %></p></div>
         <% if (facility) { %>
           <nav class="demo-actions" aria-label="Thao tác cơ sở">
-            <a href="/owner/reports" class="demo-button demo-button-secondary">Báo cáo thu / hoàn</a>
+            <a href="/owner/extras" class="demo-button demo-button-secondary">Nước và đồ thuê</a><a href="/owner/reports" class="demo-button demo-button-secondary">Báo cáo thu / hoàn</a>
             <a href="/owner/calendar" class="demo-button demo-button-secondary">Lịch điều hành</a>
             <% if (demoMode) { %><a href="/owner/payment-reconciliation" class="demo-button demo-button-secondary">Đối soát QR thử nghiệm</a><% } %>
             <a href="/owner/facilities/<%= facility._id %>/edit" class="demo-button demo-button-secondary">Sửa thông tin cơ sở</a>

@@ -1,0 +1,20 @@
+<% if (typeof extras !== 'undefined' && extras.length) { %>
+<details class="extra-choice">
+<summary>Thêm nước hoặc đồ thuê <span>tùy chọn</span>
+</summary>
+<p>Trả tại sân, cần cơ sở xác nhận còn hàng. Không cộng vào tiền sân.</p>
+<% for (const e of extras) { %>
+<label class="extra-row">
+<span>
+<strong>
+<%= e.name %>
+</strong>
+<small>
+<%= formatMoney(e.price) %> / <%= e.unit %>
+</small>
+</span>
+<input type="number" min="0" max="20" value="0" name="extra_<%= e._id %>" aria-label="Số lượng <%= e.name %>">
+</label>
+<% } %>
+</details>
+<% } %>

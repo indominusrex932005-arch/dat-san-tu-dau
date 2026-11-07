@@ -90,3 +90,7 @@ npm test
 - [Hạn mức gửi form và cấu hình proxy](docs/GIOI_HAN_YEU_CAU.md)
 
 Không commit `.env`, mật khẩu, connection string có thông tin đăng nhập hoặc `node_modules`.
+
+## Bản mở rộng sân ghép và dịch vụ
+
+Nhánh `feat/san-ghep-va-dich-vu` bổ sung tạo nhóm từ đơn đã thanh toán mô phỏng, đăng ký từng người, chia tiền khi chốt và yêu cầu nước/đồ thuê. Xem [luồng sử dụng, kiểm thử và giới hạn](docs/SAN_GHEP_VA_DICH_VU.md).

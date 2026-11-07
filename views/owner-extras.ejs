@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>
+<%= title %> | Sân Thể Thao</title>
+<link rel="stylesheet" href="/assets/css/app.css">
+<link rel="stylesheet" href="/assets/css/demo.css">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<link rel="stylesheet" href="/assets/css/groups.css">
+</head>
+<body class="demo-page">
+<div class="demo-shell">
+<%- include('partials/navigation') %>
+<main>
+<a href="/owner">← Quản lý cơ sở</a>
+<section class="group-heading">
+<p class="group-kicker">THÊM TIỆN ÍCH CHO KHÁCH</p>
+<h1>Nước và đồ thuê</h1>
+<p>
+<%= facility.name %> · Giá hiển thị theo lượt. Khách trả tại sân sau khi bạn xác nhận còn hàng.</p>
+</section>
+<div class="group-columns">
+<section class="demo-card">
+<h2>Dịch vụ đang có</h2>
+<% for (const e of extras) { %>
+<div class="group-member">
+<div>
+<strong>
+<%= e.name %>
+</strong>
+<small>
+<%= formatMoney(e.price) %> / <%= e.unit %>
+</small>
+</div>
+<form method="POST" action="/owner/extras/<%= e._id %>/toggle">
+<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+<button class="demo-button demo-button-secondary">
+<%= e.active ? 'Tạm ngừng' : 'Mở lại' %>
+</button>
+</form>
+</div>
+<% } %>
+<% if (!extras.length) { %>
+<p>Chưa có dịch vụ. Bạn thêm nước hoặc đồ thuê ở form bên cạnh nhé.</p>
+<% } %>
+</section>
+<form class="demo-card demo-form" method="POST" action="/owner/extras">
+<h2>Thêm dịch vụ</h2>
+<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+<label for="name">Tên</label>
+<input id="name" name="name" maxlength="80" placeholder="Nước suối, thuê vợt…" required>
+<label for="unit">Đơn vị tính</label>
+<input id="unit" name="unit" maxlength="30" placeholder="chai, cây/lượt…" required>
+<label for="price">Giá (đồng)</label>
+<input type="number" id="price" name="price" min="0" max="10000000" required>
+<button class="demo-button">Thêm dịch vụ</button>
+</form>
+</div>
+<section class="demo-card">
+<h2>Khách đã chọn gần đây</h2>
+<p>Đây là yêu cầu đặt trước, chưa xác nhận tồn kho hoặc thu tiền. Chưa tính vào báo cáo thu/hoàn.</p>
+<% for (const b of bookings) { %>
+<h3>
+<%= b.guestName %> · <%= b.publicCode %> · <%= statusLabel(b.status) %>
+</h3>
+<%- include('partials/extra-summary', { lines: b.extras }) %>
+<% } %>
+<% for (const g of groups) { %>
+<h3>Sân ghép: <%= g.title %>
+</h3>
+<% for (const m of g.members) { if (!m.extras.length || String(m.user) === String(g.organizer)) continue; %>
+<strong>
+<%= m.name %>
+</strong>
+<%- include('partials/extra-summary', { lines: m.extras }) %>
+<% } %>
+<% } %>
+</section>
+</main>
+<footer class="group-footer">Hẹn nhau ở sân. Chơi vui, kết nối nhiều hơn.</footer>
+</div>
+</body>
+</html>

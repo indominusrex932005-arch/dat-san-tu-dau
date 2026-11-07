@@ -1,4 +1,5 @@
 import express from 'express';
+import groupRoutes from './routes/play-group.routes.js';
 import session from 'express-session';
 import { fileURLToPath } from 'node:url';
 import homeRoutes from './routes/home.routes.js';
@@ -95,6 +96,7 @@ export default function createApp(sessionStore, {
   app.use('/', createAuthRoutes(limits));
   app.use('/courts', courtRoutes);
   app.use('/', createBookingRoutes(limits.bookings));
+  app.use('/', groupRoutes(limits.bookings));
   app.use('/owner', ownerRoutes);
   app.use('/owner', createOwnerImageRoutes(imageStorage, limits.images));
   app.use('/admin', adminRoutes);
