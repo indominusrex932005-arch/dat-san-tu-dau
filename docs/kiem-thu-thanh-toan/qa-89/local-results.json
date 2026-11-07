@@ -1,0 +1,151 @@
+{
+  "issue": 89,
+  "phase": "MOCK",
+  "runAtUtc": "2026-11-06T11:50:27.690Z",
+  "candidateSha": "ce7d6109ca9f94d64ff03d77f0ef0442452c4a4d",
+  "candidateTree": "b53777eb92c9928b3b05ac90b285f39c3266d7cf",
+  "node": "v24.15.0",
+  "backend": "HTTP loopback",
+  "cases": [
+    {
+      "case": "checkout → signed webhook → receipt",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "viewer": "GUEST",
+      "result": "PASS_MOCK",
+      "decodedQrMatchesFixture": true,
+      "recipientAndPriceMatched": true,
+      "horizontalOverflow": false,
+      "invalidSignature": 401,
+      "callback": "200 APPLIED",
+      "replay": "200 DUPLICATE",
+      "unauthenticatedIntentStatusReceipt": [
+        403,
+        403,
+        403
+      ],
+      "booking": "CONFIRMED",
+      "paymentStatus": "DEMO_PAID",
+      "intentStatus": "SETTLED",
+      "appliedReceipts": 1,
+      "initialDemoRecords": 0,
+      "confirmedLocks": 2,
+      "snapshotAmountVND": 125000
+    },
+    {
+      "case": "checkout → signed webhook → receipt",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "viewer": "CUSTOMER",
+      "result": "PASS_MOCK",
+      "decodedQrMatchesFixture": true,
+      "recipientAndPriceMatched": true,
+      "horizontalOverflow": false,
+      "invalidSignature": 401,
+      "callback": "200 APPLIED",
+      "replay": "200 DUPLICATE",
+      "unauthenticatedIntentStatusReceipt": [
+        403,
+        403,
+        403
+      ],
+      "booking": "CONFIRMED",
+      "paymentStatus": "DEMO_PAID",
+      "intentStatus": "SETTLED",
+      "appliedReceipts": 1,
+      "initialDemoRecords": 0,
+      "confirmedLocks": 2,
+      "snapshotAmountVND": 125000
+    },
+    {
+      "case": "webhook REVIEW → owner/admin and booking notice",
+      "result": "FAIL_INTEGRATION",
+      "webhookCases": [
+        {
+          "name": "underpaid",
+          "webhook": "200 REVIEW",
+          "receiptStatus": "REVIEW",
+          "reviewReason": "AMOUNT_MISMATCH",
+          "replay": "200 DUPLICATE"
+        },
+        {
+          "name": "overpaid",
+          "webhook": "200 REVIEW",
+          "receiptStatus": "REVIEW",
+          "reviewReason": "AMOUNT_MISMATCH",
+          "replay": "200 DUPLICATE"
+        },
+        {
+          "name": "currency",
+          "webhook": "200 REVIEW",
+          "receiptStatus": "REVIEW",
+          "reviewReason": "CURRENCY_MISMATCH",
+          "replay": "200 DUPLICATE"
+        },
+        {
+          "name": "merchant",
+          "webhook": "200 REVIEW",
+          "receiptStatus": "REVIEW",
+          "reviewReason": "MERCHANT_MISMATCH",
+          "replay": "200 DUPLICATE"
+        }
+      ],
+      "reviewPayments": 4,
+      "paymentReceiptRows": 0,
+      "ownerAndAdminListsEmpty": true,
+      "bookingNoticeAbsent": true,
+      "bookingAndLocksUnchanged": true,
+      "foreignAccess": 403
+    },
+    {
+      "case": "local Node process restart",
+      "result": "PASS_MOCK",
+      "freshProcess": true,
+      "guestCapabilityAndCustomerSessionSurvived": true,
+      "confirmationsStillPresent": 2,
+      "replayAfterRestart": "200 DUPLICATE"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "qr-mock-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "41d778b7dcbe446445ce56c5872c48a623732a5bccd2195f47913d7c64f4783a"
+    },
+    {
+      "file": "receipt-mock-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "eae84ac602348342e94abaf2142360ce399bc0d2bd6644565af18b6a65542aec"
+    },
+    {
+      "file": "qr-mock-1366.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "sha256": "efa991074640b04dbf3a8833f7671bf470cca624dc3de4b6cdcacedcf8adb7d0"
+    },
+    {
+      "file": "receipt-mock-1366.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "sha256": "f787008a30052aaec615f8c1e714bbccf4c406c48de5139ea83b69dee6be330b"
+    }
+  ],
+  "mongo": "8.3.11",
+  "url": "http://127.0.0.1:62890",
+  "browser": "Google Chrome 156.0.8078.80",
+  "temporaryDatabaseDropped": true
+}
