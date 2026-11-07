@@ -1,5 +1,7 @@
 # Sân Thể Thao — bản tích hợp MVC
 
+**Bản demo final:** [Cách chạy và kịch bản trình bày](docs/BAN_DEMO_FINAL.md) · [Kết quả kiểm thử](docs/KIEM_THU_FINAL.md). Có ảnh cơ sở/sân, check-in và báo cáo thu/hoàn mô phỏng.
+
 Node.js 24, Express, EJS, Mongoose/MongoDB Atlas. Giữ MVC ở thư mục gốc, không có `src`.
 
 Có tài khoản khách và chủ sân chờ duyệt; đặt vãng lai bằng tên/SĐT; nhiều ô 30 phút rời nhau; giá thường/cao điểm; giữ tối đa 10 phút, trước khi ô đầu tiên bắt đầu; thanh toán **mô phỏng**; in/lưu PDF phiếu; chủ sân xử lý yêu cầu hủy/đổi và ghi nhận hoàn thủ công.
@@ -22,7 +24,7 @@ Build `npm ci`, start `npm start`, Node 24 qua `.node-version`, Web Service; ser
 
 Giữ các biến `RATE_LIMIT_*` trong `.env.example` để cấu hình giới hạn gửi form. `TRUST_PROXY_IPS` chỉ nhận danh sách IP/CIDR proxy đã được xác minh; để trống thì không tin các header chuyển tiếp. Cookie Secure qua proxy chỉ được cấp khi kết nối đến từ proxy tin cậy và báo HTTPS. Không đổi sang `trust proxy = 1` hoặc tin mọi IP để bỏ qua việc xác minh. Xem [hạn mức và proxy](docs/GIOI_HAN_YEU_CAU.md) và [hợp đồng chế độ thanh toán](docs/CHE_DO_THANH_TOAN.md); triển khai Render vẫn cần thử HTTPS/header/IP trên hạ tầng thực tế.
 
-Đây là chuẩn bị code #81, **chưa có URL online hoặc kết quả nghiệm thu hosting**. Hướng dẫn #82 đang ở [PR #94](https://github.com/indominusrex932005-arch/dat-san-tu-dau/pull/94); chỉ triển khai sau khi các phần nền được review/merge và quyền hosting/DB demo được bàn giao.
+Đây là chuẩn bị code #81, **chưa có URL online hoặc kết quả nghiệm thu hosting**. Hướng dẫn #82 đã tích hợp tại [triển khai Render](docs/TRIEN_KHAI_RENDER.md); triển khai thực tế cần quyền hosting/DB demo và kiểm tra trên host.
 
 ### Nếu database có dữ liệu bản một giờ cũ
 
@@ -43,6 +45,8 @@ npm start
 ```
 
 Seed thêm cơ sở/sân mẫu, không tạo tài khoản hoặc xóa dữ liệu. Mở http://localhost:3000.
+
+Seed bổ sung mẫu còn thiếu để tổng cộng có 4 cơ sở; nếu đã có từ 4 cơ sở thì giữ nguyên. DB trống có Demo MVC, Hải Châu, Thanh Khê và Sơn Trà. Trang chủ có ảnh đại diện và đường dẫn đến sân của từng cơ sở. OWNER quản lý ảnh trong form sửa cơ sở/sân; xem [cấu hình Cloudinary và hướng dẫn ảnh](docs/HINH_ANH_CO_SO_VA_SAN.md). Chưa cấu hình kho ảnh vẫn xem và đặt sân được với hình minh họa.
 
 ## Cấp ADMIN và chủ sân
 

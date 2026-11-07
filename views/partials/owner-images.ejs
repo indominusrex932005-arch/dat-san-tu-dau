@@ -1,0 +1,25 @@
+<% const savedImages = imageTarget.images || []; const canUpload = typeof imageUploadsReady === 'boolean' && imageUploadsReady; %>
+<section class="media-manager" aria-labelledby="media-heading" data-media-manager data-upload-url="/owner/<%= imageKind %>/<%= imageTarget._id %>/images" data-csrf="<%= csrfToken %>">
+  <div class="media-section-heading"><div><p class="media-kicker">CHO KHÁCH THẤY KHÔNG GIAN THẬT</p><h2 id="media-heading">Ảnh <%= imageKind === 'facilities' ? 'cơ sở' : 'sân' %></h2></div><span class="media-count"><%= savedImages.length %> / 5 ảnh</span></div>
+  <p class="media-help">Ảnh đại diện xuất hiện trong danh sách. Dùng ảnh do bạn chụp hoặc được phép sử dụng.</p>
+  <% if (savedImages.length) { %><ul class="media-owner-grid">
+    <% for (const photo of savedImages) { const isCover = photo.id === imageTarget.coverImageId || (!imageTarget.coverImageId && photo === savedImages[0]); %>
+    <li class="media-owner-item"><img src="<%= photo.url %>" alt="Ảnh của <%= imageTarget.name %>" width="400" height="260" loading="lazy" data-media-fallback>
+      <% if (isCover) { %><span class="media-cover-badge">Ảnh đại diện</span><% } %>
+      <div class="media-photo-actions">
+        <% if (!isCover) { %><form method="POST" action="/owner/<%= imageKind %>/<%= imageTarget._id %>/images/<%= photo.id %>/cover"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="media-button">Chọn đại diện</button></form><% } %>
+        <form method="POST" action="/owner/<%= imageKind %>/<%= imageTarget._id %>/images/<%= photo.id %>/delete" data-photo-delete><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="media-button media-button-danger">Xóa ảnh</button></form>
+      </div>
+    </li><% } %>
+  </ul><% } else { %><p class="media-empty">Chưa có ảnh riêng. Khách đang thấy hình minh họa; thêm ảnh để giới thiệu không gian của bạn.</p><% } %>
+  <% if (!canUpload) { %><p class="media-empty">Tải ảnh chưa được mở. Vui lòng nhờ quản trị viên cấu hình kho ảnh.</p><% } else if (savedImages.length < 5) { %>
+    <form class="media-upload" data-image-upload>
+      <label for="image-file" class="media-upload-label">Chọn ảnh từ máy <span>JPG, PNG hoặc WebP · tối đa 5 MB / ảnh</span></label>
+      <input id="image-file" name="image" type="file" accept="image/jpeg,image/png,image/webp" required>
+      <figure class="media-preview" hidden><img alt="Xem trước ảnh đã chọn" width="400" height="260"><figcaption>Ảnh sẽ được tối ưu khi lưu.</figcaption></figure>
+      <button type="submit" class="media-button media-button-primary">Tải ảnh lên</button>
+    </form>
+    <noscript><p>Cần bật JavaScript để xem trước và tải ảnh. Các chức năng sửa thông tin vẫn dùng được.</p></noscript>
+  <% } else { %><p class="media-help">Đã đủ 5 ảnh. Xóa một ảnh trước khi tải ảnh mới.</p><% } %>
+  <p class="media-upload-status" role="status" aria-live="polite"></p>
+</section>

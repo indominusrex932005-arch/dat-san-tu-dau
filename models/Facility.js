@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
+import { imageFields } from './image-fields.js';
 
 const facilitySchema = new mongoose.Schema({
+  ...imageFields,
   name: {
     type: String,
     required: true,

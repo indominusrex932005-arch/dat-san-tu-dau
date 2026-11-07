@@ -10,6 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap&subset=vietnamese,latin" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/app.css">
   <link rel="stylesheet" href="/assets/css/home.css">
+  <link rel="stylesheet" href="/assets/css/media.css">
+  <script src="/assets/js/media.js" defer></script>
 </head>
 <body class="home-page">
   <a class="home-skip-link" href="#noi-dung">Đến nội dung chính</a>
@@ -27,7 +29,7 @@
 
     <nav class="home-nav" aria-label="Điều hướng chính">
       <a class="home-nav-link" href="/" aria-current="page">Trang chủ</a>
-      <a class="home-nav-link" href="/facilities">Cơ sở <span aria-hidden="true">↗</span></a>
+      <a class="home-nav-link" href="/facilities">Cơ sở <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a class="home-nav-link" href="/courts">Đặt sân</a>
       <% if (!currentUser) { %>
         <a class="home-nav-link" href="/login">Đăng nhập</a>
@@ -49,7 +51,7 @@
         <p class="home-hero-description">Khám phá các cơ sở thể thao, tìm địa điểm phù hợp và lên kế hoạch cho buổi chơi tiếp theo của bạn.</p>
 
         <div class="home-actions">
-          <a class="home-button" href="/courts">Xem sân và đặt lịch <span aria-hidden="true">↗</span></a>
+          <a class="home-button" href="/courts">Xem sân và đặt lịch <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a class="home-text-link" href="#gioi-thieu">Tìm hiểu thêm <span aria-hidden="true">↓</span></a>
         </div>
 
@@ -87,6 +89,17 @@
         </svg>
         <figcaption class="home-visual-caption"><span class="home-caption-line" aria-hidden="true"></span> Hẹn nhau ở sân, vui hơn mỗi ngày.</figcaption>
       </figure>
+    </section>
+
+    <section class="home-facilities" aria-labelledby="home-facilities-title">
+      <div class="media-section-heading"><div><p class="media-kicker">TÌM KHÔNG GIAN CỦA BẠN</p><h2 id="home-facilities-title">Chọn một nơi. Hẹn nhau ra sân.</h2></div><a class="home-text-link" href="/facilities">Tất cả cơ sở <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+      <% const homeFacilities = typeof facilities !== 'undefined' ? facilities : []; %>
+      <% if (homeFacilities.length) { %><div class="home-facility-grid">
+        <% for (const facility of homeFacilities) { %><article class="home-facility-card">
+          <%- include('partials/media-cover', { entity: facility }) %>
+          <div class="home-facility-body"><span class="media-card-tag">Không gian thể thao</span><h3><%= facility.name %></h3><p><%= facility.address %></p><a class="home-text-link" href="/courts?facilityId=<%= facility._id %>">Khám phá sân <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        </article><% } %>
+      </div><% } else { %><p class="media-empty">Các cơ sở đang được chuẩn bị. Hẹn bạn ở buổi chơi tiếp theo!</p><% } %>
     </section>
 
     <section id="gioi-thieu" class="home-intro" aria-labelledby="home-intro-title">

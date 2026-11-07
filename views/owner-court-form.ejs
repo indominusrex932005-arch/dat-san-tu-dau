@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="/assets/css/app.css">
   <link rel="stylesheet" href="/assets/css/demo.css">
   <link rel="stylesheet" href="/assets/css/owner-court-form.css">
+  <link rel="stylesheet" href="/assets/css/media.css">
+  <script src="/assets/js/media.js" defer></script>
 </head>
 <body class="owner-court-form-page demo-page">
   <div class="owner-court-form-shell demo-shell">
@@ -164,6 +166,7 @@
           </div>
         </aside>
       </div>
+      <% if (courtData._id) { %><%- include('partials/owner-images', { imageTarget: courtData, imageKind: 'courts' }) %><% } else { %><p class="media-help">Tạo sân trước, sau đó mở Sửa sân để thêm ảnh.</p><% } %>
     </main>
   </div>
 </body>

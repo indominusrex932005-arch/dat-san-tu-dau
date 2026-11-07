@@ -28,6 +28,8 @@ const bookingSchema = new mongoose.Schema({
   status: { type: String, enum: ['HOLD', 'CONFIRMED', 'EXPIRED', 'CANCELLED', 'LEGACY_RESERVED'], default: 'HOLD' },
   paymentStatus: { type: String, enum: ['UNPAID', 'DEMO_PAID', 'PAID'], default: 'UNPAID' },
   holdExpiresAt: { type: Date, required: function () { return this.status === 'HOLD'; } },
+  checkedInAt: Date,
+  checkedInBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   legacy: { type: Boolean, default: false },
   startHour: { type: Number, min: 0, max: 23, validate: Number.isInteger }
 }, { timestamps: true });
