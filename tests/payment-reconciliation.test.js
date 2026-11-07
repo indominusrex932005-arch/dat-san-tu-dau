@@ -28,7 +28,7 @@ test('QR reconciliation on isolated MongoDB, through the staff and booking route
       createIntent: request => ({
         status: 'PENDING', amountVND: request.amountVND, currency: request.currency,
         reconciliationCode: request.reconciliationCode, providerPaymentId: `order-${request.bookingId}`,
-        checkoutUrl: 'https://sandbox.example.test/fixture'
+        checkoutUrl: 'https://sandbox.example.test/fixture', qrPayload: 'MOCK-RECONCILIATION'
       })
     },
     resolveRecipient: () => ({ ...identity, verified: true, displayName: 'Người nhận thử nghiệm' }),
@@ -139,6 +139,10 @@ test('QR reconciliation on isolated MongoDB, through the staff and booking route
   await t.test('Webhook thiếu tiền hiện đúng cơ sở; replay không tạo khoản thứ hai hay xóa lịch sử hoàn', async () => {
     const booking = await hold(await createCourt(), guest);
     await issueIntent(booking, guest);
+    const statusUrl = `/bookings/${booking.id}/payment-status?token=${booking.token}`;
+    const before = JSON.parse((await guest.get(statusUrl)).html);
+    assert.match(before.qrImage, /^data:image\/png;base64,/);
+    assert.ok(before.intent.checkoutUrl);
     const payment = await transfer(booking, 'handoff-underpaid', { amountVND: 40000 });
     const results = await Promise.all([callback(payment), callback(payment)]);
     assert.deepEqual(results.map(result => result.status), [200, 200]);
@@ -149,8 +153,13 @@ test('QR reconciliation on isolated MongoDB, through the staff and booking route
     assert.ok((await ownerBrowser.get(ownerQueue)).html.includes(receipt._id));
     assert.equal((await otherBrowser.get(`${ownerQueue}/${receipt._id}`)).status, 404);
     assert.match((await guest.get(booking.checkout)).html, /QR thử nghiệm đang được đối soát/);
-    const status = await guest.get(`/bookings/${booking.id}/payment-status?token=${booking.token}`);
-    assert.equal(JSON.parse(status.html).reviewStatus, 'IN_REVIEW');
+    const status = await guest.get(statusUrl);
+    const data = JSON.parse(status.html);
+    assert.equal(data.reviewStatus, 'IN_REVIEW');
+    assert.equal(data.booking.status, 'HOLD');
+    assert.equal(data.qrImage, null);
+    assert.equal(data.intent.qrPayload, undefined);
+    assert.equal(data.intent.checkoutUrl, undefined);
     assert.ok(!status.html.includes(payment.transactionId));
     assert.equal((await ownerBrowser.post(`${ownerQueue}/${receipt._id}`, {
       action: 'REFUND_RECORDED', reference: 'HANDOFF-REFUND', reason: 'Đã kiểm tra khoản hoàn thử',
