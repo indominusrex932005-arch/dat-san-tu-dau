@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import PlayGroup from '../../models/PlayGroup.js';
+import ExtraService from '../../models/ExtraService.js';
 import MongoStore from 'connect-mongo';
 import { once } from 'node:events';
 import createApp from '../../app.js';
@@ -37,7 +39,7 @@ export async function createTestEnvironment({
     await mongoose.disconnect();
     throw new Error('Integration tests require a MongoDB replica set for real transactions.');
   }
-  await Promise.all([User, Facility, Court, Booking, SlotLock, Payment, BookingRequest].map(model => model.init()));
+  await Promise.all([PlayGroup, ExtraService, User, Facility, Court, Booking, SlotLock, Payment, BookingRequest].map(model => model.init()));
   const store = MongoStore.create({ client: mongoose.connection.getClient(), dbName, collectionName: 'sessions' });
   let server = createApp(store, { imageStorage, ...appOptions }).listen(0, '127.0.0.1');
   await once(server, 'listening');

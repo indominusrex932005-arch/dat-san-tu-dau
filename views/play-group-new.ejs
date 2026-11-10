@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>
+<%= title %> | Sân Thể Thao</title>
+<link rel="stylesheet" href="/assets/css/app.css">
+<link rel="stylesheet" href="/assets/css/demo.css">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<link rel="stylesheet" href="/assets/css/groups.css">
+</head>
+<body class="demo-page">
+<div class="demo-shell">
+<%- include('partials/navigation') %>
+<main>
+<a href="/groups">← Sân ghép</a>
+<section class="group-heading">
+<p class="group-kicker">CÙNG CHƠI, CÙNG CHIA SẺ</p>
+<h1>Rủ bạn cùng ra sân</h1>
+<p>Bạn đặt sân trước. Mọi người tham gia sau và cùng chia tiền sân.</p>
+</section>
+<div class="group-columns">
+<section class="demo-card">
+<% if (!bookings.length) { %>
+<h2>Bắt đầu bằng một lượt đặt sân</h2>
+<p>Chọn sân và hoàn tất thanh toán mô phỏng. Sau đó quay lại đây để mở nhóm.</p>
+<a class="demo-button" href="/courts">Chọn sân và giờ chơi</a>
+<% } else { %>
+<form class="demo-form" method="POST" action="/groups">
+<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+<label for="bookingId">Chọn lượt đặt của bạn</label>
+<select id="bookingId" name="bookingId">
+<% for (const b of bookings) { %>
+<option value="<%= b._id %>" <%= String(b._id) === selectedBooking ? 'selected' : '' %>>
+<%= b.court?.name %> · <%= formatDate(b.date) %> · <%= formatTime(b.slots[0].startAt) %> · <%= formatMoney(b.totalPrice) %>
+</option>
+<% } %>
+</select>
+<label for="title">Đặt một tên dễ nhớ</label>
+<input id="title" name="title" placeholder="Ví dụ: Cầu lông tối thứ bảy" maxlength="100" required>
+<label for="capacity">Tối đa bao nhiêu người? (tính cả bạn)</label>
+<input id="capacity" name="capacity" type="number" min="2" max="30" value="6" required>
+<label for="closesAt">Đóng đăng ký lúc nào? (giờ Việt Nam)</label>
+<input id="closesAt" name="closesAt" type="datetime-local" required>
+<small>Chọn thời điểm trước giờ chơi để mọi người biết phần tiền của mình.</small>
+<label for="phone">Số điện thoại để thành viên liên hệ</label>
+<input id="phone" name="phone" type="tel" value="<%= currentUser.phone || '' %>" required>
+<label for="note">Ghi chú cho bạn chơi</label>
+<textarea id="note" name="note" maxlength="500" placeholder="Trình độ, điểm hẹn, cần mang gì…">
+</textarea>
+<label class="group-check">
+<input type="checkbox" name="consent" value="yes" required> Đồng ý cho người đã tham gia xem số liên hệ của tôi.</label>
+<button class="demo-button" type="submit">Mở buổi chơi</button>
+</form>
+<% } %>
+</section>
+<aside class="demo-card group-tip">
+<h2>Bạn làm người kết nối</h2>
+<p>1. Đặt và thanh toán mô phỏng tiền sân.</p>
+<p>2. Mở nhóm, chia sẻ link để mời bạn.</p>
+<p>3. Chốt danh sách và xem phần tiền từng người.</p>
+<p>Tiền sân chia đều. Mỗi người tự trả lại bạn bên ngoài web; hệ thống không xác minh chuyển khoản.</p>
+</aside>
+</div>
+</main>
+<footer class="group-footer">Hẹn nhau ở sân. Chơi vui, kết nối nhiều hơn.</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+.group-hero{display:flex;align-items:center;justify-content:space-between;gap:24px;background:linear-gradient(120deg,#064b37,#087a52);border-radius:26px;padding:44px;color:#effbe9;margin:20px 0 32px;overflow:hidden}
+.group-hero h1{color:white;font-size:clamp(32px,4vw,52px);margin:12px 0;line-height:1.12}
+.group-hero p{max-width:600px;color:#e0f1df}
+.group-hero .group-kicker{color:#c7ed71}
+.group-kicker{font-size:12px;font-weight:800;letter-spacing:1.5px;color:#397345}
+.group-lime{background:#c7ed71;color:#123e2d;border-color:#c7ed71}
+.group-light-link{color:#e0f1df}
+.group-hero-art{font-size:140px;line-height:1;color:#c7ed71;transform:rotate(-20deg)}
+.group-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,310px),1fr));gap:22px}
+.group-card{display:flex;flex-direction:column;gap:8px;margin-bottom:0}
+.group-card h2{font-size:23px;margin:12px 0}
+.group-card h2 a{text-decoration:none}
+.group-tag{align-self:start;padding:6px 11px;background:#e4f2d6;border-radius:30px;color:#256140;font-size:12px;font-weight:700}
+.group-meter{height:6px;background:#e7efe4;border-radius:20px;margin:12px 0;overflow:hidden}
+.group-meter span{height:100%;display:block;background:#5f9b33}
+.group-price{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px}
+.group-price strong{font-size:23px}
+.group-price small,.group-member small{display:block;font-size:12px;color:#526d60;font-weight:400}
+.group-columns{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);gap:24px;align-items:start}
+.group-columns>*{min-width:0}
+.group-heading{margin:30px 0}
+.group-heading h1{font-size:36px;margin:12px 0}
+.group-tip{position:sticky;top:20px;background:#e5f1df}
+.group-hero-price{display:grid;text-align:center;min-width:100px}
+.group-hero-price strong{font-size:56px;letter-spacing:-3px}
+.group-member{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;border-bottom:1px solid #dce7d9}
+.group-check{display:flex;gap:10px;align-items:start}
+.group-check input{width:auto;flex:0 0 auto}
+.extra-choice{padding:14px;border:1px solid #cfe1ca;border-radius:12px;margin:12px 0;background:#f4f9ef}
+.extra-choice summary{font-weight:700;cursor:pointer}
+.extra-choice summary span{font-size:12px;font-weight:400}
+.extra-choice p{font-size:13px}
+.extra-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0}
+.extra-row small{display:block;font-weight:400}
+.extra-row input[type=number]{width:74px}
+.extra-summary{padding:14px;border-radius:10px;background:#eef5e8;margin:14px 0;font-size:14px}
+.extra-summary small{color:#526d60}
+.group-footer{padding:40px 0;font-size:13px;color:#526d60}
+.group-empty{grid-column:1/-1;text-align:center;padding:45px}
+.group-card .demo-button{margin-top:auto}
+.group-columns .demo-form input,.group-columns .demo-form textarea{max-width:100%}
+@media(max-width:760px){.group-hero{padding:26px;align-items:start}
+.group-hero-art{display:none}
+.group-columns{grid-template-columns:1fr}
+.group-tip{position:static}
+.group-hero-price strong{font-size:34px}
+.group-hero-price{min-width:60px}
+.group-hero-price span{font-size:12px}
+.group-hero:has(.group-hero-price){flex-wrap:wrap}
+.group-heading h1{font-size:30px}
+}
+
+.booking-style{border:1px solid #cfe1ca;border-radius:12px;padding:14px;margin:14px 0;background:#f4f9ef}
+.booking-style legend{font-weight:700;font-size:14px}
+.booking-style label{display:flex;gap:10px;align-items:center;margin:10px 0}
+.booking-style input{width:auto}
+

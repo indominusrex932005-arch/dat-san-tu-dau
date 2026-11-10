@@ -1,0 +1,13 @@
+<% if (lines?.length) { %>
+<div class="extra-summary">
+<strong>Dịch vụ yêu cầu thêm · trả tại sân</strong>
+<ul>
+<% for (const e of lines) { %>
+<li>
+<%= e.name %> × <%= e.quantity %> <%= e.unit %> — <%= formatMoney(e.price*e.quantity) %>
+</li>
+<% } %>
+</ul>
+<small>Cơ sở xác nhận còn hàng khi bạn tới. Chưa tính vào thanh toán mô phỏng tiền sân.</small>
+</div>
+<% } %>

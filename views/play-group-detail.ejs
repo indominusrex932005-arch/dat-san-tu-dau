@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>
+<%= title %> | Sân Thể Thao</title>
+<link rel="stylesheet" href="/assets/css/app.css">
+<link rel="stylesheet" href="/assets/css/demo.css">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<link rel="stylesheet" href="/assets/css/groups.css">
+</head>
+<body class="demo-page">
+<div class="demo-shell">
+<%- include('partials/navigation') %>
+<main>
+<a href="/groups">← Tất cả buổi chơi</a>
+<% const b = group.booking; const cancelled = b.status === 'CANCELLED'; const open = !group.closedAt && !waiting && b.status === 'CONFIRMED' && !b.checkedInAt; %>
+<section class="group-hero">
+<div>
+<p class="group-kicker">
+<%= cancelled ? 'BUỔI CHƠI ĐÃ HỦY' : waiting ? 'ĐANG CHỜ CHỦ SÂN XỬ LÝ YÊU CẦU' : group.closedAt ? 'ĐÃ CHỐT DANH SÁCH' : 'HẸN NHAU RA SÂN' %>
+</p>
+<h1>
+<%= group.title %>
+</h1>
+<p>
+<%= b.facility?.name %> · <%= b.court?.name %>
+</p>
+<p>
+<%= formatDate(b.date) %> · <%= formatTime(b.slots[0].startAt) %>–<%= formatTime(b.slots[b.slots.length-1].endAt) %>
+</p>
+</div>
+<div class="group-hero-price">
+<strong>
+<%= group.members.length %>/<%= group.capacity %>
+</strong>
+<span>người đã tham gia</span>
+</div>
+</section>
+<div class="group-columns">
+<section>
+<article class="demo-card">
+<h2>Thông tin buổi chơi</h2>
+<p>
+<%= group.note || 'Cùng chơi vui, giao lưu và tôn trọng bạn chơi.' %>
+</p>
+<p>Tổng tiền sân: <strong>
+<%= formatMoney(group.total) %>
+</strong>
+</p>
+<p>Đóng đăng ký: <%= formatDate(new Date(group.closesAt).toLocaleDateString('en-CA',{timeZone:'Asia/Ho_Chi_Minh'})) %> · <%= formatTime(group.closesAt) %>
+</p>
+<p class="booking-notice">Thanh toán sân đang mô phỏng. Phần chia tiền chỉ để tham khảo; web không chuyển tiền hoặc xác minh tiền giữa thành viên.</p>
+<% if (joined) { %>
+<p>Liên hệ người tạo nhóm: <strong>
+<%= group.members[0].phone %>
+</strong>
+</p>
+<p>Muốn rời nhóm? Liên hệ người tạo. Sau khi chốt, danh sách và phần tiền được giữ nguyên.</p>
+<% } %>
+<% if (organizer) { %>
+<p>
+<a href="/bookings/<%= b._id %>/receipt">Xem / in phiếu đặt sân</a>
+</p>
+<p>Chia sẻ: sao chép đường dẫn trang này trên thanh địa chỉ để mời bạn.</p>
+<div class="demo-actions">
+<% if (open) { %>
+<form method="POST" action="/groups/<%= group._id %>/close">
+<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+<button class="demo-button demo-button-secondary">Chốt nhóm ngay</button>
+</form>
+<% } %>
+<% if (!cancelled && !b.checkedInAt) { %>
+<a class="demo-button demo-button-secondary" href="/bookings/<%= b._id %>/request">Gửi yêu cầu hủy buổi</a>
+<% } %>
+</div>
+<% } %>
+</article>
+<article class="demo-card">
+<h2>Các bạn cùng chơi</h2>
+<% for (const m of group.members) { %>
+<div class="group-member">
+<div>
+<strong>
+<%= m.name %>
+</strong>
+<small>
+<%= String(m.user) === String(group.organizer) ? 'Người tạo nhóm · đã thanh toán sân mô phỏng' : 'Thành viên' %>
+</small>
+<% if (organizer) { %>
+<small>
+<%= m.phone %>
+</small>
+<% } %>
+</div>
+<strong>
+<%= formatMoney(group.closedAt ? m.share : Math.ceil(group.total/group.members.length)) %>
+<small>
+<%= group.closedAt ? 'đã chốt' : 'tạm tính' %>
+</small>
+</strong>
+<% if (organizer && open && String(m.user) !== String(group.organizer)) { %>
+<form method="POST" action="/groups/<%= group._id %>/remove">
+<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+<input type="hidden" name="memberId" value="<%= m.user %>">
+<button class="demo-button demo-button-secondary">Cho rời nhóm</button>
+</form>
+<% } %>
+</div>
+<% if (organizer || String(m.user) === String(currentUser?._id)) { %>
+<%- include('partials/extra-summary', { lines: m.extras || [] }) %>
+<% } %>
+<% } %>
+</article>
+</section>
+<aside class="demo-card group-tip">
+<h2>
+<%= joined ? 'Bạn đã có mặt trong nhóm' : 'Một chỗ chơi đang chờ bạn' %>
+</h2>
+<% if (joined) { %>
+<p>Phần tiền sân <%= group.closedAt ? 'đã chốt' : 'tạm tính' %>: <strong>
+<%= formatMoney(group.closedAt ? group.members.find(m => String(m.user) === String(currentUser._id)).share : Math.ceil(group.total/group.members.length)) %>
+</strong>
+</p>
+<p>Người tạo đã trả trước toàn bộ tiền sân mô phỏng. Các thành viên tự thỏa thuận và trả lại phần của mình bên ngoài web.</p>
+<% } else if (open && group.members.length < group.capacity) { %>
+<% if (currentUser) { %>
+<form class="demo-form" method="POST" action="/groups/<%= group._id %>/join">
+<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+<label for="phone">Số liên hệ (chỉ người tạo nhóm xem)</label>
+<input type="tel" id="phone" name="phone" value="<%= currentUser.phone || '' %>" required>
+<%- include('partials/extra-choice', { extras }) %>
+<button class="demo-button">Tham gia buổi chơi</button>
+</form>
+<% } else { %>
+<p>Đăng nhập để giữ một chỗ trong nhóm.</p>
+<a class="demo-button" href="/login">Đăng nhập để tham gia</a>
+<% } %>
+<% } else { %>
+<p>
+<%= cancelled ? 'Buổi chơi đã hủy. Bạn có thể tìm một buổi khác.' : waiting ? 'Nhóm tạm dừng nhận người trong lúc chủ sân xử lý yêu cầu.' : 'Nhóm đã đủ người hoặc đóng đăng ký. Hẹn bạn ở buổi khác nhé.' %>
+</p>
+<a href="/groups">Tìm buổi chơi khác →</a>
+<% } %>
+</aside>
+</div>
+</main>
+<footer class="group-footer">Hẹn nhau ở sân. Chơi vui, kết nối nhiều hơn.</footer>
+</div>
+</body>
+</html>

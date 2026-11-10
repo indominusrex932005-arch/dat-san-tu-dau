@@ -1,5 +1,7 @@
 import { createHash, randomBytes, timingSafeEqual } from 'node:crypto';
 import mongoose from 'mongoose';
+import PlayGroup from '../models/PlayGroup.js';
+import ExtraService from '../models/ExtraService.js';
 import Court from '../models/Court.js';
 import Facility from '../models/Facility.js';
 import Booking from '../models/Booking.js';
@@ -175,10 +177,11 @@ export async function getAvailability(courtId, requestedDate) {
   const facility = await Facility.findById(court.facility).lean();
   if (!facility) fail(404, 'Cơ sở của sân không còn tồn tại.');
   const locks = await locksFor(court._id, date);
-  return { court: { ...court, facility }, date, slots: makeSlots(court, date, locks, now), facilityReady: await facilityReady(facility) };
+  const extras = await ExtraService.find({ facility: facility._id, active: true }).lean();
+  return { extras, court: { ...court, facility }, date, slots: makeSlots(court, date, locks, now), facilityReady: await facilityReady(facility) };
 }
 
-export async function createHold({ courtId, date: inputDate, times: inputTimes, guestName, guestPhone, user }) {
+export async function createHold({ courtId, date: inputDate, times: inputTimes, guestName, guestPhone, user, extras = {}, groupIntent = false }) {
   const now = new Date();
   const date = bookingDate(inputDate, now);
   const times = selectedTimes(inputTimes);
@@ -195,6 +198,13 @@ export async function createHold({ courtId, date: inputDate, times: inputTimes, 
     if (!await facilityReady(facility, session)) {
       fail(409, 'Cơ sở chưa được cấp chủ sân hoặc số liên hệ. Vui lòng chọn cơ sở khác.');
     }
+    const availableExtras = await ExtraService.find({ facility: court.facility, active: true }).session(session).lean();
+    const extraLines = availableExtras.flatMap(item => {
+      const raw = extras['extra_' + item._id];
+      if (raw === undefined || raw === '' || raw === '0') return [];
+      if (typeof raw !== 'string' || !/^\d{1,2}$/.test(raw) || Number(raw) > 20) fail(400, 'Mỗi dịch vụ chọn tối đa 20.');
+      return [{ name: item.name, unit: item.unit, price: item.price, quantity: Number(raw) }];
+    });
     const quote = checkedQuote(court, date, times, await locksFor(court._id, date, session), current);
     const slots = asSlots(quote, date);
     const expiry = holdExpiresAt(current, slots);
@@ -204,7 +214,7 @@ export async function createHold({ courtId, date: inputDate, times: inputTimes, 
       publicCode: 'DS-' + randomBytes(6).toString('hex').toUpperCase(), ...guest,
       guestTokenHash: token ? tokenHash(token) : undefined,
       date, slots, totalPrice: quote.totalPriceVND, status: 'HOLD',
-      paymentStatus: 'UNPAID', holdExpiresAt: expiry, legacy: false
+      paymentStatus: 'UNPAID', holdExpiresAt: expiry, legacy: false, extras: extraLines, groupIntent: Boolean(groupIntent && user?._id)
     }], { session });
     await SlotLock.insertMany(slots.map(slot => ({ court: court._id, booking: id, slotStart: slot.startAt, expiresAt: expiry })), { session });
   });
@@ -292,6 +302,7 @@ export async function createChangeRequest(id, user, body = {}) {
     // Viết lên đơn để việc tạo yêu cầu đồng thời với hủy/đổi phải tranh chấp cùng document.
     await Booking.updateOne({ _id: booking._id }, { $inc: { __v: 1 } }, { session });
     const details = { booking: booking._id, user: user._id, type, reason, status: 'PENDING', source: 'CUSTOMER' };
+    if (type === 'CHANGE' && await PlayGroup.exists({ booking: booking._id }).session(session)) fail(409, 'Đơn đã mở sân ghép. Bạn giữ nguyên lịch này hoặc gửi yêu cầu hủy buổi chơi nhé.');
     if (type === 'CHANGE') {
       details.requestedCourt = objectId(body.requestedCourt, 'Mã sân muốn đổi');
       details.requestedDate = bookingDate(body.requestedDate);
@@ -334,6 +345,7 @@ export async function approveRequest(requestId, owner, body = {}) {
     if (request.status !== 'PENDING') fail(409, 'Yêu cầu đã được xử lý.');
     if (request.type === 'CANCEL') return applyCancellation(booking, request, body, session, now);
     canModify(booking, now);
+    if (await PlayGroup.exists({ booking: booking._id }).session(session)) fail(409, 'Đơn này đã có sân ghép nên chưa hỗ trợ đổi lịch.');
     const court = await activeCourt(request.requestedCourt, session);
     if (!sameId(court.facility, booking.facility)) fail(400, 'Chỉ đổi sân trong cùng cơ sở.');
     const date = bookingDate(request.requestedDate, now);

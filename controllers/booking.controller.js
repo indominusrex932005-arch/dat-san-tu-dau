@@ -24,7 +24,7 @@ export async function createBooking(req, res) {
   try {
     result = await createHold({
       courtId: body.courtId, date: body.date, times: body.times ?? body['times[]'],
-      guestName: body.guestName, guestPhone: body.guestPhone, user: req.currentUser
+      guestName: body.guestName, guestPhone: body.guestPhone, user: req.currentUser, extras: body, groupIntent: body.bookingStyle === 'group'
     });
   } catch (error) {
     if (![400, 409].includes(error.status) || typeof body.courtId !== 'string' || typeof body.date !== 'string') throw error;
@@ -64,6 +64,7 @@ export async function showCheckout(req, res) {
 export async function payDemo(req, res) {
   const token = tokenFrom(req);
   const booking = await simulatePayment(req.params.id, { user: req.currentUser, token });
+  if (booking.groupIntent && req.currentUser) return res.redirect(303, `/groups/new?booking=${booking._id}`);
   res.redirect(303, `/bookings/${booking._id}/receipt${tokenQuery(token)}`);
 }
 

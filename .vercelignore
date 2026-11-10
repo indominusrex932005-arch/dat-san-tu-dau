@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+.git
+node_modules
+tests
+docs
+scripts
+AGENTS.md
+GHI_CHU_CA_NHAN_MVC.*

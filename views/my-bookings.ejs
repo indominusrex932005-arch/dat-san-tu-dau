@@ -9,12 +9,13 @@
   <link rel="stylesheet" href="/assets/css/booking.css">
   <link rel="stylesheet" href="/assets/css/my-bookings.css">
   <link rel="stylesheet" href="/assets/css/design-system.css">
+<link rel="stylesheet" href="/assets/css/groups.css">
 </head>
 <body class="my-bookings-page demo-page">
   <div class="my-bookings-shell demo-shell">
     <%- include('partials/navigation') %>
     <main>
-      <header class="my-bookings-header">
+      <div class="demo-actions"><a class="demo-button demo-button-secondary" href="/groups?mine=1">Buổi sân ghép của tôi</a><a class="demo-button" href="/groups/new">Rủ bạn cùng chơi</a></div><header class="my-bookings-header">
         <p class="my-bookings-eyebrow">TÀI KHOẢN CỦA BẠN</p>
         <h1 class="my-bookings-title"><%= title %></h1>
         <p class="my-bookings-desc">Xem phiếu và theo dõi yêu cầu hủy/đổi của các đơn thuộc tài khoản này.</p>

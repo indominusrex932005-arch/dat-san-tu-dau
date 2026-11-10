@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { extraLine } from './PlayGroup.js';
 
 const slotSchema = new mongoose.Schema({
   startAt: { type: Date, required: true },
@@ -12,6 +13,8 @@ slotSchema.pre('validate', function () {
 });
 
 const bookingSchema = new mongoose.Schema({
+  groupIntent: { type: Boolean, default: false },
+  extras: { type: [extraLine], default: [] },
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   facility: { type: mongoose.Schema.Types.ObjectId, ref: 'Facility', required: true },
   court: { type: mongoose.Schema.Types.ObjectId, ref: 'Court', required: true },

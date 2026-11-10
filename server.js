@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import MongoStore from 'connect-mongo';
 import createApp from './app.js';
 import connectDatabase from './config/database.js';
+import PlayGroup from './models/PlayGroup.js';
+import ExtraService from './models/ExtraService.js';
 import User from './models/User.js';
 import Court from './models/Court.js';
 import Booking from './models/Booking.js';
@@ -25,7 +27,7 @@ try {
 
   await connectDatabase();
   await assertDatabaseCompatibility();
-  await Promise.all([User.init(), Facility.init(), Court.init(), Booking.init(), SlotLock.init(), Payment.init(), BookingRequest.init()]);
+  await Promise.all([PlayGroup.init(), ExtraService.init(), User.init(), Facility.init(), Court.init(), Booking.init(), SlotLock.init(), Payment.init(), BookingRequest.init()]);
   await expireHolds();
   const store = MongoStore.create({
     client: mongoose.connection.getClient(),

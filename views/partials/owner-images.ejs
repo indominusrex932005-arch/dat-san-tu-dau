@@ -14,8 +14,8 @@
   </ul><% } else { %><p class="media-empty">Chưa có ảnh riêng. Khách đang thấy hình minh họa; thêm ảnh để giới thiệu không gian của bạn.</p><% } %>
   <% if (!canUpload) { %><p class="media-empty">Tải ảnh chưa được mở. Vui lòng nhờ quản trị viên cấu hình kho ảnh.</p><% } else if (savedImages.length < 5) { %>
     <form class="media-upload" data-image-upload>
-      <label for="image-file" class="media-upload-label">Chọn ảnh từ máy <span>JPG, PNG hoặc WebP · tối đa 5 MB / ảnh</span></label>
-      <input id="image-file" name="image" type="file" accept="image/jpeg,image/png,image/webp" required>
+      <label for="image-file" class="media-upload-label">Chọn ảnh từ máy <span>JPG, PNG hoặc WebP · tối đa <%= imageUploadMaxMB %> MB / ảnh</span></label>
+      <input id="image-file" name="image" type="file" accept="image/jpeg,image/png,image/webp" data-max-mb="<%= imageUploadMaxMB %>" required>
       <figure class="media-preview" hidden><img alt="Xem trước ảnh đã chọn" width="400" height="260"><figcaption>Ảnh sẽ được tối ưu khi lưu.</figcaption></figure>
       <button type="submit" class="media-button media-button-primary">Tải ảnh lên</button>
     </form>

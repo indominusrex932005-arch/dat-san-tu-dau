@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="/assets/css/media.css">
   <script src="/assets/js/media.js" defer></script>
   <link rel="stylesheet" href="/assets/css/design-system.css">
+<link rel="stylesheet" href="/assets/css/groups.css">
 </head>
 <body class="demo-page owner-facility-page">
   <div class="demo-shell">
@@ -80,7 +81,7 @@
           <form method="POST" action="/owner/facilities/<%= facility._id %>/demo-qr/delete"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="media-button media-button-danger" type="submit">Xóa ảnh QR</button></form>
         <% } %>
         <% if (imageUploadsReady) { %>
-          <form class="media-upload" data-image-upload><label class="media-upload-label" for="demo-qr-file">Chọn ảnh QR minh họa (JPG, PNG, WebP; tối đa 5 MB)</label><input id="demo-qr-file" type="file" name="image" accept="image/jpeg,image/png,image/webp" required><figure class="media-preview" hidden><img alt="Xem trước ảnh QR" width="200" height="200"></figure><button type="submit" class="media-button media-button-primary"><%= facility.demoQr ? 'Thay ảnh QR' : 'Tải ảnh QR' %></button></form>
+          <form class="media-upload" data-image-upload><label class="media-upload-label" for="demo-qr-file">Chọn ảnh QR minh họa (JPG, PNG, WebP; tối đa <%= imageUploadMaxMB %> MB)</label><input id="demo-qr-file" type="file" name="image" data-max-mb="<%= imageUploadMaxMB %>" accept="image/jpeg,image/png,image/webp" required><figure class="media-preview" hidden><img alt="Xem trước ảnh QR" width="200" height="200"></figure><button type="submit" class="media-button media-button-primary"><%= facility.demoQr ? 'Thay ảnh QR' : 'Tải ảnh QR' %></button></form>
         <% } else { %><p class="media-empty">Cần cấu hình Cloudinary trước khi tải ảnh.</p><% } %>
         <p role="status" aria-live="polite"></p>
       </section>
