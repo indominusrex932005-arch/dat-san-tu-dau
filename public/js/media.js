@@ -26,7 +26,8 @@ for (const manager of document.querySelectorAll('[data-media-manager]')) {
     const file = input.files?.[0];
     if (!file) throw new Error('Hãy chọn một ảnh trước.');
     if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) throw new Error('Chỉ nhận ảnh JPG, PNG hoặc WebP.');
-    if (file.size > 5 * 1024 * 1024) throw new Error('Ảnh vượt quá 5 MB. Hãy chọn ảnh nhỏ hơn.');
+    const maxMB = Number(input.dataset.maxMb) || 5;
+    if (file.size > maxMB * 1024 * 1024) throw new Error(`Ảnh vượt quá ${maxMB} MB. Hãy chọn ảnh nhỏ hơn.`);
     return file;
   };
   input.addEventListener('change', () => {

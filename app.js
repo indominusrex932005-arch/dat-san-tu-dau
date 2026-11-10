@@ -25,7 +25,7 @@ import createOwnerImageRoutes from './routes/owner-images.routes.js';
 
 export default function createApp(sessionStore, {
   paymentService = createPaymentService({ getPaymentConfig }), paymentWebhookHandler,
-  paymentCheckoutEnabled = false, imageStorage = cloudImageStorage
+  paymentCheckoutEnabled = false, imageStorage = cloudImageStorage, sessionProxy
 } = {}) {
   if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
     throw new Error('Hãy thêm SESSION_SECRET dài ít nhất 32 ký tự vào .env.');
@@ -40,6 +40,7 @@ export default function createApp(sessionStore, {
   app.locals.formatDate = formatDate;
   app.locals.coverImage = coverImage;
   app.locals.imageUploadsReady = imageStorage.ready();
+  app.locals.imageUploadMaxMB = process.env.VERCEL === '1' ? 3 : 5;
   app.locals.formatTime = value => new Intl.DateTimeFormat('vi-VN', {
     timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
   }).format(new Date(value));
@@ -81,6 +82,9 @@ export default function createApp(sessionStore, {
     store: sessionStore,
     resave: false,
     saveUninitialized: false,
+    // The Vercel entry point trusts the platform's HTTPS header for cookies only.
+    // Keep Express's IP/header trust policy separate and unchanged.
+    proxy: sessionProxy,
     cookie: {
       httpOnly: true,
       sameSite: 'lax',

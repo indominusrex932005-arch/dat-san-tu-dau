@@ -94,3 +94,7 @@ Không commit `.env`, mật khẩu, connection string có thông tin đăng nh�
 ## Bản mở rộng sân ghép và dịch vụ
 
 Nhánh `feat/san-ghep-va-dich-vu` bổ sung tạo nhóm từ đơn đã thanh toán mô phỏng, đăng ký từng người, chia tiền khi chốt và yêu cầu nước/đồ thuê. Xem [luồng sử dụng, kiểm thử và giới hạn](docs/SAN_GHEP_VA_DICH_VU.md).
+
+## Triển khai Vercel
+
+Nhánh `feat/trien-khai-vercel` có entry point function và đóng gói EJS/static cho Vercel, bao gồm bản sân ghép. Xem [cấu hình, biến môi trường và cách kiểm tra sau deploy](docs/TRIEN_KHAI_VERCEL.md). Chưa có deployment Vercel được nghiệm thu.

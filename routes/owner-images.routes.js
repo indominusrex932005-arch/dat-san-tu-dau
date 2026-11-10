@@ -4,9 +4,9 @@ import { uploadDemoQr, deleteDemoQr } from '../services/demo-qr.service.js';
 import { requireAuth, requireOwner } from '../middlewares/auth.middleware.js';
 import { ownedImageTarget, uploadOwnerImage, changeOwnerImage } from '../services/owner-images.service.js';
 
-const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024, files: 1, fields: 0, parts: 1 } });
-
 export default function createOwnerImageRoutes(storage, limiter) {
+  const maxMB = process.env.VERCEL === '1' ? 3 : 5;
+  const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: maxMB * 1024 * 1024, files: 1, fields: 0, parts: 1 } });
   const router = express.Router();
   let activeUploads = 0;
   const reserveUploadSlot = (req, res, next) => {
@@ -34,7 +34,7 @@ export default function createOwnerImageRoutes(storage, limiter) {
   }, provider, reserveUploadSlot, limiter, (req, res, next) => {
     upload.single('image')(req, res, error => {
       if (!error) return next();
-      res.status(error.code === 'LIMIT_FILE_SIZE' ? 413 : 400).json({ message: 'Mỗi lần chỉ tải một ảnh tối đa 5 MB.' });
+      res.status(error.code === 'LIMIT_FILE_SIZE' ? 413 : 400).json({ message: `Mỗi lần chỉ tải một ảnh tối đa ${maxMB} MB.` });
     });
   }, async (req, res, next) => {
     try { await uploadDemoQr(req.params.id, req.currentUser, req.file, storage); res.status(201).json({ message: 'Đã lưu ảnh QR minh họa.' }); }
@@ -48,7 +48,7 @@ export default function createOwnerImageRoutes(storage, limiter) {
     upload.single('image')(req, res, error => {
       if (!error) return next();
       const tooLarge = error.code === 'LIMIT_FILE_SIZE';
-      res.status(tooLarge ? 413 : 400).json({ message: tooLarge ? 'Ảnh vượt quá 5 MB.' : 'Mỗi lần chỉ tải một ảnh, không kèm trường dữ liệu khác.' });
+      res.status(tooLarge ? 413 : 400).json({ message: tooLarge ? `Ảnh vượt quá ${maxMB} MB.` : 'Mỗi lần chỉ tải một ảnh, không kèm trường dữ liệu khác.' });
     });
   }, async (req, res, next) => {
     try {
