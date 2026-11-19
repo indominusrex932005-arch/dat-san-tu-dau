@@ -24,22 +24,26 @@
     <% if (isOwner) { %><p class="booking-notice">Tài khoản cần được quản trị viên duyệt và cấp cơ sở. Bạn chỉ quản lý sân sau khi được duyệt.</p>
     <% } else { %><p class="demo-muted">Xem lịch sử, lưu phiếu và gửi yêu cầu hủy/đổi cho chủ sân từ tài khoản của bạn.</p><% } %>
     <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
-    <form action="<%= isOwner ? '/register/owner' : '/register' %>" method="POST" class="demo-form">
+    <form action="<%= isOwner ? '/register/owner' : '/register' %>" method="POST" class="demo-form" data-auth-form>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <label for="fullName">Họ tên</label>
       <input id="fullName" name="fullName" value="<%= typeof fullName === 'string' ? fullName : '' %>" autocomplete="name" maxlength="100" required>
       <label for="email">Email</label>
       <input type="email" id="email" name="email" value="<%= email %>" autocomplete="username" maxlength="254" required>
       <label for="phone">Số điện thoại<%= isOwner ? '' : ' (không bắt buộc)' %></label>
-      <input type="tel" id="phone" name="phone" value="<%= typeof phone === 'string' ? phone : '' %>" autocomplete="tel" maxlength="24" <%- isOwner ? 'required' : '' %>>
+      <input type="tel" id="phone" name="phone" value="<%= typeof phone === 'string' ? phone : '' %>" placeholder="VD: 0901234567" autocomplete="tel" maxlength="24" aria-describedby="phoneHelp" <%- isOwner ? 'required' : '' %>>
+      <p id="phoneHelp" class="demo-muted">10 chữ số Việt Nam, bắt đầu bằng 0 hoặc +84.</p>
       <% if (isOwner) { %>
         <label for="requestedFacilityName">Tên cơ sở muốn quản lý</label>
-        <input id="requestedFacilityName" name="requestedFacilityName" value="<%= typeof requestedFacilityName === 'string' ? requestedFacilityName : '' %>" minlength="2" maxlength="150" required>
+        <input id="requestedFacilityName" name="requestedFacilityName" value="<%= typeof requestedFacilityName === 'string' ? requestedFacilityName : '' %>" placeholder="VD: Sân Cầu Lông Hòa Xuân" minlength="2" maxlength="150" required>
         <label for="requestedFacilityAddress">Địa chỉ cơ sở</label>
-        <input id="requestedFacilityAddress" name="requestedFacilityAddress" value="<%= typeof requestedFacilityAddress === 'string' ? requestedFacilityAddress : '' %>" minlength="3" maxlength="500" required>
+        <input id="requestedFacilityAddress" name="requestedFacilityAddress" value="<%= typeof requestedFacilityAddress === 'string' ? requestedFacilityAddress : '' %>" placeholder="Số nhà, đường, quận/huyện, tỉnh/thành" minlength="3" maxlength="500" required>
       <% } %>
       <label for="password">Mật khẩu</label>
-      <input type="password" id="password" name="password" autocomplete="new-password" minlength="8" aria-describedby="passwordHelp" required>
+      <div class="login-password-wrap">
+        <input type="password" id="password" name="password" autocomplete="new-password" minlength="8" aria-describedby="passwordHelp" required>
+        <button type="button" class="login-password-toggle" data-password-toggle aria-controls="password" aria-pressed="false">Hiện</button>
+      </div>
       <p id="passwordHelp" class="demo-muted">Ít nhất 8 ký tự, không quá 72 byte.</p>
       <label for="confirmPassword">Nhập lại mật khẩu</label>
       <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" minlength="8" required>

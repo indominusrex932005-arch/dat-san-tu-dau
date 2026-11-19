@@ -5,9 +5,9 @@
     <% if (currentUser) { %>
       <a href="/my-bookings">Đơn của tôi</a>
       <% if (currentUser.role === 'OWNER') { %><a href="/owner">Quản lý cơ sở</a><% } %>
-      <% if (currentUser.role === 'ADMIN') { %><a href="/admin">Duyệt chủ sân</a><% } %>
+      <% if (currentUser.role === 'ADMIN') { %><a href="/admin">Quản trị hệ thống</a><% } %>
       <span class="demo-user"><%= currentUser.fullName %></span>
-      <form action="/logout" method="POST" class="demo-inline-form">
+      <form action="/logout" method="POST" class="demo-inline-form" data-logout-form>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="demo-button demo-button-secondary">Đăng xuất</button>
       </form>
     <% } else { %>
@@ -15,6 +15,17 @@
     <% } %>
   </nav>
 </header>
+<% if (currentUser) { %>
+  <dialog id="logout-confirm-dialog" class="logout-dialog" aria-labelledby="logout-dialog-title">
+    <h2 id="logout-dialog-title">Xác nhận đăng xuất</h2>
+    <p>Bạn có chắc chắn muốn đăng xuất khỏi tài khoản <strong><%= currentUser.fullName %></strong> không?</p>
+    <div class="logout-dialog-actions">
+      <button type="button" class="demo-button demo-button-secondary" data-logout-cancel>Ở lại</button>
+      <button type="button" class="demo-button" data-logout-confirm>Đăng xuất</button>
+    </div>
+  </dialog>
+  <script src="/assets/js/logout-confirm.js" defer></script>
+<% } %>
 <% if (typeof publicDemo !== 'undefined' && publicDemo) { %>
   <p class="demo-muted" role="note">Bản demo công khai: chỉ nhập thông tin thử; các giao dịch thanh toán đều là mô phỏng.</p>
 <% } %>

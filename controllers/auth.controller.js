@@ -96,7 +96,10 @@ export function showLoginForm(req, res) {
   if (req.currentUser) return res.redirect(destination(req.currentUser));
   prepareBotCheck(req, res);
   let successMessage = null;
-  if (req.query?.reset === '1') {
+  if (req.session?.loginSuccessMessage) {
+    successMessage = req.session.loginSuccessMessage;
+    delete req.session.loginSuccessMessage;
+  } else if (req.query?.reset === '1') {
     successMessage = 'Mật khẩu đã được cập nhật. Bạn có thể đăng nhập bằng mật khẩu mới.';
   } else if (req.query?.verified === '1') {
     successMessage = 'Địa chỉ email của bạn đã được xác nhận. Bạn có thể đăng nhập ngay.';
@@ -190,6 +193,11 @@ async function registerAccount(req, res, accountType) {
       verifyUrl,
       expiresMinutes: Math.round(EMAIL_VERIFY_TTL_MS / 60000)
     }).catch(() => {});
+  }
+  if (req.session) {
+    req.session.loginSuccessMessage = accountType === 'OWNER'
+      ? 'Đã gửi đăng ký chủ sân thành công! Vui lòng đăng nhập để theo dõi trạng thái duyệt từ quản trị viên.'
+      : 'Tạo tài khoản thành công! Bạn có thể đăng nhập ngay bây giờ.';
   }
   res.redirect(303, '/login');
 }
@@ -293,6 +301,12 @@ export async function login(req, res) {
         }
       }
     );
+    const delivery = await mailService.sendLoginOtp({
+      to: user.email,
+      fullName: user.fullName,
+      code,
+      expiresMinutes: Math.round(LOGIN_OTP_TTL_MS / 60000)
+    });
     await new Promise((resolve, reject) => {
       req.session.regenerate(error => error ? reject(error) : resolve());
     });
@@ -300,17 +314,11 @@ export async function login(req, res) {
       userId: user._id.toString(),
       email: user.email,
       lastOtpSentAt: now,
-      ...(process.env.NODE_ENV === 'development' && !mailService.isConfigured?.() ? { devOtpCode: code } : {}),
+      ...(process.env.NODE_ENV === 'development' && !delivery?.delivered ? { devOtpCode: code } : {}),
       ...(checkoutUrl ? { checkoutId, checkoutToken, checkoutUrl } : {})
     };
     await new Promise((resolve, reject) => {
       req.session.save(error => error ? reject(error) : resolve());
-    });
-    await mailService.sendLoginOtp({
-      to: user.email,
-      fullName: user.fullName,
-      code,
-      expiresMinutes: Math.round(LOGIN_OTP_TTL_MS / 60000)
     });
     return res.redirect(303, '/login/verify');
   }
@@ -455,16 +463,18 @@ export async function resendLoginOtp(req, res) {
     }
   );
   const mailService = getMailService(req);
-  pending.lastOtpSentAt = now;
-  if (process.env.NODE_ENV === 'development' && !mailService.isConfigured?.()) {
-    pending.devOtpCode = code;
-  }
-  await mailService.sendLoginOtp({
+  const delivery = await mailService.sendLoginOtp({
     to: user.email,
     fullName: user.fullName,
     code,
     expiresMinutes: Math.round(LOGIN_OTP_TTL_MS / 60000)
   });
+  pending.lastOtpSentAt = now;
+  if (process.env.NODE_ENV === 'development' && !delivery?.delivered) {
+    pending.devOtpCode = code;
+  } else {
+    delete pending.devOtpCode;
+  }
   res.redirect(303, '/login/verify?resent=1');
 }
 
@@ -551,13 +561,13 @@ export async function requestPasswordReset(req, res) {
       }
     );
     const resetUrl = `${resolveBaseUrl(req)}/reset-password?token=${rawToken}`;
-    await mailService.sendPasswordReset({
+    const delivery = await mailService.sendPasswordReset({
       to: user.email,
       fullName: user.fullName,
       resetUrl,
       expiresMinutes: Math.round(PASSWORD_RESET_TTL_MS / 60000)
     });
-    if (process.env.NODE_ENV === 'development' && !mailService.isConfigured?.()) {
+    if (process.env.NODE_ENV === 'development' && !delivery?.delivered) {
       devResetUrl = resetUrl;
     }
   }

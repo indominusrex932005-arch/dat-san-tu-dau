@@ -6,8 +6,40 @@ import { createGroup, groupAction, validId, ownExtraFacility } from '../services
 const populate = [{ path: 'booking', populate: [{ path: 'court' }, { path: 'facility' }] }];
 export async function listGroups(req, res) {
   const mine = req.query.mine === '1' && req.currentUser;
-  const groups = await PlayGroup.find(mine ? { 'members.user': req.currentUser._id } : {}).select('-members.phone').populate(populate).sort({ createdAt: -1 }).limit(60).lean();
-  res.render('play-groups', { title: 'Tìm bạn ra sân', groups });
+  const q = typeof req.query.q === 'string' ? req.query.q.trim().slice(0, 80) : '';
+  const date = typeof req.query.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(req.query.date) ? req.query.date : '';
+  const openOnly = req.query.open === '1';
+
+  const rawGroups = await PlayGroup.find(mine ? { 'members.user': req.currentUser._id } : {})
+    .select('-members.phone')
+    .populate(populate)
+    .sort({ createdAt: -1 })
+    .limit(60)
+    .lean();
+
+  const needle = q.toLowerCase();
+  const now = Date.now();
+  const groups = rawGroups.filter(g => {
+    if (!g.booking) return false;
+    if (date && g.booking.date !== date) return false;
+    if (openOnly) {
+      const cancelled = g.booking.status === 'CANCELLED';
+      const ended = g.booking.slots.every(s => +new Date(s.endAt) <= now);
+      const closed = Boolean(g.closedAt) || +new Date(g.closesAt) <= now;
+      if (cancelled || ended || closed || g.members.length >= g.capacity) return false;
+    }
+    if (needle) {
+      const hay = `${g.title} ${g.booking.facility?.name || ''} ${g.booking.court?.name || ''}`.toLowerCase();
+      if (!hay.includes(needle)) return false;
+    }
+    return true;
+  });
+
+  res.render('play-groups', {
+    title: 'Tìm bạn ra sân',
+    groups,
+    filters: { q, date, openOnly, mine: Boolean(mine) }
+  });
 }
 export async function newGroup(req, res) {
   const bookings = await Booking.find({ user: req.currentUser._id, status: 'CONFIRMED', checkedInAt: null, 'slots.0.startAt': { $gt: new Date() } }).populate('court').populate('facility').sort({ date: 1 }).limit(100).lean();

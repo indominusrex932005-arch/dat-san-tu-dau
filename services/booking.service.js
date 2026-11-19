@@ -311,6 +311,28 @@ export async function simulatePayment(id, { user, token } = {}) {
   return getBookingForViewer(id, { user, token });
 }
 
+export async function cancelHold(id, { user, token } = {}) {
+  await getBookingForViewer(id, { user, token });
+  await transaction(async session => {
+    const booking = await Booking.findById(id).session(session);
+    if (!booking) fail(404, 'Không tìm thấy đơn đặt sân.');
+    if (booking.status === 'CANCELLED' || booking.status === 'EXPIRED') return;
+    if (booking.status !== 'HOLD' || booking.paymentStatus !== 'UNPAID') {
+      fail(409, 'Đơn đã thanh toán không thể tự hủy nhanh; hãy gửi yêu cầu hủy để chủ sân xét duyệt.');
+    }
+    booking.status = 'CANCELLED';
+    booking.holdExpiresAt = undefined;
+    await booking.save({ session });
+    await SlotLock.deleteMany({ booking: booking._id }, { session });
+    await Payment.updateMany(
+      { booking: booking._id, type: 'INITIAL_INTENT', intentStatus: { $in: ['CREATING', 'PENDING', 'UNKNOWN'] } },
+      { $set: { intentStatus: 'EXPIRED', failureCode: 'HOLD_CANCELLED' } },
+      { session }
+    );
+  });
+  return getBookingForViewer(id, { user, token });
+}
+
 export async function createChangeRequest(id, user, body = {}) {
   objectId(id, 'Mã đơn');
   if (!user?._id) fail(403, 'Đăng nhập để gửi yêu cầu hủy/đổi.');

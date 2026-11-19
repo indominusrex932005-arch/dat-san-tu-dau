@@ -83,6 +83,10 @@
             </form>
             <p class="demo-muted">Chỉ dùng để trình bày. Phiếu sau bước này được ghi rõ là thanh toán mô phỏng.</p>
           <% } else { %><p class="demo-muted">Thanh toán trực tuyến chưa được mở. Vui lòng liên hệ cơ sở; các ô sẽ được giải phóng khi hết hạn giữ.</p><% } %>
+          <form action="/bookings/<%= booking._id %>/cancel-hold" method="POST" class="demo-form">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="token" value="<%= accessToken %>">
+            <button class="demo-button demo-button-secondary" type="submit">Hủy giữ chỗ (nhả sân ngay)</button>
+          </form>
         <% } else { %>
           <h2><%= statusLabel(booking.status) %></h2><p><%= paymentLabel(booking.paymentStatus) %></p>
           <a class="demo-button" href="/bookings/<%= booking._id %>/receipt<%= query %>">Xem thông tin / phiếu</a>

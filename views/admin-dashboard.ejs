@@ -6,66 +6,340 @@
   <title><%= title %> | Sân Thể Thao</title>
   <link rel="stylesheet" href="/assets/css/app.css">
   <link rel="stylesheet" href="/assets/css/demo.css">
+  <link rel="stylesheet" href="/assets/css/booking.css">
   <link rel="stylesheet" href="/assets/css/owner.css">
   <link rel="stylesheet" href="/assets/css/design-system.css">
-<link rel="stylesheet" href="/assets/css/groups.css">
+  <link rel="stylesheet" href="/assets/css/groups.css">
 </head>
 <body class="demo-page">
   <div class="demo-shell">
     <%- include('partials/navigation') %>
-    <% const pendingApplications = Array.isArray(applications) ? applications : []; %>
-    <% const availableFacilities = Array.isArray(facilities) ? facilities.filter(item => !item.owner) : []; %>
-    <% const approvedOwners = Array.isArray(owners) ? owners : []; %>
+    <%
+      const tab = typeof activeTab === 'string' ? activeTab : 'owners';
+      const pendingApplications = Array.isArray(applications) ? applications : [];
+      const rejectedList = Array.isArray(rejectedOwners) ? rejectedOwners : [];
+      const allFacilities = Array.isArray(facilities) ? facilities : [];
+      const availableFacilities = allFacilities.filter(item => !item.owner);
+      const approvedOwners = Array.isArray(owners) ? owners : [];
+      const userList = Array.isArray(users) ? users : [];
+      const bookingList = Array.isArray(recentBookings) ? recentBookings : [];
+      const requestList = Array.isArray(recentRequests) ? recentRequests : [];
+      const kpi = typeof stats === 'object' && stats ? stats : {
+        totalUsers: 0, lockedUsersCount: 0, totalCourts: 0, totalBookings: 0,
+        confirmedBookings: 0, holdBookings: 0, pendingRequestsCount: 0, pendingRefundsCount: 0
+      };
+      const f = typeof filters === 'object' && filters ? filters : { userQ: '', userRole: '', bookingStatus: '' };
+      const nowTimestamp = typeof nowMs === 'number' ? nowMs : Date.now();
+      const roleLabels = { CUSTOMER: 'Khách đặt sân', OWNER: 'Chủ sân', ADMIN: 'Quản trị viên' };
+      const ownerStatusLabels = { PENDING: 'Chờ duyệt', APPROVED: 'Đã duyệt', REJECTED: 'Đã từ chối' };
+    %>
     <main aria-labelledby="admin-title">
-      <div class="owner-heading"><div><span class="owner-kicker">QUẢN TRỊ NHÓM</span><h1 id="admin-title"><%= title %></h1><p>Duyệt tài khoản chủ sân và cấp cơ sở quản lý.</p></div></div>
-      <% if (demoMode) { %><p><a class="demo-button demo-button-secondary" href="/admin/payment-reconciliation">Đối soát QR thử nghiệm</a></p><% } %>
-      <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
-      <section class="owner-stat-grid" aria-label="Tổng quan tài khoản">
-        <div class="demo-card owner-stat"><span>Đang chờ duyệt</span><strong><%= pendingApplications.length %></strong></div>
-        <div class="demo-card owner-stat"><span>Chủ sân đã duyệt</span><strong><%= approvedOwners.length %></strong></div>
-        <div class="demo-card owner-stat"><span>Cơ sở chưa cấp chủ sân</span><strong><%= availableFacilities.length %></strong></div>
-      </section>
-      <section aria-labelledby="applications-title">
-        <h2 id="applications-title">Đăng ký chủ sân</h2>
-        <% if (!pendingApplications.length) { %><p class="demo-card owner-empty">Chưa có đăng ký đang chờ duyệt.</p><% } %>
-        <div class="owner-application-grid">
-          <% for (const item of pendingApplications) { %>
-            <article class="demo-card owner-application">
-              <div class="owner-card-heading"><h3><%= item.fullName %></h3><span class="owner-badge owner-badge-waiting">Chờ duyệt</span></div>
-              <dl class="owner-detail-list">
-                <div><dt>Email</dt><dd><%= item.email %></dd></div>
-                <div><dt>Điện thoại</dt><dd><%= item.phone || 'Chưa có thông tin' %></dd></div>
-                <div><dt>Cơ sở đề nghị</dt><dd><%= item.requestedFacilityName || 'Chưa có thông tin' %></dd></div>
-                <div><dt>Địa chỉ đề nghị</dt><dd><%= item.requestedFacilityAddress || 'Chưa có thông tin' %></dd></div>
-              </dl>
-              <form action="/admin/owners/<%= item._id %>/approve" method="POST" class="demo-form owner-review-form">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <label for="facility-<%= item._id %>">Cơ sở sẽ cấp quyền quản lý</label>
-                <select id="facility-<%= item._id %>" name="facilityId">
-                  <option value="">Tạo cơ sở mới theo thông tin đề nghị</option>
-                  <% for (const available of availableFacilities) { %><option value="<%= available._id %>"><%= available.name %> — <%= available.address %></option><% } %>
-                </select>
-                <p class="owner-field-help">Chỉ cấp một cơ sở chưa có chủ sân hoặc tạo cơ sở mới. Người đăng ký không tự nhận quyền cơ sở.</p>
-                <button class="demo-button" type="submit">Duyệt và cấp cơ sở</button>
-              </form>
-              <form action="/admin/owners/<%= item._id %>/reject" method="POST" class="owner-secondary-action">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <button class="demo-button owner-button-danger" type="submit">Từ chối đăng ký</button>
-              </form>
-            </article>
-          <% } %>
+      <div class="owner-heading">
+        <div>
+          <span class="owner-kicker">QUẢN TRỊ HỆ THỐNG</span>
+          <h1 id="admin-title"><%= title %></h1>
+          <p>Duyệt người đăng ký chủ sân, quản lý bảo mật tài khoản và giám sát đặt sân, hủy đơn, đổi giờ.</p>
         </div>
+        <% if (demoMode) { %>
+          <div class="demo-actions">
+            <a class="demo-button demo-button-secondary" href="/admin/payment-reconciliation">Đối soát QR thử nghiệm</a>
+          </div>
+        <% } %>
+      </div>
+
+      <% if (typeof successMessage !== 'undefined' && successMessage) { %>
+        <p class="booking-notice" role="status"><%= successMessage %></p>
+      <% } %>
+      <% if (errorMessage) { %>
+        <p class="demo-error" role="alert"><%= errorMessage %></p>
+      <% } %>
+
+      <section class="owner-stat-grid" aria-label="Tổng quan toàn hệ thống">
+        <div class="demo-card owner-stat"><span>Chủ sân chờ duyệt</span><strong><%= pendingApplications.length %></strong></div>
+        <div class="demo-card owner-stat"><span>Chủ sân đã duyệt</span><strong><%= approvedOwners.length %></strong></div>
+        <div class="demo-card owner-stat"><span>Cơ sở chưa cấp chủ</span><strong><%= availableFacilities.length %> / <%= allFacilities.length %></strong></div>
+        <div class="demo-card owner-stat"><span>Tài khoản / Đang khóa</span><strong><%= kpi.totalUsers %> / <%= kpi.lockedUsersCount %></strong></div>
+        <div class="demo-card owner-stat"><span>Đơn đã chốt / Giữ chỗ</span><strong><%= kpi.confirmedBookings %> / <%= kpi.holdBookings %></strong></div>
+        <div class="demo-card owner-stat"><span>Hủy-đổi chờ / Chờ hoàn</span><strong><%= kpi.pendingRequestsCount %> / <%= kpi.pendingRefundsCount %></strong></div>
       </section>
-      <section class="demo-card" aria-labelledby="approved-title">
-        <h2 id="approved-title">Chủ sân đã được cấp quyền</h2>
-        <% if (!approvedOwners.length) { %><p class="demo-muted">Chưa có chủ sân được duyệt.</p><% } %>
-        <ul class="owner-owner-list">
-          <% for (const item of approvedOwners) { %>
-            <% const assigned = facilities.find(entry => entry.owner && String(entry.owner._id || entry.owner) === String(item._id)); %>
-            <li><div><strong><%= item.fullName %></strong><span><%= item.email %></span></div><span><%= assigned?.name || 'Chưa có cơ sở được cấp' %></span></li>
+
+      <nav class="booking-tabs" aria-label="Các mục quản trị">
+        <a href="/admin/owners" <%- tab === 'owners' ? 'aria-current="page"' : '' %>>Duyệt chủ sân (<%= pendingApplications.length %>)</a>
+        <a href="/admin?tab=facilities" <%- tab === 'facilities' ? 'aria-current="page"' : '' %>>Cơ sở &amp; Sân (<%= allFacilities.length %>)</a>
+        <a href="/admin?tab=users" <%- tab === 'users' ? 'aria-current="page"' : '' %>>Tài khoản &amp; Đăng nhập (<%= kpi.totalUsers %>)</a>
+        <a href="/admin?tab=bookings" <%- tab === 'bookings' ? 'aria-current="page"' : '' %>>Đặt sân toàn sàn (<%= kpi.totalBookings %>)</a>
+        <a href="/admin?tab=requests" <%- tab === 'requests' ? 'aria-current="page"' : '' %>>Hủy sân &amp; Đổi giờ (<%= kpi.pendingRequestsCount %>)</a>
+      </nav>
+
+      <% if (tab === 'owners') { %>
+        <section id="applications" aria-labelledby="applications-title">
+          <h2 id="applications-title">Hồ sơ đăng ký chủ sân đang chờ duyệt (<%= pendingApplications.length %>)</h2>
+          <% if (!pendingApplications.length) { %>
+            <p class="demo-card owner-empty">Hiện không có hồ sơ chủ sân nào đang chờ duyệt.</p>
+          <% } else { %>
+            <div class="owner-application-grid">
+              <% for (const item of pendingApplications) { %>
+                <article class="demo-card owner-application">
+                  <div class="owner-card-heading">
+                    <h3><%= item.fullName %></h3>
+                    <span class="owner-badge owner-badge-waiting">Chờ duyệt</span>
+                  </div>
+                  <dl class="owner-detail-list">
+                    <div><dt>Email</dt><dd><%= item.email %></dd></div>
+                    <div><dt>Điện thoại</dt><dd><%= item.phone || 'Chưa có thông tin' %></dd></div>
+                    <div><dt>Cơ sở đề nghị</dt><dd><%= item.requestedFacilityName || 'Chưa có thông tin' %></dd></div>
+                    <div><dt>Địa chỉ đề nghị</dt><dd><%= item.requestedFacilityAddress || 'Chưa có thông tin' %></dd></div>
+                  </dl>
+                  <form action="/admin/owners/<%= item._id %>/approve" method="POST" class="demo-form owner-review-form">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <label for="facility-<%= item._id %>">Cơ sở sẽ cấp quyền quản lý</label>
+                    <select id="facility-<%= item._id %>" name="facilityId">
+                      <option value="">Tạo cơ sở mới theo thông tin đề nghị</option>
+                      <% for (const available of availableFacilities) { %>
+                        <option value="<%= available._id %>"><%= available.name %> — <%= available.address %></option>
+                      <% } %>
+                    </select>
+                    <p class="owner-field-help">Chỉ cấp cơ sở chưa có chủ sân hoặc tạo cơ sở mới. Người đăng ký không tự nhận quyền cơ sở.</p>
+                    <button class="demo-button" type="submit">Duyệt và cấp cơ sở</button>
+                  </form>
+                  <form action="/admin/owners/<%= item._id %>/reject" method="POST" class="owner-secondary-action">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button class="demo-button owner-button-danger" type="submit">Từ chối đăng ký</button>
+                  </form>
+                </article>
+              <% } %>
+            </div>
           <% } %>
-        </ul>
-      </section>
+
+          <div class="demo-card">
+            <h3>Chủ sân đã được duyệt (<%= approvedOwners.length %>)</h3>
+            <% if (!approvedOwners.length) { %>
+              <p class="demo-muted">Chưa có chủ sân nào được duyệt.</p>
+            <% } else { %>
+              <ul class="owner-owner-list">
+                <% for (const item of approvedOwners) { %>
+                  <% const assigned = allFacilities.find(entry => entry.owner && String(entry.owner._id || entry.owner) === String(item._id)); %>
+                  <li>
+                    <div><strong><%= item.fullName %></strong> · <span><%= item.email %></span></div>
+                    <span><%= assigned?.name || 'Chưa có cơ sở được cấp' %></span>
+                  </li>
+                <% } %>
+              </ul>
+            <% } %>
+          </div>
+
+          <% if (rejectedList.length) { %>
+            <div class="demo-card">
+              <h3>Hồ sơ chủ sân đã từ chối (<%= rejectedList.length %>)</h3>
+              <ul class="owner-owner-list">
+                <% for (const item of rejectedList) { %>
+                  <li>
+                    <div>
+                      <strong><%= item.fullName %></strong> · <span><%= item.email %></span>
+                      <br><small>Cơ sở đề nghị: <%= item.requestedFacilityName || 'Chưa có' %></small>
+                    </div>
+                    <form action="/admin/owners/<%= item._id %>/reopen" method="POST" class="demo-inline-form">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                      <button type="submit" class="demo-button demo-button-secondary">Đưa về chờ duyệt</button>
+                    </form>
+                  </li>
+                <% } %>
+              </ul>
+            </div>
+          <% } %>
+        </section>
+      <% } else if (tab === 'facilities') { %>
+        <section id="facilities" aria-labelledby="facilities-title">
+          <h2 id="facilities-title">Danh sách cơ sở &amp; sân trên hệ thống (<%= allFacilities.length %> cơ sở · <%= kpi.totalCourts %> sân)</h2>
+          <div class="demo-card">
+            <% if (!allFacilities.length) { %>
+              <p class="demo-muted">Chưa có cơ sở nào trên hệ thống.</p>
+            <% } else { %>
+              <ul class="owner-owner-list">
+                <% for (const fac of allFacilities) { %>
+                  <li>
+                    <div>
+                      <strong><%= fac.name %></strong> · <span><%= fac.address || 'Chưa có địa chỉ' %></span>
+                      <br>
+                      <small>
+                        Điện thoại: <strong><%= fac.phone || 'Chưa cập nhật' %></strong>
+                        · Số sân: <strong><%= fac.courtStats?.active ?? 0 %>/<%= fac.courtStats?.total ?? 0 %> đang mở</strong>
+                        · Chủ sân: <strong><%= fac.owner ? `${fac.owner.fullName} (${fac.owner.email})` : 'Chưa cấp chủ sân' %></strong>
+                      </small>
+                    </div>
+                    <span class="owner-badge <%= fac.owner ? 'owner-badge-success' : 'owner-badge-waiting' %>"><%= fac.owner ? 'Đã có chủ sân' : 'Chưa cấp chủ' %></span>
+                  </li>
+                <% } %>
+              </ul>
+            <% } %>
+          </div>
+        </section>
+      <% } else if (tab === 'users') { %>
+        <section id="users" aria-labelledby="users-title">
+          <h2 id="users-title">Quản lý tài khoản, đăng nhập &amp; đăng ký</h2>
+          <form method="GET" action="/admin" class="demo-card demo-inline-form" aria-label="Lọc tài khoản">
+            <input type="hidden" name="tab" value="users">
+            <input type="search" name="userQ" value="<%= f.userQ %>" placeholder="Tìm tên, email hoặc SĐT…" maxlength="80">
+            <select name="userRole" aria-label="Lọc theo vai trò">
+              <option value="">Tất cả vai trò</option>
+              <option value="CUSTOMER" <%= f.userRole === 'CUSTOMER' ? 'selected' : '' %>>Khách đặt sân</option>
+              <option value="OWNER" <%= f.userRole === 'OWNER' ? 'selected' : '' %>>Chủ sân</option>
+              <option value="ADMIN" <%= f.userRole === 'ADMIN' ? 'selected' : '' %>>Quản trị viên</option>
+            </select>
+            <button type="submit" class="demo-button">Lọc</button>
+            <% if (f.userQ || f.userRole) { %>
+              <a class="demo-button demo-button-secondary" href="/admin?tab=users">Xóa lọc</a>
+            <% } %>
+          </form>
+
+          <div class="demo-card">
+            <% if (!userList.length) { %>
+              <p class="demo-muted">Không tìm thấy tài khoản phù hợp.</p>
+            <% } else { %>
+              <ul class="owner-owner-list">
+                <% for (const u of userList) { %>
+                  <% const isLocked = Boolean(u.loginLockedUntil && new Date(u.loginLockedUntil).getTime() > nowTimestamp); %>
+                  <li>
+                    <div>
+                      <strong><%= u.fullName %></strong> · <span><%= u.email %></span>
+                      <% if (u.phone) { %> · <span><%= u.phone %></span><% } %>
+                      <br>
+                      <small>
+                        Vai trò: <strong><%= roleLabels[u.role] || u.role %></strong>
+                        <% if (u.role === 'OWNER') { %> · Trạng thái chủ sân: <strong><%= ownerStatusLabels[u.ownerStatus] || u.ownerStatus %></strong><% } %>
+                        · Email: <strong><%= u.emailVerified === false ? 'Chưa xác nhận' : 'Đã xác nhận' %></strong>
+                        <% if (isLocked) { %> · <span class="owner-badge owner-badge-waiting">Đang bị khóa đăng nhập</span><% } %>
+                      </small>
+                    </div>
+                    <div class="demo-actions">
+                      <% if (isLocked || (u.failedLoginAttempts || 0) > 0) { %>
+                        <form action="/admin/users/<%= u._id %>/unlock" method="POST" class="demo-inline-form">
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                          <button type="submit" class="demo-button demo-button-secondary">Mở khóa đăng nhập</button>
+                        </form>
+                      <% } %>
+                      <% if (u.emailVerified === false) { %>
+                        <form action="/admin/users/<%= u._id %>/verify-email" method="POST" class="demo-inline-form">
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                          <button type="submit" class="demo-button demo-button-secondary">Xác nhận email</button>
+                        </form>
+                      <% } %>
+                    </div>
+                  </li>
+                <% } %>
+              </ul>
+            <% } %>
+          </div>
+        </section>
+      <% } else if (tab === 'bookings') { %>
+        <section id="bookings" aria-labelledby="bookings-title">
+          <h2 id="bookings-title">Giám sát đặt sân toàn hệ thống (30 đơn gần nhất)</h2>
+          <form method="GET" action="/admin" class="demo-card demo-inline-form" aria-label="Lọc đơn đặt sân">
+            <input type="hidden" name="tab" value="bookings">
+            <input type="search" name="bookingQ" value="<%= f.bookingQ || '' %>" placeholder="Mã đơn, tên hoặc SĐT khách…" maxlength="80">
+            <select name="bookingFacility" aria-label="Lọc theo cơ sở">
+              <option value="">Tất cả cơ sở</option>
+              <% for (const fac of allFacilities) { %>
+                <option value="<%= fac._id %>" <%= f.bookingFacility === String(fac._id) ? 'selected' : '' %>><%= fac.name %></option>
+              <% } %>
+            </select>
+            <select name="bookingStatus" aria-label="Trạng thái đơn">
+              <option value="">Tất cả trạng thái</option>
+              <option value="CONFIRMED" <%= f.bookingStatus === 'CONFIRMED' ? 'selected' : '' %>>Đã xác nhận</option>
+              <option value="HOLD" <%= f.bookingStatus === 'HOLD' ? 'selected' : '' %>>Đang giữ chỗ</option>
+              <option value="CANCELLED" <%= f.bookingStatus === 'CANCELLED' ? 'selected' : '' %>>Đã hủy</option>
+              <option value="EXPIRED" <%= f.bookingStatus === 'EXPIRED' ? 'selected' : '' %>>Đã hết hạn</option>
+            </select>
+            <button type="submit" class="demo-button">Lọc đơn</button>
+            <% if (f.bookingStatus || f.bookingFacility || f.bookingQ) { %><a class="demo-button demo-button-secondary" href="/admin?tab=bookings">Xóa lọc</a><% } %>
+          </form>
+
+          <div class="demo-card">
+            <% if (!bookingList.length) { %>
+              <p class="demo-muted">Chưa có đơn đặt sân phù hợp.</p>
+            <% } else { %>
+              <ul class="owner-owner-list">
+                <% for (const b of bookingList) { %>
+                  <li>
+                    <div>
+                      <strong><%= b.publicCode || b._id %></strong> · <%= b.facility?.name || 'Cơ sở' %> · <%= b.court?.name || 'Sân' %>
+                      <br>
+                      <small>
+                        Ngày <%= formatDate(b.date) %>
+                        <% if (b.slots?.length) { %> · <%= formatTime(b.slots[0].startAt) %>–<%= formatTime(b.slots[b.slots.length - 1].endAt) %><% } %>
+                        · Khách: <%= b.guestName || b.user?.fullName || 'Khách vãng lai' %> (<%= b.user ? 'Có tài khoản' : 'Vãng lai' %>)
+                        · <strong><%= formatMoney(b.totalPrice) %></strong> · <%= paymentLabel(b.paymentStatus) %>
+                      </small>
+                    </div>
+                    <div class="demo-actions">
+                      <span class="owner-badge <%= b.status === 'CONFIRMED' ? 'owner-badge-success' : b.status === 'HOLD' ? 'owner-badge-waiting' : '' %>"><%= statusLabel(b.status) %></span>
+                      <a class="demo-button demo-button-secondary" href="/bookings/<%= b._id %>/receipt">Xem phiếu</a>
+                      <% if (b.status === 'HOLD') { %>
+                        <form action="/bookings/<%= b._id %>/cancel-hold" method="POST" class="demo-inline-form">
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                          <button type="submit" class="demo-button owner-button-danger">Hủy giữ chỗ</button>
+                        </form>
+                      <% } %>
+                    </div>
+                  </li>
+                <% } %>
+              </ul>
+            <% } %>
+          </div>
+        </section>
+      <% } else { %>
+        <section id="requests" aria-labelledby="requests-title">
+          <h2 id="requests-title">Giám sát yêu cầu hủy sân, đổi giờ &amp; hoàn tiền</h2>
+          <p class="demo-muted">Chủ sân trực tiếp xét duyệt và ghi nhận hoàn tiền thủ công cho cơ sở của mình tại <strong>/owner</strong>. Admin theo dõi toàn hệ thống tại đây.</p>
+          <form method="GET" action="/admin" class="demo-card demo-inline-form" aria-label="Lọc yêu cầu hủy hoặc đổi">
+            <input type="hidden" name="tab" value="requests">
+            <select name="requestType" aria-label="Loại yêu cầu">
+              <option value="">Tất cả loại</option>
+              <option value="CANCEL" <%= f.requestType === 'CANCEL' ? 'selected' : '' %>>Hủy đơn</option>
+              <option value="CHANGE" <%= f.requestType === 'CHANGE' ? 'selected' : '' %>>Đổi giờ / sân</option>
+            </select>
+            <select name="requestStatus" aria-label="Trạng thái yêu cầu">
+              <option value="">Tất cả trạng thái</option>
+              <option value="PENDING" <%= f.requestStatus === 'PENDING' ? 'selected' : '' %>>Chờ xử lý</option>
+              <option value="APPROVED" <%= f.requestStatus === 'APPROVED' ? 'selected' : '' %>>Đã duyệt</option>
+              <option value="REJECTED" <%= f.requestStatus === 'REJECTED' ? 'selected' : '' %>>Đã từ chối</option>
+            </select>
+            <button type="submit" class="demo-button">Lọc yêu cầu</button>
+            <% if (f.requestType || f.requestStatus) { %><a class="demo-button demo-button-secondary" href="/admin?tab=requests">Xóa lọc</a><% } %>
+          </form>
+          <div class="demo-card">
+            <% if (!requestList.length) { %>
+              <p class="demo-muted">Chưa có yêu cầu hủy sân hoặc đổi giờ nào.</p>
+            <% } else { %>
+              <ul class="owner-owner-list">
+                <% for (const reqItem of requestList) { %>
+                  <li>
+                    <div>
+                      <strong><%= reqItem.type === 'CHANGE' ? 'Đổi giờ / sân' : 'Hủy đơn' %></strong>
+                      · Mã đơn <%= reqItem.booking?.publicCode || 'N/A' %>
+                      · <%= reqItem.booking?.facility?.name || 'Cơ sở' %>
+                      <br>
+                      <small>
+                        Khách: <%= reqItem.user?.fullName || reqItem.booking?.guestName || 'Khách' %> · Lý do: <%= reqItem.reason || 'Không có' %>
+                        <% if (reqItem.type === 'CHANGE') { %>
+                          <br>Đề nghị đổi sang: <%= reqItem.requestedCourt?.name || 'Sân trong cơ sở' %> · <%= reqItem.requestedDate ? formatDate(reqItem.requestedDate) : '' %> (<%= Array.isArray(reqItem.requestedTimes) ? reqItem.requestedTimes.join(', ') : '' %>)
+                        <% } %>
+                        <% if (reqItem.refundAmount > 0) { %>
+                          <br>Hoàn tiền: <strong><%= formatMoney(reqItem.refundAmount) %></strong> (<%= reqItem.refundStatus === 'TRANSFERRED' ? 'Đã ghi nhận hoàn' : 'Chờ chủ sân hoàn thủ công' %>)
+                        <% } %>
+                        <% if (reqItem.extraAmount > 0) { %>
+                          · Thu thêm chênh lệch: <strong><%= formatMoney(reqItem.extraAmount) %></strong>
+                        <% } %>
+                      </small>
+                    </div>
+                    <span class="owner-badge <%= reqItem.status === 'PENDING' ? 'owner-badge-waiting' : reqItem.status === 'APPROVED' ? 'owner-badge-success' : '' %>"><%= statusLabel(reqItem.status) %></span>
+                  </li>
+                <% } %>
+              </ul>
+            <% } %>
+          </div>
+        </section>
+      <% } %>
     </main>
   </div>
 </body>

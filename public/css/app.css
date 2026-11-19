@@ -76,3 +76,65 @@ a {
   margin-top: 8px !important;
   font-weight: 600;
 }
+
+.login-password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.login-password-wrap input {
+  width: 100%;
+  padding-right: 68px;
+}
+
+.login-password-toggle {
+  position: absolute;
+  right: 8px;
+  min-height: 36px;
+  padding: 4px 10px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  color: #53685d;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.login-password-toggle:hover {
+  color: #173f35;
+  background: #eef3ee;
+}
+
+.logout-dialog {
+  width: min(420px, calc(100% - 32px));
+  padding: 24px;
+  border: 1px solid #dce2d7;
+  border-radius: 14px;
+  background: #fff;
+  color: #173f35;
+  box-shadow: 0 18px 48px rgba(23, 63, 53, 0.18);
+}
+
+.logout-dialog::backdrop {
+  background: rgba(23, 63, 53, 0.42);
+}
+
+.logout-dialog h2 {
+  margin: 0 0 10px;
+  font-size: 20px;
+}
+
+.logout-dialog p {
+  margin: 0 0 20px;
+  color: #53685d;
+  line-height: 1.6;
+}
+
+.logout-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

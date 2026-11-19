@@ -46,7 +46,8 @@
     </article>
     <div class="demo-actions no-print"><% if (owned && booking.status === 'CONFIRMED' && !booking.checkedInAt) { %><a class="demo-button" href="/groups/new">Rủ bạn chia tiền sân</a><% } %>
       <% if (owned && !booking.checkedInAt && ['CONFIRMED', 'LEGACY_RESERVED'].includes(booking.status) && withinRequestWindow(booking)) { %>
-        <a class="demo-button demo-button-secondary" href="/bookings/<%= booking._id %>/request">Gửi yêu cầu hủy / đổi</a>
+        <a class="demo-button demo-button-secondary" href="/bookings/<%= booking._id %>/request?type=CHANGE">Đổi giờ / sân</a>
+        <a class="demo-button demo-button-secondary" href="/bookings/<%= booking._id %>/request?type=CANCEL">Gửi yêu cầu hủy đơn</a>
       <% } %>
       <% if (booking.status === 'HOLD') { %><a class="demo-button" href="/bookings/<%= booking._id %>/checkout<%= query %>">Tiếp tục xem giữ chỗ</a><% } %>
     </div>

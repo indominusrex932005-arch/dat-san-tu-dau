@@ -16,7 +16,8 @@
     <form action="/bookings/<%= booking._id %>/requests" method="POST" class="demo-form" id="booking-request-form">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <label for="requestType">Loại yêu cầu</label>
-      <select name="type" id="requestType" required><option value="CANCEL">Hủy toàn bộ đơn</option><option value="CHANGE">Đổi ngày / ô giờ / sân trong cùng cơ sở</option></select>
+      <% const selectedType = typeof initialType === 'string' && initialType === 'CHANGE' ? 'CHANGE' : 'CANCEL'; %>
+      <select name="type" id="requestType" required><option value="CANCEL" <%- selectedType === 'CANCEL' ? 'selected' : '' %>>Hủy toàn bộ đơn</option><option value="CHANGE" <%- selectedType === 'CHANGE' ? 'selected' : '' %>>Đổi ngày / ô giờ / sân trong cùng cơ sở</option></select>
       <fieldset id="request-change-fields">
         <legend>Thông tin muốn đổi</legend>
         <label for="requestedCourt">Sân mong muốn</label>

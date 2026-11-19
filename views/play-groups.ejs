@@ -26,12 +26,22 @@
 </div>
 <span class="group-hero-art" aria-hidden="true">◎</span>
 </section>
+<% const f = typeof filters !== 'undefined' ? filters : { q: '', date: '', openOnly: false, mine: false }; %>
 <nav class="demo-actions" aria-label="Lọc buổi chơi">
 <a class="demo-button demo-button-secondary" href="/groups">Tất cả buổi chơi</a>
+<a class="demo-button demo-button-secondary" href="/groups?open=1">Còn chỗ trống</a>
 <% if (currentUser) { %>
 <a class="demo-button demo-button-secondary" href="/groups?mine=1">Buổi tôi tham gia</a>
 <% } %>
 </nav>
+<form method="GET" action="/groups" class="demo-card demo-inline-form" aria-label="Tìm kiếm buổi chơi">
+  <% if (f.mine) { %><input type="hidden" name="mine" value="1"><% } %>
+  <input type="search" name="q" value="<%= f.q %>" placeholder="Tìm theo tên buổi, cơ sở, sân…" maxlength="80">
+  <input type="date" name="date" value="<%= f.date %>" aria-label="Lọc theo ngày chơi">
+  <label><input type="checkbox" name="open" value="1" <%= f.openOnly ? 'checked' : '' %>> Chỉ hiện buổi còn chỗ</label>
+  <button type="submit" class="demo-button">Lọc</button>
+  <% if (f.q || f.date || f.openOnly) { %><a class="demo-button demo-button-secondary" href="<%= f.mine ? '/groups?mine=1' : '/groups' %>">Xóa lọc</a><% } %>
+</form>
 <section class="group-grid">
 <% if (!groups.length) { %>
 <article class="demo-card group-empty">

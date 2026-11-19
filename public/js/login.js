@@ -1,5 +1,5 @@
 (() => {
-  const form = document.querySelector('.login-form');
+  const form = document.querySelector('.login-form, [data-auth-form]');
   const toggle = document.querySelector('[data-password-toggle]');
   const password = document.getElementById('password');
   const captchaImg = document.querySelector('[data-captcha-image]');
@@ -27,7 +27,7 @@
 
   if (form) {
     form.addEventListener('submit', () => {
-      const submit = form.querySelector('.login-submit');
+      const submit = form.querySelector('.login-submit, button[type="submit"]');
       if (!submit || submit.disabled) return;
       submit.disabled = true;
       submit.setAttribute('aria-busy', 'true');

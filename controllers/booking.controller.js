@@ -2,7 +2,7 @@ import { PAGE_SIZE, pageNumber, pageInfo } from '../utils/pagination.js';
 import Court from '../models/Court.js';
 import Booking from '../models/Booking.js';
 import BookingRequest from '../models/BookingRequest.js';
-import { withinRequestWindow, createHold, getAvailability, getBookingForViewer, simulatePayment, createChangeRequest, expireHolds } from '../services/booking.service.js';
+import { withinRequestWindow, createHold, getAvailability, getBookingForViewer, simulatePayment, cancelHold, createChangeRequest, expireHolds } from '../services/booking.service.js';
 import { prepareBotCheck } from '../middlewares/anti-bot.middleware.js';
 import { bookingReceiptReviewStatus } from '../services/payment-reconciliation.service.js';
 
@@ -88,6 +88,15 @@ export async function payDemo(req, res) {
   res.redirect(303, `/bookings/${booking._id}/receipt${tokenQuery(token)}`);
 }
 
+export async function cancelHoldBooking(req, res) {
+  const token = tokenFrom(req);
+  const booking = await cancelHold(req.params.id, { user: req.currentUser, token });
+  if (req.currentUser && booking.user && String(booking.user._id || booking.user) === String(req.currentUser._id)) {
+    return res.redirect(303, '/my-bookings');
+  }
+  return res.redirect(303, `/bookings/${booking._id}/receipt${tokenQuery(token)}`);
+}
+
 export async function showReceipt(req, res) {
   const token = tokenFrom(req);
   const booking = await getBookingForViewer(req.params.id, { user: req.currentUser, token });
@@ -116,7 +125,8 @@ export async function showRequestForm(req, res) {
   if (booking.checkedInAt) throw Object.assign(new Error('Đơn đã check-in, không thể hủy hoặc đổi lịch.'), { status: 409 });
   if (!withinRequestWindow(booking)) throw Object.assign(new Error('Cần gửi yêu cầu trước ô đầu tiên ít nhất 36 giờ.'), { status: 409 });
   const courts = await Court.find({ facility: booking.facility?._id, active: true }).sort({ name: 1 }).lean();
-  res.render('booking-request', { title: 'Yêu cầu hủy hoặc đổi sân', booking, courts, token: '', errorMessage: null });
+  const initialType = req.query?.type === 'CHANGE' ? 'CHANGE' : 'CANCEL';
+  res.render('booking-request', { title: 'Yêu cầu hủy hoặc đổi sân', booking, courts, token: '', errorMessage: null, initialType });
 }
 
 export async function sendRequest(req, res) {

@@ -57,7 +57,14 @@
 <%= group.members[0].phone %>
 </strong>
 </p>
-<p>Muốn rời nhóm? Liên hệ người tạo. Sau khi chốt, danh sách và phần tiền được giữ nguyên.</p>
+<% if (!organizer && open) { %>
+<form method="POST" action="/groups/<%= group._id %>/leave" class="demo-inline-form">
+<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+<button class="demo-button demo-button-secondary">Rời nhóm</button>
+</form>
+<% } else { %>
+<p>Sau khi chốt, danh sách và phần tiền được giữ nguyên.</p>
+<% } %>
 <% } %>
 <% if (organizer) { %>
 <p>
@@ -75,6 +82,21 @@
 <a class="demo-button demo-button-secondary" href="/bookings/<%= b._id %>/request">Gửi yêu cầu hủy buổi</a>
 <% } %>
 </div>
+<% if (open) { %>
+<details class="demo-form">
+  <summary>Chỉnh sửa thông tin buổi chơi</summary>
+  <form method="POST" action="/groups/<%= group._id %>/edit" class="demo-form">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <label for="edit-title">Tên buổi chơi</label>
+    <input id="edit-title" name="title" value="<%= group.title %>" maxlength="100" required>
+    <label for="edit-capacity">Số người tối đa (<%= Math.max(2, group.members.length) %>–30)</label>
+    <input id="edit-capacity" name="capacity" type="number" min="<%= Math.max(2, group.members.length) %>" max="30" value="<%= group.capacity %>" required>
+    <label for="edit-note">Ghi chú</label>
+    <textarea id="edit-note" name="note" maxlength="500" rows="3"><%= group.note || '' %></textarea>
+    <button class="demo-button" type="submit">Lưu thay đổi</button>
+  </form>
+</details>
+<% } %>
 <% } %>
 </article>
 <article class="demo-card">

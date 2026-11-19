@@ -15,6 +15,10 @@ import BookingRequest from './models/BookingRequest.js';
 import { assertDatabaseCompatibility } from './services/database-compatibility.js';
 import { expireHolds } from './services/booking.service.js';
 import { getPaymentConfig } from './config/payment-mode.js';
+import { createPaymentService } from './services/payment.service.js';
+import { createPaymentWebhookHandler } from './services/payment-webhook.service.js';
+import { createMomoSandboxAdapter, getMomoSandboxEnv } from './services/momo-sandbox.adapter.js';
+import { createLocalQrSandboxAdapter } from './services/local-qr-sandbox.adapter.js';
 
 try {
   // Fail before connecting, initializing indexes or cleaning up any booking.
@@ -36,7 +40,48 @@ try {
     ttl: 8 * 60 * 60
   });
   store.on('error', error => console.error('Lỗi session:', error.name));
-  const app = createApp(store);
+  const appOptions = {};
+  const momoEnv = getMomoSandboxEnv();
+  if (getPaymentConfig().demoMode && momoEnv.enabled) {
+    const momoAdapter = createMomoSandboxAdapter(momoEnv);
+    appOptions.paymentService = createPaymentService({
+      adapter: momoAdapter,
+      getPaymentConfig,
+      resolveRecipient: async booking => ({
+        verified: true,
+        merchantId: momoEnv.partnerCode,
+        bindingId: `momo-sandbox-${momoEnv.partnerCode}`,
+        recipientId: momoEnv.partnerCode,
+        displayName: booking?.facility?.name || 'Cơ sở Sân Thể Thao (MoMo Sandbox)'
+      })
+    });
+    appOptions.paymentWebhookHandler = createPaymentWebhookHandler({
+      adapter: momoAdapter,
+      getPaymentConfig
+    });
+    appOptions.paymentCheckoutEnabled = true;
+    console.log('Đã kích hoạt MoMo Sandbox (PAYMENT_MODE=demo) tại POST /webhooks/payments.');
+  } else if (getPaymentConfig().demoMode && process.env.NODE_ENV === 'development') {
+    const localAdapter = createLocalQrSandboxAdapter();
+    appOptions.paymentService = createPaymentService({
+      adapter: localAdapter,
+      getPaymentConfig,
+      resolveRecipient: async booking => ({
+        verified: true,
+        merchantId: 'LOCAL_DEMO_SANDBOX',
+        bindingId: 'local-demo-sandbox',
+        recipientId: 'LOCAL_DEMO_SANDBOX',
+        displayName: `${booking?.facility?.name || 'Cơ sở Sân Thể Thao'} (QR thử nghiệm)`
+      })
+    });
+    appOptions.paymentWebhookHandler = createPaymentWebhookHandler({
+      adapter: localAdapter,
+      getPaymentConfig
+    });
+    appOptions.paymentCheckoutEnabled = true;
+    console.log('Đã kích hoạt QR Sandbox cục bộ (PAYMENT_MODE=demo, development).');
+  }
+  const app = createApp(store, appOptions);
   const server = app.listen(port, '0.0.0.0', () => console.log(`Server đang lắng nghe trên cổng ${port}.`));
   const expirationTimer = setInterval(() => {
     expireHolds().catch(error => console.error('Không thể dọn chỗ hết hạn:', error.name));

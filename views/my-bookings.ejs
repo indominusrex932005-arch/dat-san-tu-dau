@@ -93,10 +93,20 @@
                   <a class="my-bookings-btn-receipt" href="/bookings/<%= booking._id %>/<%= booking.status === 'HOLD' ? 'checkout' : 'receipt' %>">
                     <%= booking.status === 'HOLD' ? 'Xem giữ chỗ' : 'Xem / lưu phiếu' %>
                   </a>
+                  <% if (booking.status === 'HOLD') { %>
+                    <form action="/bookings/<%= booking._id %>/cancel-hold" method="POST" class="demo-inline-form">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                      <button type="submit" class="my-bookings-btn-request">Hủy giữ chỗ</button>
+                    </form>
+                  <% } %>
                   <% if (!pending && !booking.checkedInAt && ['CONFIRMED', 'LEGACY_RESERVED'].includes(booking.status) && withinRequestWindow(booking)) { %>
-                    <a class="my-bookings-btn-request" href="/bookings/<%= booking._id %>/request">Yêu cầu hủy / đổi</a>
+                    <a class="my-bookings-btn-request" href="/bookings/<%= booking._id %>/request?type=CHANGE">Đổi giờ / sân</a>
+                    <a class="my-bookings-btn-request" href="/bookings/<%= booking._id %>/request?type=CANCEL">Hủy đơn</a>
                   <% } %>
                 </div>
+                <% if (!pending && !booking.checkedInAt && ['CONFIRMED', 'LEGACY_RESERVED'].includes(booking.status) && !withinRequestWindow(booking)) { %>
+                  <p class="demo-muted">Đã qua hạn gửi yêu cầu tự động (trước 36 giờ) — vui lòng liên hệ trực tiếp cơ sở nếu cần hủy/đổi.</p>
+                <% } %>
 
                 <% for (const request of booking.requests || []) { 
                      const reqStatusText = ({ PENDING: 'Chờ chủ sân xử lý', APPROVED: 'Chủ sân đã đồng ý', REJECTED: 'Chủ sân đã từ chối' })[request.status] || request.status;

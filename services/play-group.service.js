@@ -64,10 +64,26 @@ export async function groupAction(id, user, action, body = {}) {
       const phone = words(body.phone, 30).replace(/[\s.-]/g, '').replace(/^\+84/, '0');
       if (!/^0\d{9}$/.test(phone)) fail(400, 'Nhập số điện thoại để người tạo nhóm liên hệ bạn.');
       group.members.push({ user: user._id, name: user.fullName, phone, extras: await extraSelection(group.facility, body, session) });
+    } else if (action === 'leave') {
+      if (String(group.organizer) === String(user._id)) fail(400, 'Người tạo nhóm không thể tự rời; hãy gửi yêu cầu hủy buổi nếu cần.');
+      const before = group.members.length;
+      group.members = group.members.filter(item => String(item.user) !== String(user._id));
+      if (group.members.length === before) fail(409, 'Bạn chưa tham gia buổi chơi này.');
     } else {
       if (String(group.organizer) !== String(user._id)) fail(403, 'Chỉ người tạo nhóm thực hiện thao tác này.');
       if (action === 'close') { group.closesAt = new Date(); finish(group, new Date()); }
-      else if (action === 'remove') {
+      else if (action === 'edit') {
+        const title = words(body.title, 100);
+        const note = words(body.note, 500);
+        if (!title) fail(400, 'Tên buổi chơi không được để trống.');
+        if (typeof body.capacity !== 'string' || !/^\d{1,2}$/.test(body.capacity)
+            || Number(body.capacity) < Math.max(2, group.members.length) || Number(body.capacity) > 30) {
+          fail(400, `Số người tối đa phải từ ${Math.max(2, group.members.length)} đến 30.`);
+        }
+        group.title = title;
+        group.note = note;
+        group.capacity = Number(body.capacity);
+      } else if (action === 'remove') {
         validId(body.memberId);
         if (body.memberId === String(group.organizer)) fail(400, 'Người tạo nhóm được tính trong danh sách.');
         group.members = group.members.filter(item => String(item.user) !== body.memberId);
