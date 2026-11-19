@@ -5,7 +5,11 @@
   <title><%= title %> | Sân Thể Thao</title>
   <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/booking.css">
   <link rel="stylesheet" href="/assets/css/design-system.css">
-<link rel="stylesheet" href="/assets/css/groups.css">
+  <link rel="stylesheet" href="/assets/css/groups.css">
+  <script src="/assets/js/login.js" defer></script>
+  <% if (typeof turnstileSiteKey !== 'undefined' && turnstileSiteKey) { %>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <% } %>
 </head>
 <body class="demo-page"><div class="demo-shell">
   <%- include('partials/navigation') %>
@@ -39,6 +43,7 @@
       <p id="passwordHelp" class="demo-muted">Ít nhất 8 ký tự, không quá 72 byte.</p>
       <label for="confirmPassword">Nhập lại mật khẩu</label>
       <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" minlength="8" required>
+      <%- include('partials/bot-check') %>
       <button type="submit" class="demo-button"><%= isOwner ? 'Gửi đăng ký chủ sân' : 'Tạo tài khoản khách' %></button>
     </form>
     <p>Đã có tài khoản? <a href="/login">Đăng nhập</a>.</p>

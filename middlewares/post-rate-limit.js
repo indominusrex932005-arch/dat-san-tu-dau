@@ -105,6 +105,11 @@ export function createPostRateLimits() {
     login: createLimiter('LOGIN', 900, 60, '/login', {
       suffix: '_ACCOUNT_IP_MAX', max: 8, key: accountAndIpKey
     }),
+    loginVerify: createLimiter('LOGIN_VERIFY', 900, 30, '/login/verify'),
+    forgotPassword: createLimiter('FORGOT_PASSWORD', 900, 15, '/forgot-password', {
+      suffix: '_ACCOUNT_IP_MAX', max: 5, key: accountAndIpKey
+    }),
+    resetPassword: createLimiter('RESET_PASSWORD', 900, 15, '/forgot-password'),
     register: createLimiter('REGISTER', 900, 12, '/register'),
     registerOwner: createLimiter('REGISTER_OWNER', 900, 12, '/register/owner'),
     bookings: createLimiter('BOOKINGS', 600, 60, '/courts', {

@@ -11,7 +11,11 @@
   <link rel="stylesheet" href="/assets/css/demo.css">
   <link rel="stylesheet" href="/assets/css/login.css">
   <link rel="stylesheet" href="/assets/css/design-system.css">
-<link rel="stylesheet" href="/assets/css/groups.css">
+  <link rel="stylesheet" href="/assets/css/groups.css">
+  <script src="/assets/js/login.js" defer></script>
+  <% if (typeof turnstileSiteKey !== 'undefined' && turnstileSiteKey) { %>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <% } %>
 </head>
 <body class="demo-page login-page">
   <a class="login-skip-link" href="#login-content">Đến nội dung đăng nhập</a>
@@ -43,6 +47,11 @@
         <p class="login-card-eyebrow">Tài khoản của bạn</p>
         <h1 id="login-title"><%= title %></h1>
         <p class="login-card-description">Chào mừng bạn trở lại Sân Thể Thao.</p>
+        <% if (typeof successMessage !== 'undefined' && successMessage) { %>
+          <div class="login-success" role="status">
+            <p><%= successMessage %></p>
+          </div>
+        <% } %>
         <% if (errorMessage) { %>
           <div class="login-error" id="login-error" role="alert">
             <p class="login-error-title">Không thể đăng nhập</p>
@@ -54,7 +63,7 @@
           <% if (typeof checkoutId !== 'undefined') { %>
             <input type="hidden" name="checkoutId" value="<%= checkoutId %>">
             <input type="hidden" name="checkoutToken" value="<%= checkoutToken %>">
-            <p>Đơn được giữ tới <%= formatTime(checkoutDeadline) %> (giờ Việt Nam). Đăng nhập bằng email để quay lại đơn.</p>
+            <p class="login-checkout-notice">Đơn được giữ tới <%= formatTime(checkoutDeadline) %> (giờ Việt Nam). Đăng nhập bằng email để quay lại đơn.</p>
           <% } %>
           <div class="login-field">
             <label for="email">Email</label>
@@ -62,9 +71,16 @@
             <p class="login-field-help" id="login-email-help">Email bạn đã dùng khi đăng ký tài khoản.</p>
           </div>
           <div class="login-field">
-            <label for="password">Mật khẩu</label>
-            <input type="password" id="password" name="password" autocomplete="current-password" required>
+            <div class="login-field-head">
+              <label for="password">Mật khẩu</label>
+              <a class="login-forgot-link" href="/forgot-password">Quên mật khẩu?</a>
+            </div>
+            <div class="login-password-wrap">
+              <input type="password" id="password" name="password" autocomplete="current-password" required>
+              <button type="button" class="login-password-toggle" data-password-toggle aria-controls="password" aria-pressed="false">Hiện</button>
+            </div>
           </div>
+          <%- include('partials/bot-check') %>
           <button type="submit" class="login-submit">Đăng nhập <span aria-hidden="true">↗</span></button>
         </form>
         <p class="login-register">Chưa có tài khoản? <a href="/register">Đăng ký khách</a> hoặc <a href="/register/owner">đăng ký chủ sân</a>.</p>

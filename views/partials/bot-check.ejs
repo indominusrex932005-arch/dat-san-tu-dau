@@ -1,0 +1,17 @@
+<div class="login-hp-field" aria-hidden="true">
+  <label for="website">Website</label>
+  <input type="text" id="website" name="website" value="" tabindex="-1" autocomplete="off">
+</div>
+<% if (typeof captchaEnabled !== 'undefined' && captchaEnabled) { %>
+  <div class="login-field">
+    <label for="botAnswer">Mã xác minh CAPTCHA</label>
+    <div class="captcha-box">
+      <img src="/captcha.svg?t=<%= typeof captchaStamp !== 'undefined' ? captchaStamp : '' %>" alt="Mã CAPTCHA xác minh" class="captcha-image" width="180" height="54" data-captcha-image>
+      <button type="button" class="captcha-refresh" data-captcha-refresh>Đổi mã</button>
+    </div>
+    <input type="text" id="botAnswer" name="botAnswer" class="captcha-input" placeholder="Nhập 6 ký tự trên hình" maxlength="6" autocomplete="off" spellcheck="false" required>
+  </div>
+<% } %>
+<% if (typeof turnstileSiteKey !== 'undefined' && turnstileSiteKey) { %>
+  <div class="cf-turnstile" data-sitekey="<%= turnstileSiteKey %>"></div>
+<% } %>

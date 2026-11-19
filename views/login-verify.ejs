@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Sân Thể Thao</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/demo.css">
+  <link rel="stylesheet" href="/assets/css/login.css">
+  <link rel="stylesheet" href="/assets/css/design-system.css">
+  <link rel="stylesheet" href="/assets/css/groups.css">
+</head>
+<body class="demo-page login-page">
+  <div class="login-shell">
+    <%- include('partials/navigation') %>
+    <main class="login-main login-main-single" id="verify-content" tabindex="-1">
+      <section class="login-card" aria-labelledby="verify-title">
+        <p class="login-card-eyebrow">Bảo mật 2 bước</p>
+        <h1 id="verify-title"><%= title %></h1>
+        <p class="login-card-description">Chúng tôi đã gửi mã xác nhận gồm 6 chữ số đến <strong><%= maskedEmail %></strong>. Mã có hiệu lực trong 5 phút.</p>
+        <% if (typeof devOtpCode !== 'undefined' && devOtpCode) { %>
+          <div class="login-checkout-notice" role="status">
+            Chế độ dev (chưa cấu hình email thật): mã xác nhận của bạn là <strong><%= devOtpCode %></strong>.
+          </div>
+        <% } %>
+        <% if (infoMessage) { %>
+          <div class="login-success" role="status">
+            <p><%= infoMessage %></p>
+          </div>
+        <% } %>
+        <% if (errorMessage) { %>
+          <div class="login-error" role="alert">
+            <p class="login-error-title">Không thể xác nhận</p>
+            <p><%= errorMessage %></p>
+          </div>
+        <% } %>
+        <form action="/login/verify" method="POST" class="login-form">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="login-field">
+            <label for="code">Mã xác nhận 6 số</label>
+            <input type="text" id="code" name="code" class="login-otp-input" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" required>
+          </div>
+          <button type="submit" class="login-submit">Xác nhận đăng nhập <span aria-hidden="true">↗</span></button>
+        </form>
+        <form action="/login/verify/resend" method="POST" class="login-resend-form">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button type="submit" class="login-link-button">Chưa nhận được email? Gửi lại mã mới</button>
+        </form>
+        <p class="login-register"><a href="/login">← Đăng nhập bằng tài khoản khác</a></p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

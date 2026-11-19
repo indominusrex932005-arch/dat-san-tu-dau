@@ -3,6 +3,7 @@ import Court from '../models/Court.js';
 import Booking from '../models/Booking.js';
 import BookingRequest from '../models/BookingRequest.js';
 import { withinRequestWindow, createHold, getAvailability, getBookingForViewer, simulatePayment, createChangeRequest, expireHolds } from '../services/booking.service.js';
+import { prepareBotCheck } from '../middlewares/anti-bot.middleware.js';
 import { bookingReceiptReviewStatus } from '../services/payment-reconciliation.service.js';
 
 function tokenFrom(req) {
@@ -67,10 +68,13 @@ export async function checkoutChoice(req, res) {
   const booking = await getBookingForViewer(req.params.id, { token });
   const url = `/bookings/${booking._id}/checkout${tokenQuery(token)}`;
   if (booking.status !== 'HOLD' || req.currentUser) return res.redirect(303, url);
-  if (req.body.choice === 'login') return res.render('login', {
-    title: 'Đăng nhập để quản lý đơn', email: '', errorMessage: null,
-    checkoutId: String(booking._id), checkoutToken: token, checkoutDeadline: booking.holdExpiresAt
-  });
+  if (req.body.choice === 'login') {
+    prepareBotCheck(req, res);
+    return res.render('login', {
+      title: 'Đăng nhập để quản lý đơn', email: '', errorMessage: null,
+      checkoutId: String(booking._id), checkoutToken: token, checkoutDeadline: booking.holdExpiresAt
+    });
+  }
   if (req.body.choice !== 'guest') return res.sendStatus(400);
   req.session.guestChoices = Object.fromEntries(Object.entries(req.session.guestChoices || {}).filter(([, expires]) => expires > Date.now()));
   req.session.guestChoices[String(booking._id)] = Number(booking.holdExpiresAt);

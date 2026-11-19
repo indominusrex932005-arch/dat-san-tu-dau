@@ -6,7 +6,7 @@ export function csrfProtection(req, res, next) {
   }
   res.locals.csrfToken = req.session.csrfToken;
 
-  if (req.method !== 'POST') return next();
+  if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) return next();
 
   const submitted = req.get('X-CSRF-Token') || req.body?._csrf;
   const expected = req.session.csrfToken;

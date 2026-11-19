@@ -185,6 +185,117 @@ body.login-page {
   font-weight: 700;
 }
 
+.login-success {
+  margin: 0 0 23px;
+  padding: 14px 16px;
+  border: 1px solid #b8d8c4;
+  border-left: 3px solid #266b4c;
+  border-radius: 7px;
+  background: #f1fbf4;
+  color: #174b34;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.login-success p {
+  margin: 0;
+}
+
+.login-main-single {
+  grid-template-columns: minmax(0, 480px);
+  justify-content: center;
+}
+
+.login-field-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.login-forgot-link {
+  color: var(--login-muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-forgot-link:hover {
+  color: var(--login-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.login-otp-input {
+  text-align: center;
+  letter-spacing: 0.35em;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.login-resend-form {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.login-link-button {
+  padding: 6px 8px;
+  border: 0;
+  background: transparent;
+  color: var(--login-muted);
+  font: inherit;
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.login-link-button:hover {
+  color: var(--login-green);
+}
+
+.login-checkout-notice {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid #c9d8cd;
+  border-left: 3px solid var(--login-green);
+  border-radius: 7px;
+  background: #f2f7f3;
+  color: var(--login-green);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.login-password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.login-password-wrap input {
+  padding-right: 68px;
+}
+
+.login-password-toggle {
+  position: absolute;
+  right: 8px;
+  min-height: 36px;
+  padding: 4px 10px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--login-muted);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.login-password-toggle:hover {
+  color: var(--login-green);
+  background: #eef3ee;
+}
+
 .login-form {
   display: grid;
   gap: 21px;
@@ -250,6 +361,11 @@ body.login-page {
 
 .login-submit:hover {
   background: #285b48;
+}
+
+.login-submit:disabled {
+  opacity: 0.7;
+  cursor: wait;
 }
 
 .login-submit span {
