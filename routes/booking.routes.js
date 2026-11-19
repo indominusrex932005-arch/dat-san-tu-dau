@@ -1,12 +1,13 @@
 import express from 'express';
 import { requireAuth } from '../middlewares/auth.middleware.js';
 import {
-  createBooking, showCheckout, payDemo, showReceipt, showMyBookings, showRequestForm, sendRequest
+  checkoutChoice, createBooking, showCheckout, payDemo, showReceipt, showMyBookings, showRequestForm, sendRequest
 } from '../controllers/booking.controller.js';
 
 export default function createBookingRoutes(limitBookings) {
   const router = express.Router();
   router.post('/bookings', limitBookings, createBooking);
+  router.post('/bookings/:id/checkout-choice', checkoutChoice);
   router.get('/bookings/:id/checkout', showCheckout);
   router.post('/bookings/:id/demo-payment', payDemo);
   router.get('/bookings/:id/receipt', showReceipt);

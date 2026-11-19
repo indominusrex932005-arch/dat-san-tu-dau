@@ -10,6 +10,19 @@
   <%- include('partials/navigation') %>
   <% const facility = booking.facility || booking.court?.facility; const accessToken = typeof token === 'string' ? token : ''; const query = accessToken ? '?token=' + encodeURIComponent(accessToken) : ''; %>
   <main>
+    <% if (typeof askGuest !== 'undefined' && askGuest) { %>
+      <dialog open id="checkout-choice" class="demo-card" aria-labelledby="choice-title">
+        <h2 id="choice-title">Bạn muốn tiếp tục thế nào?</h2>
+        <p>Nếu tiếp tục với tư cách khách vãng lai, bạn cần gọi cơ sở để hủy hoặc đổi lịch.</p>
+        <form action="/bookings/<%= booking._id %>/checkout-choice" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="token" value="<%= accessToken %>">
+          <button class="demo-button" name="choice" value="login">Đăng nhập để quản lý đơn</button>
+          <button class="demo-button demo-button-secondary" name="choice" value="guest">Tiếp tục với tư cách khách vãng lai</button>
+        </form>
+      </dialog>
+      <script src="/assets/js/checkout-choice.js" defer></script>
+    <% } %>
+    <% if (booking.status === 'EXPIRED') { %><p role="alert">Đã hết hạn giữ chỗ. Hãy chọn lại ô giờ.</p><% } %>
     <p class="booking-eyebrow">GIỮ CHỖ / THANH TOÁN</p><h1>Kiểm tra đơn <%= booking.publicCode || booking._id %></h1>
     <% if (demoMode) { %><p class="booking-notice">BẢN DEMO — Chỉ dùng dữ liệu và tài khoản thử. Thanh toán được mô phỏng, không chuyển hoặc nhận tiền thật.</p><% } %>
     <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>

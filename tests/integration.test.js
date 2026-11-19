@@ -55,6 +55,53 @@ test('Đặt nhiều ô, vai trò, khách vãng lai và xử lý đơn trên Mon
     return result;
   }
 
+  await t.test('Checkout choice, retry, claim and expiry use the original guest HOLD', async () => {
+    const guest = browser();
+    const hold = await holdAs(guest, court, ['19:00'], futureDate(12));
+    const choice = `/bookings/${hold.id}/checkout-choice`;
+    assert.match((await guest.get(hold.checkout)).html, /id="checkout-choice"/);
+    await guest.post(choice, { choice: 'guest', token: hold.token });
+    assert.doesNotMatch((await guest.get(hold.checkout)).html, /id="checkout-choice"/);
+    const other = browser();
+    await other.get(hold.checkout);
+    const form = await other.post(choice, { choice: 'login', token: hold.token });
+    assert.match(form.html, /name="checkoutId"/);
+    const fields = { email: customer.email, checkoutId: hold.id, checkoutToken: hold.token };
+    assert.equal((await other.post('/login', { ...fields, password: 'wrong' })).status, 401);
+    assert.equal((await Booking.findById(hold.id)).user, null);
+    assert.equal((await other.post('/login', { ...fields, password, checkoutToken: '0'.repeat(64) })).status, 403);
+    const login = await other.post('/login', { ...fields, password });
+    assert.equal(login.location, `/bookings/${hold.id}/checkout`);
+    assert.doesNotMatch((await other.get(login.location)).html, /id="checkout-choice"/);
+    assert.equal(String((await Booking.findById(hold.id)).user), String(customer._id));
+    denial(await guest.get(hold.checkout));
+    const expired = await holdAs(guest, court, ['20:00'], futureDate(12));
+    await guest.post(`/bookings/${expired.id}/checkout-choice`, { choice: 'login', token: expired.token });
+    await Booking.updateOne({ _id: expired.id }, { holdExpiresAt: new Date(Date.now() - 1) });
+    const retry = await guest.post('/login', { ...fields, password, checkoutId: expired.id, checkoutToken: expired.token });
+    assert.equal((await guest.get(retry.location)).status, 410);
+    assert.equal(await SlotLock.countDocuments({ booking: expired.id }), 0);
+  });
+
+  await t.test('CANCEL và CHANGE chấp nhận đúng 36 giờ, từ chối thiếu 1 ms', async t => {
+    const hold = await holdAs(customerBrowser, court, ['06:00', '09:00'], futureDate(9));
+    await payAs(customerBrowser, hold);
+    const booking = await Booking.findById(hold.id);
+    const cutoff = Number(booking.slots[0].startAt) - 36 * 3600000;
+    const { createChangeRequest } = await import('../services/booking.service.js');
+    const clock = t.mock.method(Date, 'now', () => cutoff + 1);
+    for (const type of ['CHANGE', 'CANCEL']) {
+      const body = { type, reason: 'Kiểm thử giới hạn', requestedCourt: String(secondCourt._id),
+        requestedDate: futureDate(5), requestedTimes: ['10:00'] };
+      clock.mock.mockImplementation(() => cutoff + 1);
+      await assert.rejects(createChangeRequest(hold.id, customer, body), /36 giờ/);
+      clock.mock.mockImplementation(() => cutoff);
+      const request = await createChangeRequest(hold.id, customer, body);
+      assert.equal(request.status, 'PENDING');
+      await BookingRequest.deleteOne({ _id: request._id });
+    }
+  });
+
   await t.test('Đăng ký khách kiểm tra dữ liệu, CSRF và không nhận quyền từ client', async () => {
     const client = browser();
     assert.equal((await client.get('/register')).status, 200);

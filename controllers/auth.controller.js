@@ -1,3 +1,4 @@
+import { claimGuestHold, getBookingForViewer } from '../services/booking.service.js';
 import bcrypt from 'bcryptjs';
 import User from '../models/User.js';
 
@@ -114,6 +115,14 @@ export async function login(req, res) {
   const body = req.body ?? {};
   const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
   const password = body.password;
+  const { checkoutId, checkoutToken } = body;
+  let checkoutUrl;
+  if (checkoutId !== undefined) {
+    const booking = await getBookingForViewer(checkoutId, { token: checkoutToken });
+    checkoutUrl = `/bookings/${booking._id}/checkout?token=${encodeURIComponent(checkoutToken)}`;
+    if (booking.status !== 'HOLD') return res.redirect(303, checkoutUrl);
+    Object.assign(res.locals, { checkoutId, checkoutToken, checkoutDeadline: booking.holdExpiresAt });
+  }
 
   if (!email || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     || typeof password !== 'string' || !password || Buffer.byteLength(password, 'utf8') > 72) {
@@ -140,6 +149,10 @@ export async function login(req, res) {
   await new Promise((resolve, reject) => {
     req.session.save(error => error ? reject(error) : resolve());
   });
+  if (checkoutUrl) {
+    const claimed = await claimGuestHold(checkoutId, checkoutToken, user);
+    return res.redirect(303, claimed ? `/bookings/${checkoutId}/checkout` : checkoutUrl);
+  }
   res.redirect(303, destination(user));
 }
 

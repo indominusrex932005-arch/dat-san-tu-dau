@@ -2,7 +2,7 @@ import { PAGE_SIZE, pageNumber, pageInfo } from '../utils/pagination.js';
 import Court from '../models/Court.js';
 import Booking from '../models/Booking.js';
 import BookingRequest from '../models/BookingRequest.js';
-import { createHold, getAvailability, getBookingForViewer, simulatePayment, createChangeRequest, expireHolds } from '../services/booking.service.js';
+import { withinRequestWindow, createHold, getAvailability, getBookingForViewer, simulatePayment, createChangeRequest, expireHolds } from '../services/booking.service.js';
 import { bookingReceiptReviewStatus } from '../services/payment-reconciliation.service.js';
 
 function tokenFrom(req) {
@@ -57,8 +57,24 @@ export async function showCheckout(req, res) {
   if (booking.status === 'CONFIRMED') return res.redirect(303, `/bookings/${booking._id}/receipt${tokenQuery(token)}`);
   const reviewStatus = req.app.locals.demoMode ? await bookingReceiptReviewStatus(booking) : null;
   res.status(booking.status === 'EXPIRED' ? 410 : 200).render('booking-checkout', {
+    askGuest: !req.currentUser && !booking.user && booking.status === 'HOLD' && !req.session.guestChoices?.[String(booking._id)],
     title: 'Kiểm tra và thanh toán', booking, token, errorMessage: null, serverNow: new Date().toISOString(), reviewStatus
   });
+}
+
+export async function checkoutChoice(req, res) {
+  const token = tokenFrom(req);
+  const booking = await getBookingForViewer(req.params.id, { token });
+  const url = `/bookings/${booking._id}/checkout${tokenQuery(token)}`;
+  if (booking.status !== 'HOLD' || req.currentUser) return res.redirect(303, url);
+  if (req.body.choice === 'login') return res.render('login', {
+    title: 'Đăng nhập để quản lý đơn', email: '', errorMessage: null,
+    checkoutId: String(booking._id), checkoutToken: token, checkoutDeadline: booking.holdExpiresAt
+  });
+  if (req.body.choice !== 'guest') return res.sendStatus(400);
+  req.session.guestChoices = Object.fromEntries(Object.entries(req.session.guestChoices || {}).filter(([, expires]) => expires > Date.now()));
+  req.session.guestChoices[String(booking._id)] = Number(booking.holdExpiresAt);
+  return res.redirect(303, url);
 }
 
 export async function payDemo(req, res) {
@@ -94,6 +110,7 @@ export async function showRequestForm(req, res) {
     throw Object.assign(new Error('Bạn chỉ được gửi yêu cầu cho đơn của mình.'), { status: 403 });
   }
   if (booking.checkedInAt) throw Object.assign(new Error('Đơn đã check-in, không thể hủy hoặc đổi lịch.'), { status: 409 });
+  if (!withinRequestWindow(booking)) throw Object.assign(new Error('Cần gửi yêu cầu trước ô đầu tiên ít nhất 36 giờ.'), { status: 409 });
   const courts = await Court.find({ facility: booking.facility?._id, active: true }).sort({ name: 1 }).lean();
   res.render('booking-request', { title: 'Yêu cầu hủy hoặc đổi sân', booking, courts, token: '', errorMessage: null });
 }

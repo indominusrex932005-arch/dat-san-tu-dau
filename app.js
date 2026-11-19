@@ -1,3 +1,4 @@
+import { withinRequestWindow } from './services/booking.service.js';
 import express from 'express';
 import groupRoutes from './routes/play-group.routes.js';
 import session from 'express-session';
@@ -34,6 +35,7 @@ export default function createApp(sessionStore, {
   getPaymentConfig();
 
   const app = express();
+  app.locals.withinRequestWindow = withinRequestWindow;
   app.set('view engine', 'ejs');
   app.set('views', fileURLToPath(new URL('./views', import.meta.url)));
   app.locals.formatMoney = formatMoney;

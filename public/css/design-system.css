@@ -86,7 +86,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #76a838; outline-offs
 .owner-stat, .facilities-count, .courts-count { background: #e1f0dc; border-color: #c8e1c2; }
 .owner-kicker, .courts-eyebrow, .facilities-eyebrow, .booking-eyebrow { color: #347443; }
 .booking-slot.available { border-color: #a7cfac; background: #f1faef; }
-.booking-slot.available:has(input:checked) { border-color: #087a52; background: #d9efce; box-shadow: inset 0 0 0 1px #087a52; }
+.booking-slot.available:has(input:checked) { color: var(--site-forest); border-color: #087a52; background: #d9efce; box-shadow: inset 0 0 0 1px #087a52; }
 .media-cover { background: #dcead5; }
 .media-lightbox { color: #fff; }
 [hidden] { display: none !important; }

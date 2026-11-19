@@ -41,11 +41,11 @@
       <%- include('partials/extra-summary', { lines: booking.extras || [] }) %>
       <p class="booking-total"><span>Tổng giá đơn</span><strong><%= formatMoney(booking.totalPrice) %></strong></p>
       <p><strong>Điện thoại cơ sở:</strong> <% if (facility?.phone) { %><a href="tel:<%= facility.phone %>"><%= facility.phone %></a><% } else { %>Chưa có số liên hệ.<% } %></p>
-      <p class="demo-muted"><%= booking.user ? 'Khách có tài khoản có thể gửi yêu cầu hủy/đổi; chủ sân sẽ xem xét và xử lý.' : 'Khách vãng lai cần gọi chủ sân khi muốn hủy/đổi. Mã đơn giúp tra cứu, không tự cấp quyền hủy đơn.' %></p>
+      <p class="demo-muted"><%= booking.user ? 'Cần gửi yêu cầu trước ô đầu tiên ít nhất 36 giờ. Khách có tài khoản có thể gửi yêu cầu hủy/đổi; chủ sân sẽ xem xét và xử lý.' : 'Khách vãng lai cần gọi chủ sân khi muốn hủy/đổi. Mã đơn giúp tra cứu, không tự cấp quyền hủy đơn.' %></p>
       <p class="booking-receipt-footer">Chủ sân đối chiếu đơn trên hệ thống. Phiếu hoặc ảnh chụp không thay thế việc xác minh tiền.</p>
     </article>
     <div class="demo-actions no-print"><% if (owned && booking.status === 'CONFIRMED' && !booking.checkedInAt) { %><a class="demo-button" href="/groups/new">Rủ bạn chia tiền sân</a><% } %>
-      <% if (owned && !booking.checkedInAt && ['CONFIRMED', 'LEGACY_RESERVED'].includes(booking.status) && booking.slots?.length && booking.slots.every(slot => new Date(slot.startAt).getTime() > Date.now())) { %>
+      <% if (owned && !booking.checkedInAt && ['CONFIRMED', 'LEGACY_RESERVED'].includes(booking.status) && withinRequestWindow(booking)) { %>
         <a class="demo-button demo-button-secondary" href="/bookings/<%= booking._id %>/request">Gửi yêu cầu hủy / đổi</a>
       <% } %>
       <% if (booking.status === 'HOLD') { %><a class="demo-button" href="/bookings/<%= booking._id %>/checkout<%= query %>">Tiếp tục xem giữ chỗ</a><% } %>
