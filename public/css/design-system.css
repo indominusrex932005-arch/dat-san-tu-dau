@@ -5,17 +5,56 @@
   --site-green: #087a52;
   --site-lime: #c7ed71;
   --site-canvas: #f2f6ef;
-  --site-line: #d6e5d7;
-  --site-muted: #526d60;
-  --site-shadow: 0 14px 38px rgba(10, 66, 45, .08);
+  --site-surface: #ffffff;
+  --site-surface-soft: #eef4ec;
+  --site-line: #d4e2d5;
+  --site-muted: #4b675a;
+  --site-shadow: 0 10px 28px rgba(10, 66, 45, .07);
+  --site-shadow-hover: 0 16px 36px rgba(10, 66, 45, .11);
 }
-body.demo-page, body.home-page, body.facilities-page {
+::selection {
+  background: #c7ed71;
+  color: #0b3528;
+}
+html {
+  scroll-behavior: smooth;
+  scrollbar-color: #b4cbb8 var(--site-canvas);
+}
+body.demo-page, body.home-page, body.facilities-page, body.courts-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: var(--site-canvas);
   color: var(--site-ink);
   font-family: Inter, 'Segoe UI', Arial, sans-serif;
+  caret-color: var(--site-forest);
+  -webkit-font-smoothing: antialiased;
 }
-body h1, body h2, body h3 { color: var(--site-ink); letter-spacing: -.035em; }
-body a { color: var(--site-forest); }
+body.demo-page > .demo-shell,
+body.demo-page > .login-shell,
+body.demo-page > .my-bookings-shell,
+body.home-page > main,
+body.facilities-page > .facilities-shell,
+body.courts-page > .courts-shell {
+  flex: 1 0 auto;
+}
+body h1, body h2, body h3 {
+  color: var(--site-ink);
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+body p {
+  text-wrap: pretty;
+}
+body a {
+  color: var(--site-forest);
+  text-underline-offset: 0.2em;
+}
+.demo-price, .my-bookings-total-price, .my-bookings-slot-time, .my-bookings-slot-price,
+.my-bookings-code, .owner-stat strong, .booking-total strong, .booking-countdown,
+.group-hero-price strong, .group-price strong {
+  font-variant-numeric: tabular-nums;
+}
 .demo-shell, .login-shell, .home-shell, .facilities-shell, .my-bookings-shell {
   width: min(1184px, calc(100% - 48px));
   margin-inline: auto;
@@ -46,6 +85,7 @@ body a { color: var(--site-forest); }
   transition: background-color .18s ease, box-shadow .18s ease, transform .18s ease;
 }
 .demo-button:hover, .my-bookings-btn-primary:hover, .my-bookings-btn-receipt:hover, .home-button:hover, .courts-button:hover, .courts-filter-submit:hover, .media-button-primary:hover { background: var(--site-green); border-color: var(--site-green); color: #fff; }
+.demo-button:active, .my-bookings-btn-primary:active, .my-bookings-btn-receipt:active, .home-button:active, .courts-button:active { transform: translateY(1px); }
 .demo-button-secondary, .my-bookings-btn-request, .media-button:not(.media-button-primary) { background: #e8f2e6; border-color: #c8dfc9; color: var(--site-forest); }
 .demo-button-secondary:hover, .my-bookings-btn-request:hover { background: #d5eacb; color: #064b37; border-color: #afd0ac; }
 .demo-page input:not([type=checkbox]):not([type=radio]), .demo-page select, .demo-page textarea {
@@ -57,7 +97,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #76a838; outline-offs
 .demo-error, .booking-notice, .owner-note { line-height: 1.6; }
 /* Trang chủ */
 .home-hero { gap: clamp(30px, 5vw, 72px); }
-.home-hero h1 { font-family: Inter, 'Segoe UI', Arial, sans-serif; font-weight: 800; letter-spacing: -.055em; line-height: 1.05; }
+.home-hero h1 { font-family: 'Playfair Display', Georgia, serif; font-weight: 600; letter-spacing: -.025em; line-height: 1.1; }
 .home-eyebrow, .media-kicker { color: #397345; }
 .home-status-dot { background: #75ac36; }
 .home-hero-description { color: #426352; }
@@ -69,12 +109,12 @@ a:focus-visible, button:focus-visible { outline: 3px solid #76a838; outline-offs
 .home-facility-body h3, .courts-card h2, .facilities-card h2 { color: var(--site-ink); }
 .media-card-tag { color: #367148; }
 /* Lịch sử đặt sân */
-.my-bookings-header { margin-bottom: 30px; padding: 28px 30px; border-radius: 20px; color: #fff; background: linear-gradient(120deg, #064b37, #0b7650); box-shadow: var(--site-shadow); }
+.my-bookings-header { margin-bottom: 30px; padding: 28px 30px; border-radius: 20px; color: #fff; background: #084835; border: 1px solid #0e5f47; box-shadow: var(--site-shadow); }
 .my-bookings-header .my-bookings-eyebrow { color: #c7ed71; }
 .my-bookings-header .my-bookings-title { color: #fff; font-size: clamp(28px, 3vw, 38px); }
 .my-bookings-header .my-bookings-desc { color: #e0f2e3; }
 .my-bookings-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; align-items: stretch; }
-.my-bookings-card { padding: 25px; border-top: 4px solid #b9d88e; }
+.my-bookings-card { padding: 25px; border: 1px solid var(--site-line); }
 .my-bookings-court-name { color: var(--site-ink); }
 .my-bookings-card-top { gap: 10px; }
 .my-bookings-card .my-bookings-code-wrap { min-width: 0; }
@@ -90,22 +130,136 @@ a:focus-visible, button:focus-visible { outline: 3px solid #76a838; outline-offs
 .media-cover { background: #dcead5; }
 .media-lightbox { color: #fff; }
 [hidden] { display: none !important; }
+/* Footer toàn trang */
+.site-footer {
+  margin-top: 64px;
+  background: #0b3528;
+  color: #dce9e0;
+  border-top: 1px solid #164e3c;
+}
+.site-footer-inner {
+  width: min(1184px, calc(100% - 48px));
+  margin-inline: auto;
+  padding: 52px 0 32px;
+}
+.site-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) repeat(3, minmax(0, 1fr));
+  gap: 32px 40px;
+}
+.site-footer-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  text-decoration: none;
+}
+.site-footer-mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: #14533f;
+  border: 1px solid rgba(199, 237, 113, .28);
+}
+.site-footer-mark svg {
+  width: 24px;
+  height: 24px;
+  stroke: #c7ed71;
+  stroke-width: 1.5;
+}
+.site-footer-dot {
+  color: #c7ed71;
+}
+.site-footer-tagline {
+  max-width: 34ch;
+  margin: 14px 0 10px;
+  color: #c9ddd0;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.site-footer-meta {
+  margin: 0;
+  color: #93b4a2;
+  font-size: 12.5px;
+}
+.site-footer-col h2 {
+  margin: 0 0 14px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.site-footer-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 9px;
+}
+.site-footer-col a {
+  color: #cfe0d4;
+  font-size: 14px;
+  text-decoration: none;
+  transition: color .15s ease;
+}
+.site-footer-col a:hover, .site-footer-col a:focus-visible {
+  color: #c7ed71;
+  text-decoration: underline;
+}
+.site-footer-rules li {
+  color: #b8cfc1;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.site-footer-rules strong {
+  color: #eef6f0;
+}
+.site-footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px 24px;
+  margin-top: 36px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, .12);
+  font-size: 13px;
+  color: #97b6a5;
+}
+.site-footer-bottom p {
+  margin: 0;
+}
+@media (max-width: 960px) {
+  .site-footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 @media (max-width: 760px) {
-  .demo-shell, .login-shell, .home-shell, .facilities-shell, .my-bookings-shell { width: calc(100% - 32px); }
+  .demo-shell, .login-shell, .home-shell, .facilities-shell, .my-bookings-shell, .site-footer-inner { width: calc(100% - 32px); }
+  .site-footer { margin-top: 44px; }
+  .site-footer-inner { padding: 38px 0 26px; }
+  .site-footer-grid { grid-template-columns: minmax(0, 1fr); gap: 26px; }
   .demo-nav { min-height: 0; gap: 12px; margin-bottom: 26px; }
   .demo-nav-links { width: 100%; gap: 4px; }
   .demo-nav-links > a { min-height: 40px; padding: 8px 10px; font-size: 13px; }
   .demo-user { font-size: 12px; }
-  .home-hero h1 { font-size: clamp(38px, 10vw, 52px); }
+  .home-hero h1 { font-size: clamp(34px, 9vw, 48px); }
   .my-bookings-header { padding: 23px 22px; }
   .my-bookings-card { padding: 20px; }
   .owner-heading, .courts-intro { padding: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   .demo-button, .my-bookings-btn-primary, .my-bookings-btn-receipt, .home-button, .courts-button, .courts-filter-submit, .media-button-primary { transition: none; }
 }
 @media print {
-  .demo-nav, .booking-receipt-actions, .no-print { display: none !important; }
+  .demo-nav, .site-footer, .booking-receipt-actions, .no-print { display: none !important; }
   body.demo-page { background: #fff; }
   .demo-card { box-shadow: none; }
 }

@@ -2,6 +2,7 @@ import js from '@eslint/js';
 import globals from 'globals';
 
 export default [
+  { ignores: ['.github/skills/**', '.impeccable/**'] },
   js.configs.recommended,
   {
     files: ['**/*.js'],
