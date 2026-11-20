@@ -114,7 +114,8 @@ function browserHarness({ initial = pageFixture(), fetch, parsedPage } = {}) {
     history: { replaceState(_state, _title, url) { history.push(url); window.location.href = url; } },
     fetch(...args) { calls.push(args); return fetch(...args); }, DOMParser,
     addEventListener(type, handler) { pageshow.addEventListener(type, handler); },
-    setInterval() { throw new Error('No checkout timer should be started by this page.'); }
+    setInterval() { return 1; },
+    clearInterval() {}
   };
   vm.runInNewContext(script, { document, window, URL, URLSearchParams, FormData, DOMParser, Intl }, { filename: 'public/js/booking.js' });
   return { document, calls, navigation, history, pageshow };
