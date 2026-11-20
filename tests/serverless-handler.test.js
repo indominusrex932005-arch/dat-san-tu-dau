@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { EventEmitter } from 'node:events';
 import { createServerlessHandler } from '../services/serverless-handler.js';
 
 function response() {
@@ -61,4 +62,34 @@ test('Lỗi dọn hạn không bỏ qua bảo vệ; lần sau thử lại mà kh
   assert.equal(requests, 0);
   await handler({}, response());
   assert.deepEqual([starts, cleanups, requests], [1, 2, 1]);
+});
+
+test('Serverless đợi response finish bất đồng bộ và gỡ helper Vercel xung đột Express 5', async () => {
+  let finished = false;
+  let sawCleanReq = false;
+  let sawCleanRes = false;
+  const handler = createServerlessHandler({
+    initialize: async () => (req, res) => {
+      sawCleanReq = !Object.hasOwn(req, 'body') && !Object.hasOwn(req, 'query') && !Object.hasOwn(req, 'cookies');
+      sawCleanRes = !Object.hasOwn(res, 'send') && !Object.hasOwn(res, 'status') && !Object.hasOwn(res, 'json') && !Object.hasOwn(res, 'redirect');
+      setTimeout(() => {
+        finished = true;
+        res.emit('finish');
+      }, 15);
+    },
+    expireHolds: async () => {}
+  });
+  const req = {};
+  Object.defineProperty(req, 'body', { configurable: true, get() { throw new Error('getter must not run'); } });
+  Object.defineProperty(req, 'query', { configurable: true, value: { fromVercel: '1' } });
+  Object.defineProperty(req, 'cookies', { configurable: true, value: {} });
+  const res = new EventEmitter();
+  res.send = () => {};
+  res.status = () => res;
+  res.json = () => {};
+  res.redirect = () => {};
+  await handler(req, res);
+  assert.equal(sawCleanReq, true);
+  assert.equal(sawCleanRes, true);
+  assert.equal(finished, true);
 });

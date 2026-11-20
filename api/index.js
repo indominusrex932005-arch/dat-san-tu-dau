@@ -15,6 +15,7 @@ import Booking from '../models/Booking.js';
 import Facility from '../models/Facility.js';
 import SlotLock from '../models/SlotLock.js';
 import Payment from '../models/Payment.js';
+import PaymentReceipt from '../models/PaymentReceipt.js';
 import BookingRequest from '../models/BookingRequest.js';
 
 async function initialize() {
@@ -26,7 +27,7 @@ async function initialize() {
   try {
     await connectDatabase({ maxPoolSize: 5, minPoolSize: 0 });
     await assertDatabaseCompatibility();
-    await Promise.all([PlayGroup, ExtraService, User, Facility, Court, Booking, SlotLock, Payment, BookingRequest].map(model => model.init()));
+    await Promise.all([PlayGroup, ExtraService, User, Facility, Court, Booking, SlotLock, Payment, PaymentReceipt, BookingRequest].map(model => model.init()));
     store = MongoStore.create({
       client: mongoose.connection.getClient(), dbName: mongoose.connection.name,
       collectionName: 'sessions', ttl: 8 * 60 * 60, autoRemove: 'native'
@@ -43,5 +44,4 @@ async function initialize() {
 }
 
 // Express parses the original form/multipart stream. Never run server.js here.
-export const config = { maxDuration: 60 };
 export default createServerlessHandler({ initialize, expireHolds });

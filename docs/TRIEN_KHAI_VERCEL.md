@@ -4,18 +4,18 @@
 
 Nhánh `feat/trien-khai-vercel` được tạo từ `feat/san-ghep-va-dich-vu` (512776d), nên có cả sân ghép, dịch vụ, giao diện và ảnh QR demo. Chưa cần merge main để thử Preview. Đây là cấu hình chuẩn bị triển khai; chưa phải bằng chứng website đã chạy trên Vercel.
 
-`api/index.js` khởi tạo Express/MongoStore một lần cho mỗi function instance, dùng chung promise giữa request đồng thời; lỗi khởi tạo được phép thử lại. Mongo pool tối đa 5 kết nối/instance. View EJS và tài nguyên `public` được đóng gói cùng function; `/assets` vẫn do Express phục vụ. Node 24 được khai báo trong package.json. `npm start` tiếp tục chạy Node/Render như cũ.
+`api/index.js` khởi tạo Express/MongoStore một lần cho mỗi function instance, dùng chung promise giữa request đồng thời; lỗi khởi tạo được phép thử lại. Mongo pool tối đa 5 kết nối/instance và trên Vercel không ghi đè DNS nền tảng (`dns.setServers`). View EJS và tài nguyên `public` được đóng gói cùng function qua `functions["api/index.js"].includeFiles` trong `vercel.json`; `/assets` vẫn do Express phục vụ. Node 24 được khai báo trong `package.json`. `npm start` tiếp tục chạy Node/Render như cũ.
 
-Builder tắt `helpers` của Vercel Node để giữ stream request cho Express/Multer tự parse, thay vì thêm parser trước middleware của ứng dụng.
+`vercel.json` dùng cấu hình hiện đại (`framework: null`, `functions`, `rewrites`) thay cho `builds`/`routes` cũ để tránh Vercel nhận nhầm `app.js` ở gốc. `services/serverless-handler.js` gỡ các helper `req`/`res` do `@vercel/node` gắn thêm trước khi chuyển vào Express 5/Multer và chờ `res` hoàn tất (`finish`/`close`) trước khi kết thúc lời gọi function.
 
 Không dùng interval trên function. Request sau mỗi 30 giây sẽ đợi dọn HOLD hết hạn; khi không có truy cập, trạng thái DB có thể chưa đổi ngay. Deadline vẫn được kiểm tra trong nghiệp vụ giữ/thanh toán, nên không thể dùng thời gian function ngủ để thanh toán đơn quá hạn.
 
 ## Import từ GitHub
 
-1. Đăng nhập [Vercel](https://vercel.com/new), chọn **Add New → Project → Import Git Repository** và repo `indominusrex932005-arch/dat-san-tu-dau`.
-2. Chọn nhánh **feat/trien-khai-vercel** làm nhánh triển khai. Nếu trang Import chỉ hiện main, đặt Production Branch trong Project Settings → Git rồi redeploy đúng nhánh; kiểm tra SHA trước khi thử.
-3. Root Directory để gốc repo; Framework Preset **Other**. Không thêm `npm start` vào Build Command: Vercel dùng builder Node trong vercel.json, không giữ một server mở cổng.
-4. Điền các biến bên dưới trong giao diện riêng. Không thêm file `.env` lên GitHub; xóa key `DEMO_MODE` nếu đã khai báo.
+1. Đăng nhập [Vercel](https://vercel.com/new), chọn **Add New → Project → Import Git Repository** và chọn repo GitHub của bạn.
+2. Chọn nhánh triển khai (ví dụ `main`).
+3. Root Directory để gốc repo; Framework Preset **Other** (`vercel.json` đã khóa `"framework": null`). Không thêm `npm start` vào Build Command: Vercel dùng function `api/index.js`, không giữ một server mở cổng.
+4. Điền các biến bên dưới trong Project Settings → Environment Variables. Không commit file `.env` lên GitHub; xóa key `DEMO_MODE` nếu đã khai báo.
 
 | Biến | Giá trị |
 | --- | --- |
