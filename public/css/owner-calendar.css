@@ -713,3 +713,121 @@ body.owner-calendar-page {
     scroll-behavior: auto;
   }
 }
+
+
+.owner-calendar-page .owner-calendar-scroll {
+  position: relative;
+  overflow-x: auto;
+}
+
+.owner-calendar-page .owner-calendar-heading-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.owner-calendar-page .owner-calendar-jump-now {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 13px;
+  border: 1px solid #d9a520;
+  border-radius: 999px;
+  background: #fdf6df;
+  color: #173f35;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background-color .16s ease, transform .14s ease;
+}
+
+.owner-calendar-page .owner-calendar-jump-now:hover {
+  background: #f8e8b8;
+  transform: translateY(-1px);
+}
+
+.owner-calendar-page .owner-calendar-now-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d9a520;
+  box-shadow: 0 0 0 3px rgba(217, 165, 32, .25);
+}
+
+.owner-calendar-page .owner-calendar-table th.is-current-slot {
+  background: #fdf4d4 !important;
+  color: #6b4b06 !important;
+  box-shadow: inset 0 -3px 0 #d9a520;
+}
+
+.owner-calendar-page .owner-calendar-now-line {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  margin-left: -1px;
+  z-index: 3;
+  background: #d9a520;
+  box-shadow: 0 0 8px rgba(217, 165, 32, .45);
+  pointer-events: none;
+  transition: left .4s ease;
+}
+
+.owner-calendar-page .owner-calendar-now-dot {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: #d9a520;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px rgba(217, 165, 32, .38);
+}
+
+.owner-calendar-page .owner-calendar-table td {
+  transition: background-color .35s ease, color .35s ease;
+}
+
+.owner-calendar-page .owner-calendar-table td[data-status="SERVED"] {
+  color: #4b6859;
+  background: #e9f0eb;
+}
+
+.owner-calendar-page .owner-calendar-table td.is-status-transition {
+  animation: owner-slot-fade .45s ease-out;
+}
+
+@keyframes owner-slot-fade {
+  0% { opacity: .45; transform: scale(.97); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-jump-now {
+  background: #2f2711;
+  border-color: #e5b73b;
+  color: #fbe7a8;
+}
+
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-table th.is-current-slot {
+  background: #2d2612 !important;
+  color: #f8de88 !important;
+  box-shadow: inset 0 -3px 0 #e5b73b;
+}
+
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-now-line,
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-now-dot {
+  background: #e5b73b;
+}
+
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-now-dot {
+  border-color: #13231e;
+}
+
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-table td[data-status="SERVED"] {
+  color: #93b0a2;
+  background: #172721;
+}

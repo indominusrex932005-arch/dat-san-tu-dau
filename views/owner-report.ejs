@@ -2,20 +2,21 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> | Sân Thể Thao</title>
+  <title><%= title %> | SanXanh</title>
   <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/owner.css">
   <link rel="stylesheet" href="/assets/css/design-system.css">
 <link rel="stylesheet" href="/assets/css/groups.css">
+  <script src="/assets/js/booking-pickers.js" defer></script>
 </head>
 <body class="demo-page"><div class="demo-shell">
   <%- include('partials/navigation') %>
   <main>
-    <a href="/owner">← Quản lý cơ sở</a>
+    <%- include('partials/back-link', { href: '/owner', label: 'Quản lý cơ sở' }) %>
     <h1>Báo cáo thu / hoàn mô phỏng</h1><p><%= facility.name %></p>
     <p class="owner-note"><strong>SỐ LIỆU MÔ PHỎNG — không xác minh tiền ngân hàng.</strong> Báo cáo tính theo ngày ghi nhận giao dịch (giờ Việt Nam), không theo ngày chơi. Không cộng yêu cầu thanh toán đang chờ hoặc giao dịch QR thử nghiệm.</p>
     <form method="GET" action="/owner/reports" class="demo-form demo-card">
-      <label for="from">Từ ngày</label><input id="from" type="date" name="from" value="<%= from %>" required>
-      <label for="to">Đến ngày</label><input id="to" type="date" name="to" value="<%= to %>" required>
+      <label for="from">Từ ngày</label><%- include('partials/booking-picker-field', { id: 'from', name: 'from', value: from, required: true }) %>
+      <label for="to">Đến ngày</label><%- include('partials/booking-picker-field', { id: 'to', name: 'to', value: to, required: true }) %>
       <button class="demo-button" type="submit">Xem báo cáo</button>
     </form>
     <section class="owner-stat-grid" aria-label="Tổng hợp thu hoàn">

@@ -3,10 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> | Sân Thể Thao</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  <title><%= title %> | SanXanh</title>
   <link rel="stylesheet" href="/assets/css/app.css">
   <link rel="stylesheet" href="/assets/css/demo.css">
   <link rel="stylesheet" href="/assets/css/login.css">
@@ -23,9 +20,8 @@
     <%- include('partials/navigation') %>
     <main class="login-main" id="login-content" tabindex="-1">
       <section class="login-intro" aria-labelledby="login-intro-title">
-        <p class="login-eyebrow"><span aria-hidden="true">✳</span> Hẹn nhau ở sân</p>
-        <p class="login-intro-title" id="login-intro-title">Trở lại sân,<br>tiếp nối niềm vui.</p>
-        <p class="login-description">Đăng nhập để quản lý lượt đặt hoặc cơ sở của bạn. Khách đặt sân, chủ sân và quản trị viên dùng chung trang đăng nhập này.</p>
+        <p class="login-intro-title" id="login-intro-title">Quản lý lượt đặt sân</p>
+        <p class="login-description">Xem phiếu đặt sân và theo dõi yêu cầu hủy hoặc đổi lịch trong tài khoản.</p>
         <div class="login-art" aria-hidden="true">
           <svg viewBox="0 0 440 230" fill="none" focusable="false">
             <circle cx="361" cy="49" r="29" fill="#ead684" />
@@ -39,14 +35,12 @@
             <circle cx="378" cy="179" r="16" fill="#e5ebda" stroke="#8b9d4b" stroke-width="1.5" />
             <path d="M369 166c-1 12 6 23 21 25M367 188c12 0 22-7 25-17" stroke="#8b9d4b" stroke-width="1.5" />
           </svg>
-          <p>Thêm vận động. Thêm kết nối.</p>
         </div>
       </section>
 
       <section class="login-card" aria-labelledby="login-title">
-        <p class="login-card-eyebrow">Tài khoản của bạn</p>
         <h1 id="login-title"><%= title %></h1>
-        <p class="login-card-description">Chào mừng bạn trở lại Sân Thể Thao.</p>
+        <p class="login-card-description">Dùng tài khoản của bạn để xem đơn hoặc quản lý cơ sở.</p>
         <% if (typeof successMessage !== 'undefined' && successMessage) { %>
           <div class="login-success" role="status">
             <p><%= successMessage %></p>

@@ -119,7 +119,7 @@ function sendViaGmailSmtp({ user, pass, to, subject, text, html, timeoutMs = 100
         await sendCommand(`MAIL FROM:<${user}>`, [250]);
         await sendCommand(`RCPT TO:<${to}>`, [250, 251]);
         await sendCommand('DATA', [354]);
-        const mime = buildMimeMessage({ from: `Sân Thể Thao <${user}>`, to, subject, text, html });
+        const mime = buildMimeMessage({ from: `SanXanh <${user}>`, to, subject, text, html });
         socket.write(`${mime}\r\n.\r\n`);
         const dataReply = await readReply();
         if (dataReply.code !== 250) throw new Error(`SMTP_${dataReply.code}`);
@@ -212,11 +212,11 @@ export function createMailService({
     sendMail,
     sendEmailVerification({ to, fullName, verifyUrl, expiresMinutes = 30 }) {
       const name = fullName || 'bạn';
-      const subject = 'Xác nhận địa chỉ email | Sân Thể Thao';
+      const subject = 'Xác nhận địa chỉ email | SanXanh';
       const text = [
         `Xin chào ${name},`,
         '',
-        'Cảm ơn bạn đã đăng ký tài khoản tại Sân Thể Thao.',
+        'Cảm ơn bạn đã đăng ký tài khoản tại SanXanh.',
         `Mở đường dẫn sau trong vòng ${expiresMinutes} phút để xác nhận email của bạn:`,
         verifyUrl,
         '',
@@ -224,7 +224,7 @@ export function createMailService({
       ].join('\n');
       const html = `
         <p>Xin chào <strong>${escapeHtml(name)}</strong>,</p>
-        <p>Cảm ơn bạn đã đăng ký tài khoản tại Sân Thể Thao.</p>
+        <p>Cảm ơn bạn đã đăng ký tài khoản tại SanXanh.</p>
         <p><a href="${escapeHtml(verifyUrl)}">Xác nhận địa chỉ email</a> (có hiệu lực trong ${expiresMinutes} phút).</p>
         <p>Nếu bạn không thực hiện đăng ký này, hãy bỏ qua email.</p>
       `.trim();
@@ -232,7 +232,7 @@ export function createMailService({
     },
     sendPasswordReset({ to, fullName, resetUrl, expiresMinutes = 15 }) {
       const name = fullName || 'bạn';
-      const subject = 'Đặt lại mật khẩu | Sân Thể Thao';
+      const subject = 'Đặt lại mật khẩu | SanXanh';
       const text = [
         `Xin chào ${name},`,
         '',
@@ -252,7 +252,7 @@ export function createMailService({
     },
     sendLoginOtp({ to, fullName, code, expiresMinutes = 5 }) {
       const name = fullName || 'bạn';
-      const subject = `Mã xác nhận đăng nhập: ${code} | Sân Thể Thao`;
+      const subject = `Mã xác nhận đăng nhập: ${code} | SanXanh`;
       const text = [
         `Xin chào ${name},`,
         '',
@@ -271,11 +271,11 @@ export function createMailService({
     },
     sendLoginAlert({ to, fullName, timeText, ip, userAgent, forgotUrl }) {
       const name = fullName || 'bạn';
-      const subject = 'Thông báo đăng nhập mới | Sân Thể Thao';
+      const subject = 'Thông báo đăng nhập mới | SanXanh';
       const text = [
         `Xin chào ${name},`,
         '',
-        'Tài khoản Sân Thể Thao của bạn vừa được đăng nhập:',
+        'Tài khoản SanXanh của bạn vừa được đăng nhập:',
         `- Thời gian: ${timeText}`,
         `- Địa chỉ IP: ${ip || 'Không xác định'}`,
         `- Thiết bị: ${userAgent || 'Không xác định'}`,
@@ -284,7 +284,7 @@ export function createMailService({
       ].join('\n');
       const html = `
         <p>Xin chào <strong>${escapeHtml(name)}</strong>,</p>
-        <p>Tài khoản Sân Thể Thao của bạn vừa được đăng nhập:</p>
+        <p>Tài khoản SanXanh của bạn vừa được đăng nhập:</p>
         <ul>
           <li><strong>Thời gian:</strong> ${escapeHtml(timeText)}</li>
           <li><strong>Địa chỉ IP:</strong> ${escapeHtml(ip || 'Không xác định')}</li>

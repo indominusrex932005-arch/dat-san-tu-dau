@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>
-<%= title %> | Sân Thể Thao</title>
+<%= title %> | SanXanh</title>
 <link rel="stylesheet" href="/assets/css/app.css">
 <link rel="stylesheet" href="/assets/css/demo.css">
 <link rel="stylesheet" href="/assets/css/design-system.css">
@@ -14,7 +14,7 @@
 <div class="demo-shell">
 <%- include('partials/navigation') %>
 <main>
-<a href="/groups">← Tất cả buổi chơi</a>
+<%- include('partials/back-link', { href: '/groups', label: 'Tất cả buổi chơi' }) %>
 <% const b = group.booking; const cancelled = b.status === 'CANCELLED'; const open = !group.closedAt && !waiting && b.status === 'CONFIRMED' && !b.checkedInAt; %>
 <section class="group-hero">
 <div>

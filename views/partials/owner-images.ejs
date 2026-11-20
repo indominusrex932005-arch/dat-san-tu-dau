@@ -8,7 +8,7 @@
       <% if (isCover) { %><span class="media-cover-badge">Ảnh đại diện</span><% } %>
       <div class="media-photo-actions">
         <% if (!isCover) { %><form method="POST" action="/owner/<%= imageKind %>/<%= imageTarget._id %>/images/<%= photo.id %>/cover"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="media-button">Chọn đại diện</button></form><% } %>
-        <form method="POST" action="/owner/<%= imageKind %>/<%= imageTarget._id %>/images/<%= photo.id %>/delete" data-photo-delete><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="media-button media-button-danger">Xóa ảnh</button></form>
+        <form method="POST" action="/owner/<%= imageKind %>/<%= imageTarget._id %>/images/<%= photo.id %>/delete" data-confirm-title="Xóa ảnh" data-confirm-message="Ảnh sẽ bị gỡ khỏi trang công khai của sân hoặc cơ sở." data-confirm-label="Xóa ảnh"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="media-button media-button-danger">Xóa ảnh</button></form>
       </div>
     </li><% } %>
   </ul><% } else { %><p class="media-empty">Chưa có ảnh riêng. Khách đang thấy hình minh họa; thêm ảnh để giới thiệu không gian của bạn.</p><% } %>

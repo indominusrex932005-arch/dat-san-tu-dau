@@ -63,10 +63,9 @@
 }
 
 .owner-court-form-error {
-  background-color: #fde8e8;
-  border: 1px solid #f8b4b4;
-  border-left: 4px solid #c81e1e;
-  color: #9b1c1c;
+  background-color: #fff1ed;
+  border: 1px solid #d9aa9d;
+  color: #812424;
   padding: 14px 18px;
   border-radius: 8px;
   font-size: 14.5px;
@@ -266,8 +265,8 @@
   margin-top: 16px;
   padding: 10px 14px;
   background: #f7f8f2;
-  border-left: 3px solid #173f35;
-  border-radius: 4px;
+  border: 1px solid #cbd7c6;
+  border-radius: 8px;
   font-size: 13px !important;
   color: #173f35 !important;
   line-height: 1.45;

@@ -5,7 +5,6 @@
 .group-kicker{font-size:12px;font-weight:800;letter-spacing:1.5px;color:#397345}
 .group-lime{background:#c7ed71;color:#123e2d;border-color:#c7ed71}
 .group-light-link{color:#e0f1df}
-.group-hero-art{font-size:140px;line-height:1;color:#c7ed71;transform:rotate(-20deg)}
 .group-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,310px),1fr));gap:22px}
 .group-card{display:flex;flex-direction:column;gap:8px;margin-bottom:0}
 .group-card h2{font-size:23px;margin:12px 0}
@@ -40,7 +39,6 @@
 .group-card .demo-button{margin-top:auto}
 .group-columns .demo-form input,.group-columns .demo-form textarea{max-width:100%}
 @media(max-width:760px){.group-hero{padding:26px;align-items:start}
-.group-hero-art{display:none}
 .group-columns{grid-template-columns:1fr}
 .group-tip{position:static}
 .group-hero-price strong{font-size:34px}
@@ -55,3 +53,16 @@
 .booking-style label{display:flex;gap:10px;align-items:center;margin:10px 0}
 .booking-style input{width:auto}
 
+.group-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-block: 16px 24px;
+}
+.group-filters input:not([type="checkbox"]) {
+  min-height: 44px;
+  padding-inline: 12px;
+}
+.group-filters input[type="search"] { flex: 1 1 15rem; min-width: 0; }
+.group-filters label { display: inline-flex; align-items: center; gap: 8px; }

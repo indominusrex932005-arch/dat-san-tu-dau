@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> | Sân Thể Thao</title>
+  <title><%= title %> | SanXanh</title>
   <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/owner.css">
   <link rel="stylesheet" href="/assets/css/design-system.css">
 <link rel="stylesheet" href="/assets/css/groups.css">
@@ -14,7 +14,7 @@
   <main aria-labelledby="reconciliation-title">
     <div class="owner-heading"><div><span class="owner-kicker">DỮ LIỆU THỬ NGHIỆM</span><h1 id="reconciliation-title"><%= title %></h1></div></div>
     <p class="owner-note">Đối chiếu khoản nhận với nguồn đã xác minh. Trạng thái khoản tiền và trạng thái giữ sân được theo dõi riêng. Chỉ ghi nhận hoàn khi đã kiểm tra bằng chứng xử lý bên ngoài hệ thống.</p>
-    <p><a href="<%= receipt ? baseUrl : dashboardUrl %>">← <%= receipt ? 'Danh sách đối soát' : 'Trang quản lý' %></a></p>
+    <p><%- include('partials/back-link', { href: receipt ? baseUrl : dashboardUrl, label: receipt ? 'Danh sách đối soát' : 'Trang quản lý', extraClass: 'site-back-link-inline' }) %></p>
     <% if (receipt) { %>
       <section class="demo-card owner-application" aria-labelledby="receipt-detail-title">
         <h2 id="receipt-detail-title">Khoản nhận <%= receiptAmount(receipt) %></h2>

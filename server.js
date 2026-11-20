@@ -52,7 +52,7 @@ try {
         merchantId: momoEnv.partnerCode,
         bindingId: `momo-sandbox-${momoEnv.partnerCode}`,
         recipientId: momoEnv.partnerCode,
-        displayName: booking?.facility?.name || 'Cơ sở Sân Thể Thao (MoMo Sandbox)'
+        displayName: booking?.facility?.name || 'Cơ sở SanXanh (MoMo Sandbox)'
       })
     });
     appOptions.paymentWebhookHandler = createPaymentWebhookHandler({
@@ -61,7 +61,7 @@ try {
     });
     appOptions.paymentCheckoutEnabled = true;
     console.log('Đã kích hoạt MoMo Sandbox (PAYMENT_MODE=demo) tại POST /webhooks/payments.');
-  } else if (getPaymentConfig().demoMode && process.env.NODE_ENV === 'development') {
+  } else if (getPaymentConfig().demoMode && (!process.env.NODE_ENV || process.env.NODE_ENV === 'development')) {
     const localAdapter = createLocalQrSandboxAdapter();
     appOptions.paymentService = createPaymentService({
       adapter: localAdapter,
@@ -71,7 +71,7 @@ try {
         merchantId: 'LOCAL_DEMO_SANDBOX',
         bindingId: 'local-demo-sandbox',
         recipientId: 'LOCAL_DEMO_SANDBOX',
-        displayName: `${booking?.facility?.name || 'Cơ sở Sân Thể Thao'} (QR thử nghiệm)`
+        displayName: `${booking?.facility?.name || 'Cơ sở SanXanh'} (QR thử nghiệm)`
       })
     });
     appOptions.paymentWebhookHandler = createPaymentWebhookHandler({

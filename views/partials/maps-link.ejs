@@ -1,0 +1,15 @@
+<%
+  const mapsName = typeof facilityName === 'string' ? facilityName.trim() : '';
+  const mapsAddress = typeof facilityAddress === 'string' ? facilityAddress.trim() : '';
+  const mapsQuery = [mapsName, mapsAddress].filter(Boolean).join(', ');
+  const mapsClass = typeof extraClass === 'string' && extraClass ? ` ${extraClass}` : '';
+%>
+<% if (mapsQuery) { %>
+  <a class="site-maps-link<%= mapsClass %>" href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(mapsQuery) %>" target="_blank" rel="noopener noreferrer" aria-label="Mở Google Maps chỉ đường đến <%= mapsName || mapsAddress %>">
+    <svg class="site-maps-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 2.2c-3.8 0-6.9 3.1-6.9 6.9 0 4.8 6.9 12.7 6.9 12.7s6.9-7.9 6.9-12.7c0-3.8-3.1-6.9-6.9-6.9Z" fill="currentColor"/>
+      <circle cx="12" cy="9.1" r="2.7" fill="var(--site-surface)"/>
+    </svg>
+    <span>Chỉ đường</span>
+  </a>
+<% } %>

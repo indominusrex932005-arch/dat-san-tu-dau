@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | SanXanh</title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/demo.css">
+  <link rel="stylesheet" href="/assets/css/design-system.css">
+  <link rel="stylesheet" href="/assets/css/account.css">
+</head>
+<body class="demo-page">
+  <div class="demo-shell">
+    <%- include('partials/navigation') %>
+    <main class="account-main">
+      <section class="account-header" aria-labelledby="account-heading">
+        <div class="account-header-identity">
+          <span class="account-avatar-xl" aria-hidden="true"><%= accountUser.fullName ? accountUser.fullName.trim().charAt(0).toUpperCase() : 'U' %></span>
+          <div>
+            <p class="account-eyebrow">TÀI KHOẢN CÁ NHÂN</p>
+            <h1 id="account-heading" class="account-title"><%= accountUser.fullName %></h1>
+            <p class="account-subtitle"><%= accountUser.email %></p>
+          </div>
+        </div>
+        <div class="account-header-chips">
+          <span class="account-chip"><%= roleLabel %></span>
+          <span class="account-chip"><%= bookingCount %> đơn đặt sân</span>
+          <% if (joinedDate) { %><span class="account-chip">Tham gia <%= formatDate(joinedDate) %></span><% } %>
+        </div>
+      </section>
+
+      <div class="account-grid">
+        <section class="demo-card account-card" aria-labelledby="profile-section-title">
+          <div class="account-card-head">
+            <h2 id="profile-section-title">Thông tin cá nhân</h2>
+            <p class="demo-muted">Thông tin này sẽ được điền sẵn khi bạn giữ chỗ đặt sân.</p>
+          </div>
+
+          <% if (profileMessage) { %>
+            <p class="account-success" role="status"><%= profileMessage %></p>
+          <% } %>
+          <% if (profileError) { %>
+            <p class="demo-error" role="alert"><%= profileError %></p>
+          <% } %>
+
+          <form action="/account/profile" method="POST" class="demo-form">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <div class="account-field">
+              <label for="account-email">Email đăng nhập</label>
+              <input id="account-email" type="email" value="<%= accountUser.email %>" disabled>
+              <small class="demo-muted">Email dùng để đăng nhập và nhận thông báo, không thể tự thay đổi.</small>
+            </div>
+            <div class="account-field">
+              <label for="account-fullName">Họ và tên</label>
+              <input id="account-fullName" name="fullName" type="text" required maxlength="100" autocomplete="name" value="<%= profileValues.fullName %>">
+            </div>
+            <div class="account-field">
+              <label for="account-phone">Số điện thoại</label>
+              <input id="account-phone" name="phone" type="tel" maxlength="30" autocomplete="tel" placeholder="Ví dụ: 0901234567" value="<%= profileValues.phone %>"<%= accountUser.role === 'OWNER' ? ' required' : '' %>>
+              <small class="demo-muted">Số điện thoại Việt Nam gồm 10 chữ số (bắt đầu bằng 0 hoặc +84).</small>
+            </div>
+            <div class="account-actions">
+              <button type="submit" class="demo-button">Lưu thay đổi</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="demo-card account-card" aria-labelledby="password-section-title">
+          <div class="account-card-head">
+            <h2 id="password-section-title">Đổi mật khẩu</h2>
+            <p class="demo-muted">Dùng mật khẩu từ 8 ký tự trở lên để bảo vệ tài khoản của bạn.</p>
+          </div>
+
+          <% if (passwordMessage) { %>
+            <p class="account-success" role="status"><%= passwordMessage %></p>
+          <% } %>
+          <% if (passwordError) { %>
+            <p class="demo-error" role="alert"><%= passwordError %></p>
+          <% } %>
+
+          <form action="/account/password" method="POST" class="demo-form">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <div class="account-field">
+              <label for="current-password">Mật khẩu hiện tại</label>
+              <input id="current-password" name="currentPassword" type="password" required autocomplete="current-password">
+            </div>
+            <div class="account-field">
+              <label for="new-password">Mật khẩu mới</label>
+              <input id="new-password" name="newPassword" type="password" required minlength="8" maxlength="72" autocomplete="new-password">
+            </div>
+            <div class="account-field">
+              <label for="confirm-password">Nhập lại mật khẩu mới</label>
+              <input id="confirm-password" name="confirmPassword" type="password" required minlength="8" maxlength="72" autocomplete="new-password">
+            </div>
+            <div class="account-actions">
+              <button type="submit" class="demo-button">Cập nhật mật khẩu</button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </main>
+  </div>
+  <%- include('partials/footer') %>
+</body>
+</html>

@@ -12,8 +12,10 @@
   <link rel="stylesheet" href="/assets/css/home.css">
   <link rel="stylesheet" href="/assets/css/media.css">
   <script src="/assets/js/media.js" defer></script>
+  <script src="/assets/js/home-availability.js" defer></script>
   <link rel="stylesheet" href="/assets/css/design-system.css">
 <link rel="stylesheet" href="/assets/css/groups.css">
+  <script src="/assets/js/booking-pickers.js" defer></script>
 </head>
 <body class="home-page">
   <a class="home-skip-link" href="#noi-dung">Đến nội dung chính</a>
@@ -23,71 +25,171 @@
   <main id="noi-dung" class="home-shell" tabindex="-1">
     <section class="home-hero" aria-labelledby="home-title">
       <div class="home-hero-content">
-        <p class="home-eyebrow"><span class="home-status-dot" aria-hidden="true"></span> Cùng nhau ra sân</p>
-        <h1 id="home-title"><%= title %></h1>
-        <p class="home-hero-description">Khám phá các cơ sở thể thao, tìm địa điểm phù hợp và lên kế hoạch cho buổi chơi tiếp theo của bạn.</p>
-
-        <div class="home-actions">
-          <a class="home-button" href="/courts">Xem sân và đặt lịch <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a class="home-text-link" href="#gioi-thieu">Tìm hiểu thêm <span aria-hidden="true">↓</span></a>
-        </div>
-
-        <p class="home-hero-note"><span aria-hidden="true">✳</span> Thêm vận động. Thêm kết nối.</p>
+        <h1 id="home-title">Đặt sân thể thao nhanh gọn, minh bạch.</h1>
+        <p class="home-hero-description">Chọn cơ sở và ngày chơi để xem lịch trống và giá từng ô 30 phút.</p>
+        <form action="/courts" method="GET" class="home-booking-search" aria-label="Tìm sân trống">
+          <div>
+            <label for="home-facility">Cơ sở</label>
+            <select id="home-facility" name="facilityId">
+              <option value="">Tất cả cơ sở</option>
+              <% for (const facility of (typeof facilities !== 'undefined' ? facilities : [])) { %>
+                <option value="<%= facility._id %>"><%= facility.name %></option>
+              <% } %>
+            </select>
+          </div>
+          <div>
+            <label for="home-date">Ngày chơi</label>
+            <%- include('partials/booking-picker-field', { id: 'home-date', name: 'date', value: '' }) %>
+          </div>
+          <button class="home-button" type="submit">Tìm sân trống <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </form>
       </div>
-
-      <figure class="home-visual" aria-label="Minh họa sân thể thao và vợt">
-        <div class="home-visual-label"><span aria-hidden="true">✦</span> Một khoảng sân, nhiều niềm vui</div>
-        <svg class="home-court-art" viewBox="0 0 480 440" fill="none" aria-hidden="true" focusable="false">
-          <defs>
-            <pattern id="home-racket-strings" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(15)">
-              <path d="M0 0h9v9" stroke="#d6dfca" stroke-width="1.2" />
-            </pattern>
-          </defs>
-          <circle cx="388" cy="73" r="40" fill="#ead684" />
-          <path d="M42 115h26m-13-13v26M413 210h18m-9-9v18" stroke="#98ad8d" stroke-width="2" stroke-linecap="round" />
-          <g transform="rotate(-16 231 226)">
-            <rect x="94" y="55" width="267" height="358" rx="9" fill="#173f35" fill-opacity=".12" />
-            <rect x="82" y="40" width="267" height="358" rx="9" fill="#326b50" />
-            <rect x="100" y="58" width="231" height="322" stroke="#e9efdf" stroke-width="2" />
-            <path d="M116 58v322M315 58v322M100 80h231M100 358h231M100 160h231M100 278h231M215.5 58v102M215.5 278v102" stroke="#e9efdf" stroke-width="1.5" />
-            <path d="M88 219h255" stroke="#143e31" stroke-width="10" stroke-linecap="round" />
-            <path d="M88 215h255" stroke="#f2df99" stroke-width="3" stroke-linecap="round" />
-            <path d="M88 210v20M343 210v20" stroke="#f2df99" stroke-width="4" stroke-linecap="round" />
-          </g>
-          <g transform="rotate(30 383 322)">
-            <path d="M383 348v67" stroke="#173f35" stroke-width="10" stroke-linecap="round" />
-            <path d="M383 392v25" stroke="#ead684" stroke-width="12" stroke-linecap="round" />
-            <ellipse cx="383" cy="303" rx="35" ry="48" fill="#f7f8f2" />
-            <ellipse cx="383" cy="303" rx="35" ry="48" fill="url(#home-racket-strings)" stroke="#173f35" stroke-width="5" />
-          </g>
-          <circle cx="75" cy="330" r="13" fill="#f7f8f2" />
-          <path d="M65 324c7 0 13 6 14 17" stroke="#a9ba97" stroke-width="1.5" />
-          <path d="M52 354c-5 12-2 22 9 29" stroke="#98ad8d" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 7" />
-        </svg>
-        <figcaption class="home-visual-caption"><span class="home-caption-line" aria-hidden="true"></span> Hẹn nhau ở sân, vui hơn mỗi ngày.</figcaption>
-      </figure>
+      <%
+        const homeQuickCourts = typeof quickCourts !== 'undefined' && Array.isArray(quickCourts) ? quickCourts : [];
+        const homeCalendar = typeof initialCalendar !== 'undefined' ? initialCalendar : null;
+        const homeToday = typeof today === 'string' ? today : '';
+        const selectedCourtId = homeCalendar ? String(homeCalendar.court._id) : (homeQuickCourts[0]?._id || '');
+        const selectedDate = homeCalendar?.date || homeToday;
+        const shortPrice = value => value >= 1000 ? `${Math.round(value / 1000)}k` : `${value}đ`;
+      %>
+      <aside class="home-availability" id="home-quick-booking" aria-label="Lịch đặt sân trực tiếp"
+        data-court-id="<%= selectedCourtId %>" data-date="<%= selectedDate %>" data-ready="<%= homeCalendar && homeCalendar.facilityReady ? 'true' : 'false' %>">
+        <div class="home-availability-head">
+          <div>
+            <div class="home-availability-title-row">
+              <strong>Lịch sân trực tiếp</strong>
+              <span class="home-live-clock" id="home-live-clock" data-server-now="<%= typeof serverNow === 'string' ? serverNow : '' %>" title="Giờ Việt Nam (UTC+7)">
+                <span class="home-live-dot" aria-hidden="true"></span>
+                <time data-clock-time>--:--:--</time>
+              </span>
+            </div>
+            <span id="home-quick-subtitle">Ô 30 phút<% if (homeCalendar?.court?.facility?.name) { %> · <%= homeCalendar.court.facility.name %><% } %></span>
+          </div>
+          <a id="home-quick-detail-link" href="<%= selectedCourtId ? `/courts/${selectedCourtId}?date=${encodeURIComponent(selectedDate)}` : '/courts' %>">Xem chi tiết</a>
+        </div>
+        <% if (homeQuickCourts.length) { %>
+          <div class="home-availability-controls">
+            <select id="home-quick-court" aria-label="Chọn sân">
+              <% for (const court of homeQuickCourts) { %>
+                <option value="<%= court._id %>" <%= court._id === selectedCourtId ? 'selected' : '' %>><%= court.name %> — <%= court.facilityName %></option>
+              <% } %>
+            </select>
+            <%- include('partials/booking-picker-field', { id: 'home-quick-date', value: selectedDate, min: homeToday, label: 'Chọn ngày chơi' }) %>
+          </div>
+          <p class="home-availability-status" id="home-quick-status" role="status" aria-live="polite" <%= homeCalendar && !homeCalendar.facilityReady ? '' : 'hidden' %>>
+            <%= homeCalendar && !homeCalendar.facilityReady ? 'Cơ sở đang chờ cập nhật chủ sân hoặc số điện thoại.' : '' %>
+          </p>
+          <div class="home-availability-grid" id="home-quick-grid" role="region" tabindex="0" aria-label="Các ô 30 phút của sân, cuộn để xem thêm giờ">
+            <% if (homeCalendar?.slots?.length) { %>
+              <% for (const slot of homeCalendar.slots) {
+                const selectable = homeCalendar.facilityReady && slot.status === 'AVAILABLE';
+                const statusClass = slot.status === 'LOCKED' ? 'is-held' : slot.status === 'BOOKED' ? 'is-booked' : slot.status === 'AVAILABLE' ? '' : 'is-unavailable';
+                const statusText = slot.status === 'LOCKED' ? 'Đang giữ' : slot.status === 'BOOKED' ? 'Đã đặt' : slot.status === 'AVAILABLE' ? shortPrice(slot.priceVND) : 'Đã qua';
+              %>
+                <button type="button" class="home-slot <%= statusClass %>" data-time="<%= slot.time %>" data-price="<%= slot.priceVND %>" aria-pressed="false" <%= selectable ? '' : 'disabled' %>>
+                  <strong><%= slot.time %></strong>
+                  <small><%= statusText %></small>
+                </button>
+              <% } %>
+            <% } else { %>
+              <p class="home-availability-empty">Không có ô giờ nào cho ngày này.</p>
+            <% } %>
+          </div>
+          <div class="home-availability-foot">
+            <div><span class="home-key is-free" aria-hidden="true"></span> Trống</div>
+            <div><span class="home-key is-selected" aria-hidden="true"></span> Đang chọn</div>
+            <div><span class="home-key is-held" aria-hidden="true"></span> Đang giữ</div>
+            <div><span class="home-key is-booked" aria-hidden="true"></span> Đã đặt</div>
+          </div>
+          <div class="home-availability-cta">
+            <div class="home-quick-summary" id="home-quick-summary" aria-live="polite">Chọn các ô trống để đặt nhanh</div>
+            <button type="button" class="home-quick-submit" id="home-quick-submit" disabled>Đặt sân ngay →</button>
+          </div>
+        <% } else { %>
+          <p class="home-availability-empty">Hiện chưa có sân nào đang mở. Hãy xem danh sách cơ sở để cập nhật mới nhất.</p>
+        <% } %>
+      </aside>
     </section>
 
     <section class="home-facilities" aria-labelledby="home-facilities-title">
-      <div class="media-section-heading"><div><p class="media-kicker">TÌM KHÔNG GIAN CỦA BẠN</p><h2 id="home-facilities-title">Chọn một nơi. Hẹn nhau ra sân.</h2></div><a class="home-text-link" href="/facilities">Tất cả cơ sở <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+      <div class="media-section-heading"><div><h2 id="home-facilities-title">Cơ sở thể thao</h2></div><a class="home-text-link" href="/facilities">Tất cả cơ sở <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
       <% const homeFacilities = typeof facilities !== 'undefined' ? facilities : []; %>
       <% if (homeFacilities.length) { %><div class="home-facility-grid">
         <% for (const facility of homeFacilities) { %><article class="home-facility-card">
           <%- include('partials/media-cover', { entity: facility }) %>
           <div class="home-facility-body"><span class="media-card-tag">Không gian thể thao</span><h3><%= facility.name %></h3><p><%= facility.address %></p><a class="home-text-link" href="/courts?facilityId=<%= facility._id %>">Khám phá sân <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
         </article><% } %>
-      </div><% } else { %><p class="media-empty">Các cơ sở đang được chuẩn bị. Hẹn bạn ở buổi chơi tiếp theo!</p><% } %>
+      </div><% } else { %><p class="media-empty">Chưa có cơ sở để hiển thị.</p><% } %>
     </section>
 
-    <section id="gioi-thieu" class="home-intro" aria-labelledby="home-intro-title">
-      <div class="home-intro-heading">
-        <p class="home-eyebrow">Bắt đầu từ đây</p>
-        <h2 id="home-intro-title">Một nơi để tìm sân.<br>Một lý do để ra ngoài.</h2>
+    <section id="gioi-thieu" class="home-howto" aria-labelledby="home-intro-title">
+      <div class="home-howto-head">
+        <div>
+          <p class="media-kicker">QUY TRÌNH 4 BƯỚC</p>
+          <h2 id="home-intro-title">Cách đặt sân trên SanXanh</h2>
+          <p class="home-howto-lead">Từ lúc chọn khung giờ đến khi cầm phiếu ra sân — rõ giá từng ô, không trùng lịch, hỗ trợ cả khách vãng lai lẫn tài khoản thành viên.</p>
+        </div>
+        <a class="home-button home-howto-cta" href="/courts">Chọn sân ngay <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
-      <div class="home-intro-content">
-        <p>Chúng tôi xây dựng hệ thống quản lý đặt sân thể thao để việc kết nối với các cơ sở trở nên thuận tiện hơn. Hãy bắt đầu bằng cách khám phá thông tin địa điểm trên hệ thống.</p>
-        <a class="home-text-link" href="/facilities">Khám phá danh sách cơ sở <span aria-hidden="true">→</span></a>
-      </div>
+      <ol class="home-steps-grid">
+        <li class="home-step-card">
+          <div class="home-step-top">
+            <span class="home-step-icon" aria-hidden="true">
+              <svg viewBox="0 0 28 28" fill="none">
+                <rect x="3.5" y="5.5" width="21" height="19" rx="4" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M9 3v5M19 3v5M3.5 11.5h21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <rect x="7.5" y="14.5" width="4.5" height="3.5" rx="1" fill="currentColor"/>
+                <rect x="14" y="14.5" width="4.5" height="3.5" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="7.5" y="19.5" width="4.5" height="2.5" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </span>
+            <span class="home-step-num">01</span>
+          </div>
+          <h3>Chọn sân & ô 30 phút</h3>
+          <p>Xem lịch trống theo ngày thực tế, chọn một hoặc nhiều ô 30 phút (kể cả các ô rời nhau) với giá thường và cao điểm hiển thị rõ.</p>
+        </li>
+        <li class="home-step-card">
+          <div class="home-step-top">
+            <span class="home-step-icon" aria-hidden="true">
+              <svg viewBox="0 0 28 28" fill="none">
+                <circle cx="14" cy="15" r="9" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M14 10.5V15l3 2M11 3.5h6M14 3.5V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="home-step-num">02</span>
+          </div>
+          <h3>Giữ chỗ trong 10 phút</h3>
+          <p>Đặt bằng tài khoản để quản lý đơn, hoặc đặt vãng lai chỉ cần họ tên và SĐT. Hệ thống khóa toàn bộ ô đã chọn trong tối đa 10 phút.</p>
+        </li>
+        <li class="home-step-card">
+          <div class="home-step-top">
+            <span class="home-step-icon" aria-hidden="true">
+              <svg viewBox="0 0 28 28" fill="none">
+                <rect x="4" y="4" width="7.5" height="7.5" rx="1.8" stroke="currentColor" stroke-width="1.8"/>
+                <rect x="16.5" y="4" width="7.5" height="7.5" rx="1.8" stroke="currentColor" stroke-width="1.8"/>
+                <rect x="4" y="16.5" width="7.5" height="7.5" rx="1.8" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M16.5 16.5h3v3h-3zM21.5 16.5H24v7.5h-7.5v-2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="home-step-num">03</span>
+          </div>
+          <h3>Xác nhận & thanh toán</h3>
+          <p>Kiểm tra lại chi tiết đơn, mã QR và hoàn tất xác nhận trước khi hết hạn giữ chỗ. Có thể tạo thêm <strong>sân ghép</strong> để rủ bạn chia tiền.</p>
+        </li>
+        <li class="home-step-card">
+          <div class="home-step-top">
+            <span class="home-step-icon" aria-hidden="true">
+              <svg viewBox="0 0 28 28" fill="none">
+                <path d="M6.5 4.5h15a2 2 0 0 1 2 2v17l-3.2-2.2-3.1 2.2-3.2-2.2-3.2 2.2-3.1-2.2L4.5 23.5v-17a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="m10 13.5 2.7 2.7L18.5 10" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="home-step-num">04</span>
+          </div>
+          <h3>Lưu phiếu & ra sân</h3>
+          <p>Lưu đường dẫn hoặc in phiếu PDF để check-in tại cơ sở. Thành viên có thể gửi yêu cầu hủy/đổi ngay trong mục <strong>Đơn của tôi</strong>.</p>
+        </li>
+      </ol>
     </section>
   </main>
 

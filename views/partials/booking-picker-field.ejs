@@ -1,0 +1,15 @@
+<% const useTimePicker = typeof pickerType !== 'undefined' && pickerType === 'time'; %>
+<span class="booking-picker-field">
+  <input type="<%= useTimePicker ? 'time' : 'date' %>" id="<%= id %>"<% if (typeof name !== 'undefined') { %> name="<%= name %>"<% } %>
+    value="<%= value %>"<% if (typeof min !== 'undefined' && min) { %> min="<%= min %>"<% } %>
+    <% if (useTimePicker) { %>step="1800"<% } %>
+    <% if (typeof inputClass !== 'undefined') { %>class="<%= inputClass %>"<% } %>
+    <% if (typeof label !== 'undefined') { %>aria-label="<%= label %>"<% } %>
+    <%= typeof required !== 'undefined' && required ? 'required' : '' %>>
+  <button type="button" class="booking-picker-trigger <%= useTimePicker ? 'booking-time-trigger' : 'booking-date-trigger' %>" aria-label="<%= useTimePicker ? 'Mở danh sách chọn giờ' : 'Mở lịch chọn ngày' %>" aria-haspopup="dialog">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+      <% if (useTimePicker) { %><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/>
+      <% } else { %><rect x="4" y="6" width="16" height="15" rx="2"/><path d="M8 3v6m8-6v6M4 11h16"/><% } %>
+    </svg>
+  </button>
+</span>

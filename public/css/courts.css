@@ -3,44 +3,6 @@ body.courts-page {
   background: #f7f8f2;
 }
 
-.courts-page .demo-shell {
-  width: min(1184px, calc(100% - 80px));
-  padding: 0;
-}
-
-.courts-page .demo-nav {
-  min-height: 102px;
-  margin: 0;
-  padding: 24px 0;
-  border-color: #dce2d5;
-}
-
-.courts-page .demo-brand {
-  color: #173f35;
-  font-size: 24px;
-  letter-spacing: -0.8px;
-}
-
-.courts-page .demo-nav-links {
-  min-width: 0;
-  gap: 12px 24px;
-  font-size: 14px;
-}
-
-.courts-page .demo-nav-links > a {
-  color: #53685d;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.courts-page .demo-nav-links > a[href="/courts"] {
-  color: #173f35;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 7px;
-}
-
-.courts-page .demo-nav-links > a:hover,
 .courts-footer a:hover {
   color: #173f35;
   text-decoration: underline;
@@ -49,46 +11,7 @@ body.courts-page {
 
 .courts-main {
   min-height: 60vh;
-  padding: 60px 0 72px;
-}
-
-.courts-intro {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 28px;
-  margin-bottom: 36px;
-}
-
-.courts-intro > div {
-  min-width: 0;
-  max-width: 660px;
-}
-
-.courts-eyebrow {
-  margin: 0 0 14px;
-  color: #53685d;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-}
-
-.courts-intro h1 {
-  margin: 0;
-  font-family: 'Playfair Display', 'Times New Roman', serif;
-  font-size: clamp(38px, 4vw, 54px);
-  font-weight: 400;
-  line-height: 1.18;
-  letter-spacing: -0.5px;
-  overflow-wrap: anywhere;
-}
-
-.courts-description {
-  max-width: 580px;
-  margin: 18px 0 0;
-  color: #53685d;
-  font-size: 16px;
+  padding-bottom: 72px;
 }
 
 .courts-count {
@@ -330,41 +253,11 @@ body.courts-page {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .courts-page .demo-nav-links {
-    gap: 12px 18px;
-  }
 }
 
 @media (max-width: 700px) {
-  .courts-page .demo-shell {
-    width: calc(100% - 40px);
-  }
-
-  .courts-page .demo-nav {
-    align-items: flex-start;
-    gap: 18px;
-    padding: 24px 0;
-  }
-
-  .courts-page .demo-nav-links {
-    width: 100%;
-    gap: 12px 20px;
-  }
-
   .courts-main {
-    padding: 36px 0 48px;
-  }
-
-  .courts-intro {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 20px;
-    margin-bottom: 24px;
-  }
-
-  .courts-description {
-    margin-top: 16px;
-    font-size: 15px;
+    padding-bottom: 48px;
   }
 
   .courts-grid {
@@ -414,10 +307,9 @@ body.courts-page {
 }
 
 .courts-filter-error {
-  background-color: #fde8e8;
-  border: 1px solid #f8b4b4;
-  border-left: 4px solid #c81e1e;
-  color: #9b1c1c;
+  background-color: #fff1ed;
+  border: 1px solid #d9aa9d;
+  color: #812424;
   padding: 10px 14px;
   border-radius: 6px;
   font-size: 13.5px;

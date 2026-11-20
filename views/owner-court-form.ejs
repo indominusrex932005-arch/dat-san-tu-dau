@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> | Sân Thể Thao</title>
+  <title><%= title %> | SanXanh</title>
   <link rel="stylesheet" href="/assets/css/app.css">
   <link rel="stylesheet" href="/assets/css/demo.css">
   <link rel="stylesheet" href="/assets/css/owner-court-form.css">
@@ -17,7 +17,7 @@
     <%- include('partials/navigation') %>
     <% const courtData = court || {}; const editingCourt = Boolean(courtData._id); %>
     <main aria-labelledby="court-form-title">
-      <a class="owner-court-form-back" href="/owner">&larr; Quản lý cơ sở</a>
+      <%- include('partials/back-link', { href: '/owner', label: 'Quản lý cơ sở' }) %>
       <div class="owner-court-form-heading">
         <span class="owner-court-form-kicker"><%= facility?.name || 'CƠ SỞ CỦA BẠN' %></span>
         <h1 id="court-form-title" class="owner-court-form-title"><%= title %></h1>

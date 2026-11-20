@@ -11,7 +11,7 @@
 .owner-heading p { margin: 0; color: #53685d; }
 .owner-kicker { color: #4e6b46; font-size: 12px; font-weight: 700; letter-spacing: .1em; }
 .owner-back { display: inline-block; margin: 0 0 8px; }
-.owner-note { padding: 14px 16px; border-left: 4px solid #72964e; background: #edf3e7; border-radius: 0 8px 8px 0; overflow-wrap: anywhere; }
+.owner-note { padding: 14px 16px; border: 1px solid #c4d3b8; background: #edf3e7; border-radius: 8px; overflow-wrap: anywhere; }
 .owner-stat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 24px 0 12px; }
 .owner-stat { display: flex; flex-direction: column; gap: 8px; margin: 0 0 16px; }
 .owner-stat span { color: #53685d; }
@@ -101,3 +101,23 @@
 .owner-report-table thead { background: #e6ecdc; }
 .owner-pagination { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin: 1rem 0 2rem; }
 .owner-check-in { margin: 1rem 0; }
+
+.admin-overview { margin-block: 12px 20px; }
+.admin-overview > summary,
+.owner-secondary-tools > summary,
+.owner-request-choice > summary {
+  min-height: 44px;
+  padding-block: 10px;
+  color: var(--site-ink, #173f35);
+  font-weight: 700;
+  cursor: pointer;
+}
+.owner-secondary-tools { margin-block: 12px 20px; }
+.owner-request-choice .demo-form { margin-top: 8px; }
+.owner-dashboard-links { margin-block: 16px 22px; }
+
+@media (max-width: 600px) {
+  .admin-shell .owner-heading { margin-block: 12px; padding: 16px; }
+  .admin-shell .owner-heading h1 { margin-block: 0 4px; }
+  .admin-overview { margin-block: 4px 10px; }
+}

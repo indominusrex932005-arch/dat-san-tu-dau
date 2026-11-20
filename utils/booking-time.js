@@ -29,6 +29,13 @@ export function formatMoney(amount) {
 }
 
 export function formatDate(date) {
-  return new Intl.DateTimeFormat('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })
-    .format(new Date(`${date}T00:00:00+07:00`));
+  if (typeof date === 'string') {
+    const match = date.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (match) return `${match[3]}/${match[2]}/${match[1]}`;
+  }
+  const parsed = date instanceof Date ? date : new Date(`${date}T00:00:00+07:00`);
+  if (!Number.isFinite(parsed.getTime())) return String(date ?? '');
+  const parts = vietnamDate.formatToParts(parsed);
+  const part = name => parts.find(item => item.type === name).value;
+  return `${part('day')}/${part('month')}/${part('year')}`;
 }

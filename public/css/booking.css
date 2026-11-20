@@ -28,14 +28,47 @@
 .booking-slot strong { font-size: 14px; }
 .booking-slot small { font-size: 12px; }
 .booking-slot input[type="checkbox"] { display: block; width: 18px; height: 18px; min-width: 18px; padding: 0; margin: 0; accent-color: #173f35; }
-.booking-slot:has(input:checked) { color: #fff; background: #60468a; border-color: #60468a; }
+.booking-slot:has(input:checked) { color: #173f35; background: #f1cf72; border-color: #d9a520; box-shadow: inset 0 0 0 1px #d9a520; }
 .booking-slot.locked { cursor: not-allowed; background: #fff1d6; border-color: #d7ad58; color: #725019; }
 .booking-slot.booked { cursor: not-allowed; background: #e5efe6; border-color: #a4b6a1; color: #3c6644; }
 .booking-slot.unavailable { cursor: not-allowed; background: #f0f0ee; border-color: #d1d2cd; color: #6b716b; }
+.booking-slot { position: relative; transition: background-color 220ms ease, border-color 220ms ease, color 220ms ease; }
+.booking-slot.is-closing-soon { border-color: #d99b26 !important; }
+.booking-slot.is-closing-soon::after {
+  content: '';
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e59a1a;
+  box-shadow: 0 0 0 3px rgba(229, 154, 26, .22);
+  animation: booking-slot-pulse 1.8s ease-in-out infinite;
+}
+.booking-slot.is-just-expired { animation: booking-slot-expire .42s ease-out; }
+@keyframes booking-slot-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .5; transform: scale(.8); }
+}
+@keyframes booking-slot-expire {
+  0% { background: #fff1d6; border-color: #d99b26; transform: scale(.97); }
+  100% { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .booking-slot.is-closing-soon::after,
+  .booking-slot.is-just-expired { animation: none; }
+}
 .booking-slot[hidden] { display: none; }
 .booking-summary { position: sticky; top: 20px; }
+.checkout-facility-contact {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--site-line, #d7dfd2);
+}
+.checkout-facility-contact h3 { margin: 0 0 10px; font-size: 1rem; }
 .booking-selected { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
-.booking-selected span { padding: 4px 8px; border-radius: 5px; background: #f0eaf8; color: #533774; font-size: 13px; }
+.booking-selected span { padding: 5px 9px; border-radius: 6px; background: #f4e2a8; color: #173f35; font-size: 13px; font-weight: 800; }
 .booking-prices { margin: 22px 0; }
 .booking-prices div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 8px 0; border-bottom: 1px solid #e8ece3; }
 .booking-prices dt { color: #53685d; font-size: 14px; }
@@ -61,14 +94,16 @@
 .provider-payment-details dd { margin: 4px 0 0; font-weight: 700; overflow-wrap: anywhere; }
 .provider-payment-qr { display: block; width: min(320px, 100%); height: auto; margin: 20px auto; background: white; }
 .provider-payment [hidden] { display: none !important; }
-.provider-payment > .demo-button { margin-bottom: 12px; }
+.provider-payment > .demo-button { display: block; width: 100%; margin-bottom: 12px; }
+.provider-payment > .demo-form { margin-bottom: 12px; }
+.provider-payment > .demo-form:has(> button[hidden]) { margin-bottom: 0; }
 .booking-receipt-wrap { max-width: 760px; margin: 0 auto; }
 .booking-receipt-actions { display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-between; align-items: center; margin: 0 0 20px; }
 .booking-receipt { padding: 36px; }
 .booking-receipt h1 { margin: 0 0 12px; }
 .booking-code { font-size: 14px; font-weight: 700; letter-spacing: .04em; overflow-wrap: anywhere; }
 .booking-receipt-footer { border-top: 1px dashed #bcc8b8; padding-top: 18px; font-size: 13px; color: #53685d; }
-.booking-request-status { padding: 12px 14px; margin-top: 18px; border-left: 3px solid #8b9d4b; background: #f7f9f2; }
+.booking-request-status { padding: 12px 14px; margin-top: 18px; border: 1px solid #cbd8bd; background: #f7f9f2; border-radius: 8px; }
 .booking-request-status h3 { margin: 0; font-size: 15px; }
 .booking-request-status p { font-size: 14px; margin: 6px 0; }
 .booking-request-form { max-width: 800px; margin: 0 auto; }
@@ -100,4 +135,80 @@
   .booking-badge { color: #111; background: #fff; }
   h1, h2 { break-after: avoid; }
   .booking-details > div, .booking-time-list li { break-inside: avoid; }
+}
+
+.court-booking-main .booking-court-title { margin-top: 8px; }
+.booking-period-label { margin: 18px 0 8px; font-size: 1rem; }
+.booking-mobile-summary { display: none; }
+#booking-contact { scroll-margin-block: 16px 96px; }
+
+@media (max-width: 850px) {
+  .court-booking-main .booking-steps { display: none; }
+  .court-booking-main #slot-booking-form { padding-bottom: 76px; }
+  .booking-mobile-summary:not([hidden]) {
+    position: fixed;
+    z-index: 10;
+    inset: auto 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: var(--site-surface, #fff);
+    color: var(--site-ink, #173f35);
+    border-top: 1px solid var(--site-line, #d7dfd2);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.booking-past-slots,
+.checkout-demo-shortcut {
+  margin-block: 18px;
+  padding-top: 10px;
+  border-top: 1px solid var(--site-line, #d7dfd2);
+}
+.booking-past-slots summary,
+.checkout-demo-shortcut summary {
+  min-height: 44px;
+  padding-block: 10px;
+  width: fit-content;
+  color: var(--site-ink, #173f35);
+  font-weight: 700;
+  cursor: pointer;
+}
+.booking-past-slots ul { list-style: none; padding: 0; }
+.checkout-jump-to-qr { display: none; }
+#provider-payment-panel { scroll-margin-top: 16px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .booking-slot.available {
+    transition: background-color 140ms ease-out, border-color 140ms ease-out, box-shadow 140ms ease-out;
+  }
+  .booking-mobile-summary:not([hidden]) {
+    animation: booking-summary-enter 180ms cubic-bezier(.22, 1, .36, 1);
+  }
+  .provider-payment-qr:not([hidden]) {
+    animation: payment-qr-enter 200ms ease-out;
+  }
+}
+
+@keyframes booking-summary-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes payment-qr-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 850px) {
+  .checkout-jump-to-qr {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
 }

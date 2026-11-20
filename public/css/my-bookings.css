@@ -363,8 +363,7 @@
 .my-bookings-request-box {
   margin-top: 14px;
   background: #fdfefc;
-  border: 1px solid #dce2d5;
-  border-left: 4px solid #173f35;
+  border: 1px solid #bdcbb5;
   border-radius: 8px;
   padding: 12px 14px;
 }
@@ -442,4 +441,14 @@
     width: 100%;
     box-sizing: border-box;
   }
+}
+
+.my-bookings-group-actions {
+  gap: 12px;
+  margin-block: 0 24px;
+}
+
+@media (max-width: 480px) {
+  .my-bookings-group-actions { align-items: stretch; }
+  .my-bookings-group-actions a { flex: 1 1 12rem; }
 }

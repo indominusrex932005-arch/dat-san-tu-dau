@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> | Sân Thể Thao</title>
+  <title><%= title %> | SanXanh</title>
   <link rel="stylesheet" href="/assets/css/app.css">
   <link rel="stylesheet" href="/assets/css/demo.css">
   <link rel="stylesheet" href="/assets/css/booking.css">
@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="/assets/css/groups.css">
 </head>
 <body class="demo-page">
-  <div class="demo-shell">
+  <div class="demo-shell admin-shell">
     <%- include('partials/navigation') %>
     <%
       const tab = typeof activeTab === 'string' ? activeTab : 'owners';
@@ -36,9 +36,8 @@
     <main aria-labelledby="admin-title">
       <div class="owner-heading">
         <div>
-          <span class="owner-kicker">QUẢN TRỊ HỆ THỐNG</span>
           <h1 id="admin-title"><%= title %></h1>
-          <p>Duyệt người đăng ký chủ sân, quản lý bảo mật tài khoản và giám sát đặt sân, hủy đơn, đổi giờ.</p>
+          <p>Duyệt hồ sơ chủ sân và theo dõi hoạt động đặt sân.</p>
         </div>
         <% if (demoMode) { %>
           <div class="demo-actions">
@@ -54,26 +53,29 @@
         <p class="demo-error" role="alert"><%= errorMessage %></p>
       <% } %>
 
-      <section class="owner-stat-grid" aria-label="Tổng quan toàn hệ thống">
+      <details class="admin-overview">
+        <summary>Tổng quan hệ thống</summary>
+        <section class="owner-stat-grid" aria-label="Tổng quan toàn hệ thống">
         <div class="demo-card owner-stat"><span>Chủ sân chờ duyệt</span><strong><%= pendingApplications.length %></strong></div>
         <div class="demo-card owner-stat"><span>Chủ sân đã duyệt</span><strong><%= approvedOwners.length %></strong></div>
         <div class="demo-card owner-stat"><span>Cơ sở chưa cấp chủ</span><strong><%= availableFacilities.length %> / <%= allFacilities.length %></strong></div>
         <div class="demo-card owner-stat"><span>Tài khoản / Đang khóa</span><strong><%= kpi.totalUsers %> / <%= kpi.lockedUsersCount %></strong></div>
         <div class="demo-card owner-stat"><span>Đơn đã chốt / Giữ chỗ</span><strong><%= kpi.confirmedBookings %> / <%= kpi.holdBookings %></strong></div>
         <div class="demo-card owner-stat"><span>Hủy-đổi chờ / Chờ hoàn</span><strong><%= kpi.pendingRequestsCount %> / <%= kpi.pendingRefundsCount %></strong></div>
-      </section>
+        </section>
+      </details>
 
       <nav class="booking-tabs" aria-label="Các mục quản trị">
         <a href="/admin/owners" <%- tab === 'owners' ? 'aria-current="page"' : '' %>>Duyệt chủ sân (<%= pendingApplications.length %>)</a>
-        <a href="/admin?tab=facilities" <%- tab === 'facilities' ? 'aria-current="page"' : '' %>>Cơ sở &amp; Sân (<%= allFacilities.length %>)</a>
-        <a href="/admin?tab=users" <%- tab === 'users' ? 'aria-current="page"' : '' %>>Tài khoản &amp; Đăng nhập (<%= kpi.totalUsers %>)</a>
-        <a href="/admin?tab=bookings" <%- tab === 'bookings' ? 'aria-current="page"' : '' %>>Đặt sân toàn sàn (<%= kpi.totalBookings %>)</a>
-        <a href="/admin?tab=requests" <%- tab === 'requests' ? 'aria-current="page"' : '' %>>Hủy sân &amp; Đổi giờ (<%= kpi.pendingRequestsCount %>)</a>
+        <a href="/admin?tab=facilities" <%- tab === 'facilities' ? 'aria-current="page"' : '' %>>Cơ sở và sân (<%= allFacilities.length %>)</a>
+        <a href="/admin?tab=users" <%- tab === 'users' ? 'aria-current="page"' : '' %>>Tài khoản (<%= kpi.totalUsers %>)</a>
+        <a href="/admin?tab=bookings" <%- tab === 'bookings' ? 'aria-current="page"' : '' %>>Đơn đặt sân (<%= kpi.totalBookings %>)</a>
+        <a href="/admin?tab=requests" <%- tab === 'requests' ? 'aria-current="page"' : '' %>>Hủy và đổi lịch (<%= kpi.pendingRequestsCount %>)</a>
       </nav>
 
       <% if (tab === 'owners') { %>
         <section id="applications" aria-labelledby="applications-title">
-          <h2 id="applications-title">Hồ sơ đăng ký chủ sân đang chờ duyệt (<%= pendingApplications.length %>)</h2>
+          <h2 id="applications-title">Hồ sơ chờ duyệt (<%= pendingApplications.length %>)</h2>
           <% if (!pendingApplications.length) { %>
             <p class="demo-card owner-empty">Hiện không có hồ sơ chủ sân nào đang chờ duyệt.</p>
           <% } else { %>
@@ -90,11 +92,12 @@
                     <div><dt>Cơ sở đề nghị</dt><dd><%= item.requestedFacilityName || 'Chưa có thông tin' %></dd></div>
                     <div><dt>Địa chỉ đề nghị</dt><dd><%= item.requestedFacilityAddress || 'Chưa có thông tin' %></dd></div>
                   </dl>
-                  <form action="/admin/owners/<%= item._id %>/approve" method="POST" class="demo-form owner-review-form">
+                  <form action="/admin/owners/<%= item._id %>/approve" method="POST" class="demo-form owner-review-form" data-confirm-title="Duyệt chủ sân" data-confirm-message="Duyệt hồ sơ của <%= item.fullName %>" data-confirm-label="Duyệt và cấp cơ sở" data-confirm-facility="<%= item.requestedFacilityName || '' %>">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <label for="facility-<%= item._id %>">Cơ sở sẽ cấp quyền quản lý</label>
-                    <select id="facility-<%= item._id %>" name="facilityId">
-                      <option value="">Tạo cơ sở mới theo thông tin đề nghị</option>
+                    <select id="facility-<%= item._id %>" name="facilityId" required>
+                      <option value="" disabled selected>Chọn cách cấp cơ sở</option>
+                      <option value="new">Tạo cơ sở mới theo thông tin đề nghị</option>
                       <% for (const available of availableFacilities) { %>
                         <option value="<%= available._id %>"><%= available.name %> — <%= available.address %></option>
                       <% } %>
@@ -102,7 +105,7 @@
                     <p class="owner-field-help">Chỉ cấp cơ sở chưa có chủ sân hoặc tạo cơ sở mới. Người đăng ký không tự nhận quyền cơ sở.</p>
                     <button class="demo-button" type="submit">Duyệt và cấp cơ sở</button>
                   </form>
-                  <form action="/admin/owners/<%= item._id %>/reject" method="POST" class="owner-secondary-action">
+                  <form action="/admin/owners/<%= item._id %>/reject" method="POST" class="owner-secondary-action" data-confirm-title="Từ chối hồ sơ" data-confirm-message="Bạn muốn từ chối hồ sơ đăng ký chủ sân của <%= item.fullName %>?" data-confirm-label="Từ chối hồ sơ">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <button class="demo-button owner-button-danger" type="submit">Từ chối đăng ký</button>
                   </form>
@@ -230,10 +233,11 @@
               </ul>
             <% } %>
           </div>
+          <%- include('partials/admin-pagination', { tab }) %>
         </section>
       <% } else if (tab === 'bookings') { %>
         <section id="bookings" aria-labelledby="bookings-title">
-          <h2 id="bookings-title">Giám sát đặt sân toàn hệ thống (30 đơn gần nhất)</h2>
+          <h2 id="bookings-title">Đơn đặt sân toàn hệ thống</h2>
           <form method="GET" action="/admin" class="demo-card demo-inline-form" aria-label="Lọc đơn đặt sân">
             <input type="hidden" name="tab" value="bookings">
             <input type="search" name="bookingQ" value="<%= f.bookingQ || '' %>" placeholder="Mã đơn, tên hoặc SĐT khách…" maxlength="80">
@@ -286,6 +290,7 @@
               </ul>
             <% } %>
           </div>
+          <%- include('partials/admin-pagination', { tab }) %>
         </section>
       <% } else { %>
         <section id="requests" aria-labelledby="requests-title">
@@ -338,6 +343,7 @@
               </ul>
             <% } %>
           </div>
+          <%- include('partials/admin-pagination', { tab }) %>
         </section>
       <% } %>
     </main>

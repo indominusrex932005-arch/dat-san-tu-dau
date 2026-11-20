@@ -4,7 +4,7 @@ body.demo-page {
   padding: 0;
   background: #f7f8f2;
   color: #173f35;
-  font-family: Arial, sans-serif;
+  font-family: 'Google Sans', 'Segoe UI', Arial, sans-serif;
   line-height: 1.6;
 }
 .demo-page *, .demo-page *::before, .demo-page *::after { box-sizing: border-box; }

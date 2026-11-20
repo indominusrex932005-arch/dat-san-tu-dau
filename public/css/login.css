@@ -97,7 +97,7 @@ body.login-page {
 
 .login-intro-title {
   margin: 0;
-  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-family: 'Google Sans', 'Segoe UI', Arial, sans-serif;
   font-size: clamp(38px, 4.1vw, 56px);
   font-weight: 400;
   line-height: 1.18;
@@ -150,7 +150,7 @@ body.login-page {
 
 .login-card h1 {
   margin: 0;
-  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-family: 'Google Sans', 'Segoe UI', Arial, sans-serif;
   font-size: 38px;
   font-weight: 400;
   line-height: 1.25;
@@ -514,4 +514,11 @@ body.login-page {
   .login-submit {
     transition: none;
   }
+}
+
+#login-email-help { font-size: 0.875rem; }
+
+@media (max-width: 760px) {
+  .login-page .login-intro { display: none; }
+  .login-page .login-main { margin-top: 16px; }
 }

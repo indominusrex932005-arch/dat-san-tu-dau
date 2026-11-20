@@ -4,50 +4,66 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>
-<%= title %> | Sân Thể Thao</title>
+<%= title %> | SanXanh</title>
 <link rel="stylesheet" href="/assets/css/app.css">
 <link rel="stylesheet" href="/assets/css/demo.css">
 <link rel="stylesheet" href="/assets/css/design-system.css">
 <link rel="stylesheet" href="/assets/css/groups.css">
+<script src="/assets/js/booking-pickers.js" defer></script>
 </head>
 <body class="demo-page">
 <div class="demo-shell">
-<%- include('partials/navigation') %>
+<%- include('partials/navigation', { activePage: 'groups' }) %>
 <main>
-<section class="group-hero">
-<div>
-<p class="group-kicker">THÊM BẠN · THÊM NIỀM VUI</p>
-<h1>Tìm bạn ra sân.</h1>
-<p>Chọn một buổi chơi hợp lịch. Cùng chia tiền sân và kết nối với bạn mới.</p>
-<div class="demo-actions">
-<a class="demo-button group-lime" href="/groups/new">+ Rủ bạn cùng chơi</a>
-<a class="group-light-link" href="/courts">Muốn thuê riêng? Xem sân →</a>
-</div>
-</div>
-<span class="group-hero-art" aria-hidden="true">◎</span>
-</section>
-<% const f = typeof filters !== 'undefined' ? filters : { q: '', date: '', openOnly: false, mine: false }; %>
-<nav class="demo-actions" aria-label="Lọc buổi chơi">
-<a class="demo-button demo-button-secondary" href="/groups">Tất cả buổi chơi</a>
-<a class="demo-button demo-button-secondary" href="/groups?open=1">Còn chỗ trống</a>
+<header class="listing-header" aria-labelledby="groups-title">
+  <div>
+    <h1 id="groups-title"><%= title %></h1>
+    <p class="listing-description">Chọn buổi chơi hợp lịch, làm quen với bạn mới và cùng chia tiền sân.</p>
+  </div>
+  <div class="demo-actions">
+    <a class="demo-button" href="/groups/new">Rủ bạn cùng chơi</a>
+    <a class="demo-button demo-button-secondary" href="/courts">Thuê sân riêng</a>
+  </div>
+</header>
+<%
+  const f = typeof filters !== 'undefined' ? filters : { q: '', date: '', openOnly: false, mine: false };
+  const hasFilters = Boolean(f.q || f.date || f.openOnly);
+  const groupListUrl = mine => {
+    const query = new URLSearchParams();
+    if (mine) query.set('mine', '1');
+    if (f.q) query.set('q', f.q);
+    if (f.date) query.set('date', f.date);
+    if (f.openOnly) query.set('open', '1');
+    return query.size ? '/groups?' + query.toString() : '/groups';
+  };
+%>
 <% if (currentUser) { %>
-<a class="demo-button demo-button-secondary" href="/groups?mine=1">Buổi tôi tham gia</a>
+  <nav class="demo-actions group-scope" aria-label="Danh sách buổi chơi">
+    <a class="demo-button<%= f.mine ? ' demo-button-secondary' : '' %>" href="<%= groupListUrl(false) %>" <%- !f.mine ? 'aria-current="page"' : '' %>>Tất cả buổi chơi</a>
+    <a class="demo-button<%= f.mine ? '' : ' demo-button-secondary' %>" href="<%= groupListUrl(true) %>" <%- f.mine ? 'aria-current="page"' : '' %>>Buổi tôi tham gia</a>
+  </nav>
 <% } %>
-</nav>
-<form method="GET" action="/groups" class="demo-card demo-inline-form" aria-label="Tìm kiếm buổi chơi">
+<form method="GET" action="/groups" class="demo-card group-filters" aria-label="Tìm kiếm buổi chơi">
   <% if (f.mine) { %><input type="hidden" name="mine" value="1"><% } %>
-  <input type="search" name="q" value="<%= f.q %>" placeholder="Tìm theo tên buổi, cơ sở, sân…" maxlength="80">
-  <input type="date" name="date" value="<%= f.date %>" aria-label="Lọc theo ngày chơi">
+  <input type="search" name="q" value="<%= f.q %>" placeholder="Tìm theo tên buổi, cơ sở, sân…" aria-label="Tên buổi, cơ sở hoặc sân" maxlength="80">
+  <%- include('partials/booking-picker-field', { id: 'groups-date', name: 'date', value: f.date, label: 'Lọc theo ngày chơi' }) %>
   <label><input type="checkbox" name="open" value="1" <%= f.openOnly ? 'checked' : '' %>> Chỉ hiện buổi còn chỗ</label>
   <button type="submit" class="demo-button">Lọc</button>
-  <% if (f.q || f.date || f.openOnly) { %><a class="demo-button demo-button-secondary" href="<%= f.mine ? '/groups?mine=1' : '/groups' %>">Xóa lọc</a><% } %>
+  <% if (hasFilters) { %><a class="demo-button demo-button-secondary" href="<%= f.mine ? '/groups?mine=1' : '/groups' %>">Xóa lọc</a><% } %>
 </form>
 <section class="group-grid">
 <% if (!groups.length) { %>
 <article class="demo-card group-empty">
-<h2>Buổi chơi đầu tiên đang chờ bạn</h2>
-<p>Đặt sân, tạo nhóm rồi chia sẻ đường dẫn để rủ mọi người.</p>
-<a class="demo-button" href="/groups/new">Tạo buổi chơi</a>
+<% if (hasFilters) { %>
+  <h2>Không tìm thấy buổi chơi phù hợp</h2>
+  <p>Thử đổi ngày, từ khóa hoặc bỏ lọc chỗ trống.</p>
+<% } else if (f.mine) { %>
+  <h2>Bạn chưa tham gia buổi sân ghép nào</h2>
+  <a class="demo-button" href="/groups">Xem tất cả buổi chơi</a>
+<% } else { %>
+  <h2>Chưa có buổi sân ghép</h2>
+  <p>Bạn có thể tạo buổi từ đơn đã xác nhận rồi gửi đường dẫn cho bạn bè.</p>
+<% } %>
 </article>
 <% } %>
 <% for (const g of groups) { if (!g.booking) continue; const cancelled = g.booking.status === 'CANCELLED'; const ended = g.booking.slots.every(s => +new Date(s.endAt) <= Date.now()); const closed = g.closedAt || +new Date(g.closesAt) <= Date.now(); %>

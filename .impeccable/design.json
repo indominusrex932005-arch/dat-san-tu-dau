@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-20T04:28:45+07:00",
+  "title": "Design System: Sân Thể Thao",
+  "extensions": {
+    "colorMeta": {
+      "forest-ink": {
+        "role": "primary",
+        "displayName": "Forest Ink",
+        "canonical": "#173f35",
+        "tonalRamp": ["#0b211c", "#103229", "#173f35", "#2f6b57", "#5b8876", "#9ab5a5", "#d7e4dc", "#f5f7ef"]
+      },
+      "forest-green": {
+        "role": "secondary",
+        "displayName": "Forest Green",
+        "canonical": "#2f6b57",
+        "tonalRamp": ["#102b22", "#1a4436", "#2f6b57", "#4f8a70", "#80aa96", "#b4cfbf", "#dfebe4", "#f7faf8"]
+      },
+      "gold-selected": {
+        "role": "tertiary",
+        "displayName": "Selected Gold",
+        "canonical": "#d9a520",
+        "tonalRamp": ["#3c2b08", "#725514", "#a57d19", "#d9a520", "#e7c56e", "#f1dca2", "#f8edd0", "#fffaf0"]
+      },
+      "warm-canvas": {
+        "role": "neutral",
+        "displayName": "Warm Canvas",
+        "canonical": "#f5f7ef",
+        "tonalRamp": ["#1d2520", "#52675d", "#8b9c91", "#b9c9bd", "#d7e1d8", "#e7eee6", "#f0f4ed", "#f5f7ef"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface White",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#1c211e", "#4a554e", "#819087", "#b4c0b8", "#d6ded8", "#e7ece8", "#f3f6f3", "#ffffff"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Manrope Display",
+        "purpose": "Hero headlines and the primary booking entry point."
+      },
+      "body": {
+        "displayName": "Manrope Body",
+        "purpose": "Vietnamese interface copy, labels, forms, and operational data."
+      }
+    },
+    "shadows": [
+      {
+        "name": "surface-low",
+        "value": "0 8px 24px rgba(23, 63, 53, .06)",
+        "purpose": "Default separation for cards and panels."
+      },
+      {
+        "name": "surface-hover",
+        "value": "0 14px 34px rgba(23, 63, 53, .10)",
+        "purpose": "Hover lift for cards and interactive surfaces."
+      },
+      {
+        "name": "availability-hero",
+        "value": "0 18px 44px rgba(23, 63, 53, .16)",
+        "purpose": "Deep green home availability preview."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-standard",
+        "value": "160ms–200ms ease",
+        "purpose": "Button, border, card shadow, and media-cover transitions."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Disables scrolling and component transitions; removes card lift."
+      }
+    ],
+    "breakpoints": [
+      { "name": "wide", "value": "1050px" },
+      { "name": "tablet", "value": "960px" },
+      { "name": "mobile", "value": "768px" },
+      { "name": "small-mobile", "value": "700px" },
+      { "name": "booking-stack", "value": "850px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Forest action for search, booking, and primary submission.",
+      "html": "<button class=\"ds-btn-primary\">Tìm sân trống <span aria-hidden=\"true\">↗</span></button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:space-between;gap:16px;min-height:48px;padding:12px 16px;border:1px solid var(--site-forest);border-radius:8px;background:var(--site-forest);color:#fff;font:700 14px/1.5 Manrope,Segoe UI,Arial,sans-serif;cursor:pointer;transition:background-color .18s ease,box-shadow .18s ease,transform .18s ease}.ds-btn-primary:hover{background:var(--site-green);border-color:var(--site-green)}.ds-btn-primary:active{transform:translateY(1px)}.ds-btn-primary:focus-visible{outline:3px solid #76a838;outline-offset:3px}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Low-emphasis action for viewing a date or requesting a secondary operation.",
+      "html": "<button class=\"ds-btn-secondary\">Xem lịch</button>",
+      "css": ".ds-btn-secondary{min-height:40px;padding:9px 14px;border:1px solid #c8dfc9;border-radius:8px;background:#e8f2e6;color:var(--site-forest);font:700 13px/1.4 Manrope,Segoe UI,Arial,sans-serif;cursor:pointer;transition:background-color .18s ease,border-color .18s ease}.ds-btn-secondary:hover{background:#d5eacb;border-color:#afd0ac}.ds-btn-secondary:focus-visible{outline:3px solid #76a838;outline-offset:3px}"
+    },
+    {
+      "name": "Input Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "White bordered field for dates, times, facility filters, and contact details.",
+      "html": "<label class=\"ds-field\"><span>Ngày chơi</span><input type=\"date\" /></label>",
+      "css": ".ds-field{display:grid;gap:6px;color:var(--site-muted);font:700 12px/1.5 Manrope,Segoe UI,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase}.ds-field input{height:42px;width:100%;padding:0 12px;border:1px solid #cbd5c8;border-radius:8px;background:#fff;color:var(--site-forest);font:400 14px/1.4 Manrope,Segoe UI,Arial,sans-serif}.ds-field input:focus-visible{outline:none;border-color:var(--site-forest);box-shadow:0 0 0 3px rgba(23,63,53,.15)}"
+    },
+    {
+      "name": "Content Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "White bordered container for a facility, court, or booking panel.",
+      "html": "<article class=\"ds-card\"><p class=\"ds-card-label\">Cơ sở</p><h2>Sân trung tâm</h2><p>Thông tin địa điểm và giá.</p></article>",
+      "css": ".ds-card{padding:24px;border:1px solid var(--site-line);border-radius:18px;background:#fff;color:var(--site-forest);box-shadow:var(--site-shadow);font-family:Manrope,Segoe UI,Arial,sans-serif}.ds-card h2{margin:10px 0;color:var(--site-ink);font-size:23px;line-height:1.35;letter-spacing:-.035em}.ds-card-label{margin:0;color:var(--site-muted);font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Responsive site navigation with a strong forest brand and visible active route.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-brand\" href=\"#\">Sân Thể Thao<span>.</span></a><a class=\"ds-nav-link\" aria-current=\"page\" href=\"#\">Tìm sân</a></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px 24px;min-height:92px;padding:18px 0;border-bottom:1px solid var(--site-line);font-family:Manrope,Segoe UI,Arial,sans-serif}.ds-brand{color:var(--site-ink);font-size:20px;font-weight:800;letter-spacing:-.04em;text-decoration:none}.ds-brand span{color:#70a927}.ds-nav-link{min-height:42px;padding:9px 12px;border-radius:10px;color:var(--site-ink);font-size:14px;font-weight:650;text-decoration:none}.ds-nav-link:hover,.ds-nav-link:focus-visible{background:#dfeede;color:#07583a}.ds-nav-link:focus-visible{outline:3px solid #76a838;outline-offset:3px}"
+    },
+    {
+      "name": "Availability Cell",
+      "kind": "custom",
+      "refersTo": "availability-grid",
+      "description": "30-minute timetable cell with selected and held states.",
+      "html": "<div class=\"ds-availability\"><span>06:30</span><span class=\"is-selected\">07:00</span><span class=\"is-held\">08:30</span></div>",
+      "css": ".ds-availability{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.16);font:400 13px/1 Manrope,Segoe UI,Arial,sans-serif}.ds-availability span{display:grid;min-height:56px;place-items:center;background:#244f43;color:#edf4ef;font-variant-numeric:tabular-nums}.ds-availability .is-selected{background:#d9a520;color:#173f35;font-weight:900}.ds-availability .is-held{background:#4c6258;color:#bfcac3;text-decoration:line-through}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Forest Operations Board",
+    "overview": "Sân Thể Thao is a quiet, dependable booking surface: warm paper backgrounds, deep forest typography, thin green-gray rules, and compact information blocks that make venue, date, time, price, and booking state easy to scan. The interface is professional and restrained rather than decorative; its strongest visual move is the contrast between a calm canvas and confident forest actions.\n\nThe shipped implementation uses Manrope throughout the visible system, with tabular numerals for money and time. Rounded cards and small shadows soften the operational density, while gold marks selection and important time states, muted green marks availability, and brick/red treatments communicate warnings and errors. The home page introduces the task with a split booking/search hero; courts and booking views continue the same vocabulary with filters, cards, slot grids, and a sticky summary.",
+    "keyCharacteristics": [
+      "Forest-ink actions and headings on warm, low-chroma surfaces.",
+      "Editorial labels, clear numeric hierarchy, and 30-minute timetable states.",
+      "Moderate rounded geometry with thin borders; depth is tonal and lightly shadowed.",
+      "Vietnamese-first content with keyboard-visible focus and skip links."
+    ],
+    "rules": [
+      {
+        "name": "The State-Color Rule",
+        "body": "Gold means selected or important; green means available or actionable; red/brick means a warning or failure. Do not use these colors as arbitrary decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Numeric-Clarity Rule",
+        "body": "Prices, hours, slot times, and booking codes use tabular numerals so columns and totals scan cleanly.",
+        "section": "typography"
+      },
+      {
+        "name": "The Soft-Lift Rule",
+        "body": "Shadows should clarify a card, search panel, or sticky summary's separation from the canvas; they should never become a hard outline or a decorative glow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep primary actions, headings, and navigation in Forest Ink and reserve Gold for a real selection or important time state.",
+      "Do preserve the booking vocabulary: 30-minute cells, explicit date/time labels, prices, and visible status legends.",
+      "Do use thin borders, moderate radii, and low diffuse shadows to organize dense operational information.",
+      "Do keep focus-visible outlines, skip links, semantic labels, aria-live summaries, and role=\"alert\" error surfaces intact.",
+      "Do honor the Vietnamese-first product language and the server-backed truth of availability and pricing."
+    ],
+    "donts": [
+      "Don't introduce a second display family or a decorative type treatment; the visible system is Manrope-led.",
+      "Don't use gold, lime, or brick as general decoration; they communicate state and priority.",
+      "Don't replace the timetable and filter hierarchy with nested ornamental cards or hidden status meanings.",
+      "Don't remove the reduced-motion behavior, print simplification, or keyboard focus treatment.",
+      "Don't canonize the unused Playfair stylesheet links or the brief's flatter “no nested cards” aspiration over the rounded, lightly elevated implementation that actually shipped."
+    ]
+  }
+}

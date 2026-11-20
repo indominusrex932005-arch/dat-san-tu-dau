@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Danh sách cơ sở</title>
+  <title>Danh sách cơ sở | SanXanh</title>
   <link rel="stylesheet" href="/assets/css/app.css">
   <link rel="stylesheet" href="/assets/css/facilities.css">
   <link rel="stylesheet" href="/assets/css/media.css">
@@ -19,15 +19,11 @@
   <main id="noi-dung" class="facilities-main">
     <div class="facilities-shell">
       <section class="facilities-intro" aria-labelledby="facilities-title">
-        <a class="facilities-back-link" href="/">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6" /></svg>
-          Về trang chủ
-        </a>
+        <%- include('partials/back-link', { href: '/', label: 'Về trang chủ' }) %>
         <div class="facilities-intro-content">
           <div>
-            <p class="facilities-eyebrow">Cùng nhau ra sân</p>
             <h1 id="facilities-title">Danh sách cơ sở</h1>
-            <p class="facilities-description">Khám phá các cơ sở thể thao và tìm địa điểm phù hợp cho buổi vận động tiếp theo của bạn.</p>
+            <p class="facilities-description">Xem địa chỉ và các sân đang nhận đặt tại từng cơ sở.</p>
           </div>
           <p class="facilities-count"><span><%= facilities.length %></span> cơ sở trong hệ thống</p>
         </div>
@@ -43,7 +39,6 @@
                 <path d="M12 51c-4 1-6 3-6 5 0 4 12 6 26 6s26-2 26-6c0-2-2-4-6-5" />
               </svg>
             </span>
-            <p class="facilities-eyebrow">Hẹn bạn ở buổi chơi tiếp theo</p>
             <h2>Chưa có cơ sở nào.</h2>
             <p class="facilities-empty-description">Thông tin cơ sở sẽ xuất hiện tại đây khi được cập nhật vào hệ thống. Bạn có thể ghé lại sau để khám phá các địa điểm thể thao.</p>
             <a class="facilities-home-button" href="/">Trở về trang chủ <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -75,7 +70,10 @@
                     </div>
                   <% } %>
                 </dl>
-                <a class="media-card-link" href="/courts?facilityId=<%= facility._id %>">Khám phá sân <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <div class="facility-card-actions">
+                  <a class="media-card-link" href="/courts?facilityId=<%= facility._id %>">Khám phá sân <svg class="media-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                  <%- include('partials/maps-link', { facilityName: facility.name, facilityAddress: facility.address }) %>
+                </div>
               </article>
             <% } %>
           </div>

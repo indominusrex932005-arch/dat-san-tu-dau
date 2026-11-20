@@ -3,19 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> | Sân Thể Thao</title>
+  <title><%= title %> | SanXanh</title>
   <link rel="stylesheet" href="/assets/css/app.css">
   <link rel="stylesheet" href="/assets/css/demo.css">
   <link rel="stylesheet" href="/assets/css/owner-calendar.css">
   <link rel="stylesheet" href="/assets/css/design-system.css">
 <link rel="stylesheet" href="/assets/css/groups.css">
+  <script src="/assets/js/booking-pickers.js" defer></script>
+  <script src="/assets/js/owner-calendar.js" defer></script>
 </head>
 <body class="demo-page owner-calendar-page">
   <a class="owner-calendar-skip" href="#owner-calendar-main">Đến lịch điều hành</a>
   <div class="demo-shell">
     <%- include('partials/navigation') %>
     <main id="owner-calendar-main" class="owner-calendar-main" aria-labelledby="owner-calendar-title" tabindex="-1">
-      <a class="owner-calendar-back" href="/owner"><span aria-hidden="true">←</span> Quản lý cơ sở</a>
+      <%- include('partials/back-link', { href: '/owner', label: 'Quản lý cơ sở' }) %>
       <header class="owner-calendar-heading">
         <div class="owner-calendar-heading-copy">
           <p class="owner-calendar-kicker">QUẢN LÝ CƠ SỞ / LỊCH SÂN</p>
@@ -39,7 +41,7 @@
         <form action="/owner/calendar" method="GET" class="owner-calendar-date-form">
           <div class="owner-calendar-date-field">
             <label for="calendar-date">Ngày xem lịch</label>
-            <input type="date" id="calendar-date" name="date" value="<%= selectedDate %>" min="<%= dayOptions[0].date %>" required>
+            <%- include('partials/booking-picker-field', { id: 'calendar-date', name: 'date', value: selectedDate, min: dayOptions[0].date, required: true }) %>
           </div>
           <button type="submit" class="owner-calendar-submit">Xem lịch <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </form>
@@ -58,7 +60,13 @@
             <h2 id="owner-calendar-schedule-title" class="owner-calendar-section-title">Lịch ngày <%= formatDate(selectedDate) %></h2>
             <p class="owner-calendar-selected-note">Theo giờ Việt Nam · 30 phút mỗi ô</p>
           </div>
-          <span class="owner-calendar-readonly">Chỉ xem lịch</span>
+          <div class="owner-calendar-heading-tools">
+            <button type="button" class="owner-calendar-jump-now" id="owner-calendar-jump-now" hidden>
+              <span class="owner-calendar-now-pulse" aria-hidden="true"></span>
+              <span>Hiện tại: <strong data-calendar-clock>--:--</strong></span>
+            </button>
+            <span class="owner-calendar-readonly">Chỉ xem lịch</span>
+          </div>
         </div>
         <%
           const calendarStatuses = {
@@ -89,12 +97,12 @@
           </div>
         <% } else { %>
           <p id="owner-calendar-help" class="owner-calendar-scroll-hint"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M4 12h16M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg>Cuộn ngang trong bảng để xem thêm giờ. Dùng phím Tab để chọn bảng, sau đó dùng phím mũi tên trái/phải.</p>
-          <div class="owner-calendar-scroll" role="region" aria-label="Lịch các sân, cuộn ngang để xem thêm giờ" aria-describedby="owner-calendar-help" tabindex="0">
+          <div class="owner-calendar-scroll" id="owner-calendar-scroll" data-selected-date="<%= selectedDate %>" role="region" aria-label="Lịch các sân, cuộn ngang để xem thêm giờ" aria-describedby="owner-calendar-help" tabindex="0">
             <table class="owner-calendar-table">
               <caption class="owner-calendar-sr-only">Lịch sân tại <%= facility.name %>, ngày <%= formatDate(selectedDate) %>, theo giờ Việt Nam</caption>
               <thead><tr>
                 <th scope="col" class="owner-calendar-corner">Sân / giờ</th>
-                <% for (const column of timeColumns) { %><th scope="col"><%= column.time %>–<%= column.endTime %></th><% } %>
+                <% for (const column of timeColumns) { %><th scope="col" data-time="<%= column.time %>"><%= column.time %>–<%= column.endTime %></th><% } %>
               </tr></thead>
               <tbody>
                 <% for (const row of courtRows) { %>

@@ -108,8 +108,8 @@ if (paymentPanel) {
     serverTime = now;
     deadline = Math.min(deadline, until);
     clockStarted = responseStarted;
-    clearPaymentLinks();
     if (data.reviewStatus === 'IN_REVIEW') {
+      clearPaymentLinks();
       canCreate = false;
       details.hidden = true;
       createButton.hidden = true;
@@ -117,6 +117,8 @@ if (paymentPanel) {
       updateClock();
       return;
     }
+    let nextQr = '';
+    let nextCheckoutUrl = '';
     const intent = data.intent;
     canCreate = !intent && !createAttempted;
     details.hidden = !intent;
@@ -143,18 +145,30 @@ if (paymentPanel) {
       if (needsRecovery) checkButton.textContent = 'Tra cứu yêu cầu cũ';
       if (intent.status === 'PENDING' && remainingSeconds() > 0) {
         if (typeof data.qrImage === 'string' && data.qrImage.startsWith('data:image/png;base64,')) {
-          qr.src = data.qrImage;
-          qr.hidden = false;
+          nextQr = data.qrImage;
         }
         if (intent.checkoutUrl) {
           const url = new URL(intent.checkoutUrl);
           if (url.protocol === 'https:' && !url.username && !url.password && (!guestToken || !url.href.includes(guestToken))) {
-            checkoutLink.href = url.href;
-            checkoutLink.hidden = false;
+            nextCheckoutUrl = url.href;
           }
         }
-        if (qr.hidden && checkoutLink.hidden) status.textContent = 'Chưa có mã QR hoặc đường dẫn hợp lệ. Hãy liên hệ cơ sở.';
+        if (!nextQr && !nextCheckoutUrl) status.textContent = 'Chưa có mã QR hoặc đường dẫn hợp lệ. Hãy liên hệ cơ sở.';
       }
+    }
+    if (nextQr) {
+      if (qr.getAttribute('src') !== nextQr) qr.src = nextQr;
+      qr.hidden = false;
+    } else {
+      qr.hidden = true;
+      qr.removeAttribute('src');
+    }
+    if (nextCheckoutUrl) {
+      checkoutLink.href = nextCheckoutUrl;
+      checkoutLink.hidden = false;
+    } else {
+      checkoutLink.hidden = true;
+      checkoutLink.removeAttribute('href');
     }
     updateClock();
   }

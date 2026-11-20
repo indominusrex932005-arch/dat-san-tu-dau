@@ -10,6 +10,8 @@ function initializeSlotForm() {
   const total = document.querySelector('#selection-total');
   const chips = document.querySelector('#selected-slots');
   const submit = document.querySelector('#hold-slots');
+  const mobileSummary = slotForm.querySelector('.booking-mobile-summary');
+  const mobileSelection = mobileSummary?.querySelector('[data-mobile-selection]');
   const datePicker = document.querySelector('#date');
   const bookingDate = slotForm.querySelector('input[name="date"]').value;
   const money = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' });
@@ -20,6 +22,10 @@ function initializeSlotForm() {
     summary.textContent = changedDate ? 'Bấm “Xem lịch” để áp dụng ngày mới.'
       : selected.length ? `${selected.length} ô · ${selected.length * 30} phút` : 'Chưa chọn ô giờ.';
     total.textContent = selected.length ? money.format(selected.reduce((sum, input) => sum + Number(input.dataset.price), 0)) : '—';
+    if (mobileSummary) {
+      mobileSummary.hidden = submitting || !selected.length || Boolean(changedDate);
+      mobileSelection.textContent = `${selected.length} ô · ${total.textContent}`;
+    }
     chips.replaceChildren();
     for (const input of selected) {
       const chip = document.createElement('span');
@@ -96,12 +102,50 @@ function initializeSlotForm() {
       if (slotForm.isConnected) refreshSelection();
     }
   }
+  function updateSlotUrgency() {
+    if (!bookingDate) return;
+    const now = Date.now();
+    const closingWindowMs = 30 * 60 * 1000;
+    let changed = false;
+    for (const label of slotForm.querySelectorAll('.booking-slot.available')) {
+      const input = label.querySelector('input[name="times"]');
+      const small = label.querySelector('small');
+      if (!input || !input.value) continue;
+      if (!label.dataset.priceLabel && small) label.dataset.priceLabel = small.textContent;
+      const slotStartMs = Date.parse(`${bookingDate}T${input.value}:00+07:00`);
+      if (!Number.isFinite(slotStartMs)) continue;
+      const diffMs = slotStartMs - now;
+      if (diffMs <= 0) {
+        label.classList.remove('available', 'is-closing-soon');
+        label.classList.add('unavailable', 'is-just-expired');
+        if (input.checked) {
+          input.checked = false;
+          changed = true;
+        }
+        input.disabled = true;
+        if (small) small.textContent = 'Đã qua giờ';
+      } else if (diffMs <= closingWindowMs && !input.disabled) {
+        const mins = Math.ceil(diffMs / 60000);
+        label.classList.add('is-closing-soon');
+        if (small) small.textContent = `${label.dataset.priceLabel || ''} · ${diffMs < 60000 ? 'Còn <1p' : `Còn ${mins}p`}`;
+      } else {
+        label.classList.remove('is-closing-soon');
+        if (small && label.dataset.priceLabel) small.textContent = label.dataset.priceLabel;
+      }
+    }
+    if (changed) refreshSelection();
+  }
+  updateSlotUrgency();
+  const urgencyTimer = window.setInterval(updateSlotUrgency, 15000);
+  window.addEventListener('pagehide', () => window.clearInterval(urgencyTimer), { once: true });
+
   slotForm.addEventListener('change', refreshSelection);
   datePicker?.addEventListener('change', refreshSelection);
   slotForm.addEventListener('submit', submitBooking);
   slotFormRefreshers.set(slotForm, () => {
     submitting = false;
     slotForm.removeAttribute('aria-busy');
+    updateSlotUrgency();
     refreshSelection();
   });
   refreshSelection();

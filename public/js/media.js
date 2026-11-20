@@ -66,10 +66,6 @@ for (const manager of document.querySelectorAll('[data-media-manager]')) {
   });
 }
 
-for (const form of document.querySelectorAll('[data-photo-delete]')) {
-  form.addEventListener('submit', event => { if (!window.confirm('Xóa ảnh này khỏi sân/cơ sở?')) event.preventDefault(); });
-}
-
 const lightbox = document.querySelector('.media-lightbox');
 if (lightbox && typeof lightbox.showModal === 'function') {
   for (const link of document.querySelectorAll('[data-gallery-image]')) {

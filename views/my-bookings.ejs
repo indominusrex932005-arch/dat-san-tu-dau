@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> | Sân Thể Thao</title>
+  <title><%= title %> | SanXanh</title>
   <link rel="stylesheet" href="/assets/css/app.css">
   <link rel="stylesheet" href="/assets/css/demo.css">
   <link rel="stylesheet" href="/assets/css/booking.css">
@@ -15,11 +15,14 @@
   <div class="my-bookings-shell demo-shell">
     <%- include('partials/navigation') %>
     <main>
-      <div class="demo-actions"><a class="demo-button demo-button-secondary" href="/groups?mine=1">Buổi sân ghép của tôi</a><a class="demo-button" href="/groups/new">Rủ bạn cùng chơi</a></div><header class="my-bookings-header">
-        <p class="my-bookings-eyebrow">TÀI KHOẢN CỦA BẠN</p>
+      <header class="my-bookings-header">
         <h1 class="my-bookings-title"><%= title %></h1>
         <p class="my-bookings-desc">Cần gửi yêu cầu trước ô đầu tiên ít nhất 36 giờ. Xem phiếu và theo dõi yêu cầu hủy/đổi của các đơn thuộc tài khoản này.</p>
       </header>
+      <nav class="demo-actions my-bookings-group-actions" aria-label="Sân ghép">
+        <a class="demo-button" href="/groups/new">Rủ bạn cùng chơi</a>
+        <a class="demo-button demo-button-secondary" href="/groups?mine=1">Buổi sân ghép của tôi</a>
+      </nav>
 
       <% if (!bookings.length) { %>
         <section class="my-bookings-empty-card">
@@ -96,7 +99,7 @@
                     <%= booking.status === 'HOLD' ? 'Xem giữ chỗ' : 'Xem / lưu phiếu' %>
                   </a>
                   <% if (booking.status === 'HOLD') { %>
-                    <form action="/bookings/<%= booking._id %>/cancel-hold" method="POST" class="demo-inline-form">
+                    <form action="/bookings/<%= booking._id %>/cancel-hold" method="POST" class="demo-inline-form" data-confirm-title="Hủy giữ chỗ?" data-confirm-message="Các ô đang giữ sẽ được mở lại cho người khác đặt." data-confirm-label="Xác nhận hủy giữ chỗ">
                       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                       <button type="submit" class="my-bookings-btn-request">Hủy giữ chỗ</button>
                     </form>

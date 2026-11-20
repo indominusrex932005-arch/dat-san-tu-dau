@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import homeRoutes from './routes/home.routes.js';
 import facilityRoutes from './routes/facility.routes.js';
 import createAuthRoutes from './routes/auth.routes.js';
+import accountRoutes from './routes/account.routes.js';
 import courtRoutes from './routes/court.routes.js';
 import createBookingRoutes from './routes/booking.routes.js';
 import ownerRoutes from './routes/owner.routes.js';
@@ -71,6 +72,7 @@ export default function createApp(sessionStore, {
   app.use((req, res, next) => {
     res.locals.currentUser = null;
     res.locals.csrfToken = '';
+    res.locals.navigationPath = req.path;
     res.setHeader('Referrer-Policy', 'no-referrer');
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-Frame-Options', 'DENY');
@@ -115,6 +117,7 @@ export default function createApp(sessionStore, {
   app.use('/', homeRoutes);
   app.use('/facilities', facilityRoutes);
   app.use('/', createAuthRoutes(limits, { mailService }));
+  app.use('/', accountRoutes);
   app.use('/courts', courtRoutes);
   app.use('/', createBookingRoutes(limits.bookings));
   app.use('/', groupRoutes(limits.bookings));

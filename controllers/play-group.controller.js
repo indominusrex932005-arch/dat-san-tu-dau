@@ -2,6 +2,8 @@ import PlayGroup from '../models/PlayGroup.js';
 import ExtraService from '../models/ExtraService.js';
 import Booking from '../models/Booking.js';
 import BookingRequest from '../models/BookingRequest.js';
+import Court from '../models/Court.js';
+import Facility from '../models/Facility.js';
 import { createGroup, groupAction, validId, ownExtraFacility } from '../services/play-group.service.js';
 const populate = [{ path: 'booking', populate: [{ path: 'court' }, { path: 'facility' }] }];
 export async function listGroups(req, res) {
@@ -10,33 +12,47 @@ export async function listGroups(req, res) {
   const date = typeof req.query.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(req.query.date) ? req.query.date : '';
   const openOnly = req.query.open === '1';
 
-  const rawGroups = await PlayGroup.find(mine ? { 'members.user': req.currentUser._id } : {})
-    .select('-members.phone')
-    .populate(populate)
-    .sort({ createdAt: -1 })
-    .limit(60)
-    .lean();
+  const now = new Date();
+  const pipeline = [
+    { $match: {
+      ...(mine ? { 'members.user': req.currentUser._id } : {}),
+      ...(openOnly ? {
+        closedAt: null,
+        closesAt: { $gt: now },
+        $expr: { $lt: [{ $size: { $ifNull: ['$members', []] } }, '$capacity'] }
+      } : {})
+    } },
+    { $sort: { createdAt: -1, _id: -1 } },
+    { $lookup: { from: Booking.collection.name, localField: 'booking', foreignField: '_id', as: 'booking' } },
+    { $unwind: '$booking' }
+  ];
+  if (date || openOnly) {
+    pipeline.push({ $match: {
+      ...(date ? { 'booking.date': date } : {}),
+      ...(openOnly ? { 'booking.status': { $ne: 'CANCELLED' }, 'booking.slots.endAt': { $gt: now } } : {})
+    } });
+  }
 
-  const needle = q.toLowerCase();
-  const now = Date.now();
-  const groups = rawGroups.filter(g => {
-    if (!g.booking) return false;
-    if (date && g.booking.date !== date) return false;
-    if (openOnly) {
-      const cancelled = g.booking.status === 'CANCELLED';
-      const ended = g.booking.slots.every(s => +new Date(s.endAt) <= now);
-      const closed = Boolean(g.closedAt) || +new Date(g.closesAt) <= now;
-      if (cancelled || ended || closed || g.members.length >= g.capacity) return false;
-    }
-    if (needle) {
-      const hay = `${g.title} ${g.booking.facility?.name || ''} ${g.booking.court?.name || ''}`.toLowerCase();
-      if (!hay.includes(needle)) return false;
-    }
-    return true;
-  });
+  pipeline.push(
+    { $lookup: { from: Facility.collection.name, localField: 'booking.facility', foreignField: '_id', as: 'facilityDetails' } },
+    { $lookup: { from: Court.collection.name, localField: 'booking.court', foreignField: '_id', as: 'courtDetails' } }
+  );
+  if (q) {
+    const phrase = { $regex: RegExp.escape(q), $options: 'i' };
+    pipeline.push({ $match: { $or: [{ title: phrase }, { 'facilityDetails.name': phrase }, { 'courtDetails.name': phrase }] } });
+  }
+  pipeline.push(
+    { $limit: 60 },
+    { $set: {
+      'booking.facility': { $first: '$facilityDetails' },
+      'booking.court': { $first: '$courtDetails' }
+    } },
+    { $unset: ['members.phone', 'facilityDetails', 'courtDetails'] }
+  );
+  const groups = await PlayGroup.aggregate(pipeline);
 
   res.render('play-groups', {
-    title: 'Tìm bạn ra sân',
+    title: 'Sân ghép',
     groups,
     filters: { q, date, openOnly, mine: Boolean(mine) }
   });

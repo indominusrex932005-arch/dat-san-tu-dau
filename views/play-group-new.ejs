@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>
-<%= title %> | Sân Thể Thao</title>
+<%= title %> | SanXanh</title>
 <link rel="stylesheet" href="/assets/css/app.css">
 <link rel="stylesheet" href="/assets/css/demo.css">
 <link rel="stylesheet" href="/assets/css/design-system.css">
@@ -14,7 +14,7 @@
 <div class="demo-shell">
 <%- include('partials/navigation') %>
 <main>
-<a href="/groups">← Sân ghép</a>
+<%- include('partials/back-link', { href: '/groups', label: 'Sân ghép' }) %>
 <section class="group-heading">
 <p class="group-kicker">CÙNG CHƠI, CÙNG CHIA SẺ</p>
 <h1>Rủ bạn cùng ra sân</h1>

@@ -1,16 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,wght@0,400..700;1,400..700&display=swap');
 /* Hệ thống màu và thành phần dùng chung cho toàn bộ website. */
 :root {
-  --site-ink: #103d30;
-  --site-forest: #064b37;
-  --site-green: #087a52;
-  --site-lime: #c7ed71;
-  --site-canvas: #f2f6ef;
+  --site-font: 'Google Sans', 'Segoe UI', Arial, sans-serif;
+  --site-ink: #173f35;
+  --site-forest: #173f35;
+  --site-green: #2f6b57;
+  --site-gold: #d9a520;
+  --site-red: #b84a32;
+  --site-lime: #dce9c1;
+  --site-canvas: #f5f7ef;
   --site-surface: #ffffff;
-  --site-surface-soft: #eef4ec;
-  --site-line: #d4e2d5;
-  --site-muted: #4b675a;
-  --site-shadow: 0 10px 28px rgba(10, 66, 45, .07);
-  --site-shadow-hover: 0 16px 36px rgba(10, 66, 45, .11);
+  --site-surface-soft: #edf2e7;
+  --site-line: #d7dfd2;
+  --site-muted: #52675d;
+  --site-shadow: 0 8px 24px rgba(23, 63, 53, .06);
+  --site-shadow-hover: 0 14px 34px rgba(23, 63, 53, .10);
 }
 ::selection {
   background: #c7ed71;
@@ -20,13 +24,162 @@ html {
   scroll-behavior: smooth;
   scrollbar-color: #b4cbb8 var(--site-canvas);
 }
+
+dialog.site-dialog {
+  box-sizing: border-box;
+  position: fixed;
+  inset: 0;
+  width: min(440px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: clamp(16px, 4vw, 24px);
+  overflow: auto;
+  border: 1px solid var(--site-line);
+  border-radius: 16px;
+  background: var(--site-surface);
+  color: var(--site-ink);
+  font: inherit;
+}
+dialog.site-dialog::backdrop { background: rgb(23 63 53 / 48%); }
+.site-dialog h2 { margin: 0 0 12px; font-size: 1.35rem; }
+.site-dialog p { margin: 0 0 18px; color: var(--site-muted); }
+.site-dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+.site-dialog-actions > .demo-button {
+  min-height: 44px;
+  padding: 9px 16px;
+  border: 1px solid var(--site-line);
+  font: inherit;
+  font-weight: 700;
+}
+#checkout-choice .site-dialog-actions > button { flex: 1 1 auto; }
+dialog.media-lightbox.site-dialog { width: fit-content; max-width: calc(100% - 32px); }
+
+.booking-picker-field { position: relative; display: block; min-width: 0; }
+.booking-picker-field > input { box-sizing: border-box; width: 100%; }
+.booking-picker-trigger { display: none; }
+.has-booking-date-picker .booking-picker-field > input { padding-inline-end: 38px; }
+.has-booking-date-picker .booking-picker-field > input::-webkit-calendar-picker-indicator { display: none; }
+.has-booking-date-picker .booking-picker-field.has-date-display > input[type="date"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+.has-booking-date-picker .booking-date-display {
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+}
+.has-booking-date-picker .booking-picker-trigger {
+  position: absolute;
+  inset: 0 2px 0 auto;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.booking-picker-trigger svg { width: 19px; height: 19px; }
+.booking-picker-trigger:hover { background: rgb(47 107 87 / 12%); }
+.home-availability-controls .booking-picker-trigger { color: white; }
+
+dialog.booking-datepicker { width: min(400px, calc(100% - 24px)); }
+.booking-datepicker-nav { display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; gap: 8px; margin-bottom: 12px; text-align: center; }
+.booking-datepicker-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; text-align: center; }
+.booking-datepicker-grid[aria-hidden] { margin-bottom: 6px; color: var(--site-muted); font-size: .78rem; font-weight: 700; }
+.booking-datepicker button[data-month],
+.booking-datepicker button[data-date] {
+  min-width: 0;
+  min-height: 40px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--site-ink);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.booking-datepicker button[data-month] { min-height: 44px; border-color: var(--site-line); font-size: 1.4rem; }
+.booking-datepicker button:is([data-month], [data-date]):hover:not(:disabled) { background: var(--site-surface-soft); }
+.booking-datepicker button[data-date][aria-current="date"] { border-color: var(--site-green); }
+.booking-datepicker button[data-date][aria-pressed="true"] { background: var(--site-forest); color: white; }
+.booking-datepicker button:is([data-month], [data-date]):disabled { opacity: .45; cursor: default; }
+.booking-datepicker .site-dialog-actions { margin-top: 16px; }
+
+dialog.booking-timepicker { width: min(320px, calc(100% - 24px)); }
+.booking-time-options {
+  display: grid;
+  gap: 4px;
+  max-height: min(300px, 50dvh);
+  padding: 4px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+  scrollbar-color: #8eaf99 var(--site-surface-soft);
+  border: 1px solid var(--site-line);
+  border-radius: 10px;
+  scroll-behavior: auto;
+}
+.booking-time-options button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--site-ink);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.booking-time-options button:hover { background: var(--site-surface-soft); }
+.booking-time-options button[aria-pressed="true"] { background: var(--site-forest); color: white; }
+.booking-timepicker .site-dialog-actions { margin-top: 16px; }
+
+@supports (appearance: base-select) and selector(select::picker(select)) {
+  select,
+  select::picker(select) { appearance: base-select; }
+  select {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    line-height: 1.3;
+  }
+  select::picker-icon {
+    flex: 0 0 auto;
+    margin-inline-start: auto;
+    align-self: center;
+  }
+  select::picker(select) {
+    max-height: min(320px, 45dvh);
+    margin-top: 4px;
+    padding: 4px;
+    border: 1px solid var(--site-line);
+    border-radius: 10px;
+    background: var(--site-surface);
+    color: var(--site-ink);
+    box-shadow: var(--site-shadow-hover);
+    scrollbar-color: #b4cbb8 var(--site-surface-soft);
+  }
+  select option { padding: 9px 10px; border-radius: 6px; overflow-wrap: anywhere; }
+  select option:is(:hover, :focus-visible, :checked) { background: var(--site-surface-soft); color: var(--site-ink); }
+}
 body.demo-page, body.home-page, body.facilities-page, body.courts-page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--site-canvas);
+  background-color: var(--site-canvas);
+  background-image:
+    radial-gradient(ellipse 68% 46% at 10% 0%, rgba(146, 206, 164, .22) 0%, transparent 62%),
+    radial-gradient(ellipse 56% 42% at 92% 4%, rgba(220, 236, 166, .28) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 44% at 50% 100%, rgba(168, 212, 190, .14) 0%, transparent 68%);
   color: var(--site-ink);
-  font-family: Inter, 'Segoe UI', Arial, sans-serif;
+  font-family: var(--site-font);
   caret-color: var(--site-forest);
   -webkit-font-smoothing: antialiased;
 }
@@ -40,7 +193,8 @@ body.courts-page > .courts-shell {
 }
 body h1, body h2, body h3 {
   color: var(--site-ink);
-  letter-spacing: -.025em;
+  font-family: var(--site-font);
+  letter-spacing: -.035em;
   text-wrap: balance;
 }
 body p {
@@ -64,15 +218,76 @@ body a {
 .demo-nav {
   display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
   min-height: 92px; gap: 16px 24px; padding: 18px 0; margin: 0 0 38px;
-  border-bottom: 1px solid #cbded0;
+  border-bottom: 1px solid var(--site-line);
 }
 .demo-brand { display: inline-flex; align-items: center; gap: 12px; color: var(--site-ink); font-size: 20px; font-weight: 800; letter-spacing: -.04em; text-decoration: none; white-space: nowrap; }
-.demo-brand-mark { display: grid; place-items: center; width: 46px; height: 46px; flex: 0 0 46px; border-radius: 14px; background: var(--site-forest); box-shadow: 0 5px 12px #084d3024; }
-.demo-brand-mark svg { width: 29px; height: 29px; stroke: #d4f39a; stroke-width: 1.5; }
-.demo-brand-dot { color: #70a927; }
+.demo-brand-mark {
+  display: grid; place-items: center; width: 46px; height: 46px; flex: 0 0 46px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #113a2f 0%, #23664f 100%);
+  border: 1px solid rgba(212, 243, 154, .22);
+  box-shadow: 0 6px 14px rgba(8, 77, 48, .22);
+  transition: transform .28s cubic-bezier(.34, 1.56, .64, 1), box-shadow .25s ease, background .25s ease;
+}
+.demo-brand-mark svg, .site-footer-mark svg { width: 30px; height: 30px; overflow: visible; }
+.demo-brand-mark .brand-court, .site-footer-mark .brand-court {
+  stroke: rgba(212, 243, 154, .88); stroke-width: 1.5;
+  transition: stroke .22s ease;
+}
+.demo-brand-mark .brand-lines, .site-footer-mark .brand-lines {
+  stroke: rgba(212, 243, 154, .38); stroke-width: 1.15;
+}
+.demo-brand-mark .brand-arc, .site-footer-mark .brand-arc {
+  stroke: #f4cf65; stroke-width: 1.75; stroke-linecap: round;
+  stroke-dasharray: 24; stroke-dashoffset: 0;
+  transition: stroke-dashoffset .45s ease;
+}
+.demo-brand-mark .brand-ball, .site-footer-mark .brand-ball {
+  fill: #f4cf65; stroke: #113a2f; stroke-width: 1;
+  transform-box: fill-box; transform-origin: center;
+  transition: transform .35s cubic-bezier(.34, 1.56, .64, 1), fill .22s ease;
+}
+.demo-brand-dot, .site-footer-dot {
+  display: inline-block; color: #70a927;
+  transition: transform .28s cubic-bezier(.34, 1.56, .64, 1), color .2s ease;
+}
+.demo-brand:hover .demo-brand-mark,
+.demo-brand:focus-visible .demo-brand-mark,
+.site-footer-logo:hover .site-footer-mark,
+.site-footer-logo:focus-visible .site-footer-mark {
+  transform: translateY(-2px) rotate(-4deg) scale(1.05);
+  box-shadow: 0 10px 22px rgba(23, 98, 69, .34);
+}
+.demo-brand:hover .brand-court,
+.site-footer-logo:hover .brand-court {
+  stroke: #e3fbac;
+}
+.demo-brand:hover .brand-arc,
+.site-footer-logo:hover .brand-arc {
+  animation: brand-arc-draw .55s ease forwards;
+}
+.demo-brand:hover .brand-ball,
+.site-footer-logo:hover .brand-ball {
+  animation: brand-ball-pop .55s cubic-bezier(.34, 1.56, .64, 1);
+  fill: #ffe07d;
+}
+.demo-brand:hover .demo-brand-dot,
+.site-footer-logo:hover .site-footer-dot {
+  transform: translateY(-3px) scale(1.18);
+  color: #e5b73b;
+}
+@keyframes brand-arc-draw {
+  0% { stroke-dashoffset: 24; }
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes brand-ball-pop {
+  0% { transform: scale(0.75) translate(-3px, 3px); }
+  55% { transform: scale(1.22) translate(1px, -2px); }
+  100% { transform: scale(1) translate(0, 0); }
+}
 .demo-nav-links { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
 .demo-nav-links > a { display: inline-flex; align-items: center; min-height: 42px; padding: 9px 12px; border-radius: 10px; color: var(--site-ink); font-size: 14px; font-weight: 650; line-height: 1.3; text-decoration: none; }
-.demo-nav-links > a:hover, .demo-nav-links > a:focus-visible { background: #dfeede; color: #07583a; }
+.demo-nav-links > a[aria-current="page"], .demo-nav-links > a:hover, .demo-nav-links > a:focus-visible { background: #dfeede; color: #07583a; }
 .demo-user { margin: 0 5px; padding: 8px 11px; border-radius: 9px; background: #e1efdf; color: #315a44; font-weight: 650; }
 .demo-nav .demo-inline-form { margin: 0; }
 .demo-nav .demo-inline-form .demo-button { min-height: 40px; padding: 9px 14px; font-size: 13px; }
@@ -97,7 +312,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #76a838; outline-offs
 .demo-error, .booking-notice, .owner-note { line-height: 1.6; }
 /* Trang chủ */
 .home-hero { gap: clamp(30px, 5vw, 72px); }
-.home-hero h1 { font-family: 'Playfair Display', Georgia, serif; font-weight: 600; letter-spacing: -.025em; line-height: 1.1; }
+.home-hero h1 { font-family: var(--site-font); font-weight: 700; letter-spacing: -.03em; line-height: 1.06; }
 .home-eyebrow, .media-kicker { color: #397345; }
 .home-status-dot { background: #75ac36; }
 .home-hero-description { color: #426352; }
@@ -122,7 +337,45 @@ a:focus-visible, button:focus-visible { outline: 3px solid #76a838; outline-offs
 .my-bookings-card .my-bookings-status-confirmed { color: #075b3c; background: #d9f3d4; }
 .my-bookings-card .my-bookings-status-expired { color: #5d6860; background: #edf1ed; }
 /* Trang quản lý, tìm sân và biểu mẫu */
-.owner-heading, .courts-intro { padding: 24px 26px; border: 1px solid #d1e4d0; border-radius: 19px; background: #e0f0de; margin-bottom: 26px; }
+.listing-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.listing-header > div {
+  min-width: 0;
+  max-width: 660px;
+}
+
+.listing-header h1 {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 750;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.listing-description {
+  max-width: 580px;
+  margin: 8px 0 0;
+  color: #53685d;
+  font-size: 16px;
+}
+
+@media (max-width: 700px) {
+  .listing-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .listing-description {
+    font-size: 15px;
+  }
+}
+.owner-heading, .listing-header { padding: 24px 26px; border: 1px solid #d1e4d0; border-radius: 19px; background: #e0f0de; margin-bottom: 26px; }
 .owner-stat, .facilities-count, .courts-count { background: #e1f0dc; border-color: #c8e1c2; }
 .owner-kicker, .courts-eyebrow, .facilities-eyebrow, .booking-eyebrow { color: #347443; }
 .booking-slot.available { border-color: #a7cfac; background: #f1faef; }
@@ -133,9 +386,13 @@ a:focus-visible, button:focus-visible { outline: 3px solid #76a838; outline-offs
 /* Footer toàn trang */
 .site-footer {
   margin-top: 64px;
-  background: #0b3528;
+  background-color: #08291f;
+  background-image:
+    radial-gradient(ellipse 55% 75% at 12% 0%, rgba(49, 138, 102, .32) 0%, transparent 65%),
+    radial-gradient(ellipse 48% 70% at 88% 100%, rgba(199, 237, 113, .12) 0%, transparent 62%),
+    linear-gradient(180deg, #0b3528 0%, #062119 100%);
   color: #dce9e0;
-  border-top: 1px solid #164e3c;
+  border-top: 1px solid #1a5844;
 }
 .site-footer-inner {
   width: min(1184px, calc(100% - 48px));
@@ -163,14 +420,13 @@ a:focus-visible, button:focus-visible { outline: 3px solid #76a838; outline-offs
   width: 38px;
   height: 38px;
   border-radius: 11px;
-  background: #14533f;
+  background: linear-gradient(135deg, #113a2f 0%, #23664f 100%);
   border: 1px solid rgba(199, 237, 113, .28);
+  transition: transform .28s cubic-bezier(.34, 1.56, .64, 1), box-shadow .25s ease;
 }
 .site-footer-mark svg {
-  width: 24px;
-  height: 24px;
-  stroke: #c7ed71;
-  stroke-width: 1.5;
+  width: 26px;
+  height: 26px;
 }
 .site-footer-dot {
   color: #c7ed71;
@@ -186,6 +442,21 @@ a:focus-visible, button:focus-visible { outline: 3px solid #76a838; outline-offs
   margin: 0;
   color: #93b4a2;
   font-size: 12.5px;
+}
+.site-footer-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.site-footer-badges span {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(199, 237, 113, .22);
+  color: #cfe6d8;
+  font-size: 12px;
+  font-weight: 600;
 }
 .site-footer-col h2 {
   margin: 0 0 14px;
@@ -252,11 +523,1264 @@ a:focus-visible, button:focus-visible { outline: 3px solid #76a838; outline-offs
   .home-hero h1 { font-size: clamp(34px, 9vw, 48px); }
   .my-bookings-header { padding: 23px 22px; }
   .my-bookings-card { padding: 20px; }
-  .owner-heading, .courts-intro { padding: 20px; }
+  .owner-heading, .listing-header { padding: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .demo-button, .my-bookings-btn-primary, .my-bookings-btn-receipt, .home-button, .courts-button, .courts-filter-submit, .media-button-primary { transition: none; }
+}
+/* Điều khiển trên header: chuyển sáng/tối & popup tài khoản */
+.site-nav-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 6px;
+}
+.site-lang {
+  position: relative;
+}
+.site-lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--site-line);
+  border-radius: 11px;
+  background: var(--site-surface);
+  color: var(--site-ink);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: background-color .16s ease, border-color .16s ease, transform .14s ease;
+}
+.site-lang-toggle:hover,
+.site-lang.is-open .site-lang-toggle {
+  background: var(--site-surface-soft);
+  border-color: #aac3b0;
+}
+.site-lang-toggle:active {
+  transform: scale(0.96);
+}
+.site-lang-flag {
+  width: 20px;
+  height: 14px;
+  flex: 0 0 20px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .12);
+}
+.site-lang-toggle .site-lang-flag-en { display: none; }
+html[data-lang="en"] .site-lang-toggle .site-lang-flag-vi { display: none; }
+html[data-lang="en"] .site-lang-toggle .site-lang-flag-en { display: block; }
+.site-lang-popup {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 65;
+  width: 184px;
+  padding: 6px;
+  border: 1px solid var(--site-line);
+  border-radius: 14px;
+  background: var(--site-surface);
+  color: var(--site-ink);
+  box-shadow: 0 18px 42px rgba(13, 44, 34, .16);
+  display: grid;
+  gap: 2px;
+  transform-origin: top right;
+  animation: site-popup-in .15s ease-out;
+}
+.site-lang-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 11px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--site-ink);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 650;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color .14s ease, color .14s ease;
+}
+.site-lang-option:hover,
+.site-lang-option:focus-visible,
+.site-lang-option.is-active {
+  background: var(--site-surface-soft);
+  color: var(--site-forest);
+}
+.site-lang-option.is-active {
+  font-weight: 750;
+}
+.site-lang-check {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  margin-left: auto;
+  opacity: 0;
+  transition: opacity .15s ease;
+}
+.site-lang-option.is-active .site-lang-check {
+  opacity: 1;
+}
+html[data-theme="dark"] .site-lang-popup {
+  box-shadow: 0 20px 48px rgba(0, 0, 0, .55);
+}
+html[data-theme="dark"] .site-lang-option:hover,
+html[data-theme="dark"] .site-lang-option.is-active {
+  color: #c7ed71;
+}
+
+.site-theme {
+  position: relative;
+}
+.site-theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--site-line);
+  border-radius: 11px;
+  background: var(--site-surface);
+  color: var(--site-ink);
+  cursor: pointer;
+  transition: background-color .16s ease, border-color .16s ease, transform .14s ease;
+}
+.site-theme-toggle:hover,
+.site-theme.is-open .site-theme-toggle {
+  background: var(--site-surface-soft);
+  border-color: #aac3b0;
+}
+.site-theme-toggle:active {
+  transform: scale(0.96);
+}
+.site-theme-icon {
+  display: none;
+  width: 19px;
+  height: 19px;
+}
+.site-theme-toggle.is-spinning .site-theme-icon {
+  animation: site-theme-spin .38s cubic-bezier(.34, 1.56, .64, 1);
+}
+@keyframes site-theme-spin {
+  0% { transform: rotate(-75deg) scale(.65); opacity: .4; }
+  100% { transform: rotate(0deg) scale(1); opacity: 1; }
+}
+html[data-theme-mode="light"] .site-theme-sun { display: block; color: #c78b14; }
+html[data-theme-mode="dark"] .site-theme-moon { display: block; color: #f2cf66; }
+html[data-theme-mode="system"] .site-theme-system,
+html:not([data-theme-mode]) .site-theme-system { display: block; }
+
+.site-theme-popup {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 65;
+  width: 190px;
+  padding: 6px;
+  border: 1px solid var(--site-line);
+  border-radius: 14px;
+  background: var(--site-surface);
+  color: var(--site-ink);
+  box-shadow: 0 18px 42px rgba(13, 44, 34, .16);
+  display: grid;
+  gap: 2px;
+  transform-origin: top right;
+  animation: site-popup-in .15s ease-out;
+}
+.site-theme-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 11px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--site-ink);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 650;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color .14s ease, color .14s ease;
+}
+.site-theme-option svg {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  opacity: .85;
+}
+.site-theme-option:hover,
+.site-theme-option:focus-visible {
+  background: var(--site-surface-soft);
+  color: var(--site-forest);
+}
+.site-theme-option.is-active {
+  background: var(--site-surface-soft);
+  color: var(--site-forest);
+  font-weight: 750;
+}
+.site-theme-check {
+  margin-left: auto;
+  opacity: 0 !important;
+  transition: opacity .15s ease;
+}
+.site-theme-option.is-active .site-theme-check {
+  opacity: 1 !important;
+}
+html[data-theme="dark"] .site-theme-popup {
+  box-shadow: 0 20px 48px rgba(0, 0, 0, .55);
+}
+html[data-theme="dark"] .site-theme-option:hover,
+html[data-theme="dark"] .site-theme-option.is-active {
+  color: #c7ed71;
+}
+
+.site-account {
+  position: relative;
+}
+.site-account-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  max-width: 220px;
+  padding: 4px 10px 4px 5px;
+  border: 1px solid var(--site-line);
+  border-radius: 999px;
+  background: var(--site-surface);
+  color: var(--site-ink);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+.site-account-trigger:hover,
+.site-account.is-open .site-account-trigger {
+  background: var(--site-surface-soft);
+  border-color: #9dc0a6;
+  box-shadow: 0 4px 12px rgba(23, 63, 53, .08);
+}
+.site-account-avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  border-radius: 50%;
+  background: var(--site-forest);
+  color: #e6f7be;
+  font-size: 13px;
+  font-weight: 800;
+}
+.site-account-avatar-lg {
+  width: 40px;
+  height: 40px;
+  flex-basis: 40px;
+  font-size: 16px;
+}
+.site-account-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.site-account-chevron {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  color: var(--site-muted);
+  transition: transform .18s ease;
+}
+.site-account.is-open .site-account-chevron {
+  transform: rotate(180deg);
+}
+.site-account-popup {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 60;
+  width: min(290px, calc(100vw - 32px));
+  padding: 10px;
+  border: 1px solid var(--site-line);
+  border-radius: 16px;
+  background: var(--site-surface);
+  color: var(--site-ink);
+  box-shadow: 0 18px 42px rgba(13, 44, 34, .16);
+  transform-origin: top right;
+  animation: site-popup-in .15s ease-out;
+}
+@keyframes site-popup-in {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.site-account-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--site-surface-soft);
+  margin-bottom: 8px;
+}
+.site-account-meta {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.site-account-meta strong {
+  font-size: 14px;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.site-account-role {
+  display: inline-block;
+  width: fit-content;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #d8ecd5;
+  color: #14523b;
+  font-size: 11px;
+  font-weight: 700;
+}
+.site-account-email {
+  color: var(--site-muted);
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.site-account-links {
+  display: grid;
+  gap: 2px;
+}
+.site-account-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--site-ink);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 650;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .14s ease, color .14s ease;
+}
+.site-account-item svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  opacity: .85;
+}
+.site-account-item:hover,
+.site-account-item:focus-visible {
+  background: var(--site-surface-soft);
+  color: var(--site-forest);
+  text-decoration: none;
+}
+.site-account-divider {
+  height: 1px;
+  margin: 8px 4px;
+  background: var(--site-line);
+}
+.site-account-logout-form {
+  margin: 0;
+}
+.site-account-logout {
+  color: #a93624;
+}
+.site-account-logout:hover,
+.site-account-logout:focus-visible {
+  background: #fdeceb;
+  color: #8c2415;
+}
+
+/* Popup xác nhận tùy biến đồng bộ */
+dialog.site-dialog {
+  box-shadow: 0 24px 56px rgba(10, 38, 29, .24);
+  animation: site-popup-in .16s ease-out;
+}
+dialog.site-dialog::backdrop {
+  background: rgb(12 31 25 / 54%);
+  backdrop-filter: blur(4px);
+}
+.site-dialog-badge {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  background: #e4f1e2;
+  color: var(--site-forest);
+}
+.site-dialog-badge svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Chế độ tối toàn hệ thống */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --site-ink: #eaf3ee;
+  --site-forest: #2e8b69;
+  --site-green: #3aa37c;
+  --site-gold: #e5b73b;
+  --site-red: #e06b56;
+  --site-lime: #284735;
+  --site-canvas: #0c1714;
+  --site-surface: #13231e;
+  --site-surface-soft: #1a3029;
+  --site-line: #274238;
+  --site-muted: #9eb7aa;
+  --site-shadow: 0 10px 28px rgba(0, 0, 0, .34);
+  --site-shadow-hover: 0 18px 40px rgba(0, 0, 0, .48);
+  scrollbar-color: #2f5145 #0c1714;
+}
+html[data-theme="dark"] body.home-page {
+  --home-green: #eaf3ee;
+  --home-muted: #9eb7aa;
+  --home-border: #274238;
+  background-color: var(--site-canvas);
+  background-image:
+    radial-gradient(ellipse 65% 44% at 10% 0%, rgba(36, 128, 92, .22) 0%, transparent 62%),
+    radial-gradient(ellipse 52% 40% at 92% 4%, rgba(196, 178, 72, .09) 0%, transparent 60%),
+    radial-gradient(ellipse 58% 42% at 50% 100%, rgba(26, 98, 78, .15) 0%, transparent 68%);
+  color: var(--site-ink);
+}
+html[data-theme="dark"] body.demo-page,
+html[data-theme="dark"] body.facilities-page,
+html[data-theme="dark"] body.courts-page {
+  --facilities-green: #eaf3ee;
+  --facilities-muted: #a3bdb0;
+  --facilities-border: #274238;
+  background-color: var(--site-canvas);
+  background-image:
+    radial-gradient(ellipse 65% 44% at 10% 0%, rgba(36, 128, 92, .22) 0%, transparent 62%),
+    radial-gradient(ellipse 52% 40% at 92% 4%, rgba(196, 178, 72, .09) 0%, transparent 60%),
+    radial-gradient(ellipse 58% 42% at 50% 100%, rgba(26, 98, 78, .15) 0%, transparent 68%);
+  color: var(--site-ink);
+}
+html[data-theme="dark"] body a {
+  color: #7ad7aa;
+}
+html[data-theme="dark"] .demo-brand {
+  color: var(--site-ink);
+}
+html[data-theme="dark"] .demo-brand-mark {
+  background: #1a4d3c;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, .35);
+}
+html[data-theme="dark"] .demo-nav-links > a {
+  color: #dcebe3;
+}
+html[data-theme="dark"] .demo-nav-links > a[aria-current="page"],
+html[data-theme="dark"] .demo-nav-links > a:hover,
+html[data-theme="dark"] .demo-nav-links > a:focus-visible {
+  background: #1b362d;
+  color: #c7ed71;
+}
+html[data-theme="dark"] .site-account-popup {
+  box-shadow: 0 20px 48px rgba(0, 0, 0, .55);
+}
+html[data-theme="dark"] .site-account-role {
+  background: #204537;
+  color: #c7ed71;
+}
+html[data-theme="dark"] .site-account-item:hover,
+html[data-theme="dark"] .site-account-item:focus-visible {
+  color: #c7ed71;
+}
+html[data-theme="dark"] .site-account-logout {
+  color: #ff9c8f;
+}
+html[data-theme="dark"] .site-account-logout:hover,
+html[data-theme="dark"] .site-account-logout:focus-visible {
+  background: #3a1d1c;
+  color: #ffc2ba;
+}
+html[data-theme="dark"] .site-dialog-badge {
+  background: #1d3c31;
+  color: #c7ed71;
+}
+html[data-theme="dark"] .demo-card,
+html[data-theme="dark"] .my-bookings-card,
+html[data-theme="dark"] .home-facility-card,
+html[data-theme="dark"] .courts-card,
+html[data-theme="dark"] .facilities-card,
+html[data-theme="dark"] .media-manager,
+html[data-theme="dark"] .login-card,
+html[data-theme="dark"] .home-booking-search,
+html[data-theme="dark"] .courts-filter,
+html[data-theme="dark"] .group-card,
+html[data-theme="dark"] .owner-card,
+html[data-theme="dark"] .booking-receipt {
+  background: var(--site-surface);
+  border-color: var(--site-line);
+  color: var(--site-ink);
+}
+html[data-theme="dark"] .home-page .home-booking-search select,
+html[data-theme="dark"] .home-page .home-booking-search input,
+html[data-theme="dark"] .demo-page input:not([type=checkbox]):not([type=radio]),
+html[data-theme="dark"] .demo-page select,
+html[data-theme="dark"] .demo-page textarea,
+html[data-theme="dark"] .courts-filter input,
+html[data-theme="dark"] .courts-filter select {
+  background: #0e1c18;
+  color: var(--site-ink);
+  border-color: #2c4a3f;
+}
+html[data-theme="dark"] .home-booking-search label,
+html[data-theme="dark"] .home-hero-description,
+html[data-theme="dark"] .listing-description,
+html[data-theme="dark"] .booking-details dt,
+html[data-theme="dark"] .booking-prices dt,
+html[data-theme="dark"] .provider-payment-details dt,
+html[data-theme="dark"] .booking-receipt-footer {
+  color: var(--site-muted);
+}
+html[data-theme="dark"] .home-eyebrow,
+html[data-theme="dark"] .media-kicker,
+html[data-theme="dark"] .media-card-tag,
+html[data-theme="dark"] .owner-kicker,
+html[data-theme="dark"] .courts-eyebrow,
+html[data-theme="dark"] .facilities-eyebrow,
+html[data-theme="dark"] .booking-eyebrow {
+  color: #97d98b;
+}
+html[data-theme="dark"] .demo-button,
+html[data-theme="dark"] .my-bookings-btn-primary,
+html[data-theme="dark"] .my-bookings-btn-receipt,
+html[data-theme="dark"] .home-button,
+html[data-theme="dark"] .courts-button,
+html[data-theme="dark"] .courts-filter-submit,
+html[data-theme="dark"] .login-button,
+html[data-theme="dark"] .media-button-primary {
+  background: #237558;
+  border-color: #2d8d6b;
+  color: #fff;
+}
+html[data-theme="dark"] .demo-button:hover,
+html[data-theme="dark"] .my-bookings-btn-primary:hover,
+html[data-theme="dark"] .my-bookings-btn-receipt:hover,
+html[data-theme="dark"] .home-button:hover,
+html[data-theme="dark"] .courts-button:hover,
+html[data-theme="dark"] .courts-filter-submit:hover,
+html[data-theme="dark"] .media-button-primary:hover {
+  background: #2e8e6c;
+  border-color: #39a37e;
+}
+html[data-theme="dark"] .demo-button-secondary,
+html[data-theme="dark"] .my-bookings-btn-request,
+html[data-theme="dark"] .media-button:not(.media-button-primary) {
+  background: #1b312a;
+  border-color: #2f5145;
+  color: #dcf0e5;
+}
+html[data-theme="dark"] .demo-button-secondary:hover,
+html[data-theme="dark"] .my-bookings-btn-request:hover {
+  background: #234036;
+  border-color: #3d695a;
+  color: #fff;
+}
+html[data-theme="dark"] .owner-heading,
+html[data-theme="dark"] .listing-header,
+html[data-theme="dark"] .owner-stat,
+html[data-theme="dark"] .facilities-count,
+html[data-theme="dark"] .courts-count {
+  background: #152b24;
+  border-color: #27453a;
+  color: var(--site-ink);
+}
+html[data-theme="dark"] .booking-notice,
+html[data-theme="dark"] .booking-request-status,
+html[data-theme="dark"] .owner-note,
+html[data-theme="dark"] .owner-demo-payment {
+  background: #1a2d24;
+  border-color: #2d4c3e;
+  color: #dfece4;
+}
+html[data-theme="dark"] .owner-note strong {
+  color: #ffffff;
+}
+html[data-theme="dark"] .demo-error {
+  background: #331919;
+  border-color: #7c3535;
+  color: #ffc2bc;
+}
+html[data-theme="dark"] .booking-slot.available {
+  background: #162e26;
+  border-color: #2b5446;
+  color: #e6f2ec;
+}
+html[data-theme="dark"] .booking-slot.available:has(input:checked) {
+  background: #3d3316;
+  border-color: #e5b73b;
+  color: #fff1c2;
+  box-shadow: inset 0 0 0 1px #e5b73b;
+}
+html[data-theme="dark"] .booking-slot.locked {
+  background: #332714;
+  border-color: #705524;
+  color: #f4d694;
+}
+html[data-theme="dark"] .booking-slot.booked {
+  background: #1c2c26;
+  border-color: #354c43;
+  color: #96b1a5;
+}
+html[data-theme="dark"] .booking-slot.unavailable {
+  background: #121f1b;
+  border-color: #22352e;
+  color: #6b8479;
+}
+html[data-theme="dark"] .booking-selected span {
+  background: #3d3316;
+  color: #fbe49c;
+}
+html[data-theme="dark"] .booking-details > div,
+html[data-theme="dark"] .booking-time-list li,
+html[data-theme="dark"] .booking-prices div,
+html[data-theme="dark"] .provider-payment-details > div {
+  border-bottom-color: var(--site-line);
+}
+html[data-theme="dark"] .booking-total {
+  border-top-color: var(--site-forest);
+}
+html[data-theme="dark"] .my-bookings-card .my-bookings-status-confirmed {
+  background: #183e2e;
+  color: #9be8b8;
+}
+html[data-theme="dark"] .my-bookings-card .my-bookings-status-expired {
+  background: #1e2d28;
+  color: #a6bbb0;
+}
+html[data-theme="dark"] .home-availability {
+  border-color: #2a4c40;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, .45);
+}
+html[data-theme="dark"] .media-cover {
+  background: #182b24;
+}
+html[data-theme="dark"] .site-footer {
+  background-color: #060f0c;
+  background-image:
+    radial-gradient(ellipse 52% 70% at 12% 0%, rgba(32, 108, 78, .22) 0%, transparent 65%),
+    radial-gradient(ellipse 46% 65% at 88% 100%, rgba(170, 210, 96, .08) 0%, transparent 62%),
+    linear-gradient(180deg, #091612 0%, #050c0a 100%);
+  border-top-color: #193028;
+}
+html[data-theme="dark"] table th,
+html[data-theme="dark"] table td {
+  border-color: var(--site-line);
+}
+
+/* Đồng bộ toàn diện chế độ tối cho tất cả trang con */
+html[data-theme="dark"] body.login-page,
+html[data-theme="dark"] body.my-bookings-page,
+html[data-theme="dark"] body.owner-court-form-page,
+html[data-theme="dark"] body.owner-calendar-page {
+  --owner-calendar-ink: #eaf3ee;
+  --owner-calendar-muted: #a3bdb0;
+  --owner-calendar-line: #274238;
+  background-color: var(--site-canvas);
+  color: var(--site-ink);
+}
+
+/* Thẻ cấp 1 (bề mặt chính) */
+html[data-theme="dark"] .facilities-page .facility-card,
+html[data-theme="dark"] .facilities-empty,
+html[data-theme="dark"] .courts-filter-section,
+html[data-theme="dark"] .courts-empty,
+html[data-theme="dark"] .court-suggestion-section,
+html[data-theme="dark"] .court-suggestion-card,
+html[data-theme="dark"] .my-bookings-empty-card,
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-facility,
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-controls,
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-schedule,
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-empty,
+html[data-theme="dark"] .owner-court-form-card,
+html[data-theme="dark"] .owner-court-form-aside,
+html[data-theme="dark"] .owner-empty,
+html[data-theme="dark"] .owner-report-table table,
+html[data-theme="dark"] .media-empty,
+html[data-theme="dark"] .media-upload {
+  background: var(--site-surface);
+  border-color: var(--site-line);
+  color: var(--site-ink);
+}
+
+/* Thẻ lồng cấp 2 (khối con bên trong thẻ) */
+html[data-theme="dark"] .my-bookings-slots-wrap,
+html[data-theme="dark"] .my-bookings-request-box,
+html[data-theme="dark"] .booking-style,
+html[data-theme="dark"] .extra-choice,
+html[data-theme="dark"] .extra-summary,
+html[data-theme="dark"] .group-tip,
+html[data-theme="dark"] .group-lime,
+html[data-theme="dark"] .court-suggestion-info-row,
+html[data-theme="dark"] .owner-court-form-fieldset,
+html[data-theme="dark"] .owner-court-form-note,
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-day,
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-legend li,
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-readonly,
+html[data-theme="dark"] .owner-report-table thead,
+html[data-theme="dark"] .media-preview figcaption {
+  background: var(--site-surface-soft);
+  border-color: #2c4b40;
+  color: var(--site-ink);
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-day:hover {
+  background: #213d34;
+  border-color: #3c6a5a;
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-day[aria-current="date"] {
+  background: #1f5c45;
+  border-color: #338c6a;
+  color: #fff;
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-day[aria-current="date"] span {
+  color: #e6f7ee;
+}
+
+/* Văn bản tiêu đề & chữ chính trên mọi trang */
+html[data-theme="dark"] .facilities-detail dd,
+html[data-theme="dark"] .courts-filter-heading,
+html[data-theme="dark"] .courts-filter-label,
+html[data-theme="dark"] .courts-count strong,
+html[data-theme="dark"] .courts-facility,
+html[data-theme="dark"] .court-suggestion-title,
+html[data-theme="dark"] .court-suggestion-name,
+html[data-theme="dark"] .court-suggestion-value,
+html[data-theme="dark"] .court-suggestion-price-value,
+html[data-theme="dark"] .my-bookings-code,
+html[data-theme="dark"] .my-bookings-total-price,
+html[data-theme="dark"] .my-bookings-slot-time,
+html[data-theme="dark"] .my-bookings-slot-price,
+html[data-theme="dark"] .my-bookings-request-title,
+html[data-theme="dark"] .my-bookings-empty-text,
+html[data-theme="dark"] .owner-court-form-title,
+html[data-theme="dark"] .owner-court-form-label,
+html[data-theme="dark"] .owner-court-form-legend,
+html[data-theme="dark"] .owner-court-form-aside-title,
+html[data-theme="dark"] .owner-court-form-aside p strong,
+html[data-theme="dark"] .owner-court-form-checkbox-label,
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-court-name,
+html[data-theme="dark"] .media-section-heading h2,
+html[data-theme="dark"] .media-card-link,
+html[data-theme="dark"] .media-upload-label span,
+html[data-theme="dark"] .login-intro-title,
+html[data-theme="dark"] .login-field label {
+  color: var(--site-ink);
+}
+
+/* Văn bản phụ / nhãn / mô tả */
+html[data-theme="dark"] .facilities-detail dt,
+html[data-theme="dark"] .facilities-description,
+html[data-theme="dark"] .facilities-empty-description,
+html[data-theme="dark"] .facilities-back-link,
+html[data-theme="dark"] .courts-label,
+html[data-theme="dark"] .courts-address,
+html[data-theme="dark"] .courts-hours,
+html[data-theme="dark"] .courts-peak-hours,
+html[data-theme="dark"] .courts-prices dt,
+html[data-theme="dark"] .courts-filter-help,
+html[data-theme="dark"] .courts-empty p,
+html[data-theme="dark"] .court-suggestion-message,
+html[data-theme="dark"] .court-suggestion-note,
+html[data-theme="dark"] .court-suggestion-facility,
+html[data-theme="dark"] .court-suggestion-price-label,
+html[data-theme="dark"] .my-bookings-meta,
+html[data-theme="dark"] .my-bookings-slots-title,
+html[data-theme="dark"] .my-bookings-total-label,
+html[data-theme="dark"] .my-bookings-payment-status,
+html[data-theme="dark"] .my-bookings-request-note,
+html[data-theme="dark"] .my-bookings-request-money,
+html[data-theme="dark"] .group-price small,
+html[data-theme="dark"] .group-member small,
+html[data-theme="dark"] .extra-summary small,
+html[data-theme="dark"] .login-description,
+html[data-theme="dark"] .login-card-description,
+html[data-theme="dark"] .login-field-help,
+html[data-theme="dark"] .owner-heading p,
+html[data-theme="dark"] .owner-stat span,
+html[data-theme="dark"] .owner-detail-list dt,
+html[data-theme="dark"] .owner-field-help,
+html[data-theme="dark"] .owner-owner-list li > div span,
+html[data-theme="dark"] .owner-court-form-help,
+html[data-theme="dark"] .owner-court-form-aside p,
+html[data-theme="dark"] .owner-court-form-back,
+html[data-theme="dark"] .owner-facility-page .owner-facility-back,
+html[data-theme="dark"] .owner-facility-page .owner-facility-card-heading p,
+html[data-theme="dark"] .owner-facility-page .owner-facility-aside > p,
+html[data-theme="dark"] .media-help,
+html[data-theme="dark"] .media-count,
+html[data-theme="dark"] .booking-steps {
+  color: var(--site-muted);
+}
+
+/* Kicker / Eyebrow / Badge nổi bật */
+html[data-theme="dark"] .facilities-eyebrow,
+html[data-theme="dark"] .court-suggestion-eyebrow,
+html[data-theme="dark"] .court-suggestion-highlight,
+html[data-theme="dark"] .group-kicker,
+html[data-theme="dark"] .owner-court-form-kicker,
+html[data-theme="dark"] .owner-facility-page .owner-facility-aside-kicker,
+html[data-theme="dark"] .booking-steps [aria-current="step"] {
+  color: #a6e391;
+}
+
+/* Huy hiệu, chip & biểu tượng hộp */
+html[data-theme="dark"] .facilities-card-icon svg,
+html[data-theme="dark"] .facilities-empty-icon svg {
+  stroke: #c7ed71;
+}
+html[data-theme="dark"] .facilities-count span {
+  color: #c7ed71;
+}
+html[data-theme="dark"] .facilities-card-label {
+  color: #a3bdb0;
+}
+html[data-theme="dark"] .facilities-back-link:hover {
+  color: #c7ed71;
+}
+html[data-theme="dark"] .facilities-card-icon,
+html[data-theme="dark"] .facilities-empty-icon,
+html[data-theme="dark"] .courts-symbol,
+html[data-theme="dark"] .court-suggestion-icon,
+html[data-theme="dark"] .my-bookings-empty-icon,
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-facility-icon {
+  background: #1b362c;
+  border-color: #2d5446;
+  color: #c7ed71;
+}
+html[data-theme="dark"] .booking-badge,
+html[data-theme="dark"] .group-tag,
+html[data-theme="dark"] .court-suggestion-badge,
+html[data-theme="dark"] .owner-badge,
+html[data-theme="dark"] .owner-slot-chips li {
+  background: #1c3a2f;
+  border-color: #2e5b4b;
+  color: #d6f5b0;
+}
+html[data-theme="dark"] .owner-badge-success,
+html[data-theme="dark"] .my-bookings-request-status-approved {
+  background: #163b2b;
+  border-color: #2a6e51;
+  color: #9be8b8;
+}
+html[data-theme="dark"] .owner-badge-waiting,
+html[data-theme="dark"] .my-bookings-status-hold,
+html[data-theme="dark"] .my-bookings-notice,
+html[data-theme="dark"] .courts-notice,
+html[data-theme="dark"] .login-checkout-notice {
+  background: #332714;
+  border-color: #705524;
+  color: #f6dc9b;
+}
+html[data-theme="dark"] .my-bookings-status-cancelled,
+html[data-theme="dark"] .login-error,
+html[data-theme="dark"] .courts-filter-error,
+html[data-theme="dark"] .owner-court-form-error,
+html[data-theme="dark"] .owner-facility-page .owner-facility-error {
+  background: #36181a;
+  border-color: #82363a;
+  color: #ffc2bc;
+}
+html[data-theme="dark"] .login-success {
+  background: #143828;
+  border-color: #2c7454;
+  color: #a8f0c3;
+}
+html[data-theme="dark"] .my-bookings-status-legacy,
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-inactive {
+  background: #1f302a;
+  border-color: #344d44;
+  color: #b5cac0;
+}
+html[data-theme="dark"] .group-meter {
+  background: #1e352d;
+}
+html[data-theme="dark"] .my-bookings-slot-item {
+  border-bottom-color: var(--site-line);
+}
+
+/* Ô nhập liệu & nút phụ trên các trang con */
+html[data-theme="dark"] .courts-filter-select,
+html[data-theme="dark"] .courts-filter-input,
+html[data-theme="dark"] .login-field input,
+html[data-theme="dark"] .booking-date-form input,
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-date-field input,
+html[data-theme="dark"] .owner-court-form-input,
+html[data-theme="dark"] .owner-facility-page .owner-facility-field input,
+html[data-theme="dark"] .owner-facility-page .owner-facility-field textarea,
+html[data-theme="dark"] .owner-facility-form textarea,
+html[data-theme="dark"] .owner-review-form textarea {
+  background: #0e1c18;
+  border-color: #2f5044;
+  color: var(--site-ink);
+}
+html[data-theme="dark"] .courts-button-outline,
+html[data-theme="dark"] .courts-filter-reset,
+html[data-theme="dark"] .login-password-toggle,
+html[data-theme="dark"] .captcha-refresh,
+html[data-theme="dark"] .owner-court-form-btn-cancel,
+html[data-theme="dark"] .owner-facility-page .owner-facility-cancel {
+  background: #1a3029;
+  border-color: #2f5145;
+  color: #dcf0e5;
+}
+html[data-theme="dark"] .courts-button-outline:hover,
+html[data-theme="dark"] .courts-filter-reset:hover,
+html[data-theme="dark"] .login-password-toggle:hover,
+html[data-theme="dark"] .captcha-refresh:hover,
+html[data-theme="dark"] .owner-court-form-btn-cancel:hover,
+html[data-theme="dark"] .owner-facility-page .owner-facility-cancel:hover {
+  background: #234036;
+  border-color: #3e6b5b;
+  color: #fff;
+}
+html[data-theme="dark"] .owner-button-danger,
+html[data-theme="dark"] .media-button-danger {
+  background: #3a1a1c;
+  border-color: #82363a;
+  color: #ffc2bc;
+}
+html[data-theme="dark"] .owner-button-danger:hover,
+html[data-theme="dark"] .media-button-danger:hover {
+  background: #512225;
+  color: #fff;
+}
+
+/* Bảng lịch điều hành sân ở chế độ tối */
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-submit,
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-return {
+  background: #237558;
+  border-color: #2d8d6b;
+  color: #fff;
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-submit:hover,
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-return:hover {
+  background: #2e8e6c;
+  border-color: #39a37e;
+  color: #fff;
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-scroll {
+  border-color: var(--site-line);
+  background: var(--site-surface);
+  scrollbar-color: #396254 #0f1e1a;
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-scroll::-webkit-scrollbar {
+  height: 10px;
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-scroll::-webkit-scrollbar-track {
+  background: #0f1e1a;
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-scroll::-webkit-scrollbar-thumb {
+  background: #355c4f;
+  border-radius: 999px;
+  border: 2px solid #0f1e1a;
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-scroll::-webkit-scrollbar-thumb:hover {
+  background: #477968;
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-table th[scope="col"] {
+  background: #172d26;
+  color: #cfe3d8;
+  border-color: var(--site-line);
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-table th.owner-calendar-corner {
+  background: #1c362d;
+  color: #eaf3ee;
+  border-color: #2f4f43;
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-table .owner-calendar-court {
+  background: #13231e;
+  color: #eaf3ee;
+  border-color: #2f4f43;
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-table td[data-status="AVAILABLE"],
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-legend-marker[data-status="AVAILABLE"] {
+  background: #153327;
+  color: #9be8b8;
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-table td[data-status="LOCKED"],
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-legend-marker[data-status="LOCKED"] {
+  background: #362912;
+  color: #f6dc9b;
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-table td[data-status="BOOKED"],
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-legend-marker[data-status="BOOKED"] {
+  background: #173432;
+  color: #9ce6df;
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-table td[data-status="UNAVAILABLE"],
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-legend-marker[data-status="UNAVAILABLE"] {
+  color: #82998e;
+  background: repeating-linear-gradient(135deg, #121e1a, #121e1a 5px, #162420 5px, #162420 6px);
+}
+html[data-theme="dark"] .owner-calendar-page .owner-calendar-table td {
+  border-color: #243c33;
+}
+@media (max-width: 760px) {
+  .site-nav-controls {
+    margin-left: 0;
+  }
+  .site-account-trigger {
+    max-width: 180px;
+  }
+  .site-account-popup {
+    right: 0;
+    left: auto;
+  }
+}
+/* Nút quay lại đồng bộ toàn trang */
+.site-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  min-height: 38px;
+  padding: 7px 14px 7px 10px;
+  margin-bottom: 14px;
+  border: 1px solid var(--site-line);
+  border-radius: 999px;
+  background: var(--site-surface);
+  color: var(--site-ink);
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease, box-shadow .16s ease;
+}
+.site-back-link:hover,
+.site-back-link:focus-visible {
+  background: var(--site-surface-soft);
+  border-color: #9dc0a6;
+  color: var(--site-forest);
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(23, 63, 53, .08);
+}
+.site-back-arrow {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  transition: transform .18s cubic-bezier(.34, 1.56, .64, 1);
+}
+.site-back-link:hover .site-back-arrow,
+.site-back-link:focus-visible .site-back-arrow {
+  transform: translateX(-3px);
+}
+.booking-receipt-actions .site-back-link,
+.site-back-link-inline {
+  margin-bottom: 0;
+}
+.facilities-intro .site-back-link {
+  margin-bottom: 24px;
+}
+html[data-theme="dark"] .site-back-link {
+  background: #172b24;
+  border-color: #2d4c40;
+  color: #e6f3ec;
+}
+html[data-theme="dark"] .site-back-link:hover,
+html[data-theme="dark"] .site-back-link:focus-visible {
+  background: #203b31;
+  border-color: #3e6b59;
+  color: #c7ed71;
+}
+
+/* Nút chỉ đường Google Maps */
+.site-maps-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--site-line);
+  border-radius: 999px;
+  background: var(--site-surface);
+  color: var(--site-ink);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color .16s ease, border-color .16s ease, transform .14s ease, box-shadow .16s ease;
+}
+.site-maps-link:hover,
+.site-maps-link:focus-visible {
+  background: var(--site-surface-soft);
+  border-color: #9dc0a6;
+  color: var(--site-ink);
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(23, 63, 53, .08);
+}
+.site-maps-icon {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  color: var(--site-forest);
+}
+html[data-theme="dark"] .site-maps-icon {
+  color: #c7ed71;
+}
+.facility-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+}
+.booking-court-location {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+.checkout-contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.site-maps-link-block {
+  min-height: 44px;
+  padding: 9px 15px;
+  border-radius: 11px;
+}
+html[data-theme="dark"] .site-maps-link {
+  background: #172b24;
+  border-color: #2d4c40;
+  color: #e6f3ec;
+}
+html[data-theme="dark"] .site-maps-link:hover,
+html[data-theme="dark"] .site-maps-link:focus-visible {
+  background: #203b31;
+  border-color: #3e6b59;
+  color: #fff;
+}
+
+/* Thanh tiến trình & vòng xoay tải khi mạng chậm */
+.site-progress-bar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 9999;
+  height: 3px;
+  background: linear-gradient(90deg, #2f9e6f 0%, #c7ed71 55%, #f2cf66 100%);
+  transform-origin: left center;
+  transform: scaleX(0);
+  opacity: 0;
+  pointer-events: none;
+}
+.site-progress-bar.is-active {
+  opacity: 1;
+  animation: site-progress-glide 2.2s cubic-bezier(.16, 1, .3, 1) forwards;
+}
+@keyframes site-progress-glide {
+  0% { transform: scaleX(0.06); }
+  45% { transform: scaleX(0.62); }
+  100% { transform: scaleX(0.92); }
+}
+.site-slow-loader {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 9998;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border: 1px solid var(--site-line);
+  border-radius: 999px;
+  background: var(--site-surface);
+  color: var(--site-ink);
+  font-size: 13.5px;
+  font-weight: 700;
+  box-shadow: 0 14px 34px rgba(10, 38, 29, .22);
+  animation: site-popup-in .18s ease-out;
+}
+.site-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2.2px solid var(--site-line);
+  border-top-color: var(--site-forest);
+  border-radius: 50%;
+  animation: site-spin .7s linear infinite;
+}
+@keyframes site-spin {
+  to { transform: rotate(360deg); }
+}
+html[data-theme="dark"] .site-slow-loader {
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .55);
+}
+html[data-theme="dark"] .site-spinner {
+  border-top-color: #c7ed71;
+}
+
+/* Hoạt ảnh xuất hiện nhẹ thuần GPU khi mở trang */
+@keyframes site-reveal-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+body:not(.home-page) main {
+  animation: site-reveal-up .34s cubic-bezier(.22, 1, .36, 1) both;
+}
+.courts-card,
+.facility-card,
+.my-bookings-card,
+.group-card,
+.account-card {
+  animation: site-reveal-up .38s cubic-bezier(.22, 1, .36, 1) both;
+}
+.courts-card:nth-child(2), .facility-card:nth-child(2), .my-bookings-card:nth-child(2), .group-card:nth-child(2), .account-card:nth-child(2) { animation-delay: 45ms; }
+.courts-card:nth-child(3), .facility-card:nth-child(3), .my-bookings-card:nth-child(3), .group-card:nth-child(3) { animation-delay: 90ms; }
+.courts-card:nth-child(4), .facility-card:nth-child(4), .my-bookings-card:nth-child(4), .group-card:nth-child(4) { animation-delay: 135ms; }
+.courts-card:nth-child(5), .facility-card:nth-child(5), .my-bookings-card:nth-child(5), .group-card:nth-child(5) { animation-delay: 180ms; }
+.courts-card:nth-child(6), .facility-card:nth-child(6), .my-bookings-card:nth-child(6), .group-card:nth-child(6) { animation-delay: 225ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  body:not(.home-page) main,
+  .courts-card,
+  .facility-card,
+  .my-bookings-card,
+  .group-card,
+  .account-card,
+  .home-hero-content,
+  .home-availability,
+  .home-facility-card,
+  .home-step-card,
+  .site-account-popup,
+  dialog.site-dialog,
+  .demo-brand:hover .brand-arc,
+  .site-footer-logo:hover .brand-arc,
+  .demo-brand:hover .brand-ball,
+  .site-footer-logo:hover .brand-ball {
+    animation: none;
+  }
+  .demo-brand-mark,
+  .site-footer-mark,
+  .demo-brand-dot,
+  .site-footer-dot {
+    transition: none;
+  }
 }
 @media print {
   .demo-nav, .site-footer, .booking-receipt-actions, .no-print { display: none !important; }

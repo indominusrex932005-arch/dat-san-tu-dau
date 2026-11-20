@@ -1,0 +1,8 @@
+<%
+  const url = page => '/admin?' + new URLSearchParams({ tab, ...filters, page: String(page) }).toString() + '#' + tab;
+%>
+<nav class="owner-pagination" aria-label="Phân trang kết quả">
+  <% if (pagination.page > 1) { %><a class="demo-button demo-button-secondary" href="<%= url(pagination.page - 1) %>">Trang trước</a><% } %>
+  <span><%= pagination.total %> kết quả<% if (pagination.pages > 1) { %> · Trang <%= pagination.page %>/<%= pagination.pages %><% } %></span>
+  <% if (pagination.page < pagination.pages) { %><a class="demo-button demo-button-secondary" href="<%= url(pagination.page + 1) %>">Trang sau</a><% } %>
+</nav>

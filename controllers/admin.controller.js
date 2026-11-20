@@ -53,6 +53,18 @@ export async function showAdminDashboard(req, res) {
   if (requestStatus) requestFilter.status = requestStatus;
   if (requestType) requestFilter.type = requestType;
 
+  const filters = { userQ, userRole, bookingStatus, bookingFacility, bookingQ, requestStatus, requestType };
+  const listByTab = {
+    users: { model: User, filter: userFilter, pageSize: 50 },
+    bookings: { model: Booking, filter: bookingFilter, pageSize: 30 },
+    requests: { model: BookingRequest, filter: requestFilter, pageSize: 30 }
+  };
+  const list = listByTab[activeTab];
+  const total = list ? await list.model.countDocuments(list.filter) : 0;
+  const pages = list ? Math.max(1, Math.ceil(total / list.pageSize)) : 1;
+  const requestedPage = typeof req.query.page === 'string' && /^\d+$/.test(req.query.page) ? Number(req.query.page) : 1;
+  const page = Math.max(1, Math.min(pages, requestedPage));
+  const offset = tab => activeTab === tab ? (page - 1) * list.pageSize : 0;
   const now = new Date();
 
   const [
@@ -79,15 +91,17 @@ export async function showAdminDashboard(req, res) {
     User.find({ role: 'OWNER', ownerStatus: 'APPROVED' }).sort({ fullName: 1 }).lean(),
     User.find(userFilter)
       .select('fullName email phone role ownerStatus emailVerified +failedLoginAttempts +loginLockedUntil createdAt')
-      .sort({ createdAt: -1 })
-      .limit(50)
+      .sort({ createdAt: -1, _id: -1 })
+      .skip(offset('users'))
+      .limit(listByTab.users.pageSize)
       .lean(),
     Booking.find(bookingFilter)
       .populate('facility', 'name')
       .populate('court', 'name')
       .populate('user', 'fullName email')
-      .sort({ createdAt: -1 })
-      .limit(30)
+      .sort({ createdAt: -1, _id: -1 })
+      .skip(offset('bookings'))
+      .limit(listByTab.bookings.pageSize)
       .lean(),
     BookingRequest.find(requestFilter)
       .populate({
@@ -97,8 +111,9 @@ export async function showAdminDashboard(req, res) {
       })
       .populate('user', 'fullName email')
       .populate('requestedCourt', 'name')
-      .sort({ createdAt: -1 })
-      .limit(30)
+      .sort({ createdAt: -1, _id: -1 })
+      .skip(offset('requests'))
+      .limit(listByTab.requests.pageSize)
       .lean(),
     User.countDocuments(),
     User.countDocuments({ loginLockedUntil: { $gt: now } }),
@@ -153,7 +168,8 @@ export async function showAdminDashboard(req, res) {
       pendingRequestsCount,
       pendingRefundsCount
     },
-    filters: { userQ, userRole, bookingStatus, bookingFacility, bookingQ, requestStatus, requestType },
+    filters,
+    pagination: { page, pages, total },
     errorMessage: null,
     successMessage,
     nowMs: now.getTime()
@@ -167,7 +183,8 @@ export async function approveOwner(req, res) {
     if (body.facilityId !== undefined && typeof body.facilityId !== 'string') {
       fail(400, 'Mã cơ sở không hợp lệ.');
     }
-    const facilityId = body.facilityId?.trim() ?? '';
+    const assignment = body.facilityId?.trim() ?? '';
+    const facilityId = assignment === 'new' ? '' : assignment;
     if (facilityId && !mongoose.isObjectIdOrHexString(facilityId)) fail(400, 'Mã cơ sở không hợp lệ.');
 
     await mongoose.connection.transaction(async session => {

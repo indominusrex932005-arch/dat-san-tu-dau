@@ -1,30 +1,151 @@
-<header class="demo-nav">
-  <a class="demo-brand" href="/" aria-label="Sân Thể Thao - Trang chủ"><span class="demo-brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><rect x="7" y="5" width="18" height="22" rx="1"/><path d="M7 16h18M16 5v22M7 10h18M7 22h18"/></svg></span><span>Sân Thể Thao<span class="demo-brand-dot">.</span></span></a>
-  <nav class="demo-nav-links" aria-label="Điều hướng chính">
-    <a href="/">Trang chủ</a><a href="/facilities">Cơ sở</a><a href="/courts">Thuê sân riêng</a><a href="/groups">Sân ghép</a>
-    <% if (currentUser) { %>
-      <a href="/my-bookings">Đơn của tôi</a>
-      <% if (currentUser.role === 'OWNER') { %><a href="/owner">Quản lý cơ sở</a><% } %>
-      <% if (currentUser.role === 'ADMIN') { %><a href="/admin">Quản trị hệ thống</a><% } %>
-      <span class="demo-user"><%= currentUser.fullName %></span>
-      <form action="/logout" method="POST" class="demo-inline-form" data-logout-form>
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="demo-button demo-button-secondary">Đăng xuất</button>
-      </form>
+<%
+  const navPath = typeof navigationPath === 'string' ? navigationPath : '';
+  const ownerWorkspace = currentUser?.role === 'OWNER' && /^\/owner(?:\/|$)/.test(navPath);
+  const adminWorkspace = currentUser?.role === 'ADMIN' && /^\/admin(?:\/|$)/.test(navPath);
+  const workspace = ownerWorkspace || adminWorkspace;
+  const currentLink = path => navPath === path ? ' aria-current="page"' : '';
+  const roleLabel = currentUser?.role === 'ADMIN'
+    ? 'Quản trị viên'
+    : currentUser?.role === 'OWNER'
+      ? (currentUser.ownerStatus === 'APPROVED' ? 'Chủ sân' : 'Chủ sân (chờ duyệt)')
+      : 'Khách hàng';
+  const userInitial = currentUser?.fullName ? currentUser.fullName.trim().charAt(0).toUpperCase() : 'U';
+%>
+<header class="demo-nav<%= workspace ? ' workspace-nav' : '' %>">
+  <a class="demo-brand" href="/" aria-label="SanXanh - Trang chủ"><span class="demo-brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><rect class="brand-court" x="5.5" y="6.5" width="21" height="19" rx="4"/><path class="brand-lines" d="M16 6.5v19M5.5 16h21M10.5 6.5v19M21.5 6.5v19"/><path class="brand-arc" d="M8.5 22.5C11.5 13 18.5 9.5 24 10.5"/><circle class="brand-ball" cx="23.5" cy="10.5" r="2.7"/></svg></span><span>SanXanh<span class="demo-brand-dot">.</span></span></a>
+  <nav class="demo-nav-links" aria-label="<%= ownerWorkspace ? 'Điều hướng chủ sân' : adminWorkspace ? 'Điều hướng quản trị' : 'Điều hướng chính' %>">
+    <% if (ownerWorkspace) { %>
+      <a href="/owner"<%- currentLink('/owner') %>>Quản lý cơ sở</a>
+      <% if (currentUser.ownerStatus === 'APPROVED') { %>
+        <a href="/owner/calendar"<%- currentLink('/owner/calendar') %>>Lịch điều hành</a>
+      <% } %>
+      <a href="/courts">Xem sân</a>
+    <% } else if (adminWorkspace) { %>
+      <a href="/admin"<%- /^\/admin(?:\/owners)?\/?$/.test(navPath) ? ' aria-current="page"' : '' %>>Quản trị</a>
+      <a href="/courts">Xem sân</a>
     <% } else { %>
+    <a href="/">Trang chủ</a><a href="/facilities">Cơ sở</a><a href="/courts"<% if (typeof activePage !== 'undefined' && activePage === 'courts') { %> aria-current="page"<% } %>>Thuê sân riêng</a><a href="/groups"<% if (typeof activePage !== 'undefined' && activePage === 'groups') { %> aria-current="page"<% } %>>Sân ghép</a>
+    <% } %>
+    <% if (!currentUser) { %>
       <a href="/login">Đăng nhập</a><a href="/register">Đăng ký khách</a><a href="/register/owner">Dành cho chủ sân</a>
     <% } %>
+    <div class="site-nav-controls">
+      <div class="site-lang" id="site-lang">
+        <button type="button" class="site-lang-toggle" id="site-lang-toggle" aria-haspopup="menu" aria-expanded="false" aria-controls="site-lang-menu" aria-label="Chuyển ngôn ngữ Tiếng Việt / English" title="Ngôn ngữ">
+          <svg class="site-lang-flag site-lang-flag-vi" viewBox="0 0 24 16" aria-hidden="true"><rect width="24" height="16" rx="2.5" fill="#DA251D"/><path d="M12 3.3 13.15 6.85h3.75l-3.03 2.2 1.16 3.55L12 10.4 8.97 12.6l1.16-3.55-3.03-2.2h3.75L12 3.3Z" fill="#FFCD00"/></svg>
+          <svg class="site-lang-flag site-lang-flag-en" viewBox="0 0 24 16" aria-hidden="true"><clipPath id="uk-flag-btn"><rect width="24" height="16" rx="2.5"/></clipPath><g clip-path="url(#uk-flag-btn)"><rect width="24" height="16" fill="#012169"/><path d="M0 0 24 16M24 0 0 16" stroke="#fff" stroke-width="3.2"/><path d="M0 0 24 16M24 0 0 16" stroke="#C8102E" stroke-width="1.6"/><path d="M12 0v16M0 8h24" stroke="#fff" stroke-width="5"/><path d="M12 0v16M0 8h24" stroke="#C8102E" stroke-width="2.8"/></g></svg>
+          <span class="site-lang-code" data-lang-code>VI</span>
+        </button>
+        <div class="site-lang-popup" id="site-lang-menu" role="menu" aria-labelledby="site-lang-toggle" hidden>
+          <button type="button" class="site-lang-option is-active" role="menuitemradio" aria-checked="true" data-lang-choice="vi">
+            <svg class="site-lang-flag" viewBox="0 0 24 16" aria-hidden="true"><rect width="24" height="16" rx="2.5" fill="#DA251D"/><path d="M12 3.3 13.15 6.85h3.75l-3.03 2.2 1.16 3.55L12 10.4 8.97 12.6l1.16-3.55-3.03-2.2h3.75L12 3.3Z" fill="#FFCD00"/></svg>
+            <span>Tiếng Việt</span>
+            <svg class="site-lang-check" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4.5 10.5 3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="site-lang-option" role="menuitemradio" aria-checked="false" data-lang-choice="en">
+            <svg class="site-lang-flag" viewBox="0 0 24 16" aria-hidden="true"><clipPath id="uk-flag-opt"><rect width="24" height="16" rx="2.5"/></clipPath><g clip-path="url(#uk-flag-opt)"><rect width="24" height="16" fill="#012169"/><path d="M0 0 24 16M24 0 0 16" stroke="#fff" stroke-width="3.2"/><path d="M0 0 24 16M24 0 0 16" stroke="#C8102E" stroke-width="1.6"/><path d="M12 0v16M0 8h24" stroke="#fff" stroke-width="5"/><path d="M12 0v16M0 8h24" stroke="#C8102E" stroke-width="2.8"/></g></svg>
+            <span>English</span>
+            <svg class="site-lang-check" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4.5 10.5 3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="site-theme" id="site-theme">
+        <button type="button" class="site-theme-toggle" id="site-theme-toggle" aria-haspopup="menu" aria-expanded="false" aria-controls="site-theme-menu" aria-label="Chọn giao diện sáng, tối hoặc theo hệ thống" title="Giao diện hiển thị">
+          <svg class="site-theme-icon site-theme-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.2M12 19.3v2.2M4.7 4.7l1.6 1.6M17.7 17.7l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.7 19.3l1.6-1.6M17.7 6.3l1.6-1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="site-theme-icon site-theme-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.2 14.6A8.5 8.5 0 0 1 9.4 3.8a8.5 8.5 0 1 0 10.8 10.8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="site-theme-icon site-theme-system" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12.5" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 20h7M12 17v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <div class="site-theme-popup" id="site-theme-menu" role="menu" aria-labelledby="site-theme-toggle" hidden>
+          <button type="button" class="site-theme-option" role="menuitemradio" aria-checked="false" data-theme-choice="light">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.2M12 19.3v2.2M4.7 4.7l1.6 1.6M17.7 17.7l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.7 19.3l1.6-1.6M17.7 6.3l1.6-1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <span>Sáng</span>
+            <svg class="site-theme-check" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4.5 10.5 3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="site-theme-option" role="menuitemradio" aria-checked="false" data-theme-choice="dark">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.2 14.6A8.5 8.5 0 0 1 9.4 3.8a8.5 8.5 0 1 0 10.8 10.8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Tối</span>
+            <svg class="site-theme-check" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4.5 10.5 3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="site-theme-option" role="menuitemradio" aria-checked="false" data-theme-choice="system">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12.5" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 20h7M12 17v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <span>Theo hệ thống</span>
+            <svg class="site-theme-check" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4.5 10.5 3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <% if (currentUser) { %>
+        <div class="site-account" id="site-account">
+          <button type="button" class="site-account-trigger" id="site-account-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="site-account-menu">
+            <span class="site-account-avatar" aria-hidden="true"><%= userInitial %></span>
+            <span class="site-account-name"><%= currentUser.fullName %></span>
+            <svg class="site-account-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5.5 7.75 4.5 4.5 4.5-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="site-account-popup" id="site-account-menu" role="menu" aria-labelledby="site-account-trigger" hidden>
+            <div class="site-account-header">
+              <span class="site-account-avatar site-account-avatar-lg" aria-hidden="true"><%= userInitial %></span>
+              <div class="site-account-meta">
+                <strong><%= currentUser.fullName %></strong>
+                <span class="site-account-role"><%= roleLabel %></span>
+                <% if (currentUser.email) { %><span class="site-account-email"><%= currentUser.email %></span><% } %>
+              </div>
+            </div>
+            <div class="site-account-links">
+              <a class="site-account-item" href="/account" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.7"/><path d="M5 19.5c1.3-3.2 4-4.8 7-4.8s5.7 1.6 7 4.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                <span>Thông tin tài khoản</span>
+              </a>
+              <a class="site-account-item" href="/my-bookings" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M8 3v4M16 3v4M4 10h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                <span>Đơn đặt sân của tôi</span>
+              </a>
+              <% if (currentUser.role === 'OWNER') { %>
+                <a class="site-account-item" href="/owner" role="menuitem">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1v-9.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                  <span>Quản lý cơ sở</span>
+                </a>
+                <% if (currentUser.ownerStatus === 'APPROVED') { %>
+                  <a class="site-account-item" href="/owner/calendar" role="menuitem">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 3v4M16 3v4M3.5 10h17M9 14h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                    <span>Lịch điều hành sân</span>
+                  </a>
+                <% } %>
+              <% } %>
+              <% if (currentUser.role === 'ADMIN') { %>
+                <a class="site-account-item" href="/admin" role="menuitem">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 4.5 6.5v5.3c0 4.6 3.2 8.7 7.5 9.7 4.3-1 7.5-5.1 7.5-9.7V6.5L12 3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                  <span>Quản trị hệ thống</span>
+                </a>
+              <% } %>
+            </div>
+            <div class="site-account-divider" role="separator"></div>
+            <form action="/logout" method="POST" class="site-account-logout-form" data-confirm-title="Đăng xuất tài khoản" data-confirm-message="Bạn muốn đăng xuất khỏi tài khoản <%= currentUser.fullName %>?" data-confirm-label="Đăng xuất">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button type="submit" class="site-account-item site-account-logout" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10 17l-5-5 5-5M5 12h11M14 5h4a1.5 1.5 0 0 1 1.5 1.5v11A1.5 1.5 0 0 1 18 19h-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Đăng xuất</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      <% } %>
+    </div>
   </nav>
 </header>
-<% if (currentUser) { %>
-  <dialog id="logout-confirm-dialog" class="logout-dialog" aria-labelledby="logout-dialog-title">
-    <h2 id="logout-dialog-title">Xác nhận đăng xuất</h2>
-    <p>Bạn có chắc chắn muốn đăng xuất khỏi tài khoản <strong><%= currentUser.fullName %></strong> không?</p>
-    <div class="logout-dialog-actions">
-      <button type="button" class="demo-button demo-button-secondary" data-logout-cancel>Ở lại</button>
-      <button type="button" class="demo-button" data-logout-confirm>Đăng xuất</button>
+<script src="/assets/js/site-header.js" defer></script>
+<script src="/assets/js/site-i18n.js" defer></script>
+<% if (currentUser || (typeof guestConfirmation !== 'undefined' && guestConfirmation)) { %>
+  <dialog id="site-confirm-dialog" class="site-dialog" aria-labelledby="site-confirm-title" aria-describedby="site-confirm-message">
+    <div class="site-dialog-badge" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 8v5M12 16.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
+    <h2 id="site-confirm-title">Xác nhận thao tác</h2>
+    <p id="site-confirm-message"></p>
+    <form method="dialog" class="site-dialog-actions">
+      <button class="demo-button demo-button-secondary" value="cancel" autofocus>Quay lại</button>
+      <button class="demo-button" value="confirm" data-dialog-confirm>Xác nhận</button>
+    </form>
   </dialog>
-  <script src="/assets/js/logout-confirm.js" defer></script>
+  <script src="/assets/js/site-confirm.js" defer></script>
 <% } %>
 <% if (typeof publicDemo !== 'undefined' && publicDemo) { %>
   <p class="demo-muted" role="note">Bản demo công khai: chỉ nhập thông tin thử; các giao dịch thanh toán đều là mô phỏng.</p>

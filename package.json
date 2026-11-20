@@ -9,7 +9,8 @@
   "main": "index.js",
   "scripts": {
     "test": "node --test --test-concurrency=1 tests/*.test.js",
-    "start": "node server.js",
+    "start": "node --env-file-if-exists=.env.local server.js",
+    "start:demo": "node scripts/start-demo.js",
     "dev": "node --watch server.js",
     "lint": "eslint .",
     "check": "npm run lint && node scripts/check-views.js",

@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="vi"><head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> | Sân Thể Thao</title>
+  <title><%= title %> | SanXanh</title>
   <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/booking.css">
-  <script src="/assets/js/<%= typeof providerCheckoutEnabled !== 'undefined' && providerCheckoutEnabled ? 'payment-checkout.js' : 'booking.js' %>" defer></script>
+  <% const hasQrCheckout = typeof providerCheckoutEnabled !== 'undefined' && providerCheckoutEnabled; %>
+  <script src="/assets/js/<%= hasQrCheckout ? 'payment-checkout.js' : 'booking.js' %>" defer></script>
   <link rel="stylesheet" href="/assets/css/design-system.css">
 <link rel="stylesheet" href="/assets/css/groups.css">
 </head><body class="demo-page"><div class="demo-shell">
-  <%- include('partials/navigation') %>
+  <%- include('partials/navigation', { guestConfirmation: booking.status === 'HOLD' }) %>
   <% const facility = booking.facility || booking.court?.facility; const accessToken = typeof token === 'string' ? token : ''; const query = accessToken ? '?token=' + encodeURIComponent(accessToken) : ''; %>
   <main>
     <% if (typeof askGuest !== 'undefined' && askGuest) { %>
-      <dialog open id="checkout-choice" class="demo-card" aria-labelledby="choice-title">
+      <dialog open id="checkout-choice" class="site-dialog" aria-labelledby="choice-title">
         <h2 id="choice-title">Bạn muốn tiếp tục thế nào?</h2>
         <p>Nếu tiếp tục với tư cách khách vãng lai, bạn cần gọi cơ sở để hủy hoặc đổi lịch.</p>
-        <form action="/bookings/<%= booking._id %>/checkout-choice" method="post">
+        <form class="site-dialog-actions" action="/bookings/<%= booking._id %>/checkout-choice" method="post">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="token" value="<%= accessToken %>">
           <button class="demo-button" name="choice" value="login">Đăng nhập để quản lý đơn</button>
           <button class="demo-button demo-button-secondary" name="choice" value="guest">Tiếp tục với tư cách khách vãng lai</button>
@@ -23,9 +24,12 @@
       <script src="/assets/js/checkout-choice.js" defer></script>
     <% } %>
     <% if (booking.status === 'EXPIRED') { %><p role="alert">Đã hết hạn giữ chỗ. Hãy chọn lại ô giờ.</p><% } %>
-    <p class="booking-eyebrow">GIỮ CHỖ / THANH TOÁN</p><h1>Kiểm tra đơn <%= booking.publicCode || booking._id %></h1>
+    <h1>Kiểm tra đơn <%= booking.publicCode || booking._id %></h1>
     <% if (demoMode) { %><p class="booking-notice">BẢN DEMO — Chỉ dùng dữ liệu và tài khoản thử. Thanh toán được mô phỏng, không chuyển hoặc nhận tiền thật.</p><% } %>
     <% if (errorMessage) { %><p class="demo-error" role="alert"><%= errorMessage %></p><% } %>
+    <% if (hasQrCheckout && booking.status === 'HOLD') { %>
+      <a class="checkout-jump-to-qr" href="#provider-payment-panel">Đến phần thanh toán QR thử</a>
+    <% } %>
     <div class="booking-layout">
       <section class="demo-card">
         <h2><%= booking.court?.name || 'Sân đang cập nhật' %></h2>
@@ -48,14 +52,14 @@
         <% if (booking.status === 'HOLD') { %>
           <h2 data-checkout-hold-title>Chỗ đang được giữ</h2>
           <p class="booking-countdown" role="timer" data-hold-until="<%= booking.holdExpiresAt ? new Date(booking.holdExpiresAt).toISOString() : '' %>" data-server-now="<%= typeof serverNow === 'string' ? serverNow : '' %>" aria-live="off">Đang tính thời gian còn lại…</p>
-          <p class="demo-muted" data-hold-instructions>Giữ chỗ tối đa 10 phút, trước khi ô đầu tiên bắt đầu. Đồng hồ dùng thời hạn máy chủ trả về; máy chủ kiểm tra lại khi thanh toán.</p>
-          <% if (booking.holdExpiresAt) { %><p class="demo-muted" data-hold-instructions>Hạn giữ: <%= formatTime(booking.holdExpiresAt) %> (giờ Việt Nam). Thời hạn được máy chủ kiểm tra.</p><% } %>
-          <% if (typeof providerCheckoutEnabled !== 'undefined' && providerCheckoutEnabled) { %>
-            <section class="provider-payment" id="provider-payment-panel" aria-labelledby="provider-payment-title"
+          <p class="demo-muted" data-hold-instructions>Hoàn tất trước khi hết thời gian giữ. Các ô sẽ tự mở lại nếu bạn chưa xác nhận.</p>
+          <% if (booking.holdExpiresAt) { %><p class="demo-muted" data-hold-instructions>Hạn giữ: <%= formatTime(booking.holdExpiresAt) %> (giờ Việt Nam).</p><% } %>
+          <% if (hasQrCheckout) { %>
+            <section class="provider-payment" id="provider-payment-panel" aria-labelledby="provider-payment-title" tabindex="-1"
               data-booking-id="<%= booking._id %>" data-status-url="/bookings/<%= booking._id %>/payment-status<%= query %>">
               <span class="booking-badge">Thử nghiệm Sandbox</span>
-              <h3 id="provider-payment-title">Thanh toán thử</h3>
-              <p class="demo-muted">Kiểm tra đúng người nhận và tổng tiền trước khi tiếp tục.</p>
+              <h3 id="provider-payment-title">Thanh toán bằng QR mô phỏng</h3>
+              <p class="demo-muted">Kiểm tra người nhận và số tiền trên mã thử. Bước này không chuyển tiền thật.</p>
               <p id="provider-payment-status" role="status" aria-live="polite">Đang đọc trạng thái từ máy chủ…</p>
               <dl class="provider-payment-details" id="provider-payment-details" hidden>
                 <div><dt>Người nhận</dt><dd id="provider-recipient"></dd></div>
@@ -66,7 +70,7 @@
               <a class="demo-button" id="provider-checkout-link" target="_blank" rel="noopener noreferrer" hidden>Mở trang thanh toán thử</a>
               <form id="provider-payment-form" class="demo-form" action="/bookings/<%= booking._id %>/payment-intents" method="POST">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="token" value="<%= accessToken %>">
-                <button class="demo-button" type="submit" id="provider-create-payment" disabled>Tạo yêu cầu thanh toán thử</button>
+                <button class="demo-button" type="submit" id="provider-create-payment" disabled>Tạo mã QR thử</button>
               </form>
               <button class="demo-button demo-button-secondary" type="button" id="provider-check-payment">Kiểm tra thanh toán</button>
               <p class="demo-muted">Nếu đã thanh toán nhưng trạng thái chưa cập nhật hoặc đã hết hạn, hãy liên hệ cơ sở và cung cấp mã đơn.</p>
@@ -77,13 +81,17 @@
             <p class="booking-notice">Ảnh QR chỉ minh họa — không quét hoặc chuyển tiền. Chưa kết nối ngân hàng và chưa xác minh tiền thật.</p>
           <% } %>
           <% if (demoMode) { %>
+            <% if (hasQrCheckout) { %><details class="checkout-demo-shortcut"><summary>Lối tắt trình chiếu</summary><p>Dùng để xác nhận mô phỏng trực tiếp khi trình bày luồng, không cần tạo QR.</p><% } %>
             <form action="/bookings/<%= booking._id %>/demo-payment" method="POST" class="demo-form" id="demo-payment-form">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="token" value="<%= accessToken %>">
-              <button class="demo-button" type="submit" data-demo-payment>Mô phỏng thanh toán toàn bộ</button>
+              <button class="demo-button<%= hasQrCheckout ? ' demo-button-secondary' : '' %>" type="submit" data-demo-payment>Mô phỏng thanh toán toàn bộ</button>
             </form>
             <p class="demo-muted">Chỉ dùng để trình bày. Phiếu sau bước này được ghi rõ là thanh toán mô phỏng.</p>
-          <% } else { %><p class="demo-muted">Thanh toán trực tuyến chưa được mở. Vui lòng liên hệ cơ sở; các ô sẽ được giải phóng khi hết hạn giữ.</p><% } %>
-          <form action="/bookings/<%= booking._id %>/cancel-hold" method="POST" class="demo-form">
+            <% if (hasQrCheckout) { %></details><% } %>
+          <% } else { %>
+            <p class="booking-notice">Thanh toán trực tuyến đang tắt. Hãy liên hệ cơ sở để xác nhận lịch. Các ô sẽ mở lại khi hết hạn giữ.</p>
+          <% } %>
+          <form action="/bookings/<%= booking._id %>/cancel-hold" method="POST" class="demo-form" data-confirm-title="Hủy giữ chỗ?" data-confirm-message="Các ô đang giữ sẽ được mở lại cho người khác đặt." data-confirm-label="Xác nhận hủy giữ chỗ">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="token" value="<%= accessToken %>">
             <button class="demo-button demo-button-secondary" type="submit">Hủy giữ chỗ (nhả sân ngay)</button>
           </form>
@@ -91,12 +99,19 @@
           <h2><%= statusLabel(booking.status) %></h2><p><%= paymentLabel(booking.paymentStatus) %></p>
           <a class="demo-button" href="/bookings/<%= booking._id %>/receipt<%= query %>">Xem thông tin / phiếu</a>
         <% } %>
-        <hr>
-        <p>Liên hệ cơ sở: <% if (facility?.phone) { %><a href="tel:<%= facility.phone %>"><%= facility.phone %></a><% } else { %>Chưa có số liên hệ.<% } %></p>
-        <% if (!booking.user) { %><p class="demo-muted">Khách vãng lai liên hệ chủ sân khi cần hủy/đổi. Hãy lưu phiếu và đường dẫn đơn của bạn.</p><% } %>
+        <section class="checkout-facility-contact" aria-labelledby="checkout-contact-title">
+          <h3 id="checkout-contact-title">Liên hệ cơ sở</h3>
+          <div class="checkout-contact-actions">
+            <% if (facility?.phone) { %>
+              <a class="demo-button demo-button-secondary" href="tel:<%= facility.phone %>">Gọi <%= facility.phone %></a>
+            <% } else { %><p>Chưa có số liên hệ.</p><% } %>
+            <%- include('partials/maps-link', { facilityName: facility?.name, facilityAddress: facility?.address, extraClass: 'site-maps-link-block' }) %>
+          </div>
+          <% if (!booking.user) { %><p class="demo-muted">Khách vãng lai liên hệ chủ sân khi cần hủy/đổi. Hãy lưu phiếu và đường dẫn đơn của bạn.</p><% } %>
+        </section>
       </aside>
     </div>
-    <a href="/courts/<%= booking.court?._id || '' %>?date=<%= booking.date %>">← Xem lại lịch sân</a>
+    <%- include('partials/back-link', { href: `/courts/${booking.court?._id || ''}?date=${booking.date}`, label: 'Xem lại lịch sân', extraClass: 'site-back-link-inline' }) %>
   </main>
 </div>
   <%- include('partials/footer') %>

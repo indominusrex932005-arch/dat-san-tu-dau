@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi"><head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Phiếu <%= booking.publicCode || booking._id %> | Sân Thể Thao</title>
+  <title>Phiếu <%= booking.publicCode || booking._id %> | SanXanh</title>
   <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/booking.css">
   <script src="/assets/js/receipt.js" defer></script>
   <link rel="stylesheet" href="/assets/css/design-system.css">
@@ -11,11 +11,11 @@
   <% const facility = booking.facility || booking.court?.facility; const accessToken = typeof token === 'string' ? token : ''; const query = accessToken ? '?token=' + encodeURIComponent(accessToken) : ''; const owned = currentUser && booking.user && String(booking.user._id || booking.user) === String(currentUser._id); %>
   <main class="booking-receipt-wrap">
     <div class="booking-receipt-actions no-print">
-      <a href="<%= currentUser ? '/my-bookings' : '/courts' %>">← <%= currentUser ? 'Đơn của tôi' : 'Xem sân' %></a>
+      <%- include('partials/back-link', { href: currentUser ? '/my-bookings' : '/courts', label: currentUser ? 'Đơn của tôi' : 'Xem sân' }) %>
       <button type="button" class="demo-button" data-print-receipt>In / Lưu PDF</button>
     </div>
     <article class="demo-card booking-receipt" aria-labelledby="receipt-title">
-      <p class="booking-eyebrow">SÂN THỂ THAO</p><h1 id="receipt-title">Phiếu thông tin đặt sân</h1>
+      <p class="booking-eyebrow">SANXANH</p><h1 id="receipt-title">Phiếu thông tin đặt sân</h1>
       <p class="booking-code">Mã đơn: <strong><%= booking.publicCode || booking._id %></strong></p>
       <p><span class="booking-badge"><%= statusLabel(booking.status) %></span></p>
       <%- include('partials/payment-review-notice', { reviewStatus }) %>
@@ -28,7 +28,7 @@
         <div><dt>Người chơi</dt><dd><%= booking.guestName || currentUser?.fullName || 'Đang cập nhật' %></dd></div>
         <div><dt>SĐT người chơi</dt><dd><%= booking.guestPhone || 'Chưa cập nhật' %></dd></div>
         <div><dt>Cơ sở</dt><dd><%= facility?.name || 'Cơ sở đang cập nhật' %></dd></div>
-        <div><dt>Địa chỉ</dt><dd><%= facility?.address || 'Đang cập nhật' %></dd></div>
+        <div><dt>Địa chỉ</dt><dd><%= facility?.address || 'Đang cập nhật' %> <%- include('partials/maps-link', { facilityName: facility?.name, facilityAddress: facility?.address, extraClass: 'no-print' }) %></dd></div>
         <div><dt>Sân</dt><dd><%= booking.court?.name || 'Sân đang cập nhật' %></dd></div>
         <div><dt>Ngày chơi</dt><dd><%= formatDate(booking.date) %></dd></div>
         <div><dt>Thanh toán</dt><dd><%= paymentLabel(booking.paymentStatus) %></dd></div>

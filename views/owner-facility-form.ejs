@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> | Sân Thể Thao</title>
+  <title><%= title %> | SanXanh</title>
   <link rel="stylesheet" href="/assets/css/app.css">
   <link rel="stylesheet" href="/assets/css/demo.css">
   <link rel="stylesheet" href="/assets/css/owner.css">
@@ -17,7 +17,7 @@
   <div class="demo-shell">
     <%- include('partials/navigation') %>
     <main aria-labelledby="facility-form-title">
-      <a class="owner-back owner-facility-back" href="/owner">← Quản lý cơ sở</a>
+      <%- include('partials/back-link', { href: '/owner', label: 'Quản lý cơ sở' }) %>
       <div class="owner-heading owner-facility-heading">
         <div>
           <span class="owner-kicker">THÔNG TIN CƠ SỞ ĐƯỢC CẤP</span>
@@ -78,7 +78,7 @@
         <p>Chỉ tải ảnh QR giả dùng để trình bày, không chứa tài khoản ngân hàng hay thông tin chuyển tiền thật. Thanh toán vẫn là mô phỏng.</p>
         <% if (facility.demoQr) { %>
           <img src="<%= facility.demoQr.url %>" alt="Ảnh QR minh họa hiện tại" width="180" height="180" style="object-fit:contain">
-          <form method="POST" action="/owner/facilities/<%= facility._id %>/demo-qr/delete"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="media-button media-button-danger" type="submit">Xóa ảnh QR</button></form>
+          <form method="POST" action="/owner/facilities/<%= facility._id %>/demo-qr/delete" data-confirm-title="Xóa ảnh QR minh họa" data-confirm-message="Ảnh QR minh họa hiện tại sẽ bị gỡ khỏi cơ sở." data-confirm-label="Xóa ảnh QR"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="media-button media-button-danger" type="submit">Xóa ảnh QR</button></form>
         <% } %>
         <% if (imageUploadsReady) { %>
           <form class="media-upload" data-image-upload><label class="media-upload-label" for="demo-qr-file">Chọn ảnh QR minh họa (JPG, PNG, WebP; tối đa <%= imageUploadMaxMB %> MB)</label><input id="demo-qr-file" type="file" name="image" data-max-mb="<%= imageUploadMaxMB %>" accept="image/jpeg,image/png,image/webp" required><figure class="media-preview" hidden><img alt="Xem trước ảnh QR" width="200" height="200"></figure><button type="submit" class="media-button media-button-primary"><%= facility.demoQr ? 'Thay ảnh QR' : 'Tải ảnh QR' %></button></form>

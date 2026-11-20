@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="vi"><head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> | Sân Thể Thao</title>
+  <title><%= title %> | SanXanh</title>
   <link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/demo.css"><link rel="stylesheet" href="/assets/css/booking.css">
   <script src="/assets/js/booking.js" defer></script>
   <link rel="stylesheet" href="/assets/css/media.css">
   <script src="/assets/js/media.js" defer></script>
   <link rel="stylesheet" href="/assets/css/design-system.css">
 <link rel="stylesheet" href="/assets/css/groups.css">
+  <script src="/assets/js/booking-pickers.js" defer></script>
 </head><body class="demo-page"><div class="demo-shell">
   <%- include('partials/navigation') %>
   <%
@@ -16,26 +17,31 @@
     const returnedValues = typeof formValues === 'object' && formValues !== null ? formValues : null;
     const selectedValues = typeof selectedTimes !== 'undefined' && Array.isArray(selectedTimes) ? selectedTimes : [];
     const selectedSlots = slots.filter(slot => receivingBookings && slot.status === 'AVAILABLE' && selectedValues.includes(slot.time));
+    const pastSlots = slots.filter(slot => slot.status === 'UNAVAILABLE');
+    const upcomingSlots = slots.filter(slot => slot.status !== 'UNAVAILABLE');
     const removedSlots = typeof unavailableSelections !== 'undefined' && Array.isArray(unavailableSelections) ? unavailableSelections : [];
     const canonicalRecoveryUrl = typeof recoveryUrl === 'string' ? recoveryUrl : `/courts/${court._id}?date=${encodeURIComponent(date)}`;
     const guestNameValue = returnedValues && Object.hasOwn(returnedValues, 'guestName') ? returnedValues.guestName : currentUser?.fullName || '';
     const guestPhoneValue = returnedValues && Object.hasOwn(returnedValues, 'guestPhone') ? returnedValues.guestPhone : currentUser?.phone || '';
   %>
-  <main>
-    <a href="/courts">← Danh sách sân</a><p class="booking-eyebrow">CHỌN NGÀY VÀ GIỜ</p><h1 class="booking-court-title"><%= court.name %></h1>
-    <p class="booking-court-location"><strong><%= court.facility?.name || 'Cơ sở thể thao' %></strong> · <%= court.facility?.address || 'Địa chỉ đang cập nhật' %></p>
+  <main class="court-booking-main">
+    <%- include('partials/back-link', { href: '/courts', label: 'Danh sách sân' }) %><h1 class="booking-court-title"><%= court.name %></h1>
+    <p class="booking-court-location">
+      <span><strong><%= court.facility?.name || 'Cơ sở thể thao' %></strong> · <%= court.facility?.address || 'Địa chỉ đang cập nhật' %></span>
+      <%- include('partials/maps-link', { facilityName: court.facility?.name, facilityAddress: court.facility?.address }) %>
+    </p>
     <ol class="booking-steps" aria-label="Tiến trình đặt sân"><li aria-current="step">1. Chọn ô</li><li>2. Giữ chỗ / thanh toán</li><li>3. Lưu phiếu</li></ol>
     <% if (errorMessage) { %><div class="demo-error booking-form-error" id="booking-form-error" role="alert" tabindex="-1">
       <p><strong>Chưa giữ được sân.</strong> <%= errorMessage %></p>
       <% if (recoveringForm) { %><p>Lịch và giá bên dưới đã được cập nhật. Kiểm tra lại các ô còn chọn và thông tin liên hệ trước khi gửi lại.</p><% } %>
       <% if (removedSlots.length) { %><p>Các ô sau đã được bỏ khỏi lựa chọn:</p><ul>
-        <% for (const slot of removedSlots) { %><li><strong><%= slot.time %><%= slot.endTime ? `–${slot.endTime}` : '' %></strong>: <%= slot.status === 'LOCKED' ? 'đang được người khác giữ chỗ' : slot.status === 'BOOKED' ? 'đã được đặt' : 'không còn phục vụ' %>.</li><% } %>
+        <% for (const slot of removedSlots) { %><li><strong><%= slot.time %><%= slot.endTime ? `–${slot.endTime}` : '' %></strong>: <%= slot.status === 'LOCKED' ? 'đang được người khác giữ chỗ' : slot.status === 'BOOKED' ? 'đã được đặt' : 'đã qua hoặc ngoài giờ phục vụ' %>.</li><% } %>
       </ul><% } %>
     </div><% } %>
     <% if (!receivingBookings) { %><p class="booking-notice">Cơ sở đang chờ cấp chủ sân hoặc cập nhật số điện thoại, nên chưa nhận đơn mới.</p><% } %>
-    <%- include('partials/court-gallery', { court }) %>
     <form action="/courts/<%= court._id %>" method="GET" class="booking-date-form">
-      <label for="date">Ngày chơi</label><input type="date" id="date" name="date" value="<%= date %>" required>
+      <label for="date">Ngày chơi</label>
+      <%- include('partials/booking-picker-field', { id: 'date', name: 'date', value: date, required: true }) %>
       <button type="submit" class="demo-button demo-button-secondary">Xem lịch</button>
     </form>
     <form action="/bookings" method="POST" id="slot-booking-form" class="booking-layout" data-recovery-url="<%= canonicalRecoveryUrl %>" data-booking-form-error="<%= recoveringForm %>">
@@ -43,17 +49,43 @@
       <section class="demo-card" aria-labelledby="slot-title">
         <div class="booking-section-heading"><h2 id="slot-title">Lịch ngày <%= formatDate(date) %></h2><span class="booking-badge">30 phút / ô</span></div>
         <p class="demo-muted">Mở cửa <%= court.openTime || '06:00' %>–<%= court.closeTime || '22:00' %>, theo giờ Việt Nam. Bạn được chọn các ô rời nhau.</p>
-        <div class="booking-legend"><span>○ Trống</span><span>◷ Đang giữ</span><span>✓ Đã đặt</span><span>— Không phục vụ</span></div>
+        <div class="booking-legend"><span>○ Trống</span><span>◷ Đang giữ</span><span>✓ Đã đặt</span></div>
+        <% for (const period of [{ label: 'Buổi sáng', from: '00:00', to: '12:00' }, { label: 'Buổi chiều', from: '12:00', to: '17:00' }, { label: 'Buổi tối', from: '17:00', to: '24:00' }]) {
+          const periodSlots = upcomingSlots.filter(slot => slot.time >= period.from && slot.time < period.to);
+          if (!periodSlots.length) continue;
+        %>
+        <h3 class="booking-period-label"><%= period.label %></h3>
         <div class="booking-slot-grid">
-          <% for (const slot of slots) { %><label class="booking-slot <%= slot.status.toLowerCase() %>">
+          <% for (const slot of periodSlots) { %><label class="booking-slot <%= slot.status.toLowerCase() %>">
             <input type="checkbox" name="times" value="<%= slot.time %>" data-price="<%= slot.priceVND %>" data-end="<%= slot.endTime %>" <%- slot.status !== 'AVAILABLE' || !receivingBookings ? 'disabled' : '' %> <%- selectedSlots.includes(slot) ? 'checked' : '' %>>
             <span><strong><%= slot.time %>–<%= slot.endTime %></strong><small><%= slot.status === 'AVAILABLE' ? formatMoney(slot.priceVND) : slot.status === 'LOCKED' ? 'Đang giữ chỗ' : slot.status === 'BOOKED' ? 'Đã đặt' : 'Không phục vụ' %></small></span>
           </label><% } %>
         </div>
-        <% if (!slots.length || !slots.some(slot => slot.status === 'AVAILABLE')) { %><p class="booking-notice">Ngày này không còn ô trống. Bạn hãy chọn ngày khác.</p><% } %>
+        <% } %>
+        <% if (receivingBookings && !upcomingSlots.some(slot => slot.status === 'AVAILABLE')) { %><p class="booking-notice">Ngày này không còn ô trống. Bạn hãy chọn ngày khác.</p><% } %>
+        <% if (pastSlots.length) { %>
+          <details class="booking-past-slots">
+            <summary>Khung giờ đã qua (<%= pastSlots.length %>)</summary>
+            <ul class="booking-slot-grid">
+              <% for (const slot of pastSlots) { %>
+                <li>
+                  <label class="booking-slot unavailable">
+                    <input type="checkbox" name="times" value="<%= slot.time %>" disabled>
+                    <span><strong><%= slot.time %>–<%= slot.endTime %></strong><small>Đã qua</small></span>
+                  </label>
+                </li>
+              <% } %>
+            </ul>
+          </details>
+        <% } %>
       </section>
-      <aside class="demo-card booking-summary">
-        <p class="booking-eyebrow">THÔNG TIN ĐẶT SÂN</p><h2>Giữ các ô đã chọn</h2>
+      <aside class="demo-card booking-summary" id="booking-contact" tabindex="-1">
+        <h2>Giữ các ô đã chọn</h2>
+        <% if (receivingBookings && typeof paymentMode !== 'undefined' && paymentMode === 'off') { %>
+          <p class="booking-notice">Thanh toán trực tuyến đang tắt. Bạn có thể giữ ô tạm thời rồi liên hệ cơ sở để xác nhận lịch.
+            <% if (court.facility?.phone) { %><a href="tel:<%= court.facility.phone %>">Gọi <%= court.facility.phone %></a><% } %>
+          </p>
+        <% } %>
         <fieldset class="booking-style"><legend>Bạn muốn chơi theo cách nào?</legend><label><input type="radio" name="bookingStyle" value="private" checked> Thuê sân riêng</label><% if (currentUser) { %><label><input type="radio" name="bookingStyle" value="group"> Tạo sân ghép, rủ bạn chia tiền</label><% } else { %><a href="/login">Đăng nhập để mở sân ghép →</a><% } %></fieldset><p id="selection-summary" aria-live="polite"><%= selectedSlots.length ? `${selectedSlots.length} ô · ${selectedSlots.length * 30} phút` : 'Chưa chọn ô giờ.' %></p>
         <p class="demo-price" id="selection-total"><%= selectedSlots.length ? formatMoney(selectedSlots.reduce((sum, slot) => sum + slot.priceVND, 0)) : '—' %></p>
         <div id="selected-slots" class="booking-selected" aria-live="polite"><% for (const slot of selectedSlots) { %><span><%= slot.time %>–<%= slot.endTime %></span><% } %></div>
@@ -67,7 +99,12 @@
         </div>
         <p class="demo-muted">Giá cuối cùng do server tính lại. Chỉ giữ các ô bạn chọn tối đa 10 phút, trước khi ô đầu tiên bắt đầu; hết hạn chưa xác nhận, các ô được mở lại.</p>
       </aside>
+      <div class="booking-mobile-summary" hidden>
+        <span data-mobile-selection></span>
+        <a href="#booking-contact" class="demo-button">Tiếp tục</a>
+      </div>
     </form>
+    <%- include('partials/court-gallery', { court }) %>
   </main>
 </div>
   <%- include('partials/footer') %>
