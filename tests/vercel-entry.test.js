@@ -9,14 +9,17 @@ import { TestBrowser } from './helpers/http.js';
 test('Entry point Vercel thực khởi tạo DB, phục vụ EJS/static và nhận POST gốc', { timeout: 60000 }, async t => {
   const uri = process.env.TEST_MONGODB_URI || 'mongodb://127.0.0.1:27029/?replicaSet=rs0&directConnection=true';
   if (!/^mongodb:\/\/(?:127\.0\.0\.1|localhost):\d+(?:\/|\?|$)/.test(uri)) throw new Error('Chỉ dùng MongoDB tạm cục bộ.');
-  const keys = ['NODE_ENV', 'PAYMENT_MODE', 'DEMO_MODE', 'DEMO_DATA_ONLY', 'DB_NAME', 'SESSION_SECRET', 'MONGODB_URI', 'VERCEL', 'TRUST_PROXY_IPS'];
+  const keys = ['NODE_ENV', 'PAYMENT_MODE', 'DEMO_MODE', 'DEMO_DATA_ONLY', 'DB_NAME', 'SESSION_SECRET', 'MONGODB_URI', 'VERCEL', 'TRUST_PROXY_IPS', 'AUTH_BOT_CHALLENGE', 'TURNSTILE_SITE_KEY', 'TURNSTILE_SECRET_KEY', 'EMAIL_VERIFICATION_REQUIRED', 'LOGIN_EMAIL_VERIFY'];
   const previous = Object.fromEntries(keys.map(key => [key, process.env[key]]));
   Object.assign(process.env, {
     NODE_ENV: 'production', PAYMENT_MODE: 'demo', DEMO_DATA_ONLY: 'true', VERCEL: '1',
     DB_NAME: `vercel_test_${Date.now()}_${process.pid}`, MONGODB_URI: uri,
-    SESSION_SECRET: 'synthetic-vercel-local-test-session-secret-2026', TRUST_PROXY_IPS: ''
+    SESSION_SECRET: 'synthetic-vercel-local-test-session-secret-2026', TRUST_PROXY_IPS: '',
+    AUTH_BOT_CHALLENGE: 'false', EMAIL_VERIFICATION_REQUIRED: 'false', LOGIN_EMAIL_VERIFY: 'off'
   });
   delete process.env.DEMO_MODE;
+  delete process.env.TURNSTILE_SITE_KEY;
+  delete process.env.TURNSTILE_SECRET_KEY;
   const server = createServer(handler).listen(0, '127.0.0.1');
   t.after(async () => {
     await new Promise(resolve => server.close(resolve));
