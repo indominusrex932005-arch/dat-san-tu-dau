@@ -24,6 +24,10 @@
   min-width: 0;
 }
 
+.account-header-identity > div {
+  min-width: 0;
+}
+
 .account-avatar-xl {
   display: inline-grid;
   place-items: center;

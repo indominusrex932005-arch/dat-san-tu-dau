@@ -237,4 +237,120 @@
   });
 
   window.addEventListener('pageshow', stopPageLoader);
+
+  // Popup thông báo nhập liệu không hợp lệ đồng bộ (thay tooltip mặc định của trình duyệt)
+  const valPopup = document.createElement('div');
+  valPopup.className = 'site-validation-popup';
+  valPopup.setAttribute('role', 'alert');
+  valPopup.hidden = true;
+  valPopup.innerHTML = '<svg class="site-validation-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M10 6.2v4.5M10 13.6h.01" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><span class="site-validation-text"></span>';
+  document.body.append(valPopup);
+  const valText = valPopup.querySelector('.site-validation-text');
+
+  let activeInvalidField = null;
+  let invalidBatchLock = false;
+
+  function clearValidationPopup() {
+    if (activeInvalidField) {
+      activeInvalidField.classList.remove('is-field-invalid');
+      activeInvalidField = null;
+    }
+    valPopup.hidden = true;
+  }
+
+  function fieldDisplayName(field) {
+    const labelText = field.labels?.[0]?.textContent?.trim();
+    if (labelText) return labelText.replace(/\s*\(.*?\)\s*$/, '');
+    return field.getAttribute('aria-label') || field.placeholder || '';
+  }
+
+  function friendlyValidationMessage(field) {
+    const isEn = root.lang === 'en';
+    const name = fieldDisplayName(field);
+    const v = field.validity;
+    if (v.valueMissing) {
+      const isSelect = field.tagName === 'SELECT' || field.type === 'checkbox' || field.type === 'radio';
+      if (isEn) return isSelect ? `Please select ${name || 'an option'}.` : `Please fill in ${name || 'this field'}.`;
+      return isSelect ? `Vui lòng chọn ${name ? `“${name}”` : 'một mục'}.` : `Vui lòng nhập ${name ? `“${name}”` : 'thông tin này'}.`;
+    }
+    if (v.typeMismatch && field.type === 'email') {
+      return isEn ? 'Please enter a valid email address.' : 'Vui lòng nhập địa chỉ email hợp lệ.';
+    }
+    if (v.tooShort) {
+      return isEn ? `Must be at least ${field.minLength} characters.` : `Cần nhập ít nhất ${field.minLength} ký tự.`;
+    }
+    if (v.tooLong) {
+      return isEn ? `Must be at most ${field.maxLength} characters.` : `Chỉ được nhập tối đa ${field.maxLength} ký tự.`;
+    }
+    if (v.rangeUnderflow || v.rangeOverflow || v.stepMismatch) {
+      return isEn ? 'Please enter a value within the allowed range.' : 'Giá trị chưa nằm trong khoảng hợp lệ.';
+    }
+    if (v.patternMismatch) {
+      return isEn ? 'Format does not match the required pattern.' : 'Định dạng nhập chưa đúng yêu cầu.';
+    }
+    return field.validationMessage || (isEn ? 'Invalid input.' : 'Thông tin nhập chưa hợp lệ.');
+  }
+
+  function positionValidationPopup(target) {
+    const anchor = target.type === 'date' && target.parentElement?.classList.contains('has-date-display')
+      ? (target.parentElement.querySelector('.booking-date-display') || target)
+      : target;
+    const rect = anchor.getBoundingClientRect();
+    valPopup.hidden = false;
+    const popRect = valPopup.getBoundingClientRect();
+    const margin = 12;
+    const left = Math.min(
+      Math.max(margin, rect.left),
+      Math.max(margin, window.innerWidth - popRect.width - margin)
+    );
+    const fitsBelow = rect.bottom + 8 + popRect.height <= window.innerHeight - margin;
+    const top = fitsBelow ? rect.bottom + 8 : Math.max(margin, rect.top - popRect.height - 8);
+    valPopup.style.left = `${Math.round(left)}px`;
+    valPopup.style.top = `${Math.round(top)}px`;
+    valPopup.classList.toggle('is-above', !fitsBelow);
+  }
+
+  document.addEventListener('invalid', event => {
+    const field = event.target;
+    if (!(field instanceof HTMLElement)) return;
+    event.preventDefault();
+    if (invalidBatchLock) return;
+    invalidBatchLock = true;
+    window.requestAnimationFrame(() => { invalidBatchLock = false; });
+
+    clearValidationPopup();
+    activeInvalidField = field;
+    field.classList.add('is-field-invalid');
+    valText.textContent = friendlyValidationMessage(field);
+
+    const focusTarget = field.type === 'date' && field.parentElement?.classList.contains('has-date-display')
+      ? (field.parentElement.querySelector('.booking-date-display') || field)
+      : field;
+    focusTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    focusTarget.focus({ preventScroll: true });
+    positionValidationPopup(field);
+  }, true);
+
+  document.addEventListener('input', event => {
+    if (activeInvalidField && (event.target === activeInvalidField || activeInvalidField.parentElement?.contains(event.target))) {
+      clearValidationPopup();
+    }
+  });
+  document.addEventListener('change', event => {
+    if (activeInvalidField && event.target === activeInvalidField) clearValidationPopup();
+  });
+  document.addEventListener('click', event => {
+    if (!valPopup.hidden && !valPopup.contains(event.target) && event.target !== activeInvalidField) {
+      clearValidationPopup();
+    }
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !valPopup.hidden) clearValidationPopup();
+  });
+  window.addEventListener('scroll', () => {
+    if (!valPopup.hidden && activeInvalidField) positionValidationPopup(activeInvalidField);
+  }, { passive: true });
+  window.addEventListener('resize', () => {
+    if (!valPopup.hidden && activeInvalidField) positionValidationPopup(activeInvalidField);
+  });
 })();

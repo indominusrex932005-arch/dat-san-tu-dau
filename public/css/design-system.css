@@ -1539,16 +1539,77 @@ html[data-theme="dark"] .owner-calendar-page .owner-calendar-table td {
 }
 @media (max-width: 760px) {
   .site-nav-controls {
+    width: 100%;
     margin-left: 0;
+    padding-top: 8px;
+    border-top: 1px solid var(--site-line);
+  }
+  .site-account {
+    margin-left: auto;
   }
   .site-account-trigger {
-    max-width: 180px;
+    max-width: 185px;
+  }
+  .site-lang-popup,
+  .site-theme-popup {
+    left: 0;
+    right: auto;
+    transform-origin: top left;
   }
   .site-account-popup {
     right: 0;
     left: auto;
+    transform-origin: top right;
+  }
+  .checkout-contact-actions > * {
+    flex: 1 1 140px;
+    justify-content: center;
   }
 }
+/* Popup thông báo nhập liệu chưa hợp lệ đồng bộ */
+.site-validation-popup {
+  position: fixed;
+  z-index: 9990;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 9px;
+  max-width: min(340px, calc(100vw - 24px));
+  padding: 10px 14px;
+  border: 1px solid #d79690;
+  border-radius: 12px;
+  background: #fff7f6;
+  color: #7f231e;
+  font-size: 13.5px;
+  font-weight: 650;
+  line-height: 1.45;
+  box-shadow: 0 12px 28px rgba(127, 35, 30, .16);
+  animation: site-popup-in .15s ease-out;
+}
+.site-validation-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  margin-top: 1px;
+  color: #c43c32;
+}
+.is-field-invalid {
+  border-color: #c43c32 !important;
+  box-shadow: 0 0 0 3px rgba(196, 60, 50, .16) !important;
+}
+html[data-theme="dark"] .site-validation-popup {
+  background: #36191b;
+  border-color: #8f3c40;
+  color: #ffc8c2;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, .52);
+}
+html[data-theme="dark"] .site-validation-icon {
+  color: #ff8e85;
+}
+html[data-theme="dark"] .is-field-invalid {
+  border-color: #e06b56 !important;
+  box-shadow: 0 0 0 3px rgba(224, 107, 86, .24) !important;
+}
+
 /* Nút quay lại đồng bộ toàn trang */
 .site-back-link {
   display: inline-flex;
@@ -1703,6 +1764,7 @@ html[data-theme="dark"] .site-maps-link:focus-visible {
   left: 50%;
   bottom: 24px;
   z-index: 9998;
+  max-width: calc(100vw - 32px);
   transform: translateX(-50%);
   display: inline-flex;
   align-items: center;
