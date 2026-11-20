@@ -136,8 +136,6 @@ function initializeSlotForm() {
     if (changed) refreshSelection();
   }
   updateSlotUrgency();
-  const urgencyTimer = window.setInterval(updateSlotUrgency, 15000);
-  window.addEventListener('pagehide', () => window.clearInterval(urgencyTimer), { once: true });
 
   slotForm.addEventListener('change', refreshSelection);
   datePicker?.addEventListener('change', refreshSelection);
